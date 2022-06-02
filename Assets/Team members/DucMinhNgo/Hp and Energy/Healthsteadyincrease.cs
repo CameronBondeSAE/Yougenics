@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Healthsteadyincrease : MonoBehaviour
+public class Health : MonoBehaviour
 {
     public int curHealth = 10;
 
