@@ -22,6 +22,9 @@ namespace Kevin
 
         public float visionRange, attackRange;
 
+        public RaycastHit raycastHit;
+
+        public List<GameObject> entityLists;
         public void Awake()
         {
             visionRange = this.GetComponent<SphereCollider>().radius;
@@ -45,7 +48,7 @@ namespace Kevin
                 transform.localScale = new Vector3(1f, 1f, 1f);
             }
         }
-
+        
         public void Update()
         {
             if (InRange == true)
@@ -55,6 +58,21 @@ namespace Kevin
             else
             {
                 isChasing = false;
+            }
+            
+            if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward),5f))
+            {
+                if (isSleeping == false)
+                {
+                    inVisionRange = true; 
+                    Debug.Log("See");
+                    Debug.DrawRay(transform.position,Vector3.forward*5f);
+                }
+            }
+            else
+            {
+                inVisionRange = false;
+                Debug.Log("Blind");
             }
         }
         private void OnDrawGizmosSelected() 
