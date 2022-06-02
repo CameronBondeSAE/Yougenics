@@ -11,9 +11,9 @@ namespace Ollie
         public float maxHealth;
         public float mySpeed;
         
-        public Vector3 myPos;
         public Vector3 targetPos;
         public GameObject target;
+        public GameObject currentTarget;
         public RaycastHit hitData;
         
         public List<GameObject> npcTargets;
@@ -31,8 +31,9 @@ namespace Ollie
             if (rayCooldown == false)
             {
                 StartCoroutine(RayCoroutine());
-                Vector3.MoveTowards(myPos, targetPos, mySpeed);
             }
+
+            LookForTargets();
         }
         
         public IEnumerator RayCoroutine()
@@ -55,23 +56,42 @@ namespace Ollie
                 print(npcTargets[i].transform.position);
                 if (target != null)
                 {
-                    Ray ray = new Ray(transform.position, (targetPos-myPos).normalized);
-                    Debug.DrawRay(ray.origin, ray.direction*hitData.distance,Color.blue,2f);
+                    Ray ray = new Ray(transform.position, (targetPos-transform.position).normalized);
+                    Debug.DrawRay(ray.origin, ray.direction*hitData.distance,Color.blue,1f);
                     if (Physics.Raycast(ray, out hitData))
                     {
                         if (hitData.transform.gameObject.GetComponent<iNPC>() != null)
                         {
-                            //Debug.DrawLine(ray.origin, hitData.point,Color.blue,10f);
                             if (!targetsInSight.Contains(hitData.transform.gameObject))
                             {
                                 print("target acquired");
                                 targetsInSight.Add(hitData.transform.gameObject);
+                                currentTarget = targetsInSight[UnityEngine.Random.Range(0, targetsInSight.Count)];
                             }
+                        }
+                        else
+                        {
+                            currentTarget = null;
                         }
                     }
                 }
             }
             rayCooldown = false;
+        }
+
+        public void LookForTargets()
+        {
+            
+        }
+        
+        public void ChangeColourRed()
+        {
+            this.gameObject.GetComponent<Renderer>().material.color = Color.red;
+        }
+
+        public void ChangeColourBlue()
+        {
+            this.gameObject.GetComponent<Renderer>().material.color = Color.blue;
         }
     }
 }
