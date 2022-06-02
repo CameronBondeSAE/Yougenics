@@ -9,23 +9,69 @@ namespace Ollie
     {
         public float health;
         public float maxHealth;
+        public float mySpeed;
         
         public Vector3 myPos;
         public Vector3 targetPos;
-        public float mySpeed;
-
+        public GameObject target;
+        public RaycastHit hitData;
+        
         public List<GameObject> npcTargets;
+        public List<GameObject> targetsInSight;
+        private bool rayCooldown;
 
         private void Start()
         {
+            rayCooldown = false;
             health = maxHealth;
-            npcTargets = new List<GameObject>();
         }
 
         private void Update()
         {
-            myPos = transform.position;
-            Vector3.MoveTowards(myPos, targetPos, mySpeed);
+            if (rayCooldown == false)
+            {
+                StartCoroutine(RayCoroutine());
+                Vector3.MoveTowards(myPos, targetPos, mySpeed);
+            }
+        }
+        
+        public IEnumerator RayCoroutine()
+        {
+            //clears all targetsInSight every second
+            //then runs through the list of all npcs inside trigger zone
+            //for each, it assigns them as target, aims ray at them
+            //fires ray, stores target in targetsInSight list
+            
+            //I think this MIGHT pose a problem for targeting behaviours if all targets are briefly removed every second???
+            targetsInSight.Clear();
+            rayCooldown = true;
+            print("ray go yeet");
+            yield return new WaitForSeconds(1);
+
+            for (int i = 0; i < npcTargets.Count; i++)
+            {
+                target = npcTargets[i];
+                targetPos = npcTargets[i].transform.position;
+                print(npcTargets[i].transform.position);
+                if (target != null)
+                {
+                    Ray ray = new Ray(transform.position, (targetPos-myPos).normalized);
+                    Debug.DrawRay(ray.origin, ray.direction*hitData.distance,Color.blue,2f);
+                    if (Physics.Raycast(ray, out hitData))
+                    {
+                        if (hitData.transform.gameObject.GetComponent<iNPC>() != null)
+                        {
+                            //Debug.DrawLine(ray.origin, hitData.point,Color.blue,10f);
+                            if (!targetsInSight.Contains(hitData.transform.gameObject))
+                            {
+                                print("target acquired");
+                                targetsInSight.Add(hitData.transform.gameObject);
+                            }
+                        }
+                    }
+                }
+            }
+            rayCooldown = false;
         }
     }
 }
