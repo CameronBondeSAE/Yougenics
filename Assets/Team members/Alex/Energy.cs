@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System; 
 
 public class Energy : MonoBehaviour
 {
@@ -9,14 +10,27 @@ public class Energy : MonoBehaviour
     public float energyMax = 100;
     public float energyMin = 0;
     public float drainSpeed = 1;
+    public event Action NoEnergyEvent;
+    public event Action FullEnergyEvent;
 
-    Health Hp; 
+    Health Hp;
 
     // Start is called before the first frame update
     void Start()
     {
+
         CheckEnergyMax();
 
+    }
+
+    void NoEnergy()
+    {
+        print("You have no energy");
+    }
+
+    void FullEnergy()
+    {
+        print("You have max energy");
     }
 
     // Update is called once per frame
@@ -29,19 +43,20 @@ public class Energy : MonoBehaviour
 
     }
 
-    public void CheckEnergyMax()
+    void CheckEnergyMax()
     {
-        if (energyAmount == energyMax)
+        if (energyAmount >= energyMax)
         {
-            print("You have max energy");
+            FullEnergyEvent?.Invoke();
         }
     }
     
-    public void CheckEnergyMin()
+    void CheckEnergyMin()
     {
-        if (energyAmount >= energyMin)
+        if (energyAmount <= energyMin)
         {
-            print("You are out of energy");
+
+            NoEnergyEvent?.Invoke();
             //Hp = Hp -= 1;
         }
     }
