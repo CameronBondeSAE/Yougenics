@@ -13,7 +13,7 @@ namespace Ollie
         
         public Vector3 targetPos;
         public GameObject target;
-        public GameObject currentTarget;
+        public GameObject currentTarget = null;
         public RaycastHit hitData;
         
         public List<GameObject> npcTargets;
@@ -46,14 +46,12 @@ namespace Ollie
             //I think this MIGHT pose a problem for targeting behaviours if all targets are briefly removed every second???
             targetsInSight.Clear();
             rayCooldown = true;
-            print("ray go yeet");
             yield return new WaitForSeconds(1);
 
             for (int i = 0; i < npcTargets.Count; i++)
             {
                 target = npcTargets[i];
                 targetPos = npcTargets[i].transform.position;
-                print(npcTargets[i].transform.position);
                 if (target != null)
                 {
                     Ray ray = new Ray(transform.position, (targetPos-transform.position).normalized);
@@ -64,7 +62,6 @@ namespace Ollie
                         {
                             if (!targetsInSight.Contains(hitData.transform.gameObject))
                             {
-                                print("target acquired");
                                 targetsInSight.Add(hitData.transform.gameObject);
                                 currentTarget = targetsInSight[UnityEngine.Random.Range(0, targetsInSight.Count)];
                             }
