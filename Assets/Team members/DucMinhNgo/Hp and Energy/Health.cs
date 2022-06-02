@@ -2,15 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public class NewBehaviourScript : MonoBehaviour
 {
     public float Hp;
-
     // Start is called before the first frame update
     void Start()
     {
-        HPO();
-        
+        HP0();
     }
 
     // Update is called once per frame
@@ -18,14 +16,12 @@ public class Health : MonoBehaviour
     {
         
     }
-    public void HPO()
+    public void HP0()
     {
         if(Input.GetKeyDown(KeyCode.R))
-        { 
-            Hp += 10;
-            Debug.Log(Hp);
+        {
+            Hp -= 10;
         }
     }
-    
-    
+
 }
