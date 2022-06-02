@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public int curHealth = 10;
+    public int Hp = 10;
+    public GameObject coin;
+   
 
     void Start()
     {
@@ -15,9 +17,9 @@ public class Health : MonoBehaviour
     {
         while (true)
         { // loops forever...
-            if (curHealth < 100)
+            if (Hp < 100)
             { // if health < 100...
-                curHealth += 1; // increase health and wait the specified time
+                Hp += 1; // increase health and wait the specified time
                 yield return new WaitForSeconds(1);
             }
             else
@@ -26,7 +28,13 @@ public class Health : MonoBehaviour
             }
         }
     }
-
-
-
+    private void OnTriggerEnter(Collider other)
+    {
+        Hp -= 10;
+        if(Hp <= 0)
+        {
+            DestroyObject(gameObject);
+        }
+        
+    }
 }
