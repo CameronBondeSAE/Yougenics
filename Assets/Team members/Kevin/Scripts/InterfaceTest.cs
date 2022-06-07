@@ -15,7 +15,12 @@ namespace Kevin
 
     public interface IEntity
     {
-        bool InRange { get; set; }
+        
+    }
+
+    public interface IEdible
+    {
+        
     }
 }
 
