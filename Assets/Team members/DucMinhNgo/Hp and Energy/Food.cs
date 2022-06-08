@@ -12,15 +12,14 @@ namespace Minh
         void Start()
         {
             //subcribe to Health script
-            GetComponent<Health>().Collectfood += FixedUpdate;
+            //GetComponent<Health>().Collectfood += UnityEngine.PlayerLoop.FixedUpdate;
 
         }
 
         // Update is called once per frame
-        private void FixedUpdate()
+        public void OnCollisionEnter(Collision collision)
         {
-
+            Destroy(gameObject);
         }
-
     }
 }
