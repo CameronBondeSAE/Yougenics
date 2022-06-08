@@ -3,26 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
-public class LightTest : NetworkBehaviour
+public class NetworkVariableLightTest : NetworkBehaviour
 {
     bool updateLights = true;
     Light light;
 
     public NetworkVariable<Vector3> LightColour = new NetworkVariable<Vector3>();
+    public NetworkVariable<Vector3> MyPosition = new NetworkVariable<Vector3>();
 
     public override void OnNetworkSpawn()
     {
-
         LightColour.OnValueChanged += UpdateMyColour;
+        MyPosition.OnValueChanged += UpdateMyPosition;
 
         light = GetComponent<Light>();
-
-        transform.position = new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
 
         if (IsOwner)
         {
             ChangeLights();
+            SetPosition();
         }
+    }
+
+    private void UpdateMyPosition(Vector3 previousValue, Vector3 newValue)
+    {
+        transform.position = newValue;
     }
 
     private void UpdateMyColour(Vector3 previousValue, Vector3 newValue)
@@ -42,20 +47,35 @@ public class LightTest : NetworkBehaviour
         }
     }
 
+    public void SetPosition()
+    {
+        if (IsServer)
+        {
+            MyPosition.Value = GetRandomPosition();
+        }
+        else
+        {
+            SubmitPositionRequestServerRpc();
+        }
+    }
+
     [ServerRpc]
     void SubmitLightRequestServerRpc()
     {
         StartCoroutine(ChangeLightColour());
     }
 
+    [ServerRpc]
+    void SubmitPositionRequestServerRpc()
+    {
+        MyPosition.Value = GetRandomPosition();
+    }
+
     IEnumerator ChangeLightColour()
     {
         do
         {
-            Vector3 newLightColour = GetRandomColour();
-            //light.color = newLightColour;
-            LightColour.Value = newLightColour;
-            //ChangeColourClientRpc(newLightColour);
+            LightColour.Value = GetRandomColour();
             yield return new WaitForSeconds(2f);
         }
         while (updateLights);
@@ -65,23 +85,8 @@ public class LightTest : NetworkBehaviour
     {
         return new Vector3(Random.Range(0f, 255f), Random.Range(0f, 255f), Random.Range(0f, 255f));
     }
-
-    [ClientRpc]
-    public void ChangeColourClientRpc(Vector3 newColour)
+    static Vector3 GetRandomPosition()
     {
-        light.color = new Color(newColour.x, newColour.y, newColour.z);
+        return new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
     }
-
-    /*
-    private void Update()
-    {
-        if(IsClient)
-        {
-            light.color = new Color(LightColour.Value.x, LightColour.Value.y, LightColour.Value.z);
-        }
-    }
-    */
-
-
-
 }
