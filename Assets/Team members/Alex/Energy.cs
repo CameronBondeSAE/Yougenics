@@ -26,6 +26,7 @@ public class Energy : MonoBehaviour
     void NoEnergy()
     {
         print("You have no energy");
+        
     }
 
     void FullEnergy()
@@ -47,6 +48,7 @@ public class Energy : MonoBehaviour
     {
         if (energyAmount >= energyMax)
         {
+            energyAmount = energyMax ; 
             FullEnergyEvent?.Invoke();
         }
     }
@@ -55,7 +57,7 @@ public class Energy : MonoBehaviour
     {
         if (energyAmount <= energyMin)
         {
-
+            energyAmount = energyMin;
             NoEnergyEvent?.Invoke();
             //Hp = Hp -= 1;
         }
