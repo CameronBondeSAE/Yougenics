@@ -1,16 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public int Hp = 10;
+    public float Hp = 100;
     public GameObject coin;
+    public bool dead;
+
+    public event Action DeathEvent;
    
 
     void Start()
     {
         StartCoroutine(addHealth());
+        Deathcheck();
+        
     }
 
     IEnumerator addHealth()
@@ -28,13 +34,15 @@ public class Health : MonoBehaviour
             }
         }
     }
-    private void OnTriggerEnter(Collider other)
+    public void Deathcheck()
     {
-        Hp -= 10;
-        if(Hp <= 0)
+        if(Hp <=0)
         {
-            DestroyObject(gameObject);
+            dead = true;
+            DeathEvent?.Invoke();
+            Destroy(gameObject);
         }
-        
     }
+    
+
 }

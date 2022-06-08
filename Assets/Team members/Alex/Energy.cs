@@ -13,12 +13,12 @@ public class Energy : MonoBehaviour
     public event Action NoEnergyEvent;
     public event Action FullEnergyEvent;
 
-    Health Hp;
+    
 
     // Start is called before the first frame update
     void Start()
     {
-
+        GetComponent<Health>();
         CheckEnergyMax();
 
     }
