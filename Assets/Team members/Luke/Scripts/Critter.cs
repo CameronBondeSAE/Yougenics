@@ -8,9 +8,9 @@ using UnityEngine.Rendering;
 
 namespace Luke
 {
-	public class Critter : MonoBehaviour
+	public class Critter : MonoBehaviour, Luke.IEdible
 	{
-		public event Amenities.RemoveFromListAction RemoveFromListEvent;
+		public event IEdible.RemoveFromListAction RemoveFromListEvent;
 
 		public CritterInfo critterInfo;
 		
@@ -32,7 +32,10 @@ namespace Luke
 		public List<int> biomeQualities;
 		public int bestNearbyBiome;
 
-
+		private Rigidbody rb;
+		
+#region IEnumerators
+		
 		private IEnumerator HealthRegen()
 		{
 			yield return new WaitForSeconds(critterInfo.awakeDecayDelay);
@@ -62,8 +65,32 @@ namespace Luke
 
 			if (!justAte)
 			{
-				energy -= 1;
+				if (energy > 0)
+				{
+					energy -= 1;
+				}
+				else
+				{
+					//StartCoroutine(HealthDecay);
+				}
 				StartCoroutine(EnergyDecay());
+			}
+		}
+
+		private IEnumerator HealthDecay()
+		{
+			if (isSleeping)
+			{
+				yield return new WaitForSeconds(critterInfo.asleepDecayDelay);
+			}
+			else
+			{
+				yield return new WaitForSeconds(critterInfo.awakeDecayDelay);
+			}
+
+			if (energy <= 0)
+			{
+				health -= 1;
 			}
 		}
 		
@@ -132,9 +159,11 @@ namespace Luke
 			StartCoroutine(RandomiseDefaultBehaviour());
 		}
 		
+		#endregion
 
 		void OnEnable()
 		{
+			rb = GetComponent<Rigidbody>();
 			health = critterInfo.maxHealth;
 			energy = critterInfo.maxEnergyLevel;
 			sleepLevel = critterInfo.maxSleepLevel;
@@ -160,31 +189,43 @@ namespace Luke
 		{
 			if (other.transform == transform) return;
 			Luke.Critter go = other.GetComponent<Luke.Critter>();
+			Luke.Food go2 = other.GetComponent<Luke.Food>();
+			
 			if (go != null)
 			{
 				int otherDeadliness = go.critterInfo.deadliness;
 				if (otherDeadliness > critterInfo.deadliness + 3)
 				{
-					predatorsList.Add(other.transform);
-					go.RemoveFromListEvent += RemoveTransformFromList;
+					if (!predatorsList.Contains(other.transform))
+					{
+						predatorsList.Add(other.transform);
+						go.RemoveFromListEvent += RemoveTransformFromList;
+					}
 				}
 				else if (otherDeadliness < critterInfo.deadliness+3 && otherDeadliness > critterInfo.deadliness-3)
 				{
-					matesList.Add(other.transform);
-					go.RemoveFromListEvent += RemoveTransformFromList;
+					if (!matesList.Contains(other.transform))
+					{
+						matesList.Add(other.transform);
+						go.RemoveFromListEvent += RemoveTransformFromList;
+					}
 				}
 				else
 				{
-					foodList.Add(other.transform);
-					go.RemoveFromListEvent += RemoveTransformFromList;
+					if (!foodList.Contains(other.transform))
+					{
+						foodList.Add(other.transform);
+						go.RemoveFromListEvent += RemoveTransformFromList;
+					}
 				}
 			}
-
-			Luke.Food go2 = other.GetComponent<Luke.Food>();
-			if (go2 != null)
+			else if (go2 != null)
 			{
-				foodList.Add(other.transform);
-				go2.RemoveFromListEvent += RemoveTransformFromList;
+				if (!foodList.Contains(other.transform))
+				{
+					foodList.Add(other.transform);
+					go2.RemoveFromListEvent += RemoveTransformFromList;
+				}
 			}
 		}
 		
@@ -212,6 +253,19 @@ namespace Luke
 		
 
 		#region Blackboard Actions and Conditions
+
+		public Vector3 FindMoveTarget()
+		{
+			return Vector3.zero;
+		}
+		
+		public void Move(Vector3 targetPosition)
+		{
+			Vector3 position = transform.position;
+			Vector3 heading = Vector3.Normalize(targetPosition - position);
+			
+			rb.AddForce(heading*moveSpeed);
+		}
 		
 		public void GetNearestPredator()
 		{
