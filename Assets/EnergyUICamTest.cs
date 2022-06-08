@@ -12,7 +12,7 @@ public class EnergyUICamTest : MonoBehaviour
     void Start()
     {
         GetComponent<Energy>();
-        energy.EnergyUpdatedEvent += UpdateText;
+        //energy.EnergyUpdatedEvent += UpdateText;
         energy.NoEnergyEvent      += RunOut;
     }
 
