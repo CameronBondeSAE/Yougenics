@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Rendering;
@@ -9,6 +10,16 @@ namespace Luke
 	{
 		public event IEdible.RemoveFromListAction RemoveFromListEvent;
 
+		[SerializeField]
+		public float health;
+		[SerializeField]
+		private float maxHealth = 100f;
+
+		private void OnEnable()
+		{
+			health = maxHealth;
+		}
+
 		void OnDisable()
 		{
 			RemoveFromListEvent?.Invoke(transform);
@@ -19,14 +30,11 @@ namespace Luke
 			RemoveFromListEvent?.Invoke(transform);
 		}
 		
-		void Start()
+		public void TakeDamage(float damage)
 		{
-
-		}
-
-		void Update()
-		{
-
+			health -= damage;
+			if (health > 0) return;
+			Destroy(gameObject);
 		}
 	}
 }
