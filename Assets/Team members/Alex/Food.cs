@@ -25,7 +25,7 @@ namespace Alex
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.GetComponent<SimpleAI>() != null)// ‘Fire’ the event
+            if (other.GetComponent<Energy>() != null)// ‘Fire’ the event
             {
                 other.GetComponent<Energy>().energyAmount += myFoodAmount;
                 Destroy(gameObject);
