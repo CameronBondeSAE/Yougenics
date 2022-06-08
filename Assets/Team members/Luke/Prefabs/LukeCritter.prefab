@@ -192,7 +192,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &-3289536063586725846
 MonoBehaviour:
@@ -241,16 +241,17 @@ MonoBehaviour:
     maxEnergyLevel: 100
     awakeDecayDelay: 1
     asleepDecayDelay: 3
-    firstMatingDelay: 100
-    regularMatingDelay: 50
+    firstMatingDelay: 50
+    regularMatingDelay: 30
     isCarnivore: 0
     deadliness: 10
-    visionRadius: 30
+    visionRadius: 15
   defaultBehaviour: 0
   health: 0
   energy: 0
   sleepLevel: 0
-  moveSpeed: 0
+  acceleration: 1
+  maxSpeed: 5
   readyToMate: 0
   isSleeping: 0
   justAte: 0

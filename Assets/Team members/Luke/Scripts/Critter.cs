@@ -18,7 +18,8 @@ namespace Luke
 		public float health;
 		public float energy;
 		public float sleepLevel;
-		public float moveSpeed;
+		public float acceleration;
+		public float maxSpeed;
 		public bool readyToMate = false;
 		public bool isSleeping = false;
 		public bool justAte;
@@ -71,29 +72,12 @@ namespace Luke
 				}
 				else
 				{
-					//StartCoroutine(HealthDecay);
+					health -= 1;
 				}
 				StartCoroutine(EnergyDecay());
 			}
 		}
 
-		private IEnumerator HealthDecay()
-		{
-			if (isSleeping)
-			{
-				yield return new WaitForSeconds(critterInfo.asleepDecayDelay);
-			}
-			else
-			{
-				yield return new WaitForSeconds(critterInfo.awakeDecayDelay);
-			}
-
-			if (energy <= 0)
-			{
-				health -= 1;
-			}
-		}
-		
 		private IEnumerator EnergyDecayCooldown()
 		{
 			yield return new WaitForSeconds(10f);
@@ -167,7 +151,7 @@ namespace Luke
 			health = critterInfo.maxHealth;
 			energy = critterInfo.maxEnergyLevel;
 			sleepLevel = critterInfo.maxSleepLevel;
-			moveSpeed = 15+5f/critterInfo.awakeDecayDelay;
+			acceleration = 15+5f/critterInfo.awakeDecayDelay;
 			StartCoroutine(ComingOfAge(critterInfo.firstMatingDelay));
 			StartCoroutine(RandomiseDefaultBehaviour());
 			StartCoroutine(HealthRegen());
@@ -253,21 +237,34 @@ namespace Luke
 		
 
 		#region Blackboard Actions and Conditions
-
-		public Vector3 FindMoveTarget()
+		
+		public void MoveToNearestFood()
 		{
-			return Vector3.zero;
+			if (foodList.Count == 0) return;
+			transform.LookAt(nearestFood);
+			rb.AddForce(transform.TransformDirection(Vector3.forward)*acceleration);
+			rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
 		}
 		
-		public void Move(Vector3 targetPosition)
+		public void MoveToNearestMate()
 		{
+			if (matesList.Count == 0) return;
+			transform.LookAt(nearestMate);
+			rb.AddForce(transform.TransformDirection(Vector3.forward)*acceleration);
+			rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
+		}
+		
+		public void MoveAwayFromPredator()
+		{
+			if (predatorsList.Count == 0) return;
 			Vector3 position = transform.position;
-			Vector3 heading = Vector3.Normalize(targetPosition - position);
-			
-			rb.AddForce(heading*moveSpeed);
+			Vector3 heading = position - nearestPredator.position;
+			transform.LookAt(position + heading);
+			rb.AddForce(transform.TransformDirection(Vector3.forward)*acceleration);
+			rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
 		}
-		
-		public void GetNearestPredator()
+
+		public void LocateNearestPredator()
 		{
 			if (IsPredatorsListEmpty()) return;
 
@@ -279,16 +276,18 @@ namespace Luke
 				Vector3 translation = t.position - position;
 				float distance = Vector3.Magnitude(translation);
 				Physics.Raycast(new Ray(position, translation), out RaycastHit raycastHit);
-				Debug.DrawRay(position, translation, Color.red);
 				if (raycastHit.transform != t.transform) continue;
-
+				Debug.DrawRay(position, translation, new Color(1,0,0,0.5f));
 				if (!(distance < distanceToCompare)) continue;
 				nearestPredator = t;
 				distanceToCompare = distance;
 			}
+
+			if (nearestPredator == null) return;
+				Debug.DrawLine(position, nearestPredator.position, Color.red);
 		}
 		
-		public void GetNearestMate()
+		public void LocateNearestMate()
 		{
 			nearestMate = null;
 			Vector3 position = transform.position;
@@ -298,16 +297,18 @@ namespace Luke
 				Vector3 translation = t.position - position;
 				float distance = Vector3.Magnitude(translation);
 				Physics.Raycast(new Ray(position, translation), out RaycastHit raycastHit);
-				Debug.DrawRay(position, translation, Color.magenta);
 				if (raycastHit.transform != t.transform) continue;
-
+				Debug.DrawRay(position, translation, new Color (1,0,1,0.5f));
 				if (!(distance < distanceToCompare)) continue;
 				nearestMate = t;
 				distanceToCompare = distance;
 			}
+			
+			if (nearestMate == null) return;
+			Debug.DrawLine(position, nearestMate.position, Color.magenta);
 		}
 		
-		public void GetNearestFood()
+		public void LocateNearestFood()
 		{
 			nearestFood = null;
 			Vector3 position = transform.position;
@@ -317,13 +318,16 @@ namespace Luke
 				Vector3 translation = t.position - position;
 				float distance = Vector3.Magnitude(translation);
 				Physics.Raycast(new Ray(position, translation), out RaycastHit raycastHit);
-				Debug.DrawRay(position, translation, Color.green);
 				if (raycastHit.transform != t.transform) continue;
-
+				Debug.DrawRay(position, translation, new Color (0,1,0,0.5f));
 				if (!(distance < distanceToCompare)) continue;
+				
 				nearestFood = t;
 				distanceToCompare = distance;
 			}
+			
+			if (nearestFood == null) return;
+			Debug.DrawLine(position, nearestFood.position, Color.green);
 		}
 		
 		public bool IsVeryTired()
@@ -338,7 +342,7 @@ namespace Luke
 		
 		public bool IsInImminentDanger()
 		{
-			GetNearestPredator();
+			LocateNearestPredator();
 			if (nearestPredator == null)
 			{
 				return false;
