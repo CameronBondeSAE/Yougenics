@@ -5,27 +5,30 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public float Hp = 100;
-    public GameObject coin;
+    public float Hp = 100f;
     public bool dead;
 
     public event Action DeathEvent;
+    Food food;
+    public event Action Collectfood;
    
 
     void Start()
     {
         StartCoroutine(addHealth());
         Deathcheck();
+        Foodcollect();
         
     }
 
+    //health generate overtime
     IEnumerator addHealth()
     {
         while (true)
         { // loops forever...
             if (Hp < 100)
             { // if health < 100...
-                Hp += 1; // increase health and wait the specified time
+                Hp += 0.05f; // increase health and wait the specified time
                 yield return new WaitForSeconds(1);
             }
             else
@@ -43,6 +46,18 @@ public class Health : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
+    public void Foodcollect()
+    {
+        void OnCollisionEnter(Collision collision)
+        {
+            Hp += 5;
+            Collectfood?.Invoke();
+        }
+            
+    }
+    private void Update()
+    {
+        Deathcheck();
+    }
 
 }
