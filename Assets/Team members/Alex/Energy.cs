@@ -9,10 +9,10 @@ public class Energy : MonoBehaviour
     public float energyAmount = 50;
     public float energyMax = 100;
     public float energyMin = 0;
-    public float drainSpeed = 1;
+    public float drainAmount = 1;
     public event Action NoEnergyEvent;
     public event Action FullEnergyEvent;
-
+    public float drainSpeed = 1;
     
 
     // Start is called before the first frame update
@@ -20,6 +20,7 @@ public class Energy : MonoBehaviour
     {
         GetComponent<Health>();
         CheckEnergyMax();
+        StartCoroutine(EnergyDrainer());
 
     }
 
@@ -38,9 +39,10 @@ public class Energy : MonoBehaviour
     void Update()
     {
         
-        EnergyDrain();
+        //EnergyDrain();
         CheckEnergyMax();
         CheckEnergyMin();
+        EnergyDrainer();
 
     }
 
@@ -58,16 +60,31 @@ public class Energy : MonoBehaviour
         if (energyAmount <= energyMin)
         {
             energyAmount = energyMin;
+            GetComponent<Health>().Hp += -1;
             NoEnergyEvent?.Invoke();
-            //Hp = Hp -= 1;
+                        
         }
     }
 
+    /*
     void EnergyDrain()
     {
+
         energyAmount = energyAmount - drainSpeed;
            
     }
+    */
+
+    private IEnumerator EnergyDrainer()
+    {
+        while (energyAmount >= energyMin)
+        {
+            yield return new WaitForSeconds(drainSpeed);
+            {
+                energyAmount -= drainAmount;
+            }
+        }
+    }   
     
 
 }
