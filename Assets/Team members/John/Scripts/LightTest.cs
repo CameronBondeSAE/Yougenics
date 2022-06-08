@@ -8,16 +8,26 @@ public class LightTest : NetworkBehaviour
     bool updateLights = true;
     Light light;
 
-    public NetworkVariable<Vector4> LightColour = new NetworkVariable<Vector4>();
+    public NetworkVariable<Vector3> LightColour = new NetworkVariable<Vector3>();
 
     public override void OnNetworkSpawn()
     {
+
+        LightColour.OnValueChanged += UpdateMyColour;
+
         light = GetComponent<Light>();
+
+        transform.position = new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
 
         if (IsOwner)
         {
             ChangeLights();
         }
+    }
+
+    private void UpdateMyColour(Vector3 previousValue, Vector3 newValue)
+    {
+        light.color = new Color(newValue.x, newValue.y, newValue.z);
     }
 
     public void ChangeLights()
@@ -42,24 +52,36 @@ public class LightTest : NetworkBehaviour
     {
         do
         {
-            Vector4 newLightColour = GetRandomColour();
-            light.color = newLightColour;
+            Vector3 newLightColour = GetRandomColour();
+            //light.color = newLightColour;
             LightColour.Value = newLightColour;
-            ChangeColourClientRpc(newLightColour);
+            //ChangeColourClientRpc(newLightColour);
             yield return new WaitForSeconds(2f);
         }
         while (updateLights);
     }
 
-    static Vector4 GetRandomColour()
+    static Vector3 GetRandomColour()
     {
-        return new Vector4(Random.Range(0f, 255f), Random.Range(0f, 255f), Random.Range(0f, 255f), 255f);
+        return new Vector3(Random.Range(0f, 255f), Random.Range(0f, 255f), Random.Range(0f, 255f));
     }
 
     [ClientRpc]
-    public void ChangeColourClientRpc(Vector4 newColour)
+    public void ChangeColourClientRpc(Vector3 newColour)
     {
-        light.color = LightColour.Value;
+        light.color = new Color(newColour.x, newColour.y, newColour.z);
     }
+
+    /*
+    private void Update()
+    {
+        if(IsClient)
+        {
+            light.color = new Color(LightColour.Value.x, LightColour.Value.y, LightColour.Value.z);
+        }
+    }
+    */
+
+
 
 }
