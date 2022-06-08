@@ -17,7 +17,7 @@ public class Health : MonoBehaviour
     {
         StartCoroutine(addHealth());
         Deathcheck();
-        Foodcollect();
+       
         
     }
 
@@ -46,14 +46,10 @@ public class Health : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public void Foodcollect()
+    void OnCollisionEnter(Collision collision)
     {
-        void OnCollisionEnter(Collision collision)
-        {
-            Hp += 5;
-            Collectfood?.Invoke();
-        }
-            
+        Hp += 5;
+        Collectfood?.Invoke();
     }
     private void Update()
     {
