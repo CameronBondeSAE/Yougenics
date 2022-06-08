@@ -12,11 +12,10 @@ public class ClientRPCLightTest : NetworkBehaviour
     {
         light = GetComponent<Light>();
 
-        transform.position = new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
-
         if (IsOwner)
         {
             ChangeLights();
+            SetPosition();
         }
     }
 
@@ -32,10 +31,28 @@ public class ClientRPCLightTest : NetworkBehaviour
         }
     }
 
+    public void SetPosition()
+    {
+        if(IsServer)
+        {
+            ChangePositionClientRpc(GetRandomPosition());
+        }
+        else
+        {
+            SubmitPositionRequestServerRpc();
+        }
+    }
+
     [ServerRpc]
     void SubmitLightRequestServerRpc()
     {
         StartCoroutine(ChangeLightColour());
+    }
+
+    [ServerRpc]
+    void SubmitPositionRequestServerRpc()
+    {
+        ChangePositionClientRpc(GetRandomPosition());
     }
 
     IEnumerator ChangeLightColour()
@@ -54,9 +71,20 @@ public class ClientRPCLightTest : NetworkBehaviour
         return new Vector3(Random.Range(0f, 255f), Random.Range(0f, 255f), Random.Range(0f, 255f));
     }
 
+    static Vector3 GetRandomPosition()
+    {
+        return new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
+    }
+
     [ClientRpc]
     public void ChangeColourClientRpc(Vector3 newColour)
     {
         light.color = new Color(newColour.x, newColour.y, newColour.z);
+    }
+
+    [ClientRpc]
+    public void ChangePositionClientRpc(Vector3 newPosition)
+    {
+        transform.position = newPosition;
     }
 }
