@@ -8,9 +8,10 @@ public class EnergyUICamTest : MonoBehaviour
 {
     public Energy          energy;
     public TextMeshProUGUI textMeshProUGUI;
-
+    
     void Start()
     {
+        GetComponent<Energy>();
         //energy.EnergyUpdatedEvent += UpdateText;
         energy.NoEnergyEvent      += RunOut;
     }

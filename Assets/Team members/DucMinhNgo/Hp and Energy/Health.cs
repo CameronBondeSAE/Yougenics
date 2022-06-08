@@ -1,25 +1,34 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public int Hp = 10;
-    public GameObject coin;
+    public float Hp = 100f;
+    public bool dead;
+
+    public event Action DeathEvent;
+    Food food;
+    public event Action Collectfood;
    
 
     void Start()
     {
         StartCoroutine(addHealth());
+        Deathcheck();
+        Foodcollect();
+        
     }
 
+    //health generate overtime
     IEnumerator addHealth()
     {
         while (true)
         { // loops forever...
             if (Hp < 100)
             { // if health < 100...
-                Hp += 1; // increase health and wait the specified time
+                Hp += 0.05f; // increase health and wait the specified time
                 yield return new WaitForSeconds(1);
             }
             else
@@ -28,13 +37,27 @@ public class Health : MonoBehaviour
             }
         }
     }
-    private void OnTriggerEnter(Collider other)
+    public void Deathcheck()
     {
-        Hp -= 10;
-        if(Hp <= 0)
+        if(Hp <=0)
         {
-            DestroyObject(gameObject);
+            dead = true;
+            DeathEvent?.Invoke();
+            Destroy(gameObject);
         }
-        
     }
+    public void Foodcollect()
+    {
+        void OnCollisionEnter(Collision collision)
+        {
+            Hp += 5;
+            Collectfood?.Invoke();
+        }
+            
+    }
+    private void Update()
+    {
+        Deathcheck();
+    }
+
 }
