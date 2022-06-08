@@ -4,16 +4,26 @@ using UnityEngine;
 
 namespace Luke
 {
+	public interface IEdible
+	{
+		public delegate void RemoveFromListAction(Transform transform);
+		public event RemoveFromListAction RemoveFromListEvent;
+	}
+	
 	public enum DefaultBehaviours
 	{
 		Lovelorn,
 		Tired,
 		Hungry
 	}
-	
-	public class Amenities : MonoBehaviour
+
+	public enum BestNeighbourBiome
 	{
-		public delegate void RemoveFromListAction(Transform transform);
+		Current,
+		North,
+		East,
+		South,
+		West
 	}
 
 	[System.Serializable]

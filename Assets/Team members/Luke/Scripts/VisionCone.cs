@@ -9,13 +9,19 @@ namespace Luke
 	public class VisionCone : MonoBehaviour
 	{
 		private Luke.Critter parentScript;
+		private float defaultRadius;
 
+		public void UpdateVisionRadius(float newRadius)
+		{
+			GetComponent<SphereCollider>().radius = newRadius;
+		}
+		
 		void Awake()
 		{
 			parentScript = GetComponentInParent<Luke.Critter>();
-			parentScript.critterInfo.visionRadius = GetComponent<SphereCollider>().radius;
+			defaultRadius = parentScript.critterInfo.visionRadius;
+			GetComponent<SphereCollider>().radius = defaultRadius;
 		}
-		
 		
 		void OnTriggerEnter(Collider other)
 		{

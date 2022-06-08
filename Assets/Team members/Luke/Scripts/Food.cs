@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 namespace Luke
 {
-	public class Food : MonoBehaviour
+	public class Food : MonoBehaviour, Luke.IEdible
 	{
-		public event Amenities.RemoveFromListAction RemoveFromListEvent;
+		public event IEdible.RemoveFromListAction RemoveFromListEvent;
 
 		void OnDisable()
 		{

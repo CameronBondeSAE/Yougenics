@@ -11,7 +11,7 @@ public class EnergyUICamTest : MonoBehaviour
 
     void Start()
     {
-        energy.EnergyUpdatedEvent += UpdateText;
+        //energy.EnergyUpdatedEvent += UpdateText;
         energy.NoEnergyEvent      += RunOut;
     }
 
