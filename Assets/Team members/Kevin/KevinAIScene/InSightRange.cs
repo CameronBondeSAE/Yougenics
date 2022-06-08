@@ -17,8 +17,8 @@ public class InSightRange : MonoBehaviour
     
     public void OnTriggerEnter(Collider other)
     {
-        IEdible edible = other.GetComponent<IEdible>();
-        if (edible != null)
+        IEntity entity = other.GetComponent<IEntity>();
+        if (entity != null)
         {
             Debug.Log("Collide");
             _foxModel.entityInSightRange = true;
@@ -28,8 +28,8 @@ public class InSightRange : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        IEdible edible = other.GetComponent<IEdible>();
-        if (edible != null)
+        IEntity entity = other.GetComponent<IEntity>();
+        if (entity != null)
         {
             Debug.Log("!Collide");
             _foxModel.entityInSightRange = false;

@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using Kevin;
 using UnityEngine;
 
-public class AttackRange : MonoBehaviour
+public class AttackRange : MonoBehaviour,IEntity 
 {
-    
     public GameObject foxObject;
     public FoxModel _foxModel;
     

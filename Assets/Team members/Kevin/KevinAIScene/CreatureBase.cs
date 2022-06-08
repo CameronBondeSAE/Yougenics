@@ -6,23 +6,31 @@ using UnityEngine;
 
 namespace Kevin
 {
-    public class CreatureBase : MonoBehaviour, INpc
+    public class CreatureBase : MonoBehaviour, INpc, IEntity 
     {
-
+        //Critter Class Variables
         public float healthPoints;
         public float energyPoints;
 
+        //Collider range variables
         public float insightRange;
         public float attackRange;
+        public float matingRange;
         
+        //Behaviour Tree and State Checkers
         public bool entityInSightRange;
         public bool entityInAttackRange;
         public bool energyLow;
-
         public bool isPatrolling;
         public bool isChasing;
         public bool isAttacking;
         public bool isSleeping;
+        public bool isMating;
+        
+        //Patrolling Variables
+        public bool walkPointSet;
+        public Vector3 walkPoint;
+        public float walkPointRange;
         
         public  List<Transform> surroundingEntities = new List<Transform>();
         public void Update()
@@ -80,14 +88,48 @@ namespace Kevin
             isChasing = false;
             isAttacking = false;
             isSleeping = false;
+
+            if (!walkPointSet)
+            {
+                GenerateNextWalkPoint();
+            }
+
+            if (walkPointSet)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, walkPoint, 0.01f);
+                
+                //checks if the distance to the walk point is too short in which case it sets the walkPointSet to false and retries the random generation.
+                Vector3 distanceToWalkPoint = transform.position - walkPoint;
+                if (distanceToWalkPoint.magnitude < 1f)
+                {
+                    walkPointSet = false;
+                }
+            }
+        }
+
+        public void GenerateNextWalkPoint()
+        {
+            float randomX = Random.Range(-walkPointRange, walkPointRange);
+            float randomZ = Random.Range(-walkPointRange, walkPointRange);
+
+            walkPoint = new Vector3(transform.position.x + randomX, transform.position.y,
+                transform.position.z + randomZ);
+
+            walkPointSet = true;
+            /*//checks if the walk point generated is ground to prevent the enemy from falling off.
+            if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+            {
+                walkPointSet = true; 
+            }*/
         }
 
         public void Chase()
         {
             Debug.Log("Chasing");
-            
+            walkPointSet = true;
+            transform.position = Vector3.MoveTowards(this.transform.position, GetClosestTargetEntity(surroundingEntities, this.transform).transform.position,0.01f);
             //change this logic to a moving towards target logic
-            this.transform.position = GetClosestTargetEntity(surroundingEntities, this.transform).position;
+            //this.transform.position = GetClosestTargetEntity(surroundingEntities, this.transform).position;
             
             isPatrolling = false;
             isChasing = true;
@@ -116,6 +158,11 @@ namespace Kevin
             isAttacking = false;
             isSleeping = true;
             StartCoroutine(EnergyRecovery());
+        }
+
+        public void Mate()
+        {
+            throw new System.NotImplementedException();
         }
 
         IEnumerator EnergyRecovery()
