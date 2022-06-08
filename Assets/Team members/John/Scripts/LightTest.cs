@@ -12,6 +12,9 @@ public class LightTest : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+
+        LightColour.OnValueChanged += UpdateMyColour;
+
         light = GetComponent<Light>();
 
         transform.position = new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
@@ -20,6 +23,11 @@ public class LightTest : NetworkBehaviour
         {
             ChangeLights();
         }
+    }
+
+    private void UpdateMyColour(Vector3 previousValue, Vector3 newValue)
+    {
+        light.color = new Color(newValue.x, newValue.y, newValue.z);
     }
 
     public void ChangeLights()
@@ -64,6 +72,7 @@ public class LightTest : NetworkBehaviour
         light.color = new Color(newColour.x, newColour.y, newColour.z);
     }
 
+    /*
     private void Update()
     {
         if(IsClient)
@@ -71,5 +80,8 @@ public class LightTest : NetworkBehaviour
             light.color = new Color(LightColour.Value.x, LightColour.Value.y, LightColour.Value.z);
         }
     }
+    */
+
+
 
 }
