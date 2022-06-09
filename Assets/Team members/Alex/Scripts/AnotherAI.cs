@@ -8,44 +8,44 @@ namespace Alex
 {
     public class AnotherAI : MonoBehaviour
     {
-        public float movementSpeed;
-        public float lookingSpeed = 1f;
-        public Transform Target;
-        public Alex.Food myFoodTarget;
+        //public float movementSpeed;
+        //public float lookingSpeed = 1f;
+        //public Transform Target;
+        //public Alex.Food myFoodTarget;
         Energy myEnergy;
         Rigidbody rb;
+        public StateBase currentState;
 
         // Start is called before the first frame update
         void Start()
         {
             /*
             StateBase stateBase = new StateBase();
-
             stateBase.EatingTest();
-
             Eating eating = new Eating();
             eating.EatingTest();
-
             */
 
-            ChangeState(GetComponent<LookingForFood>());
-            
+            ChangeState(GetComponent<Wondering>());
         }
-
-        
-        public StateBase currentState;
-
+              
         private void Update()
         {
-            if (GetComponent<Energy>().energyAmount <= 10)
+            if (GetComponent<Energy>().energyAmount >= 80)
             {
-                // Sleep
-                ChangeState(GetComponent<Sleeping>());
+                ChangeState(GetComponent<Wondering>());
             }
-            else if (GetComponent<Energy>().energyAmount < 50)
+            
+            else if (GetComponent<Energy>().energyAmount < 80 && GetComponent<Energy>().energyAmount > 20)
             {
                 // Look for food
                 ChangeState(GetComponent<LookingForFood>());
+            }
+            
+            else if (GetComponent<Energy>().energyAmount <= 20)
+            {
+                // Sleep
+                ChangeState(GetComponent<Sleeping>());
             }
         }
 
@@ -69,9 +69,5 @@ namespace Alex
             // New state swap over to incoming state
             currentState = newState;
         }
-
-
-
-
     }
 }
