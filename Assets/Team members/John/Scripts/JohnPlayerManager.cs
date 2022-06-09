@@ -1,9 +1,12 @@
 using Unity.Netcode;
 using UnityEngine;
-
+using System.Collections;
+using System.Collections.Generic;
 
 public class JohnPlayerManager : MonoBehaviour
 {
+    public Spawner spawner;
+
     void OnGUI()
     {
         GUILayout.BeginArea(new Rect(10, 10, 300, 300));
@@ -23,7 +26,13 @@ public class JohnPlayerManager : MonoBehaviour
 
     static void StartButtons()
     {
-        if (GUILayout.Button("Host")) NetworkManager.Singleton.StartHost();
+        if (GUILayout.Button("Host"))
+        {
+            NetworkManager.Singleton.StartHost();
+            //spawner.SpawnMultiple();
+            FindObjectOfType<Spawner>().SpawnMultiple();
+        }
+
         if (GUILayout.Button("Client")) NetworkManager.Singleton.StartClient();
         if (GUILayout.Button("Server")) NetworkManager.Singleton.StartServer();
     }
