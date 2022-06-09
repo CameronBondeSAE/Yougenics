@@ -49,14 +49,17 @@ public class NetworkVariableLightTest : NetworkBehaviour
         MyPosition.OnValueChanged += UpdateMyPosition;
         IsLightActive.OnValueChanged += UpdateLightState;
 
-        dayNightManager = FindObjectOfType<DayNightManager>();
-        dayNightManager.PhaseChangeEvent += DayNightManagerOnPhaseChangeEvent;
+        if(IsServer)
+        {
+            dayNightManager = FindObjectOfType<DayNightManager>();
+            dayNightManager.PhaseChangeEvent += DayNightManagerOnPhaseChangeEvent;
+        }
 
         if (IsOwner)
         {
             ChangeLights();
             SetPosition();
-            ChangeState(dayNightManager.currentPhase);
+            ChangeState(dayNightManager.CurrentPhase.Value);
         }
     }
 

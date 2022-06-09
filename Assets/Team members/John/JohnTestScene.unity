@@ -178,6 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 300685425}
   - component: {fileID: 300685424}
+  - component: {fileID: 300685426}
   m_Layer: 0
   m_Name: DayNightManager
   m_TagString: Untagged
@@ -197,8 +198,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07cfca0bdd8657d4cb89d5eddf08571a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPhase: 7
-  currentTime: 7
+  CurrentPhase:
+    m_InternalValue: 0
+  CurrentTime:
+    m_InternalValue: 0
   timeDilation: 10
 --- !u!4 &300685425
 Transform:
@@ -215,6 +218,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &300685426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300685423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 1575103080
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &559596606
 GameObject:
   m_ObjectHideFlags: 0
