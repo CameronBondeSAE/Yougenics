@@ -205,6 +205,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
 --- !u!1001 &214278717
@@ -288,6 +293,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Food (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
@@ -674,6 +684,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
 --- !u!1001 &997477605
@@ -757,6 +772,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Food (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
@@ -1008,6 +1028,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
 --- !u!1001 &1195289722
@@ -1091,6 +1116,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Food (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
@@ -1543,6 +1573,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
 --- !u!1001 &1724591828
@@ -1627,6 +1662,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
 --- !u!1001 &1817944609
@@ -1710,6 +1750,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Food (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
@@ -1892,6 +1937,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food
       objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
 --- !u!1001 &237835569714987863
@@ -1963,3 +2013,77 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 724f78f61ea9a10489e53f3a502c0b81, type: 3}
+--- !u!1001 &4975839510743002741
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4975839511339852217, guid: f5f9b2a5573faf64b894e372744d86f2,
+        type: 3}
+      propertyPath: m_Name
+      value: FoodSpawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 4975839511339852217, guid: f5f9b2a5573faf64b894e372744d86f2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4975839511339852219, guid: f5f9b2a5573faf64b894e372744d86f2,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 4975839511339852219, guid: f5f9b2a5573faf64b894e372744d86f2,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4975839511339852219, guid: f5f9b2a5573faf64b894e372744d86f2,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4975839511339852219, guid: f5f9b2a5573faf64b894e372744d86f2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4975839511339852219, guid: f5f9b2a5573faf64b894e372744d86f2,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4975839511339852219, guid: f5f9b2a5573faf64b894e372744d86f2,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4975839511339852219, guid: f5f9b2a5573faf64b894e372744d86f2,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4975839511339852219, guid: f5f9b2a5573faf64b894e372744d86f2,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4975839511339852219, guid: f5f9b2a5573faf64b894e372744d86f2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4975839511339852219, guid: f5f9b2a5573faf64b894e372744d86f2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4975839511339852219, guid: f5f9b2a5573faf64b894e372744d86f2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f5f9b2a5573faf64b894e372744d86f2, type: 3}
