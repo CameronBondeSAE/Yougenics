@@ -16,7 +16,16 @@ namespace Alex
         public List<Alex.Food> FoodList = new List<Alex.Food>();
         Energy myEnergy;
         Rigidbody rb;
+        public AIStates currentState;
 
+
+        public enum AIStates
+        {
+            LookingForFood,
+            Sleeping,
+            Wondering,
+
+        }
 
         // Start is called before the first frame update
 
@@ -31,8 +40,41 @@ namespace Alex
         void Update()
         {
 
-            MoveToFood();
-            LookForFood();
+            if (currentState == AIStates.LookingForFood)
+            {
+                LookForFood();
+                MoveToFood();
+            }
+            else if (currentState == AIStates.Wondering)
+            {
+                WonderingAround();
+            }
+            else if (currentState == AIStates.Sleeping)
+            {
+                Sleeping();
+            }
+                    
+
+            
+
+            //MoveToFood();
+            //LookForFood();
+        }
+
+        public void WonderingAround()
+        {
+            if (myEnergy.energyAmount >= 50 && myEnergy.energyAmount < 80)
+            {
+                rb.AddRelativeForce(movementSpeed, 0, movementSpeed);
+            }
+        }
+
+        public void Sleeping()
+        {
+            if (myEnergy.energyAmount >= 80)
+            {
+                rb.velocity = Vector3.zero;
+            }
         }
 
 
@@ -71,15 +113,16 @@ namespace Alex
 
         public void MoveToFood()
         {
-            if (myEnergy.energyAmount <= 20)
+            if (myEnergy.energyAmount <= 20 && Target != null)
             {
                 //print("Low energy find food");
                 rb.AddRelativeForce(0, 0, movementSpeed);
             }
-            else
+            /*else
             {
                 rb.velocity = Vector3.zero;
             }
+            */
         }
 
 
