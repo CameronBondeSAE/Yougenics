@@ -19,9 +19,9 @@ namespace Kevin
         public bool inVisionRange;
         public bool inAttackRange;
         public bool energyLow;
-
+            
         public float visionRange, attackRange;
-
+        
         public RaycastHit raycastHit;
 
         public List<GameObject> entityLists;
