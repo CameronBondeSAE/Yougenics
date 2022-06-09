@@ -15,7 +15,7 @@ namespace Luke
 		[SerializeField]
 		private List<GameObject> foodPrefabs;
 
-		private List<Transform> worldFoods;
+		private List<Transform> worldFoods = new ();
 
 		[SerializeField]
 		private float worldEnergy;
@@ -49,6 +49,7 @@ namespace Luke
 				{
 					worldEnergy -= energyValue;
 					GameObject go = Instantiate(foodPrefabs[i - 1], transform);
+					worldFoods.Add(go.transform);
 					Vector3 spawnLocation = new Vector3(Random.Range(bounds.center.x-bounds.extents.x*0.5f, bounds.center.x+bounds.extents.x*0.5f),
 						bounds.center.y,
 						Random.Range(bounds.center.z-bounds.extents.z*0.5f, bounds.center.z+bounds.extents.z*0.5f));

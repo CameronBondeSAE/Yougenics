@@ -10107,7 +10107,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1302548737
 Transform:
   m_ObjectHideFlags: 0
@@ -10982,6 +10982,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4975839511339852216, guid: f5f9b2a5573faf64b894e372744d86f2,
+        type: 3}
+      propertyPath: spawningDelayPeriod
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4975839511339852217, guid: f5f9b2a5573faf64b894e372744d86f2,
         type: 3}
       propertyPath: m_Name
@@ -10990,7 +10995,7 @@ PrefabInstance:
     - target: {fileID: 4975839511339852217, guid: f5f9b2a5573faf64b894e372744d86f2,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4975839511339852219, guid: f5f9b2a5573faf64b894e372744d86f2,
         type: 3}

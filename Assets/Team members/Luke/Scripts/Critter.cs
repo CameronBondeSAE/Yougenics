@@ -45,6 +45,11 @@ namespace Luke
 		[SerializeField]
 		private Transform birthingTransform;
 		private Rigidbody rb;
+		[SerializeField]
+		private ParticleSystemRenderer ps;
+
+		[SerializeField]
+		private List<Material> psMats;
 		
 #region IEnumerators
 		
@@ -474,6 +479,8 @@ namespace Luke
 		
 		public void MoveToNearestFood()
 		{
+			ps.material = psMats[0];
+
 			if (isSleeping) return;
 			if (nearestFood == null) return;
 			LookAt(nearestFood.position);
@@ -483,6 +490,8 @@ namespace Luke
 		
 		public void MoveToNearestMate()
 		{
+			ps.material = psMats[1];
+			
 			if (isSleeping) return;
 			if (nearestMate == null) return;
 			LookAt(nearestMate.position);
@@ -492,6 +501,8 @@ namespace Luke
 		
 		public void MoveAwayFromPredator()
 		{
+			ps.material = psMats[2];
+
 			if (isSleeping) return;
 			if (nearestPredator == null) return;
 			Vector3 position = transform.position;
@@ -503,6 +514,8 @@ namespace Luke
 
 		public void MoveBiomes()
 		{
+			ps.material = psMats[4];
+
 			if (isSleeping) return;
 			float angle = 90f * (int)bestNearbyBiome;
 			//Check which way north should be or adjust bestBiome iteration to account for direction.
@@ -668,6 +681,7 @@ namespace Luke
 		public void GoToSleep()
 		{
 			isSleeping = true;
+			ps.material = psMats[3];
 		}
 
 		public void WakeUp()
@@ -679,7 +693,7 @@ namespace Luke
 		{
 			return justAte;
 		}
-		
-#endregion
+
+		#endregion
 	}
 }
