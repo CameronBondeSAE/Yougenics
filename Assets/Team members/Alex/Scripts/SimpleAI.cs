@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Alex;
 
 namespace Alex
 {
@@ -24,7 +25,6 @@ namespace Alex
             LookingForFood,
             Sleeping,
             Wondering,
-
         }
 
         // Start is called before the first frame update
@@ -52,9 +52,7 @@ namespace Alex
             else if (currentState == AIStates.Sleeping)
             {
                 Sleeping();
-            }
-                    
-
+            }                
             
 
             //MoveToFood();
@@ -63,7 +61,6 @@ namespace Alex
 
         public void WonderingAround()
         {
-            if (myEnergy.energyAmount >= 50 && myEnergy.energyAmount < 80)
             {
                 rb.AddRelativeForce(movementSpeed, 0, movementSpeed);
             }
@@ -71,12 +68,11 @@ namespace Alex
 
         public void Sleeping()
         {
-            if (myEnergy.energyAmount >= 80)
+            
             {
                 rb.velocity = Vector3.zero;
             }
         }
-
 
         public void LookForFood()
         {
@@ -86,8 +82,6 @@ namespace Alex
                 Target = myFoodTarget.transform;
                 transform.LookAt(Target);
             }
-
-
 
 
             /*
@@ -101,8 +95,6 @@ namespace Alex
                 nearestObj = FoodListTest;
 
                 FindObjectOfType<Food>();
-
-
 
                 FindFood();
                 }
@@ -124,7 +116,6 @@ namespace Alex
             }
             */
         }
-
 
         public void NoEnergy()
         {
