@@ -2,22 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnotherAI : MonoBehaviour
+namespace Alex
 {
-    // Start is called before the first frame update
-    void Start()
+    public class AnotherAI : MonoBehaviour
     {
-        StateBase stateBase = new StateBase();
+        // Start is called before the first frame update
+        void Start()
+        {
+            Alex.StateBase stateBase = new Alex.StateBase();
 
-        stateBase.EatingTest();
+            stateBase.EatingTest();
 
-        Eating eating = new Eating();
-        eating.EatingTest();
-    }
+            Eating eating = new Eating();
+            eating.EatingTest();
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
     }
 }
