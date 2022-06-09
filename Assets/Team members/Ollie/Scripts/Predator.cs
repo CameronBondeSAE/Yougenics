@@ -8,9 +8,16 @@ namespace Ollie
 {
     public class Predator : NPCBehaviour, iNPC, iPredator
     {
-        private void Start()
+        public override void Start()
         {
+            base.Start();
+
             SetNpcType();
+        }
+        
+        public void SetNpcType()
+        {
+            npcType = NpcType.Predator;
         }
     }
 }

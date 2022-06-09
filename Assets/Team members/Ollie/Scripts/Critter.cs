@@ -10,8 +10,10 @@ namespace Ollie
     {
         public Gender gender;
         
-        private void Start()
+        public override void Start()
         {
+            base.Start();
+
             SetGender();
             SetNpcType();
         }
@@ -38,6 +40,11 @@ namespace Ollie
             {
                 gender = Gender.NonBinary;
             }
+        }
+
+        public void SetNpcType()
+        {
+            npcType = NpcType.Critter;
         }
     }
 }
