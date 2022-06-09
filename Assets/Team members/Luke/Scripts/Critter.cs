@@ -214,6 +214,20 @@ namespace Luke
 			sleepLevel = critterInfo.maxSleepLevel;
 			acceleration = 15+5f/critterInfo.awakeDecayDelay;
 			regularMatingDelay = critterInfo.firstMatingDelay * 0.5f;
+
+			foreach (Transform t in predatorsList)
+			{
+				t.GetComponent<Critter>().RemoveFromListEvent += RemoveTransformFromList;
+			}
+			foreach (Transform t in matesList)
+			{
+				t.GetComponent<Critter>().RemoveFromListEvent += RemoveTransformFromList;
+			}
+			foreach (Transform t in foodList)
+			{
+				t.GetComponent<IEdible>().RemoveFromListEvent += RemoveTransformFromList;
+			}
+			
 			StartCoroutine(ComingOfAge(critterInfo.firstMatingDelay));
 			StartCoroutine(RandomiseDefaultBehaviour());
 			StartCoroutine(HealthRegen());
@@ -223,12 +237,12 @@ namespace Luke
 
 		void OnDisable()
 		{
-			RemoveFromListEvent?.Invoke(transform);
+			CallRemoveEvent(transform);
 		}
 		
 		void OnDestroy()
 		{
-			RemoveFromListEvent?.Invoke(transform);
+			CallRemoveEvent(transform);
 		}
 
 		public void VisionTriggerEnter(Collider other)
@@ -449,6 +463,11 @@ namespace Luke
 			health -= damage;
 			if (health > 0) return;
 			Destroy(gameObject);
+		}
+		
+		public void CallRemoveEvent(Transform _transform)
+		{
+			RemoveFromListEvent?.Invoke(_transform);
 		}
 		
 #region Blackboard Actions and Conditions

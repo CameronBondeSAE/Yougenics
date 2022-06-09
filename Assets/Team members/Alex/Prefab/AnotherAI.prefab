@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: -2689833668260180319}
   - component: {fileID: 21439739}
   - component: {fileID: 21439740}
+  - component: {fileID: 3866805762410317302}
   m_Layer: 0
   m_Name: AnotherAI
   m_TagString: Untagged
@@ -132,7 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86b58142ff8a3804fa71c5004d10d94b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyAmount: 20
+  energyAmount: 100
   energyMax: 100
   energyMin: 0
   drainAmount: 1
@@ -169,6 +170,7 @@ MonoBehaviour:
   lookingSpeed: 1
   Target: {fileID: 0}
   myFoodTarget: {fileID: 0}
+  myEnergy: 0
   currentState: {fileID: 0}
 --- !u!114 &21439739
 MonoBehaviour:
@@ -195,3 +197,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ea75eb972a5c3543aaf2a0e3c93e199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  movementSpeed: 5
+  Target: {fileID: 0}
+  myFoodTarget: {fileID: 0}
+--- !u!114 &3866805762410317302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727704201344060695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f83e17178a5de44697f38f126576729, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  movementSpeed: 5
