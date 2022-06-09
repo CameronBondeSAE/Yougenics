@@ -10,6 +10,8 @@ namespace Luke
 		public event RemoveFromListAction RemoveFromListEvent;
 
 		public void TakeDamage(float damage);
+
+		public void CallRemoveEvent(Transform transform);
 	}
 
 	public enum Gender
