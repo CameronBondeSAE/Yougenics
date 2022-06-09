@@ -1,101 +1,111 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using NodeCanvas.Tasks.Actions;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-public class Creature : MonoBehaviour
+//using Random = System.Random;
+
+namespace Maya
 {
-    public Energy energyScript;
-
-    public bool isHungry;
-    //public bool foodFound;
-    public Food foodObj;
-    public float rotateSpeed;
-    public float moveSpeed;
-    public bool atFood;
-
-    // Start is called before the first frame update
-    void Start()
+    public class Creature : MonoBehaviour
     {
+        public Energy energyScript;
+        public Food foodObj;
+        public Rigidbody myRB;
+        public Vector3 targetPos;
+        public float rotateSpeed;
+        public float moveSpeed;
+        private float defaultMoveSpeed = 0.5f;
+        private float defaultDrainSpeed = 1;
+        public bool isHungry;
+        public bool atFood;
+        public bool isMoving;
 
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public void CheckEnergy()
-    {
-        if (energyScript.energyAmount <= energyScript.energyMax * 0.5f)
+        public void Wander()
         {
-            isHungry = true;
+            targetPos = new Vector3(Random.Range(transform.position.x, transform.position.x + 50), 0,
+                Random.Range(transform.position.z, transform.position.z + 50));
+            MoveToTarget();
         }
-        else
+
+        public void CheckEnergy()
         {
-            isHungry = false;
-        }
-    }
-    
-    public bool FindFood()
-    {
-        RaycastHit hit;
-        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward * 100));
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 100))
-        {
-            if (hit.collider.GetComponent<Food>() != null)
+            if (energyScript.energyAmount <= energyScript.energyMax * 0.5f)
             {
-                Debug.Log("THERES DA FOOD");
-                return true;
+                isHungry = true;
+            }
+            else
+            {
+                isHungry = false;
             }
         }
-        else
+
+        public bool FindFood()
         {
-            transform.Rotate(new Vector3(transform.rotation.eulerAngles.x,
-                transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z) *rotateSpeed);
-            Debug.Log("WHERE DA FOOD??!??!");
+            RaycastHit hit;
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward * 100));
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 30))
+            {
+                if (hit.collider.GetComponent<Food>() != null)
+                {
+                    targetPos = hit.point;
+                    moveSpeed = defaultMoveSpeed;
+                    isMoving=true;
+                    return true;
+                }
+            }
+            else
+            {
+                Wander();
+            }
+
+            return false;
 
         }
-        return false;
-
-    }
-
-    public void GoToFood()
-    {
-        transform.Translate(Vector3.forward * moveSpeed);
         
-        //collider check for touching food
-        //att food = true
-        
-        
-    }
 
-    private void OnTriggerEnter(Collider other)
-    
-    {
-        if (other.GetComponent<Food>() != null)
+        public void MoveToTarget()
         {
-            Debug.Log("OOOH FOOD");
-            atFood = true;
-        }
-        else
-        {
-            atFood = false;
-        }
-    }
-    
+            transform.LookAt(targetPos);
+            if (isMoving)
+            {
+                myRB.AddForce(Vector3.forward * moveSpeed);
+            }
+            else
+            {
+                myRB.velocity.Set(0,0,0);
+            }
 
-    public void EatFood()
-    {
-        //if atfood is true
-        if (atFood)
-        {
-            Debug.Log("YUM YUM YUM");
-            energyScript.energyAmount += 50;
         }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            isMoving = false;
+            if (other.collider.GetComponent<Food>() != null)
+            {
+                isMoving = false;
+                atFood = true;
+            }
+            else
+            {
+                atFood = false;
+            }
+        }
+
+
+        public void EatFood()
+        {
+            if (atFood)
+            {
+                energyScript.energyAmount += foodObj.energyValue;
+            }
+        }
+
+        
     }
 }
-
     
