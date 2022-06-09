@@ -46,7 +46,6 @@ namespace Luke
 		public float awakeDecayDelay;
 		public float asleepDecayDelay;
 		public float firstMatingDelay;
-		public float regularMatingDelay;
 		public bool isCarnivore;
 		public Gender gender;
 		public int deadliness;
