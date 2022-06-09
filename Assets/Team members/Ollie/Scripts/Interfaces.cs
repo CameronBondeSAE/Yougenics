@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ namespace Ollie
 {
     public interface iNPC
     {
-
+        void SetNpcType();
     }
 
     public interface iFood
@@ -19,7 +20,7 @@ namespace Ollie
         
     }
 
-    public interface iMate
+    public interface iCritter
     {
         
     }

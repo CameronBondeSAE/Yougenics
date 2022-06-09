@@ -1,19 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Ollie;
 using UnityEngine;
 
-public class Predator : MonoBehaviour, iNPC, iPredator
+namespace Ollie
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Predator : NPCBehaviour, iNPC, iPredator
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void Start()
+        {
+            SetNpcType();
+        }
     }
 }
