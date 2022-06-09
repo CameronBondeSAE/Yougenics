@@ -10,19 +10,59 @@ public class NetworkVariableLightTest : NetworkBehaviour
 
     public NetworkVariable<Vector3> LightColour = new NetworkVariable<Vector3>();
     public NetworkVariable<Vector3> MyPosition = new NetworkVariable<Vector3>();
+    public NetworkVariable<bool> IsLightActive = new NetworkVariable<bool>();
+
+    DayNightManager dayNightManager;
+
+    private void DayNightManagerOnPhaseChangeEvent(DayNightManager.DayPhase phase)
+    {
+        if(IsServer)
+        {
+            ChangeState(phase);
+        }
+        else
+        {
+            SubmitLightStateRequestServerRpc(phase);
+        }
+    }
+
+    private void ChangeState(DayNightManager.DayPhase phase)
+    {
+        if (phase == DayNightManager.DayPhase.Dawn || phase == DayNightManager.DayPhase.Evening || phase == DayNightManager.DayPhase.Night ||
+            phase == DayNightManager.DayPhase.Midnight)
+        {
+            IsLightActive.Value = true;
+        }
+
+        if (phase == DayNightManager.DayPhase.Morning ||
+            phase == DayNightManager.DayPhase.Noon)
+        {
+            IsLightActive.Value = false;
+        }
+    }
 
     public override void OnNetworkSpawn()
     {
+        light = GetComponent<Light>();
+
         LightColour.OnValueChanged += UpdateMyColour;
         MyPosition.OnValueChanged += UpdateMyPosition;
+        IsLightActive.OnValueChanged += UpdateLightState;
 
-        light = GetComponent<Light>();
+        dayNightManager = FindObjectOfType<DayNightManager>();
+        dayNightManager.PhaseChangeEvent += DayNightManagerOnPhaseChangeEvent;
 
         if (IsOwner)
         {
             ChangeLights();
             SetPosition();
+            ChangeState(dayNightManager.currentPhase);
         }
+    }
+
+    private void UpdateLightState(bool previousValue, bool newValue)
+    {
+        light.enabled = newValue;
     }
 
     private void UpdateMyPosition(Vector3 previousValue, Vector3 newValue)
@@ -82,6 +122,24 @@ public class NetworkVariableLightTest : NetworkBehaviour
     void SubmitPositionRequestServerRpc()
     {
         MyPosition.Value = GetRandomPosition();
+    }
+
+    [ServerRpc]
+    void SubmitLightStateRequestServerRpc(DayNightManager.DayPhase phase)
+    {
+        ChangeState(phase);
+    }
+
+    [ServerRpc]
+    void SubmitLightStateOffRequestServerRpc()
+    {
+        IsLightActive.Value = false;
+    }
+
+    [ServerRpc]
+    void SubmitLightStateOnRequestServerRpc()
+    {
+        IsLightActive.Value = true;
     }
 
     IEnumerator ChangeLightColour()

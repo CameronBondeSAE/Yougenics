@@ -45,12 +45,12 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4095496305248232185}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.001
+  m_Intensity: 8.89
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -152,6 +152,8 @@ MonoBehaviour:
     m_InternalValue: {x: 0, y: 0, z: 0}
   MyPosition:
     m_InternalValue: {x: 0, y: 0, z: 0}
+  IsLightActive:
+    m_InternalValue: 0
 --- !u!23 &-7501412609240094644
 MeshRenderer:
   m_ObjectHideFlags: 0
