@@ -5,6 +5,7 @@ using NodeCanvas.Framework;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using Random = UnityEngine.Random;
 
 namespace Luke
 {
@@ -22,16 +23,19 @@ namespace Luke
 		public float maxSpeed;
 		public bool readyToMate = false;
 		public bool isSleeping = false;
-		public bool justAte;
+		public bool justAte = false;
+		public bool isAttacking = false;
 		
 		public List<Transform> matesList;
 		public List<Transform> predatorsList;
 		public List<Transform> foodList;
+		public List<float> biomeQualities;
 		public Transform nearestPredator;
 		public Transform nearestMate;
 		public Transform nearestFood;
-		public List<int> biomeQualities;
-		public int bestNearbyBiome;
+		[SerializeField]
+		public BestNeighbourBiome bestNearbyBiome;
+		private Vector3 randomAdjustment;
 
 		private Rigidbody rb;
 		
@@ -73,6 +77,10 @@ namespace Luke
 				else
 				{
 					health -= 1;
+					if (health <= 0)
+					{
+						Destroy(gameObject);
+					}
 				}
 				StartCoroutine(EnergyDecay());
 			}
@@ -122,8 +130,9 @@ namespace Luke
 			int lovelornWeight = readyToMate ? 3 : 0;
 			int tiredWeight = Mathf.RoundToInt(5 * (sleepLevel / critterInfo.maxSleepLevel));
 			int hungryWeight = Mathf.RoundToInt(5 * (energy / critterInfo.maxEnergyLevel));
+			int restlessWeight = 5;
 
-			int result = UnityEngine.Random.Range(0, lovelornWeight + tiredWeight + hungryWeight);
+			int result = UnityEngine.Random.Range(0, lovelornWeight + tiredWeight + hungryWeight + restlessWeight);
 
 			if (result < lovelornWeight)
 			{
@@ -133,18 +142,38 @@ namespace Luke
 			{
 				defaultBehaviour = DefaultBehaviours.Tired;
 			}
-			else
+			else if (result < lovelornWeight + tiredWeight + hungryWeight)
 			{
 				defaultBehaviour = DefaultBehaviours.Hungry;
 			}
+			else
+			{
+				defaultBehaviour = DefaultBehaviours.Restless;
+			}
+			
+			//TEMP
+			bestNearbyBiome = (BestNeighbourBiome) Random.Range(0, (int)BestNeighbourBiome.LENGTH);
+			Vector3 randomAdjustment = new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f));
 			
 			yield return new WaitForSeconds(30f);
 			
 			StartCoroutine(RandomiseDefaultBehaviour());
 		}
+
+		private IEnumerator AttackCooldown()
+		{
+			isAttacking = true;
+			yield return new WaitForSeconds(critterInfo.awakeDecayDelay);
+			isAttacking = false;
+		}
 		
 		#endregion
 
+		/*void Update()
+		{
+			rb.angularVelocity = Vector3.zero;
+		}*/
+		
 		void OnEnable()
 		{
 			rb = GetComponent<Rigidbody>();
@@ -178,7 +207,7 @@ namespace Luke
 			if (go != null)
 			{
 				int otherDeadliness = go.critterInfo.deadliness;
-				if (otherDeadliness > critterInfo.deadliness + 3)
+				if (otherDeadliness >= critterInfo.deadliness + 3)
 				{
 					if (!predatorsList.Contains(other.transform))
 					{
@@ -233,44 +262,107 @@ namespace Luke
 				foodList.Remove(_transform);
 			}
 		}
-		
-		
 
+		private void LookAt(Vector3 target)
+		{
+			transform.LookAt(new Vector3 (target.x, transform.position.y, target.z));
+		}
+
+		public void Eat()
+		{
+			if (isSleeping) return;
+			if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit raycastHit, 1)) return;
+			if (!foodList.Contains(raycastHit.collider.transform)) return;
+			if (isAttacking) return;
+			StartCoroutine(AttackCooldown());
+			EatHealth(raycastHit.collider);
+		}
+
+		private void EatHealth(Collider target)
+		{
+			if (isSleeping) return;
+			IEdible go = target.GetComponent<IEdible>();
+			go.TakeDamage(critterInfo.deadliness);
+			energy += critterInfo.deadliness;
+			justAte = true;
+			StopCoroutine(EnergyDecayCooldown());
+			StartCoroutine(EnergyDecayCooldown());
+			if (energy > critterInfo.maxEnergyLevel)
+			{
+				energy = critterInfo.maxEnergyLevel;
+			}
+		}
+
+		public void Mate()
+		{
+			if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit raycastHit, 1)) return;
+			if (!foodList.Contains(raycastHit.collider.transform)) return;
+			//Mate();
+		}
+
+		public void TakeDamage(float damage)
+		{
+			health -= damage;
+			if (health > 0) return;
+			Destroy(gameObject);
+		}
+		
 		#region Blackboard Actions and Conditions
 		
 		public void MoveToNearestFood()
 		{
-			if (foodList.Count == 0) return;
-			transform.LookAt(nearestFood);
+			if (isSleeping) return;
+			if (nearestFood == null) return;
+			LookAt(nearestFood.position);
 			rb.AddForce(transform.TransformDirection(Vector3.forward)*acceleration);
 			rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
 		}
 		
 		public void MoveToNearestMate()
 		{
-			if (matesList.Count == 0) return;
-			transform.LookAt(nearestMate);
+			if (isSleeping) return;
+			if (nearestMate == null) return;
+			LookAt(nearestMate.position);
 			rb.AddForce(transform.TransformDirection(Vector3.forward)*acceleration);
 			rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
 		}
 		
 		public void MoveAwayFromPredator()
 		{
-			if (predatorsList.Count == 0) return;
+			if (isSleeping) return;
+			if (nearestPredator == null) return;
 			Vector3 position = transform.position;
 			Vector3 heading = position - nearestPredator.position;
-			transform.LookAt(position + heading);
+			LookAt(position + heading);
 			rb.AddForce(transform.TransformDirection(Vector3.forward)*acceleration);
 			rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
 		}
 
-		public void LocateNearestPredator()
+		public void MoveBiomes()
 		{
-			if (IsPredatorsListEmpty()) return;
+			if (isSleeping) return;
+			float angle = 90f * (int)bestNearbyBiome;
+			//Check which way north should be or adjust bestBiome iteration to account for direction.
+			Vector3 mainHeading = Quaternion.AngleAxis(angle, Vector3.up)*Vector3.forward;
+			mainHeading += randomAdjustment;
+			LookAt(transform.position + mainHeading);
+			rb.AddForce(transform.TransformDirection(Vector3.forward)*acceleration);
+			rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
+		}
+
+		public void IterateBiomes()
+		{
+			//Will change later
+			//bestNearbyBiome = (BestNeighbourBiome) Random.Range(0, (int)BestNeighbourBiome.LENGTH);
+		}
+		
+		public bool LocateNearestPredator()
+		{
+			if (IsPredatorsListEmpty()) return false;
 
 			nearestPredator = null;
 			Vector3 position = transform.position;
-			float distanceToCompare = critterInfo.visionRadius;
+			float distanceToCompare = critterInfo.visionRadius+5f;
 			foreach (Transform t in predatorsList)
 			{
 				Vector3 translation = t.position - position;
@@ -283,15 +375,16 @@ namespace Luke
 				distanceToCompare = distance;
 			}
 
-			if (nearestPredator == null) return;
-				Debug.DrawLine(position, nearestPredator.position, Color.red);
+			if (nearestPredator == null) return false;
+			Debug.DrawLine(position, nearestPredator.position, Color.red);
+			return true;
 		}
 		
-		public void LocateNearestMate()
+		public bool LocateNearestMate()
 		{
 			nearestMate = null;
 			Vector3 position = transform.position;
-			float distanceToCompare = critterInfo.visionRadius;
+			float distanceToCompare = critterInfo.visionRadius+5f;
 			foreach (Transform t in matesList)
 			{
 				Vector3 translation = t.position - position;
@@ -304,15 +397,17 @@ namespace Luke
 				distanceToCompare = distance;
 			}
 			
-			if (nearestMate == null) return;
+			if (nearestMate == null) return false;
 			Debug.DrawLine(position, nearestMate.position, Color.magenta);
+			return true;
 		}
 		
-		public void LocateNearestFood()
+		//Issues with blocked line of sight
+		public bool LocateNearestFood()
 		{
 			nearestFood = null;
 			Vector3 position = transform.position;
-			float distanceToCompare = critterInfo.visionRadius;
+			float distanceToCompare = critterInfo.visionRadius+5f;
 			foreach (Transform t in foodList)
 			{
 				Vector3 translation = t.position - position;
@@ -326,8 +421,9 @@ namespace Luke
 				distanceToCompare = distance;
 			}
 			
-			if (nearestFood == null) return;
+			if (nearestFood == null) return false;
 			Debug.DrawLine(position, nearestFood.position, Color.green);
+			return true;
 		}
 		
 		public bool IsVeryTired()
@@ -399,6 +495,26 @@ namespace Luke
 		public bool DefaultBehaviourIsHungry()
 		{
 			return defaultBehaviour == DefaultBehaviours.Hungry;
+		}
+		
+		public bool DefaultBehaviourIsRestless()
+		{
+			return defaultBehaviour == DefaultBehaviours.Restless;
+		}
+
+		public void GoToSleep()
+		{
+			isSleeping = true;
+		}
+
+		public void WakeUp()
+		{
+			isSleeping = false;
+		}
+
+		public bool JustAte()
+		{
+			return justAte;
 		}
 		
 		#endregion

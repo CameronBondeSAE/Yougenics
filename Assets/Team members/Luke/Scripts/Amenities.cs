@@ -8,13 +8,23 @@ namespace Luke
 	{
 		public delegate void RemoveFromListAction(Transform transform);
 		public event RemoveFromListAction RemoveFromListEvent;
+
+		public void TakeDamage(float damage);
+	}
+
+	public enum Gender
+	{
+		Female,
+		Male,
+		NonBinary
 	}
 	
 	public enum DefaultBehaviours
 	{
 		Lovelorn,
 		Tired,
-		Hungry
+		Hungry,
+		Restless
 	}
 
 	public enum BestNeighbourBiome
@@ -23,7 +33,8 @@ namespace Luke
 		North,
 		East,
 		South,
-		West
+		West,
+		LENGTH //for utility
 	}
 
 	[System.Serializable]
@@ -37,6 +48,7 @@ namespace Luke
 		public float firstMatingDelay;
 		public float regularMatingDelay;
 		public bool isCarnivore;
+		public Gender gender;
 		public int deadliness;
 		public float visionRadius;
 	}

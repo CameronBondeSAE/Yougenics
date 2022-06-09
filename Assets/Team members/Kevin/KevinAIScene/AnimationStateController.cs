@@ -9,12 +9,14 @@ public class AnimationStateController : MonoBehaviour
     private FoxModel _foxModel;
     private int energyIsLowHash;
     private int isPatrollingHash;
+    private int isChasingHash;
     void Start()
     {
         animator = GetComponent<Animator>();
         _foxModel = GetComponent<FoxModel>();
         energyIsLowHash = Animator.StringToHash("energyIsLow");
         isPatrollingHash = Animator.StringToHash("isPatrolling");
+        isChasingHash = Animator.StringToHash("isChasing");
     }
     
     void Update()
@@ -38,6 +40,15 @@ public class AnimationStateController : MonoBehaviour
         {
             animator.SetBool(isPatrollingHash, false);
         }
+
+        if (_foxModel.isChasing)
+        {
+            animator.SetBool(isChasingHash, true);
+        }
         
+        if (_foxModel.isChasing == false)
+        {
+            animator.SetBool(isChasingHash, false);
+        }
     }
 }

@@ -11,8 +11,10 @@ namespace Kevin
         public void Attack();
         
         public void Sleep();
-    }
 
+        public void Mate();
+    }
+    
     public interface IEntity
     {
         
@@ -21,6 +23,13 @@ namespace Kevin
     public interface IEdible
     {
         
+    }
+
+    public enum Gender
+    {
+        Female,
+        Male,
+        NonBinary
     }
 }
 

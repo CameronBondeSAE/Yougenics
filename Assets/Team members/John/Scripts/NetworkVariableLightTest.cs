@@ -39,9 +39,21 @@ public class NetworkVariableLightTest : NetworkBehaviour
     {
         if(IsServer)
         {
-            StartCoroutine(ChangeLightColour());
+            //StartCoroutine(ChangeLightColour());
         }
+
+
+        /*
         else
+        {
+            SubmitLightRequestServerRpc();
+        }
+        */
+    }
+
+    private void OnMouseDown()
+    {
+        if(IsOwner)
         {
             SubmitLightRequestServerRpc();
         }
@@ -62,7 +74,8 @@ public class NetworkVariableLightTest : NetworkBehaviour
     [ServerRpc]
     void SubmitLightRequestServerRpc()
     {
-        StartCoroutine(ChangeLightColour());
+        //StartCoroutine(ChangeLightColour());
+        LightColour.Value = GetRandomColour();
     }
 
     [ServerRpc]

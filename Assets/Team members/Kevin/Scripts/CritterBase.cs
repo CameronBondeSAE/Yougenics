@@ -108,6 +108,11 @@ namespace Kevin
             Debug.Log("Sleeping");
         }
 
+        public void Mate()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public bool InRange { get; set; }
     }
 }
