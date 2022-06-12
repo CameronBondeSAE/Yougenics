@@ -30,7 +30,8 @@ public class JohnPlayerManager : MonoBehaviour
         {
             NetworkManager.Singleton.StartHost();
             //spawner.SpawnMultiple();
-            FindObjectOfType<Spawner>().SpawnMultiple();
+            if(FindObjectOfType<Spawner>() != null)
+                FindObjectOfType<Spawner>().SpawnMultiple();
         }
 
         if (GUILayout.Button("Client")) NetworkManager.Singleton.StartClient();

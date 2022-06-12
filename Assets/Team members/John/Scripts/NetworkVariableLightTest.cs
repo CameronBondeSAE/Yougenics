@@ -53,8 +53,15 @@ public class NetworkVariableLightTest : NetworkBehaviour
         if(IsServer)
         {
             dayNightManager = FindObjectOfType<DayNightManager>();
-            dayNightManager.PhaseChangeEvent += DayNightManagerOnPhaseChangeEvent;
-            ChangeState(dayNightManager.CurrentPhase.Value);
+            if(dayNightManager != null)
+            {
+                dayNightManager.PhaseChangeEvent += DayNightManagerOnPhaseChangeEvent;
+                ChangeState(dayNightManager.CurrentPhase.Value);
+            }
+            else
+            {
+                Debug.Log("DayNight Manager Could Not Be Found");
+            }
         }
 
         if (IsOwner)
@@ -164,6 +171,6 @@ public class NetworkVariableLightTest : NetworkBehaviour
     }
     static Vector3 GetRandomPosition()
     {
-        return new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
+        return new Vector3(Random.Range(-5, 5), 1.5f, Random.Range(-5, 5));
     }
 }
