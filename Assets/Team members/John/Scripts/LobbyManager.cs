@@ -54,26 +54,24 @@ public class LobbyManager : MonoBehaviour
     private void Start()
     {
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientJoin;
-        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientLeave;
+        //NetworkManager.Singleton.OnClientDisconnectCallback += OnClientLeave;
 
         ClientName.OnValueChanged += UpdateLobbyUI;
     }
 
+    /*
     private void OnClientLeave(ulong obj)
     {
         if(NetworkManager.Singleton.IsServer)
             HandleClientNames();
     }
+    */
 
     public void OnClientJoin(ulong clientID)
     {
-        if(NetworkManager.Singleton.IsServer && !NetworkManager.Singleton.IsClient)
+        if(NetworkManager.Singleton.IsServer)
         {
             HandleClientNames();
-        }
-        else
-        {
-            SubmitLobbyRequestServerRpc();
         }
     }
 
