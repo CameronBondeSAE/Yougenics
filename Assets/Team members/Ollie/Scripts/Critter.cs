@@ -32,7 +32,7 @@ namespace Ollie
             {
                 gender = Gender.Female;
             }
-            else if (rng <= 80 && rng >= 41)
+            else if (rng <= 80)
             {
                 gender = Gender.Male;
             }
