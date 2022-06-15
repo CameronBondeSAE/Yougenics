@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   foxObject: {fileID: 0}
   _foxModel: {fileID: 0}
+  offSet: {x: 1, y: 1, z: 1}
 --- !u!1 &1558625888466026
 GameObject:
   m_ObjectHideFlags: 0
@@ -890,6 +891,7 @@ MonoBehaviour:
   energyPoints: 0
   insightRange: 0
   attackRange: 0
+  matingRange: 0
   entityInSightRange: 0
   entityInAttackRange: 0
   energyLow: 0
@@ -902,7 +904,6 @@ MonoBehaviour:
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
   surroundingEntities: []
-  gender: 0
 --- !u!114 &7893779326716911340
 MonoBehaviour:
   m_ObjectHideFlags: 0

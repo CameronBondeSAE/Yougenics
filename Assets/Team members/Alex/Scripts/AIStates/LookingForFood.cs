@@ -6,38 +6,36 @@ namespace Alex
 {
     public class LookingForFood : StateBase
     {
-        /*
-        public void Update()
+        Rigidbody rb;
+        public float movementSpeed = 5f;
+        public Transform Target;
+        public Food myFoodTarget;
+
+        private void OnEnabled()
         {
-            LookForFood();
-            MoveToFood();
+            Debug.Log("Looking for food");
         }
 
-        // Start is called before the first frame update
-        public void LookForFood()
+        private void OnDisable()
         {
+            rb.velocity = Vector3.zero;
+        }
+
+        private void Update()
+        {
+
+            rb = GetComponent<Rigidbody>();
             myFoodTarget = FindObjectOfType<Alex.Food>();
             if (myFoodTarget != null)
             {
                 Target = myFoodTarget.transform;
                 transform.LookAt(Target);
+                
             }
-
+            rb.AddRelativeForce(0, 0, movementSpeed);
         }
 
-        public void MoveToFood()
-        {
-            if (myEnergy.energyAmount <= 20 && Target != null)
-            {
-                //print("Low energy find food");
-                rb.AddRelativeForce(0, 0, movementSpeed);
-            }
-            else
-            {
-                rb.velocity = Vector3.zero;
-            }
-            
-        }
-         */
-    }
+        
+
+}
 }

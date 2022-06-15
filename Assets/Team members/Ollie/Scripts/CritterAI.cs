@@ -211,6 +211,7 @@ namespace Ollie
         public IEnumerator SleepCoroutine()
         {
             sleeping = true;
+            print("sleeping");
             targetLocation = transform.position;
             killingTarget = true;
             yield return new WaitForSeconds(sleepTime);
@@ -220,7 +221,7 @@ namespace Ollie
 
         public void CheckTarget(GameObject checkTarget)
         {
-            if (checkTarget.GetComponent<iMate>() != null)
+            if (checkTarget.GetComponent<iCritter>() != null)
             {
                 health += 5;
                 energy -= 5;
@@ -241,7 +242,7 @@ namespace Ollie
         #region Bool Checks for BT
         public bool CheckPredator()
         {
-            if (currentTarget.GetComponent<iPredator>() != null)
+            if (currentTarget.GetComponent<NPCBehaviour>().npcType == NPCBehaviour.NpcType.Predator)
             {
                 return true;
             }
@@ -253,7 +254,7 @@ namespace Ollie
         
         public bool CheckFood()
         {
-            if (currentTarget.GetComponent<iFood>() != null)
+            if(currentTarget.GetComponent<NPCBehaviour>().npcType == NPCBehaviour.NpcType.Food)
             {
                 return true;
             }
@@ -265,7 +266,7 @@ namespace Ollie
         
         public bool CheckMate()
         {
-            if (currentTarget.GetComponent<iMate>() != null)
+            if (currentTarget.GetComponent<NPCBehaviour>().npcType == NPCBehaviour.NpcType.Critter)
             {
                 return true;
             }

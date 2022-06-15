@@ -33,24 +33,31 @@ namespace Kevin
         public float walkPointRange;
         
         public  List<Transform> surroundingEntities = new List<Transform>();
-        public void Update()
+        public void FixedUpdate()
         {
             if (surroundingEntities.Count > 0)
             {
                 Debug.Log("Closest to: " + GetClosestTargetEntity(surroundingEntities, this.transform));
             }
-
+            
             if (energyPoints < 1)
             {
                 energyLow = true; 
             }
-            
             if(energyLow && energyPoints > 99f)
             {
                 energyLow = false;
             }
+            if (energyLow == false)
+            {
+                energyPoints--;
+            }
         }
-        
+
+        private void TurnTo(Vector3 target)
+        {
+            transform.LookAt(new Vector3 (target.x, transform.position.y, target.z));
+        }
         private void OnDrawGizmosSelected() 
         {
             Gizmos.color = Color.yellow;
@@ -88,7 +95,7 @@ namespace Kevin
             isChasing = false;
             isAttacking = false;
             isSleeping = false;
-
+            
             if (!walkPointSet)
             {
                 GenerateNextWalkPoint();
@@ -96,6 +103,7 @@ namespace Kevin
 
             if (walkPointSet)
             {
+                TurnTo(walkPoint);
                 transform.position = Vector3.MoveTowards(transform.position, walkPoint, 0.01f);
                 
                 //checks if the distance to the walk point is too short in which case it sets the walkPointSet to false and retries the random generation.
@@ -127,7 +135,8 @@ namespace Kevin
         {
             Debug.Log("Chasing");
             walkPointSet = true;
-            transform.position = Vector3.MoveTowards(this.transform.position, GetClosestTargetEntity(surroundingEntities, this.transform).transform.position,0.01f);
+            TurnTo(surroundingEntities[0].position);
+            transform.position = Vector3.MoveTowards(this.transform.position, GetClosestTargetEntity(surroundingEntities, this.transform).transform.position,0.05f);
             //change this logic to a moving towards target logic
             //this.transform.position = GetClosestTargetEntity(surroundingEntities, this.transform).position;
             

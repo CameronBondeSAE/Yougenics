@@ -10,7 +10,7 @@ public class CamSmash : MonoBehaviour
 		Health health = other.GetComponent<Health>();
 		if (health != null)
 		{
-			// health.Hp -= 1f;
+			health.Hp -= 100f;
 		}
 	}
 }

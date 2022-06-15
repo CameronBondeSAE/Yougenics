@@ -11,9 +11,9 @@ namespace Luke
 		public event IEdible.RemoveFromListAction RemoveFromListEvent;
 
 		[SerializeField]
-		public float health;
+		private float health;
 		[SerializeField]
-		private float maxHealth = 100f;
+		public float maxHealth = 100f;
 
 		private void OnEnable()
 		{
@@ -22,12 +22,12 @@ namespace Luke
 
 		void OnDisable()
 		{
-			RemoveFromListEvent?.Invoke(transform);
+			CallRemoveEvent(transform);
 		}
 		
 		void OnDestroy()
 		{
-			RemoveFromListEvent?.Invoke(transform);
+			CallRemoveEvent(transform);
 		}
 		
 		public void TakeDamage(float damage)
@@ -35,6 +35,11 @@ namespace Luke
 			health -= damage;
 			if (health > 0) return;
 			Destroy(gameObject);
+		}
+
+		public void CallRemoveEvent(Transform _transform)
+		{
+			RemoveFromListEvent?.Invoke(_transform);
 		}
 	}
 }

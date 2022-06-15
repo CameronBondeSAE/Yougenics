@@ -10,19 +10,72 @@ public class NetworkVariableLightTest : NetworkBehaviour
 
     public NetworkVariable<Vector3> LightColour = new NetworkVariable<Vector3>();
     public NetworkVariable<Vector3> MyPosition = new NetworkVariable<Vector3>();
+    public NetworkVariable<bool> IsLightActive = new NetworkVariable<bool>();
+
+    DayNightManager dayNightManager;
+
+    private void DayNightManagerOnPhaseChangeEvent(DayNightManager.DayPhase phase)
+    {
+        if(IsServer)
+        {
+            ChangeState(phase);
+        }
+        else
+        {
+            SubmitLightStateRequestServerRpc(phase);
+        }
+    }
+
+    private void ChangeState(DayNightManager.DayPhase phase)
+    {
+        if (phase == DayNightManager.DayPhase.Dawn || phase == DayNightManager.DayPhase.Evening || phase == DayNightManager.DayPhase.Night ||
+            phase == DayNightManager.DayPhase.Midnight)
+        {
+            IsLightActive.Value = true;
+        }
+
+        if (phase == DayNightManager.DayPhase.Morning ||
+            phase == DayNightManager.DayPhase.Noon)
+        {
+            IsLightActive.Value = false;
+        }
+    }
 
     public override void OnNetworkSpawn()
     {
+        light = GetComponent<Light>();
+
         LightColour.OnValueChanged += UpdateMyColour;
         MyPosition.OnValueChanged += UpdateMyPosition;
+        IsLightActive.OnValueChanged += UpdateLightState;
 
-        light = GetComponent<Light>();
+        //This check is causing null errors on client end when calling line 62
+        if(IsServer)
+        {
+            dayNightManager = FindObjectOfType<DayNightManager>();
+            if(dayNightManager != null)
+            {
+                dayNightManager.PhaseChangeEvent += DayNightManagerOnPhaseChangeEvent;
+                ChangeState(dayNightManager.CurrentPhase.Value);
+            }
+            else
+            {
+                Debug.Log("DayNight Manager Could Not Be Found");
+            }
+        }
 
         if (IsOwner)
         {
             ChangeLights();
             SetPosition();
+            
         }
+    }
+
+    private void UpdateLightState(bool previousValue, bool newValue)
+    {
+        if(light != null)
+            light.enabled = newValue;
     }
 
     private void UpdateMyPosition(Vector3 previousValue, Vector3 newValue)
@@ -84,6 +137,24 @@ public class NetworkVariableLightTest : NetworkBehaviour
         MyPosition.Value = GetRandomPosition();
     }
 
+    [ServerRpc]
+    void SubmitLightStateRequestServerRpc(DayNightManager.DayPhase phase)
+    {
+        ChangeState(phase);
+    }
+
+    [ServerRpc]
+    void SubmitLightStateOffRequestServerRpc()
+    {
+        IsLightActive.Value = false;
+    }
+
+    [ServerRpc]
+    void SubmitLightStateOnRequestServerRpc()
+    {
+        IsLightActive.Value = true;
+    }
+
     IEnumerator ChangeLightColour()
     {
         do
@@ -100,6 +171,6 @@ public class NetworkVariableLightTest : NetworkBehaviour
     }
     static Vector3 GetRandomPosition()
     {
-        return new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
+        return new Vector3(Random.Range(-5, 5), 1.5f, Random.Range(-5, 5));
     }
 }

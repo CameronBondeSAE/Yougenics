@@ -25,11 +25,11 @@ namespace Kevin
         
     }
 
-    public enum Gender
+    /*public enum Gender
     {
         Female,
         Male,
         NonBinary
-    }
+    }*/
 }
 
