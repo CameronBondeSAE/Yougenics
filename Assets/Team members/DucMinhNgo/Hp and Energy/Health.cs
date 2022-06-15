@@ -45,6 +45,7 @@ public class Health : MonoBehaviour
         if(Hp <=0)
         {
             dead = true;
+            GetComponent<Renderer>().material.color = Color.yellow;
             DeathEvent?.Invoke();
             Destroy(gameObject);
         }
