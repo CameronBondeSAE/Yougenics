@@ -504,7 +504,7 @@ PrefabInstance:
     - target: {fileID: 1913037232654221411, guid: 9ecb880a42ca88648bb295e54c54f5d5,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.97
+      value: 12.12
       objectReference: {fileID: 0}
     - target: {fileID: 1913037232654221411, guid: 9ecb880a42ca88648bb295e54c54f5d5,
         type: 3}
@@ -554,14 +554,8 @@ PrefabInstance:
     - target: {fileID: 6025809690385764721, guid: 9ecb880a42ca88648bb295e54c54f5d5,
         type: 3}
       propertyPath: m_Name
-      value: CreatureP
+      value: CreatureP_Model
       objectReference: {fileID: 0}
-    - target: {fileID: 7648043570769905624, guid: 9ecb880a42ca88648bb295e54c54f5d5,
-        type: 3}
-      propertyPath: scenario
-      value: 
-      objectReference: {fileID: 11400000, guid: 120706e29da395b45b50afadc66c0f8e,
-        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ecb880a42ca88648bb295e54c54f5d5, type: 3}
 --- !u!1001 &6865947048765191823
