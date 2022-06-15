@@ -31,12 +31,17 @@ namespace Alex
               
         private void Update()
         {
-            if (GetComponent<Energy>().energyAmount >= 80)
+            if (GetComponent<Energy>().energyAmount >= 100)
+            {
+                ChangeState(GetComponent<Wondering>());
+            }
+
+            else if (GetComponent<Energy>().energyAmount >= 80 && currentState != GetComponent<Sleeping>()) 
             {
                 ChangeState(GetComponent<Wondering>());
             }
             
-            else if (GetComponent<Energy>().energyAmount < 80 && GetComponent<Energy>().energyAmount > 20)
+            else if (GetComponent<Energy>().energyAmount < 80 && GetComponent<Energy>().energyAmount > 20 && currentState != GetComponent<Sleeping>())
             {
                 // Look for food
                 ChangeState(GetComponent<LookingForFood>());
