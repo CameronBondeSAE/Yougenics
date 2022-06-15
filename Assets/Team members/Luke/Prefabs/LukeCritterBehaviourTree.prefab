@@ -4993,7 +4993,7 @@ GameObject:
   - component: {fileID: -3289536063586725846}
   - component: {fileID: 2450489025258200086}
   m_Layer: 0
-  m_Name: LukeCritter
+  m_Name: LukeCritterBehaviourTree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
