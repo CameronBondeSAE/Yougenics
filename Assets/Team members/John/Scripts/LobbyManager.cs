@@ -7,13 +7,12 @@ using UnityEngine.UI;
 using Unity.Collections;
 using System;
 
-public class LobbyManager : MonoBehaviour
+public class LobbyManager : NetworkBehaviour
 {
     public Canvas lobby;
     public TMP_Text clientUI;
 
-    public NetworkVariable<ulong> ClientID = new NetworkVariable<ulong>();
-    public NetworkVariable<FixedString512Bytes> ClientName = new NetworkVariable<FixedString512Bytes>();
+    public string clientName;
 
     void OnGUI()
     {
@@ -56,7 +55,7 @@ public class LobbyManager : MonoBehaviour
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientJoin;
         //NetworkManager.Singleton.OnClientDisconnectCallback += OnClientLeave;
 
-        ClientName.OnValueChanged += UpdateLobbyUI;
+        //ClientName.OnValueChanged += UpdateLobbyUI;
     }
 
     /*
@@ -69,27 +68,38 @@ public class LobbyManager : MonoBehaviour
 
     public void OnClientJoin(ulong clientID)
     {
-        if(NetworkManager.Singleton.IsServer)
+        if(IsOwner)
         {
             HandleClientNames();
         }
+       
     }
 
     [ServerRpc]
     void SubmitLobbyRequestServerRpc()
     {
-        if(NetworkManager.Singleton.IsServer)
-         HandleClientNames();
+        if (NetworkManager.Singleton.IsServer)
+            HandleClientNames();
     }
 
     void HandleClientNames()
     {
-        ClientName.Value = "";
+        //ClientName.Value = "";
+        clientName = "";
 
         foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
         {
-            ClientName.Value += client.PlayerObject.GetComponent<ClientInfo>().name;
+            //ClientName.Value += client.PlayerObject.GetComponent<ClientInfo>().name;
+            clientName += client.PlayerObject.GetComponent<ClientInfo>().name;
         }
+
+        UpdateLobbyClientRPC(clientName);
+    }
+
+    [ClientRpc]
+    public void UpdateLobbyClientRPC(string name)
+    {
+        clientUI.text = name;
     }
 
     public void UpdateLobbyUI(FixedString512Bytes previousValue, FixedString512Bytes newValue)
