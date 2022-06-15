@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Tanks;
 using UnityEngine;
+using UnityEngine.Rendering.Universal.Internal;
 using Random = System.Random;
 
 namespace Ollie
@@ -26,7 +28,7 @@ namespace Ollie
         public List<GameObject> npcTargets;
         public List<GameObject> targetsInSight;
         private bool rayCooldown;
-        private bool killingTarget;
+        private bool interactingTarget;
         private bool foundTarget;
         public bool sleeping;
 
@@ -36,7 +38,7 @@ namespace Ollie
             health = maxHealth;
             energy = maxEnergy;
             foundTarget = false;
-            killingTarget = false;
+            interactingTarget = false;
         }
 
         private void Update()
@@ -83,7 +85,7 @@ namespace Ollie
                                 targetsInSight.Add(hitData.transform.gameObject);
                                 currentTarget = targetsInSight[UnityEngine.Random.Range(0, targetsInSight.Count)];
 
-                                if (killingTarget == false)
+                                if (interactingTarget == false)
                                 {
                                     MoveTowards(currentTarget);
                                 }
@@ -131,7 +133,7 @@ namespace Ollie
             transform.position =
                 Vector3.MoveTowards(transform.position, targetLocation, (moveSpeed));
             
-            if (transform.position == targetLocation && !killingTarget)
+            if (transform.position == targetLocation && !interactingTarget)
             {
                 StartCoroutine(RandomLocation());
             }
@@ -148,32 +150,64 @@ namespace Ollie
         {
             StopCoroutine(RandomLocation());
             targetLocation = newTarget.transform.position;
-            if (killingTarget == false)
+            if (interactingTarget == false)
             {
-                StartCoroutine(KillTarget(newTarget));
+                StartCoroutine(InteractTarget(newTarget));
             }
         }
 
-        public IEnumerator KillTarget(GameObject targetToKill)
+        public IEnumerator InteractTarget(GameObject targetToInteract)
         {
-            print("killing target");
-            killingTarget = true;
+            interactingTarget = true;
             yield return new WaitForSeconds(3f);
             currentTarget = null;
-            CheckTarget(targetToKill);
-            if (npcTargets.Contains(targetToKill))
+            CheckTarget(targetToInteract);
+            if (npcTargets.Contains(targetToInteract))
             {
-                npcTargets.Remove(targetToKill);
+                npcTargets.Remove(targetToInteract);
             }
 
-            if (targetsInSight.Contains(targetToKill))
+            if (targetsInSight.Contains(targetToInteract))
             {
-                targetsInSight.Remove(targetToKill);
+                targetsInSight.Remove(targetToInteract);
             }
-            Destroy(targetToKill);
-            killingTarget = false;
-            targetLocation = new Vector3((UnityEngine.Random.Range(-40,40)), 1, (UnityEngine.Random.Range(-40,40)));
+            
+            //logic for how to respond to targets
+            if (targetToInteract.GetComponent<iFood>() != null)
+            {
+                Destroy(targetToInteract);
+            }
+            
+            if (targetToInteract.GetComponent<iPredator>() != null)
+            {
+                Fight(targetToInteract);
+            }
+
+            if (targetToInteract.GetComponent<iCritter>() != null)
+            {
+                Mate(targetToInteract);
+            }
+            
+            interactingTarget = false;
+            if (sleeping == false)
+            {
+                targetLocation = new Vector3((UnityEngine.Random.Range(-40,40)), 1, (UnityEngine.Random.Range(-40,40)));
+            }
             yield return new WaitForSeconds(moveTime);
+        }
+
+        private void Fight(GameObject target)
+        {
+            
+        }
+
+        private void Mate(GameObject target)
+        {
+            //if (target.GetComponent<Critter>().gender == myGender) return;
+            if (target.GetComponent<Critter>().gender == Critter.Gender.NonBinary)
+            {
+                print("target is NB");
+            }
         }
         
         public void StatChanges()
@@ -206,6 +240,11 @@ namespace Ollie
         public void StopCoroutines()
         {
             StopAllCoroutines();
+            //currently this is stopping the Destroy part of InteractTarget
+            //so main critter goes to consume food/mate/predator but then falls asleep and the obj doesn't die
+            
+            //this is also breaking the raycast!
+            //FIX IT
         }
 
         public IEnumerator SleepCoroutine()
@@ -213,9 +252,9 @@ namespace Ollie
             sleeping = true;
             print("sleeping");
             targetLocation = transform.position;
-            killingTarget = true;
+            interactingTarget = true;
             yield return new WaitForSeconds(sleepTime);
-            killingTarget = false;
+            interactingTarget = false;
             sleeping = false;
         }
 

@@ -1,0 +1,271 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f22e7053ea04ed0922308786facc8c, type: 3}
+  m_Name: Scenario
+  m_EditorClassIdentifier: 
+  conditions:
+    list:
+    - id: 0
+      name: isSafe
+    - id: 1
+      name: isHungry
+    - id: 2
+      name: npcNearby
+    - id: 3
+      name: preyFound
+    - id: 4
+      name: foodFound
+    - id: 5
+      name: predatorFound
+    - id: 6
+      name: mateFound
+    - id: 7
+      name: findingPrey
+    - id: 8
+      name: findingFood
+    - id: 9
+      name: findingPredator
+    - id: 10
+      name: findingMate
+    - id: 11
+      name: isHorny
+    - id: 12
+      name: healthLow
+    - id: 13
+      name: runningAway
+    - id: 14
+      name: inDanger
+    - id: 15
+      name: foodNearby
+    - id: 16
+      name: preyNearby
+    - id: 17
+      name: mateNearby
+    - id: 18
+      name: predatorNearby
+  actions:
+  - name: RunAway
+    isDefault: 0
+    state: {fileID: 3847709778611426878, guid: 6353a76f867a15f498b4842e36670a17, type: 3}
+    cost: 0
+    position: {x: 1180, y: 50}
+    pre:
+    - id: 5
+      value: 1
+    post:
+    - id: 13
+      value: 1
+    - id: 0
+      value: 0
+  - name: Attack
+    isDefault: 0
+    state: {fileID: 3847709778611426878, guid: 172651b4bbb6e4043a33c9261504da19, type: 3}
+    cost: 0
+    position: {x: 1160, y: 510}
+    pre:
+    - id: 3
+      value: 1
+    post:
+    - id: 4
+      value: 1
+  - name: Eat
+    isDefault: 0
+    state: {fileID: 3847709778611426878, guid: 59f7091b20f270b4f9093e69d4b74f06, type: 3}
+    cost: 0
+    position: {x: 1460, y: 410}
+    pre:
+    - id: 4
+      value: 1
+    post:
+    - id: 1
+      value: 0
+    - id: 0
+      value: 1
+  - name: Mate
+    isDefault: 0
+    state: {fileID: 3847709778611426878, guid: 8c4e8e560cf9ae34d8b8f9849ecde591, type: 3}
+    cost: 0
+    position: {x: 1460, y: 750}
+    pre:
+    - id: 6
+      value: 1
+    post:
+    - id: 11
+      value: 0
+    - id: 0
+      value: 1
+  - name: FindFood
+    isDefault: 0
+    state: {fileID: 3847709778611426878, guid: 67dce29dd25efcf45a20697d223da1a5, type: 3}
+    cost: 0
+    position: {x: 620, y: 390}
+    pre:
+    - id: 1
+      value: 1
+    post:
+    - id: 8
+      value: 1
+    - id: 7
+      value: 1
+  - name: FindMate
+    isDefault: 0
+    state: {fileID: 3847709778611426878, guid: 35fed5ef99391404ea0b0776e6226e47, type: 3}
+    cost: 0
+    position: {x: 860, y: 740}
+    pre:
+    - id: 11
+      value: 1
+    post:
+    - id: 10
+      value: 1
+  - name: SearchingFood
+    isDefault: 0
+    state: {fileID: 3847709778611426878, guid: c9adda92467df1f499bab3d0dbd52d49, type: 3}
+    cost: 0
+    position: {x: 1040, y: 290}
+    pre:
+    - id: 8
+      value: 1
+    - id: 15
+      value: 1
+    post:
+    - id: 4
+      value: 1
+  - name: SearchingPrey
+    isDefault: 0
+    state: {fileID: 3847709778611426878, guid: 40b8f6fce31b3644287fead9bc1702f1, type: 3}
+    cost: 0
+    position: {x: 920, y: 510}
+    pre:
+    - id: 7
+      value: 1
+    - id: 16
+      value: 1
+    post:
+    - id: 3
+      value: 1
+  - name: SearchingMate
+    isDefault: 0
+    state: {fileID: 3847709778611426878, guid: 2432e51d0da998346b67ce9e82a75c63, type: 3}
+    cost: 0
+    position: {x: 1080, y: 740}
+    pre:
+    - id: 10
+      value: 1
+    - id: 17
+      value: 1
+    post:
+    - id: 6
+      value: 1
+  - name: StopRunningAway
+    isDefault: 0
+    state: {fileID: 3847709778611426878, guid: 848deb683474da94a9900e0535c9dc44, type: 3}
+    cost: 0
+    position: {x: 1440, y: 50}
+    pre:
+    - id: 13
+      value: 1
+    - id: 14
+      value: 0
+    post:
+    - id: 0
+      value: 1
+    - id: 13
+      value: 0
+  - name: PredatorNearby
+    isDefault: 0
+    state: {fileID: 3847709778611426878, guid: 7c70fe0631c71234b86308001ba73db1, type: 3}
+    cost: 0
+    position: {x: 620, y: 130}
+    pre:
+    - id: 18
+      value: 1
+    post:
+    - id: 14
+      value: 1
+    - id: 0
+      value: 0
+  - name: NeedToRun
+    isDefault: 0
+    state: {fileID: 3847709778611426878, guid: ee0e8d9cb0e0acc4795325ccbda37557, type: 3}
+    cost: 0
+    position: {x: 860, y: 70}
+    pre:
+    - id: 14
+      value: 1
+    - id: 18
+      value: 1
+    post:
+    - id: 5
+      value: 1
+  - name: Wander
+    isDefault: 1
+    state: {fileID: 6357321653341043000, guid: 2fc7293f8ca8f8640a7a241a8dc7e8a5, type: 3}
+    cost: 0
+    position: {x: 440, y: 840}
+    pre: []
+    post: []
+  goals:
+  - name: Content
+    isDefault: 1
+    position: {x: 220, y: 880}
+    conditions:
+    - id: 0
+      value: 1
+    - id: 1
+      value: 0
+    - id: 11
+      value: 0
+    - id: 13
+      value: 0
+  worldStates:
+  - position: {x: 222, y: 1059}
+    isAutoUpdate: 1
+    list:
+    - id: 0
+      value: 0
+    - id: 1
+      value: 1
+    - id: 2
+      value: 0
+    - id: 3
+      value: 0
+    - id: 4
+      value: 0
+    - id: 5
+      value: 0
+    - id: 6
+      value: 0
+    - id: 7
+      value: 0
+    - id: 8
+      value: 0
+    - id: 9
+      value: 0
+    - id: 10
+      value: 0
+    - id: 11
+      value: 1
+    - id: 12
+      value: 0
+    - id: 13
+      value: 0
+    - id: 14
+      value: 0
+    - id: 15
+      value: 0
+    - id: 16
+      value: 1
+    - id: 17
+      value: 1
+    - id: 18
+      value: 0
