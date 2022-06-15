@@ -20,7 +20,7 @@ namespace Cam
             // GetComponent<Health>().DeathEvent += CamSuperDeath;
             GetComponent<Energy>().FullEnergyEvent += Hyper;
             GetComponent<Energy>().NoEnergyEvent += FindFood;
-            GetComponent<Health>().DeathEvent += CamSuperDeath;
+            GetComponent<Minh.Health>().DeathEvent += CamSuperDeath;
             
             // Initialise states
             ChangeState(GetComponent<DiscoState>());

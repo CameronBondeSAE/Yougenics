@@ -7,12 +7,15 @@ namespace Alex
 
     public class Food : MonoBehaviour
     {
+        
         public int myFoodAmount = 10;
         Energy foodEnergy;
 
         // Start is called before the first frame update
         void Start()
         {
+            
+            GetComponent<Minh.Health>();
             foodEnergy = GetComponent<Energy>();
         }
 
@@ -27,6 +30,7 @@ namespace Alex
         {
             if (other.GetComponent<Energy>() != null)// ‘Fire’ the event
             {
+                GetComponent<Minh.Health>().Hp += 35;
                 other.GetComponent<Energy>().energyAmount += myFoodAmount;
                 Destroy(gameObject);
                 //print("Cheer");
