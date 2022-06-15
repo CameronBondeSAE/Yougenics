@@ -10,6 +10,7 @@ public class LobbyManager : MonoBehaviour
     public Canvas lobby;
     public TMP_Text clientUI;
 
+    public NetworkVariable<ulong> ClientID = new NetworkVariable<ulong>();
 
     void OnGUI()
     {
@@ -50,36 +51,38 @@ public class LobbyManager : MonoBehaviour
     private void Start()
     {
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientJoin;
+
+        ClientID.OnValueChanged += UpdateLobbyUI;
     }
 
     public void OnClientJoin(ulong clientID)
     {
         if(NetworkManager.Singleton.IsServer)
         {
-            UpdateLobbyUI(clientID);
+            ClientID.Value = clientID;
         }
         else
         {
-            SubmitLobbyRequestServerRpc();
+            SubmitLobbyRequestServerRpc(clientID);
         }
         
     }
 
     [ServerRpc]
-    void SubmitLobbyRequestServerRpc()
+    void SubmitLobbyRequestServerRpc(ulong clientID)
     {
-        //UpdateLobbyUI();
+        ClientID.Value = clientID;
     }
 
-    public void UpdateLobbyUI(ulong clientID)
+    public void UpdateLobbyUI(ulong previousValue, ulong newValue)
     {
         if (NetworkManager.Singleton.ConnectedClientsList.Count <= 0)
         {
-            clientUI.text = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(clientID).GetComponent<ClientInfo>().name;
+            clientUI.text = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(newValue).GetComponent<ClientInfo>().name;
         }
         else
         {
-            clientUI.text += NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(clientID).GetComponent<ClientInfo>().name;
+            clientUI.text += NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(newValue).GetComponent<ClientInfo>().name;
         }
     }
 }
