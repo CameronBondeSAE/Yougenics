@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Anthill.AI;
 using NodeCanvas.BehaviourTrees;
 using NodeCanvas.Framework;
+using ParadoxNotion;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -10,7 +12,7 @@ using Random = UnityEngine.Random;
 
 namespace Luke
 {
-	public class Critter : MonoBehaviour, IEdible
+	public class Critter : MonoBehaviour, IEdible, ISense
 	{
 		public event IEdible.RemoveFromListAction RemoveFromListEvent;
 
@@ -23,6 +25,7 @@ namespace Luke
 		public float acceleration;
 		public float maxSpeed;
 		public float regularMatingDelay;
+		public bool isChild = true;
 		public bool readyToMate = false;
 		public bool isSleeping = false;
 		public bool justAte = false;
@@ -132,6 +135,7 @@ namespace Luke
 
 			transform.Translate(Vector3.up*0.5f);
 			transform.localScale = Vector3.one;
+			isChild = false;
 			readyToMate = true;
 		}
 
@@ -186,31 +190,43 @@ namespace Luke
 
 		private IEnumerator GiveBirth(CritterInfo childInfo)
 		{
-			if(!Physics.Raycast(birthingTransform.position, transform.position-birthingTransform.position, out RaycastHit raycastHit, Vector3.Magnitude(transform.position-birthingTransform.position)))
+			if(!Physics.Raycast(transform.position, birthingTransform.position - transform.position,
+				   out RaycastHit raycastHit, Vector3.Magnitude(birthingTransform.position - transform.position)))
 			{
-				yield return new WaitForSeconds(1f);
-				StartCoroutine(GiveBirth(childInfo));
+				GameObject go = Instantiate(childPrefab);
+				go.transform.position = birthingTransform.position;
+				Critter childCritter = go.GetComponent<Critter>();
+				childCritter.critterInfo = childInfo;
+				childCritter.isChild = true;
+				go.transform.localScale = Vector3.one * 0.5f;
+				yield return null;
 			}
 			else
 			{
-				if (!raycastHit.collider.transform == transform)
-				{
-					yield return new WaitForSeconds(1f);
-					StartCoroutine(GiveBirth(childInfo));
-				}
-				else
-				{
-					GameObject go = Instantiate(childPrefab);
-					go.transform.position = birthingTransform.position;
-					go.GetComponent<Critter>().critterInfo = childInfo;
-					go.transform.localScale = Vector3.one * 0.5f;
-					yield return null;
-				}
+				yield return new WaitForSeconds(1f);
+				StartCoroutine(GiveBirth(childInfo));
 			}
 		}
 		
 		#endregion
 
+		public void CollectConditions(AntAIAgent aAgent, AntAICondition aWorldState)
+		{
+			aWorldState.Set(LukeCritterScenario.foodNearby, !IsFoodListEmpty());
+			aWorldState.Set(LukeCritterScenario.isAsleep, isSleeping);
+			aWorldState.Set(LukeCritterScenario.hasFood, Eat());
+			aWorldState.Set(LukeCritterScenario.hasMate, Mate());
+			aWorldState.Set(LukeCritterScenario.isHealthy, IsFoodListEmpty());
+			aWorldState.Set(LukeCritterScenario.isHungry, IsQuiteHungry());
+			aWorldState.Set(LukeCritterScenario.isTired, IsTired());
+			aWorldState.Set(LukeCritterScenario.matesNearby, !IsMatesListEmpty());
+			aWorldState.Set(LukeCritterScenario.predatorsPresent, !IsPredatorsListEmpty());
+			aWorldState.Set(LukeCritterScenario.isVeryHungry, IsVeryHungry());
+			aWorldState.Set(LukeCritterScenario.isVeryTired, IsVeryTired());
+			aWorldState.Set(LukeCritterScenario.isInImminentDanger, IsInImminentDanger());
+			aWorldState.Set(LukeCritterScenario.isReadyToMate, IsReadyToMate());
+		}
+		
 		void OnEnable()
 		{
 			rb = GetComponent<Rigidbody>();
@@ -271,15 +287,15 @@ namespace Luke
 				{
 					if (!matesList.Contains(other.transform))
 					{
-						Gender gender = other.GetComponent<Critter>().critterInfo.gender;
-						if (critterInfo.gender != gender)
+						Critter otherCritter = other.GetComponent<Critter>();
+						if (critterInfo.gender != otherCritter.critterInfo.gender && !otherCritter.isChild)
 						{
 							matesList.Add(other.transform);
 							go.RemoveFromListEvent += RemoveTransformFromList;
 						}
 					}
 				}
-				else
+				else if (critterInfo.isCarnivore)
 				{
 					if (!foodList.Contains(other.transform))
 					{
@@ -324,14 +340,15 @@ namespace Luke
 			transform.LookAt(new Vector3 (target.x, transform.position.y, target.z));
 		}
 
-		public void Eat()
+		public bool Eat()
 		{
-			if (isSleeping) return;
-			if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit raycastHit, 1)) return;
-			if (!foodList.Contains(raycastHit.collider.transform)) return;
-			if (isAttacking) return;
+			if (isSleeping) return false;
+			if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit raycastHit, 1)) return false;
+			if (!foodList.Contains(raycastHit.collider.transform)) return false;
+			if (isAttacking) return false;
 			StartCoroutine(AttackCooldown());
 			EatHealth(raycastHit.collider);
+			return true;
 		}
 
 		private void EatHealth(Collider target)
@@ -353,21 +370,22 @@ namespace Luke
 			}
 		}
 
-		public void Mate()
+		public bool Mate()
 		{
-			if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit raycastHit, 1)) return;
+			if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit raycastHit, 1)) return false;
 			
 			Collider other = raycastHit.collider;
-			if (!matesList.Contains(other.transform)) return;
+			if (!matesList.Contains(other.transform)) return false;
 			
-			if (critterInfo.gender == Gender.Female) return;
+			if (critterInfo.gender == Gender.Female) return false;
 			
 			Critter otherScript = other.GetComponent<Critter>();
-			if (!otherScript.IsReadyToMate()) return;
+			if (!otherScript.IsReadyToMate()) return false;
 			
 			readyToMate = false;
 			StartCoroutine(ReadyToMateReset(regularMatingDelay));
 			otherScript.Reproduce(critterInfo);
+			return true;
 		}
 
 		public void Reproduce(CritterInfo partnerInfo)
@@ -578,7 +596,6 @@ namespace Luke
 			return true;
 		}
 		
-		//Issues with blocked line of sight
 		public bool LocateNearestFood()
 		{
 			nearestFood = null;
@@ -695,5 +712,22 @@ namespace Luke
 		}
 
 		#endregion
+	}
+	
+	public enum LukeCritterScenario
+	{
+		isVeryHungry = 0,
+		isInImminentDanger = 1,
+		isVeryTired = 2,
+		isHungry = 3,
+		predatorsPresent = 4,
+		isReadyToMate = 5,
+		isTired = 6,
+		foodNearby = 7,
+		matesNearby = 8,
+		hasFood = 9,
+		hasMate = 10,
+		isHealthy = 11,
+		isAsleep = 12
 	}
 }

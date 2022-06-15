@@ -244,7 +244,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5e974b54f9885434fbff99ca454f29a6, type: 2}
+  - {fileID: 2100000, guid: fb5a59334d7cf4543a38a54c4ea26c39, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -368,7 +368,7 @@ MonoBehaviour:
   foodChain: 0
   visionRadius: 8
   actionRadius: 0.25
-  isPatrolling: 0
+  isPatrolling: 1
   isChasing: 0
   isEating: 0
   isSleeping: 0
@@ -379,6 +379,7 @@ MonoBehaviour:
   horny: 0
   hungry: 0
   sleepy: 0
+  hasMated: 0
   neutralList: []
   predatorList: []
   preyList: []

@@ -18,7 +18,7 @@ public class Energy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<Health>();
+        GetComponent<Minh.Health>();
         CheckEnergyMax();
         StartCoroutine(EnergyDrainer());
 
@@ -60,7 +60,7 @@ public class Energy : MonoBehaviour
         if (energyAmount <= energyMin)
         {
             energyAmount = energyMin;
-            GetComponent<Health>().Hp += -1;
+            
             NoEnergyEvent?.Invoke();
                         
         }
