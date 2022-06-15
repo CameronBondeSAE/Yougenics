@@ -4,6 +4,8 @@ using UnityEngine;
 using Unity.Netcode;
 using TMPro;
 using UnityEngine.UI;
+using Unity.Collections;
+using System;
 
 public class LobbyManager : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class LobbyManager : MonoBehaviour
     public TMP_Text clientUI;
 
     public NetworkVariable<ulong> ClientID = new NetworkVariable<ulong>();
+    public NetworkVariable<FixedString512Bytes> ClientName = new NetworkVariable<FixedString512Bytes>();
 
     void OnGUI()
     {
@@ -51,38 +54,48 @@ public class LobbyManager : MonoBehaviour
     private void Start()
     {
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientJoin;
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientLeave;
 
-        ClientID.OnValueChanged += UpdateLobbyUI;
+        ClientName.OnValueChanged += UpdateLobbyUI;
+    }
+
+    private void OnClientLeave(ulong obj)
+    {
+        if(NetworkManager.Singleton.IsServer)
+            HandleClientNames();
     }
 
     public void OnClientJoin(ulong clientID)
     {
-        if(NetworkManager.Singleton.IsServer)
+        if(NetworkManager.Singleton.IsServer && !NetworkManager.Singleton.IsClient)
         {
-            ClientID.Value = clientID;
+            HandleClientNames();
         }
         else
         {
-            SubmitLobbyRequestServerRpc(clientID);
+            SubmitLobbyRequestServerRpc();
         }
-        
     }
 
     [ServerRpc]
-    void SubmitLobbyRequestServerRpc(ulong clientID)
+    void SubmitLobbyRequestServerRpc()
     {
-        ClientID.Value = clientID;
+        if(NetworkManager.Singleton.IsServer)
+         HandleClientNames();
     }
 
-    public void UpdateLobbyUI(ulong previousValue, ulong newValue)
+    void HandleClientNames()
     {
-        if (NetworkManager.Singleton.ConnectedClientsList.Count <= 0)
+        ClientName.Value = "";
+
+        foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
         {
-            clientUI.text = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(newValue).GetComponent<ClientInfo>().name;
+            ClientName.Value += client.PlayerObject.GetComponent<ClientInfo>().name;
         }
-        else
-        {
-            clientUI.text += NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(newValue).GetComponent<ClientInfo>().name;
-        }
+    }
+
+    public void UpdateLobbyUI(FixedString512Bytes previousValue, FixedString512Bytes newValue)
+    {
+        clientUI.text = newValue.ToString();
     }
 }
