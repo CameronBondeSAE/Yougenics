@@ -36,6 +36,8 @@ namespace Kev
         public bool horny;
         public bool hungry;
         public bool sleepy;
+
+        public bool hasMated;
         
         //Transform list for other entities
         public List<Transform> neutralList;
@@ -95,10 +97,12 @@ namespace Kev
         {
             Interface.Foodchain otherFoodChain = other.GetComponent<CritterBase>().foodChain;
             Interface.Gender otherGender = other.GetComponent<CritterBase>().gender;
+            RaycastHit raycastHit;
             //Interface.IEdible edible = GetComponent<Interface.IEdible>();
             
             if (otherFoodChain == Interface.Foodchain.Neutral)
             {
+                //if(RaycastHit())
                 neutralList.Add(other.transform);
             }
             if (otherFoodChain == Interface.Foodchain.Predator && foodChain != Interface.Foodchain.Predator)
@@ -116,6 +120,13 @@ namespace Kev
             {
                 potentialMates.Add(other.transform);
             }
+            else if (otherFoodChain == foodChain && otherGender == gender)
+            {
+                neutralList.Add(other.transform);
+                isChasing = false;
+                isPatrolling = true;
+            }
+            
 
             /*if (edible != null)
             {
@@ -396,12 +407,16 @@ namespace Kev
 
         public void BeginMate()
         {
-            if (isMating)
+            if (isMating && hasMated == false)
             {
                 Debug.Log("Started Mating");
+                hasMated = true;
+            }
+            else
+            {
+                Debug.Log("Monogamy Mate!!!");
             }
         }
-
         public void Sleepy()
         {
             throw new NotImplementedException();
