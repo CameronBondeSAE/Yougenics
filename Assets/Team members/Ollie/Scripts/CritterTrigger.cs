@@ -8,13 +8,14 @@ namespace Ollie
     public class CritterTrigger : MonoBehaviour
     {
         public CritterAI parent;
+        public List<GameObject> npcTargets;
         
         private void OnTriggerEnter(Collider other)
         {
             iNPC iNPC = other.gameObject.GetComponent<iNPC>();
             if (iNPC != null)
             {
-                parent.npcTargets.Add(other.gameObject);
+                npcTargets.Add(other.gameObject);
             }
         }
 
@@ -23,7 +24,7 @@ namespace Ollie
             iNPC iNPC = other.gameObject.GetComponent<iNPC>();
             if (iNPC != null)
             {
-                parent.npcTargets.Remove(other.gameObject);
+                npcTargets.Remove(other.gameObject);
             }
         }
     }

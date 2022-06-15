@@ -240,6 +240,7 @@ MonoBehaviour:
   npcTargets: []
   targetsInSight: []
   sleeping: 0
+  trigger: {fileID: 0}
 --- !u!54 &1220652111159811093
 Rigidbody:
   m_ObjectHideFlags: 0

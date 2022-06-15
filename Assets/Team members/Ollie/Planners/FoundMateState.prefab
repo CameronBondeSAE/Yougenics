@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4723844657501573712}
   - component: {fileID: 5206066252991428394}
   m_Layer: 0
-  m_Name: FindMateState
+  m_Name: FoundMateState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Ollie
 {
-    public class FindFoodState : AntAIState
+    public class FoundFoodState : AntAIState
     {
         public override void Create(GameObject aGameObject)
         {

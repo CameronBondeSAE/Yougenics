@@ -123,6 +123,30 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &41475627 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1220652111159811100, guid: 434a91244aeb5594cabe95ddd4c80fe4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1220652110437901055}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2656c24c8107ef8409d73a41c0e2aa5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &645336710 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4155980898637526194, guid: 15c66fc78f1362b4c89183bff011d047,
+    type: 3}
+  m_PrefabInstance: {fileID: 125896440490121659}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad8dee710ddae994ca5e0c0493a6eca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &989311210
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,7 +167,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &989311211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,7 +251,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 989311210}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.4, y: 0, z: 0}
+  m_LocalPosition: {x: 8.56, y: 0, z: -31.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -250,6 +274,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1069204228 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1220652110637583819, guid: 434a91244aeb5594cabe95ddd4c80fe4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1220652110437901055}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad8dee710ddae994ca5e0c0493a6eca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1148632611
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,7 +632,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &1772465391
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -668,7 +704,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1772465390}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.59, y: 23, z: 0}
+  m_LocalPosition: {x: 6.17, y: 5.06, z: -26.8}
   m_LocalScale: {x: 1, y: 9.7157, z: 14.52}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -824,7 +860,7 @@ PrefabInstance:
     - target: {fileID: 1519623156087613634, guid: 15c66fc78f1362b4c89183bff011d047,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.08
+      value: 4.09
       objectReference: {fileID: 0}
     - target: {fileID: 1519623156087613634, guid: 15c66fc78f1362b4c89183bff011d047,
         type: 3}
@@ -834,7 +870,7 @@ PrefabInstance:
     - target: {fileID: 1519623156087613634, guid: 15c66fc78f1362b4c89183bff011d047,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -25.28
+      value: -32.77
       objectReference: {fileID: 0}
     - target: {fileID: 1519623156087613634, guid: 15c66fc78f1362b4c89183bff011d047,
         type: 3}
@@ -871,11 +907,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4155980898637526194, guid: 15c66fc78f1362b4c89183bff011d047,
+        type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 41475627}
     - target: {fileID: 5861305019518734890, guid: 15c66fc78f1362b4c89183bff011d047,
         type: 3}
       propertyPath: m_Name
-      value: Planner
+      value: CritterAIPlanner
       objectReference: {fileID: 0}
+    - target: {fileID: 5950386179713793681, guid: 15c66fc78f1362b4c89183bff011d047,
+        type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 989311215}
+    - target: {fileID: 5950386179713793681, guid: 15c66fc78f1362b4c89183bff011d047,
+        type: 3}
+      propertyPath: trigger
+      value: 
+      objectReference: {fileID: 645336710}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15c66fc78f1362b4c89183bff011d047, type: 3}
 --- !u!1001 &1220652110437901055
@@ -940,10 +991,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1220652111159811100, guid: 434a91244aeb5594cabe95ddd4c80fe4,
+        type: 3}
+      propertyPath: trigger
+      value: 
+      objectReference: {fileID: 1069204228}
     - target: {fileID: 1220652111159811101, guid: 434a91244aeb5594cabe95ddd4c80fe4,
         type: 3}
       propertyPath: m_Name
-      value: Critter
+      value: CritterAIBehaviourTree
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 434a91244aeb5594cabe95ddd4c80fe4, type: 3}
@@ -958,6 +1014,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Spawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 889450817007774795, guid: 22a7f5285e5f1fc4b88104de7cd22d81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1894793142528315593, guid: 22a7f5285e5f1fc4b88104de7cd22d81,
         type: 3}

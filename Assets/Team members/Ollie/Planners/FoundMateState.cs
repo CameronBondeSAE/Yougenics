@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Ollie
 {
-    public class FindMateState : AntAIState
+    public class FoundMateState : AntAIState
     {
         public override void Create(GameObject aGameObject)
         {
