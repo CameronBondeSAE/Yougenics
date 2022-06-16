@@ -54,7 +54,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1810191182023475746}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 10
@@ -113,7 +113,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4405535915175289408}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 2
@@ -213,6 +213,8 @@ GameObject:
   - component: {fileID: 7648043570769905624}
   - component: {fileID: 2853515827771656595}
   - component: {fileID: 7455062407162274048}
+  - component: {fileID: 4730180432517699489}
+  - component: {fileID: 2287993894163932748}
   m_Layer: 0
   m_Name: CreatureP
   m_TagString: Untagged
@@ -265,7 +267,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c94751e7c2dd487479141d93239b1fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energy: {fileID: 0}
+  senses: {fileID: 7455062407162274048}
+  energy: {fileID: 4730180432517699489}
   myEnergy: 0
   myHealth: 0
   myHorny: 0
@@ -284,5 +287,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   touch: {fileID: 6486081456821416986}
   vision: {fileID: 3984403802155756092}
+  myEnergy: {fileID: 4730180432517699489}
   critterModel: {fileID: 2853515827771656595}
   isAlsoHorny: 0
+--- !u!114 &4730180432517699489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6025809690385764721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86b58142ff8a3804fa71c5004d10d94b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energyAmount: 100
+  energyMax: 100
+  energyMin: 0
+  drainAmount: 1
+  drainSpeed: 1
+--- !u!114 &2287993894163932748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6025809690385764721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd95a418070c3014eb6368bceeef6adf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Hp: 100
+  dead: 0
+  fullenergy: 0
+  noenergy: 0

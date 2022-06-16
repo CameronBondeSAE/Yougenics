@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Anthill.AI;
+using Minh;
 using UnityEngine;
 
 namespace Maya
@@ -9,6 +10,9 @@ namespace Maya
     {
         public Touch touch;
         public Vision vision;
+        public Horny myHorny;
+        public Energy myEnergy;
+        public Health myHealth;
         public CritterModel critterModel;
         private Transform myPos; //where i am
         private Transform matePos; //where my potential mate is
@@ -21,10 +25,10 @@ namespace Maya
         }
         public void CollectConditions(AntAIAgent aAgent, AntAICondition aWorldState)
         {
-            aWorldState.Set(CritterAI.isHealthy, critterModel.myHealth < 40);
-            aWorldState.Set(CritterAI.isHorny, critterModel.myHorny < 75);
-            aWorldState.Set(CritterAI.isHungry, critterModel.myEnergy < 60);
-            aWorldState.Set(CritterAI.isTired, critterModel.myEnergy < 25);
+            aWorldState.Set(CritterAI.isHealthy, myHealth.Hp < 40);
+            aWorldState.Set(CritterAI.isHorny, myHorny.currentHorny < 50);
+            aWorldState.Set(CritterAI.isHungry, myEnergy.energyAmount < 60);
+            aWorldState.Set(CritterAI.isTired, myEnergy.energyAmount < 25);
             aWorldState.Set(CritterAI.canSeeEnemy, vision.myTarget = enemyPos);
             aWorldState.Set(CritterAI.canSeeFood, vision.myTarget = foodPos);
             aWorldState.Set(CritterAI.canSeeMate, vision.myTarget = matePos);
