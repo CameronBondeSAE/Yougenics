@@ -30,7 +30,7 @@ namespace Alex
         private void WonderAround()
         {
             rb.velocity = new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
-            Debug.Log("Wondering");
+            //Debug.Log("Wondering");
         }
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using NodeCanvas.Framework;
 using Tanks;
+using TreeEditor;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -18,71 +19,59 @@ public class Wheel : MonoBehaviour
     public float suspensionLength = 3f;
     public float force = 20f;
     //public float minForce = 0;
-    public Vector3 OffSet;
-    public Vector3 Force;
-    public float turnForce = 10f;
-    public float speed = 20f;
+    //public Vector3 OffSet;
+    //public Vector3 Force;
+    //public float turnForce = 10f;
     
+    public float friction = 1f;
 
 
-    // Start is called before the first frame update
+
     
     
-    public void Forward()
+    void FixedUpdate()
     {
-        rb.AddForceAtPosition(transform.forward * speed, transform.TransformPoint(OffSet));
-        Debug.Log("MoveTest");
-    }
-    
-    public void Back()
-    {
-        rb.AddForceAtPosition(transform.forward * -1 * speed, transform.TransformPoint(OffSet));
-        Debug.Log("MoveTest");
+        CalculateLateralFriction();
+        CalculateSuspension();
     }
 
-    public void Turn()
-    {
-        
-    }
-
-        // Update is called once per frame
-    void Update()
+    private void CalculateSuspension()
     {
         RaycastHit hitInfo;
         hitInfo = new RaycastHit();
-        localVelocity = transform.InverseTransformDirection(rb.velocity);
-        //Debug.Log(localVelocity);
-        //rb.transform.position = OffSet;
 
-        rb.AddForceAtPosition(transform.up, transform.TransformPoint(OffSet));
-
-        if (localVelocity.x > 0)
-        {
-            rb.AddRelativeForce(-1, 0, 0);
-        }
-        if (localVelocity.x < 0)
-        {
-            rb.AddRelativeForce(1, 0, 0);
-        }
-        
-        
-
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hitInfo, suspensionLength, 255))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hitInfo, suspensionLength,
+                255))
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * hitInfo.distance,
                 Color.yellow);
-            
-            //force = maxForce - layerMask;
-            //Debug.Log("Did Hit");
-            rb.AddRelativeForce(0,force,0 );
+
+            //Debug.Log("Did Hit)
+            rb.AddForceAtPosition(transform.up, transform.position);
         }
         else
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * force, Color.white);
             //Debug.Log("Did not Hit");
             //force = maxForce;
-            rb.AddRelativeForce(0,0,0 );
+            rb.AddRelativeForce(0, 0, 0);
         }
     }
+
+    private void CalculateLateralFriction()
+    {
+        localVelocity = transform.InverseTransformDirection(rb.velocity);
+        
+        rb.AddRelativeForce(-localVelocity.x * friction, 0, 0);
+    }
+
+    /*
+    private void CalculateLongitudinalFriction()
+    {
+        localVelocity = transform.InverseTransformDirection(rb.velocity);
+        
+        rb.AddRelativeForce(0, -localVelocity.x * friction, 0);
+    }
+    */
 }
 

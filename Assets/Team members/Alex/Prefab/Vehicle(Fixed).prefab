@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5643461991005875016}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6924147449041944588
 MonoBehaviour:
@@ -45,11 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 3912303242066289817}
-  suspensionLength: 3
+  suspensionLength: 1.5
   force: 20
   OffSet: {x: 0.5, y: 0, z: -0.5}
-  Force: {x: 0, y: 0, z: 0}
-  turnForce: 10
   speed: 20
 --- !u!1 &2967110766598880524
 GameObject:
@@ -81,7 +79,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5643461991005875016}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1886384343663440452
 MonoBehaviour:
@@ -96,11 +94,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 3912303242066289817}
-  suspensionLength: 3
+  suspensionLength: 1.5
   force: 20
   OffSet: {x: -0.5, y: 0, z: -0.5}
-  Force: {x: 0, y: 0, z: 0}
-  turnForce: 10
   speed: 20
 --- !u!1 &3532001769312515638
 GameObject:
@@ -114,7 +110,6 @@ GameObject:
   - component: {fileID: 6719767702676371783}
   - component: {fileID: 2985835184923699081}
   - component: {fileID: 2693963332133508170}
-  - component: {fileID: 5660122940249074852}
   - component: {fileID: 3912303242066289817}
   m_Layer: 0
   m_Name: Vehicle(Fixed)
@@ -136,7 +131,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 838365020327320010}
-  - {fileID: 97490566815898940}
   - {fileID: 2503192561693324169}
   - {fileID: 1355379122741114691}
   - {fileID: 5126353630342926661}
@@ -207,25 +201,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5660122940249074852
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3532001769312515638}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06fdfd1d5530e9e41aab66f1a94f83e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  suspensionLength: 3
-  force: 20
-  OffSet: {x: 0, y: 0, z: 0}
-  Force: {x: 0, y: 0, z: 0}
-  turnForce: 10
-  speed: 20
 --- !u!54 &3912303242066289817
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -235,7 +210,7 @@ Rigidbody:
   m_GameObject: {fileID: 3532001769312515638}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 5
+  m_Drag: 1
   m_AngularDrag: 5
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -295,6 +270,7 @@ MonoBehaviour:
   - {fileID: 8860035961690252253}
   - {fileID: 1886384343663440452}
   - {fileID: 6924147449041944588}
+  steering: 20
   turnForce: 10
   speed: 20
 --- !u!1 &5837860151170081394
@@ -327,7 +303,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5643461991005875016}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8860035961690252253
 MonoBehaviour:
@@ -342,11 +318,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 3912303242066289817}
-  suspensionLength: 3
+  suspensionLength: 1.5
   force: 20
   OffSet: {x: 0.5, y: 0, z: 0.5}
-  Force: {x: 0, y: 0, z: 0}
-  turnForce: 10
   speed: 20
 --- !u!1 &7716709605948902966
 GameObject:
@@ -378,7 +352,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5643461991005875016}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &392720054664321577
 MonoBehaviour:
@@ -393,53 +367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 3912303242066289817}
-  suspensionLength: 3
+  suspensionLength: 1.5
   force: 20
   OffSet: {x: -0.5, y: 0, z: 0.5}
-  Force: {x: 0, y: 0, z: 0}
-  turnForce: 10
   speed: 20
---- !u!1 &8421284617728645541
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 97490566815898940}
-  - component: {fileID: 4413157011931647226}
-  m_Layer: 0
-  m_Name: SteeringWheel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &97490566815898940
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8421284617728645541}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5643461991005875016}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4413157011931647226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8421284617728645541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 310c973e8fd95fb4cbc0940d97cda981, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
