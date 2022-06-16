@@ -17,7 +17,9 @@ public class Wheel : MonoBehaviour
     
     Vector3 localVelocity;
     public float suspensionLength = 3f;
-    public float force = 20f;
+    public float force = 10;
+
+    private float maxForce = 20;
     //public float minForce = 0;
     //public Vector3 OffSet;
     //public Vector3 Force;
@@ -39,22 +41,26 @@ public class Wheel : MonoBehaviour
     {
         RaycastHit hitInfo;
         hitInfo = new RaycastHit();
-
+        
+        
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hitInfo, suspensionLength,
                 255))
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * hitInfo.distance,
                 Color.yellow);
+            //Debug.Log(hitInfo.distance);
 
-            //Debug.Log("Did Hit)
-            rb.AddForceAtPosition(transform.up, transform.position);
+            force = maxForce;
+            rb.AddForceAtPosition(transform.up * force, transform.position);
         }
         else
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * force, Color.white);
             //Debug.Log("Did not Hit");
             //force = maxForce;
-            rb.AddRelativeForce(0, 0, 0);
+            force = (force - hitInfo.distance);
+            rb.AddForceAtPosition(transform.up * force, transform.position);
+            
         }
     }
 
@@ -62,7 +68,7 @@ public class Wheel : MonoBehaviour
     {
         localVelocity = transform.InverseTransformDirection(rb.velocity);
         
-        rb.AddRelativeForce(-localVelocity.x * friction, 0, 0);
+        rb.AddRelativeForce(-localVelocity.x * (rb.mass/friction), 0, 0);
     }
 
     /*
