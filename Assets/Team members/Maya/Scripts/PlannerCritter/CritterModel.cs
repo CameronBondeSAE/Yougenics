@@ -8,6 +8,7 @@ namespace Maya
 
     public class CritterModel : MonoBehaviour
     {
+        public CritterSenses senses;
         public Energy energy;
         public float myEnergy; //hunger/sleep
         public float myHealth; //hp value
