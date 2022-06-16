@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8219842311993901579}
-  - component: {fileID: 6127021411721306566}
+  - component: {fileID: 8400989016957280918}
   m_Layer: 0
-  m_Name: Wander
+  m_Name: DefaultBehaviourTired
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6127021411721306566
+--- !u!114 &8400989016957280918
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,6 +41,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3207718892820481763}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4c9d13caf596334ab1ba9408505dd9f, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c010453c54327f44888384baa015ef7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

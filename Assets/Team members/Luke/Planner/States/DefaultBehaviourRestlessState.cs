@@ -4,23 +4,19 @@ using UnityEngine;
 
 namespace Luke
 {
-	public class EatHungryState : LukeAIState
+	public class DefaultBehaviourRestlessState : LukeAIState
 	{
 		public override void Enter()
 		{
 			base.Enter();
-			critter.ChangeEmote(0);
+			critter.ChangeEmote(4);
 		}
 
 		public override void Execute(float aDeltaTime, float aTimeScale)
 		{
 			base.Execute(aDeltaTime, aTimeScale);
-			critter.Eat();
-		}
-
-		public override void Exit()
-		{
-			base.Exit();
+			critter.IterateBiomes();
+			critter.MoveBiomes();
 		}
 	}
 }

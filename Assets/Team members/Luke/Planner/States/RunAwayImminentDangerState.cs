@@ -9,16 +9,14 @@ namespace Luke
 		public override void Enter()
 		{
 			base.Enter();
+			critter.ChangeEmote(2);
 		}
 
 		public override void Execute(float aDeltaTime, float aTimeScale)
 		{
 			base.Execute(aDeltaTime, aTimeScale);
-		}
-
-		public override void Exit()
-		{
-			base.Exit();
+			critter.LocateNearestPredator();
+			critter.MoveAwayFromPredator();
 		}
 	}
 }

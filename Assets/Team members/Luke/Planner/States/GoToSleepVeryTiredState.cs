@@ -6,6 +6,16 @@ namespace Luke
 {
 	public class GoToSleepVeryTiredState : LukeAIState
 	{
+		public override void Enter()
+		{
+			base.Enter();
+			critter.ChangeEmote(3);
+		}
 
+		public override void Execute(float aDeltaTime, float aTimeScale)
+		{
+			base.Execute(aDeltaTime, aTimeScale);
+			critter.GoToSleep();
+		}
 	}
 }
