@@ -4882,7 +4882,7 @@ GameObject:
   - component: {fileID: 1510552318846589206}
   - component: {fileID: 5139244303484864730}
   - component: {fileID: 2390351324738518918}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: VisionSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5047,6 +5047,7 @@ MonoBehaviour:
   acceleration: 1
   maxSpeed: 5
   regularMatingDelay: 0
+  isChild: 1
   readyToMate: 0
   isSleeping: 0
   justAte: 0
@@ -5058,6 +5059,18 @@ MonoBehaviour:
   nearestPredator: {fileID: 0}
   nearestMate: {fileID: 0}
   nearestFood: {fileID: 0}
+  currentFood: {fileID: 0}
+  currentMateInfo:
+    maxHealth: 0
+    maxSleepLevel: 0
+    maxEnergyLevel: 0
+    awakeDecayDelay: 0
+    asleepDecayDelay: 0
+    firstMatingDelay: 0
+    isCarnivore: 0
+    gender: 0
+    deadliness: 0
+    visionRadius: 0
   bestNearbyBiome: 0
   randomAdjustment: {x: 0, y: 0, z: 0}
   childPrefab: {fileID: 7004539971532304000}

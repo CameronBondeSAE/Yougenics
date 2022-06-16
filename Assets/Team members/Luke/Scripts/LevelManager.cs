@@ -2,13 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 using Random = UnityEngine.Random;
 
 namespace Luke
 {
-	public class SpawnFood : MonoBehaviour
+	public class LevelManager : MonoBehaviour
 	{
+		public Node[,] gridNodeReferences;
+		public Vector3 gridTileHalfExtents = new (0.5f ,0.5f, 0.5f);
+		
 		[SerializeField]
 		private Bounds bounds = new Bounds();
 		
@@ -25,6 +27,23 @@ namespace Luke
 
 		[SerializeField]
 		private float spawningDelayPeriod = 3f;
+
+		private void ScanWorld()
+		{
+			for (int x = 0; x < Mathf.RoundToInt(bounds.extents.x); x++)
+			{
+				for (int z = 0; z < Mathf.RoundToInt(bounds.extents.z); z++)
+				{
+					gridNodeReferences[x, z] = new Node();
+					if (Physics.OverlapBox(new Vector3(x * bounds.extents.x, 0, z * bounds.extents.z),
+						    gridTileHalfExtents,  Quaternion.identity) != null)
+					{
+						// Something is there
+						gridNodeReferences[x, z].isBlocked = true;
+					}
+				}
+			}
+		}
 
 		private void RemoveFoodFromList(Transform _transform)
 		{
@@ -69,6 +88,8 @@ namespace Luke
 			worldEnergy = maxWorldEnergy;
 			SortFoodList();
 			StartCoroutine(SpawnFoodLoop());
+			gridNodeReferences = new Node[Mathf.RoundToInt(bounds.extents.x),Mathf.RoundToInt(bounds.extents.z)];
+			ScanWorld();
 		}
 
 		private void OnDrawGizmosSelected()

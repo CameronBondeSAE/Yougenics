@@ -52,44 +52,51 @@ public class LobbyManager : NetworkBehaviour
 
     private void Start()
     {
-        NetworkManager.Singleton.OnClientConnectedCallback += OnClientJoin;
-        //NetworkManager.Singleton.OnClientDisconnectCallback += OnClientLeave;
-
-        //ClientName.OnValueChanged += UpdateLobbyUI;
+        
     }
 
-    /*
+    public override void OnNetworkSpawn()
+    {
+        NetworkManager.Singleton.OnClientConnectedCallback += OnClientJoin;
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientLeave;
+    }
+
     private void OnClientLeave(ulong obj)
     {
         if(NetworkManager.Singleton.IsServer)
             HandleClientNames();
     }
-    */
+
 
     public void OnClientJoin(ulong clientID)
     {
-        if(IsOwner)
+        //Hack to work around Unity Calling this event before server is started
+        if(!IsOwner)
+        {
+            StartCoroutine(OnClientJoinCoroutine());
+        }
+        else
         {
             HandleClientNames();
         }
-       
     }
 
-    [ServerRpc]
-    void SubmitLobbyRequestServerRpc()
+    public IEnumerator OnClientJoinCoroutine()
     {
-        if (NetworkManager.Singleton.IsServer)
+        yield return new WaitForSeconds(2f);
+
+        if (IsOwner)
+        {
             HandleClientNames();
+        }
     }
 
     void HandleClientNames()
     {
-        //ClientName.Value = "";
         clientName = "";
 
         foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
         {
-            //ClientName.Value += client.PlayerObject.GetComponent<ClientInfo>().name;
             clientName += client.PlayerObject.GetComponent<ClientInfo>().name;
         }
 
@@ -100,10 +107,5 @@ public class LobbyManager : NetworkBehaviour
     public void UpdateLobbyClientRPC(string name)
     {
         clientUI.text = name;
-    }
-
-    public void UpdateLobbyUI(FixedString512Bytes previousValue, FixedString512Bytes newValue)
-    {
-        clientUI.text = newValue.ToString();
     }
 }

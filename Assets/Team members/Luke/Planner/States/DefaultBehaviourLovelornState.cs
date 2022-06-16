@@ -4,21 +4,19 @@ using UnityEngine;
 
 namespace Luke
 {
-	public class RunAwayPredatorsPresentState : LukeAIState
+	public class DefaultBehaviourLovelornState : LukeAIState
 	{
 		public override void Enter()
 		{
 			base.Enter();
+			critter.ChangeEmote(4);
 		}
 
 		public override void Execute(float aDeltaTime, float aTimeScale)
 		{
 			base.Execute(aDeltaTime, aTimeScale);
-		}
-
-		public override void Exit()
-		{
-			base.Exit();
+			critter.IterateBiomes();
+			critter.MoveBiomes();
 		}
 	}
 }

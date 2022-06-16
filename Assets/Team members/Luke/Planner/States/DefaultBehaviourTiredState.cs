@@ -4,21 +4,18 @@ using UnityEngine;
 
 namespace Luke
 {
-	public class WanderState : LukeAIState
+	public class DefaultBehaviourTiredState : LukeAIState
 	{
 		public override void Enter()
 		{
 			base.Enter();
+			critter.ChangeEmote(3);
 		}
 
 		public override void Execute(float aDeltaTime, float aTimeScale)
 		{
 			base.Execute(aDeltaTime, aTimeScale);
-		}
-
-		public override void Exit()
-		{
-			base.Exit();
+			critter.GoToSleep();
 		}
 	}
 }
