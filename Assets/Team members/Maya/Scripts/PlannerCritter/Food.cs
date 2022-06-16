@@ -12,9 +12,9 @@ namespace Maya
         public int energyValue;
 
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
-
+            
         }
 
         // Update is called once per frame

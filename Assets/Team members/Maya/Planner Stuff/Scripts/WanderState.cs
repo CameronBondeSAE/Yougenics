@@ -10,8 +10,6 @@ namespace Maya
     {
         public float wanderRadius;
         public float wanderTimer;
-
-        //public Transform target;
         private NavMeshAgent agent;
         public float timer;
         public override void Enter()
