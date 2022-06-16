@@ -10,6 +10,7 @@ namespace Maya
     {
         public Touch touch;
         public Vision vision;
+        public Horny myHorny;
         public Energy myEnergy;
         public Health myHealth;
         public CritterModel critterModel;
@@ -25,7 +26,7 @@ namespace Maya
         public void CollectConditions(AntAIAgent aAgent, AntAICondition aWorldState)
         {
             aWorldState.Set(CritterAI.isHealthy, myHealth.Hp < 40);
-            aWorldState.Set(CritterAI.isHorny, critterModel.myHorny < 75);
+            aWorldState.Set(CritterAI.isHorny, myHorny.currentHorny < 50);
             aWorldState.Set(CritterAI.isHungry, myEnergy.energyAmount < 60);
             aWorldState.Set(CritterAI.isTired, myEnergy.energyAmount < 25);
             aWorldState.Set(CritterAI.canSeeEnemy, vision.myTarget = enemyPos);

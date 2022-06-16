@@ -38,6 +38,7 @@ namespace Maya
         public override void Exit()
         {
             base.Exit();
+            Finish();
         }
 
         public static Vector3 RandomNavSphere(Vector3 origin, float distance, int layerMask)
