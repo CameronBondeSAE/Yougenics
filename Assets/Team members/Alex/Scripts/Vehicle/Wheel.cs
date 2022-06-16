@@ -26,15 +26,22 @@ public class Wheel : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
-    {
-
-    }
     
-    public void Turn()
+    
+    public void Forward()
     {
         rb.AddForceAtPosition(transform.forward * speed, transform.TransformPoint(OffSet));
         Debug.Log("MoveTest");
+    }
+    
+    public void Back()
+    {
+        rb.AddForceAtPosition(transform.forward * -1 * speed, transform.TransformPoint(OffSet));
+        Debug.Log("MoveTest");
+    }
+
+    public void Turn()
+    {
         
     }
 
@@ -66,13 +73,13 @@ public class Wheel : MonoBehaviour
                 Color.yellow);
             
             //force = maxForce - layerMask;
-            Debug.Log("Did Hit");
+            //Debug.Log("Did Hit");
             rb.AddRelativeForce(0,force,0 );
         }
         else
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * force, Color.white);
-            Debug.Log("Did not Hit");
+            //Debug.Log("Did not Hit");
             //force = maxForce;
             rb.AddRelativeForce(0,0,0 );
         }

@@ -10,6 +10,9 @@ public class VehicleController : MonoBehaviour
     public KeyCode up;
     public KeyCode down;
     public List<Wheel> wheels;
+    //public List<FrontWheels> frontWheels;
+    //public List<RearWheels> rearWheels;
+    public float steering = 20f;
     
 
     public float turnForce = 10f;
@@ -20,19 +23,27 @@ public class VehicleController : MonoBehaviour
     {
         if (Input.GetKey(left))
         {
-            //rb.AddRelativeTorque(0,-turnForce,0);
+            //steeringWheel.transform.localRotation = Quaternion.Euler(0, steering, 0);
+            foreach (Wheel wheel in wheels)
+            {
+                wheel.transform.localRotation = Quaternion.Euler(0, steering * -1, 0);
+            }
         }
 
         if (Input.GetKey(right))
         {
-            //rb.AddRelativeTorque(0,turnForce,0);
+            //steeringWheel.transform.localRotation = Quaternion.Euler(0, steering * -1, 0);
+            foreach (Wheel wheel in wheels)
+            {
+                wheel.transform.localRotation = Quaternion.Euler(0, steering, 0);
+            }
         }
 
         if (Input.GetKey(up))
         {
             foreach (Wheel wheel in wheels)
             {
-                wheel.Turn();
+                wheel.Forward();
             }
         }
 
@@ -40,7 +51,7 @@ public class VehicleController : MonoBehaviour
         {
             foreach (Wheel wheel in wheels)
             {
-                wheel.Turn();
+                wheel.Back();
             }
 
         }
