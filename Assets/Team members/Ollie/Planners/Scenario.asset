@@ -29,9 +29,9 @@ MonoBehaviour:
     - id: 6
       name: mateFound
     - id: 7
-      name: findingPrey
+      name: preyLocated
     - id: 8
-      name: findingFood
+      name: foodLocated
     - id: 9
       name: findingPredator
     - id: 10
@@ -113,14 +113,14 @@ MonoBehaviour:
     isDefault: 0
     state: {fileID: 3847709778611426878, guid: 67dce29dd25efcf45a20697d223da1a5, type: 3}
     cost: 0
-    position: {x: 640, y: 320}
+    position: {x: 638, y: 308}
     pre:
     - id: 1
       value: 1
     - id: 12
       value: 1
     post:
-    - id: 15
+    - id: 8
       value: 1
   - name: FoundMate
     isDefault: 0
@@ -143,7 +143,7 @@ MonoBehaviour:
     cost: 0
     position: {x: 1040, y: 320}
     pre:
-    - id: 15
+    - id: 8
       value: 1
     post:
     - id: 4
@@ -152,11 +152,9 @@ MonoBehaviour:
     isDefault: 0
     state: {fileID: 809417914549644830, guid: 6f772ca34a473ba4196e8bee9c500777, type: 3}
     cost: 0
-    position: {x: 940, y: 540}
+    position: {x: 928, y: 546}
     pre:
     - id: 7
-      value: 1
-    - id: 16
       value: 1
     post:
     - id: 3
@@ -210,13 +208,6 @@ MonoBehaviour:
       value: 0
     - id: 5
       value: 1
-  - name: NeedToRun (delete)
-    isDefault: 0
-    state: {fileID: 3847709778611426878, guid: ee0e8d9cb0e0acc4795325ccbda37557, type: 3}
-    cost: 0
-    position: {x: 240, y: 340}
-    pre: []
-    post: []
   - name: Wander
     isDefault: 1
     state: {fileID: 6357321653341043000, guid: 2fc7293f8ca8f8640a7a241a8dc7e8a5, type: 3}
@@ -237,8 +228,6 @@ MonoBehaviour:
     post:
     - id: 7
       value: 1
-    - id: 16
-      value: 1
   - name: EatPrey
     isDefault: 0
     state: {fileID: 4772116866955757253, guid: 458075ceb2b20484782420bb1a61577e, type: 3}
@@ -253,7 +242,7 @@ MonoBehaviour:
   goals:
   - name: Content
     isDefault: 1
-    position: {x: 220, y: 840}
+    position: {x: 220, y: 837}
     conditions:
     - id: 0
       value: 1

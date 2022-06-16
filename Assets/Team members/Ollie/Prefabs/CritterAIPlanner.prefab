@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 0}
+  npcTargets: []
 --- !u!1 &5861305019518734890
 GameObject:
   m_ObjectHideFlags: 0
@@ -96,6 +97,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1421293349195327508}
+  - {fileID: 2277595981832449}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -190,6 +192,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7392689303276e54cbcf7e5cdcf9f4c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  foodLocationList: []
+  isSafe: 0
+  isHungry: 0
+  npcNearby: 0
+  preyFound: 0
+  foodFound: 0
+  predatorFound: 0
+  mateFound: 0
+  findingPrey: 0
+  foodLocated: 0
+  findingPredator: 0
+  findingMate: 0
+  isHorny: 0
+  healthLow: 0
+  runningAway: 0
+  inDanger: 0
+  foodNearby: 0
+  preyNearby: 0
+  mateNearby: 0
+  predatorNearby: 0
+  preyDead: 0
 --- !u!114 &4705565605658891061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,3 +255,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  trigger: {fileID: 4155980898637526194}
+  targetPos: {x: 0, y: 0, z: 0}
+  targetsInSight: []
+  currentTarget: {fileID: 0}
+  parent: {fileID: 968368501291413216}
+--- !u!1 &8654584319481658008
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2277595981832449}
+  m_Layer: 0
+  m_Name: Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2277595981832449
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8654584319481658008}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1519623156087613634}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

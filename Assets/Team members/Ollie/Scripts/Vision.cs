@@ -14,6 +14,11 @@ namespace Ollie
         public Vector3 targetPos;
         public List<GameObject> targetsInSight;
         public GameObject currentTarget;
+        public CritterAIPlanner parent;
+
+        public event Action FoodSpottedEvent;
+        public event Action PreySpottedEvent;
+        public event Action PredatorSpottedEvent;
 
         public void VisionRefresh()
         {
@@ -51,6 +56,12 @@ namespace Ollie
                                 // {
                                 //     MoveTowards(currentTarget);
                                 // }
+                            }
+
+                            if (hitData.transform.gameObject.GetComponent<iFood>() != null)
+                            {
+                                parent.AddFoodToList(hitData.transform.gameObject);
+                                FoodSpottedEvent?.Invoke();
                             }
                         }
                         else
