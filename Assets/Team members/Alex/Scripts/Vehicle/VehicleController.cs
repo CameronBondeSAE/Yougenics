@@ -10,40 +10,40 @@ public class VehicleController : MonoBehaviour
     public KeyCode up;
     public KeyCode down;
     public List<Wheel> wheels;
-    //public List<FrontWheels> frontWheels;
-    //public List<RearWheels> rearWheels;
-    public float steering = 20f;
-    
-
-    public float turnForce = 10f;
+    public List<Wheel> frontWheels;
+    //public List<Wheel> rearWheels;
+    public float steering = 50f;
+    public Rigidbody mainBodyRB; 
     public float speed = 20f;
-
     // Update is called once per frame
+    
+    
     void Update()
     {
+        
         if (Input.GetKey(left))
         {
-            //steeringWheel.transform.localRotation = Quaternion.Euler(0, steering, 0);
-            foreach (Wheel wheel in wheels)
+            foreach (Wheel frontWheel in frontWheels)
             {
-                wheel.transform.localRotation = Quaternion.Euler(0, steering * -1, 0);
+                frontWheel.transform.localRotation = Quaternion.Euler(0, -steering, 0);
             }
         }
 
         if (Input.GetKey(right))
         {
-            //steeringWheel.transform.localRotation = Quaternion.Euler(0, steering * -1, 0);
-            foreach (Wheel wheel in wheels)
+            foreach (Wheel frontWheel in frontWheels)
             {
-                wheel.transform.localRotation = Quaternion.Euler(0, steering, 0);
+                frontWheel.transform.localRotation = Quaternion.Euler(0, steering, 0);
             }
         }
+        
+        
 
         if (Input.GetKey(up))
         {
             foreach (Wheel wheel in wheels)
             {
-                wheel.Forward();
+                mainBodyRB.AddForceAtPosition(wheel.transform.forward * speed, wheel.transform.position, ForceMode.Force);
             }
         }
 
@@ -51,9 +51,8 @@ public class VehicleController : MonoBehaviour
         {
             foreach (Wheel wheel in wheels)
             {
-                wheel.Back();
+                mainBodyRB.AddForceAtPosition(wheel.transform.forward * -speed, wheel.transform.position, ForceMode.Force);
             }
-
         }
     }
 }
