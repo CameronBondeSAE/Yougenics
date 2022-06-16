@@ -10,7 +10,7 @@ namespace Alex
 
         public StateBase()
         {
-            Debug.Log("Testing");
+            //Debug.Log("Testing");
         }
 
         // Note the �virtual� keywords. 
@@ -18,7 +18,7 @@ namespace Alex
 
         public virtual void EatingTest()
         {
-            Debug.Log("Eating Test Done");
+            //Debug.Log("Eating Test Done");
         }
 
         /*
