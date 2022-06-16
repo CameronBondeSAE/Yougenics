@@ -25,12 +25,13 @@ namespace Ollie
         public GameObject currentTarget = null;
         public RaycastHit hitData;
         
-        public List<GameObject> npcTargets;
+        
         public List<GameObject> targetsInSight;
         private bool rayCooldown;
         private bool interactingTarget;
         private bool foundTarget;
         public bool sleeping;
+        public CritterTrigger trigger;
 
         private void Start()
         {
@@ -68,10 +69,10 @@ namespace Ollie
             rayCooldown = true;
             yield return new WaitForSeconds(1);
 
-            for (int i = 0; i < npcTargets.Count; i++)
+            for (int i = 0; i < trigger.npcTargets.Count; i++)
             {
-                target = npcTargets[i];
-                targetPos = npcTargets[i].transform.position;
+                target = trigger.npcTargets[i];
+                targetPos = trigger.npcTargets[i].transform.position;
                 if (target != null)
                 {
                     Ray ray = new Ray(transform.position, (targetPos-transform.position).normalized);
@@ -162,9 +163,9 @@ namespace Ollie
             yield return new WaitForSeconds(3f);
             currentTarget = null;
             CheckTarget(targetToInteract);
-            if (npcTargets.Contains(targetToInteract))
+            if (trigger.npcTargets.Contains(targetToInteract))
             {
-                npcTargets.Remove(targetToInteract);
+                trigger.npcTargets.Remove(targetToInteract);
             }
 
             if (targetsInSight.Contains(targetToInteract))

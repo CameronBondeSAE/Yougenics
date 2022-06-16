@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4723844657501573712}
-  - component: {fileID: -8143587400579779309}
+  - component: {fileID: -3616158133702387172}
   m_Layer: 0
-  m_Name: FindFoodState
+  m_Name: FoundFoodState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-8143587400579779309
+--- !u!114 &-3616158133702387172
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,6 +41,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3847709778611426878}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c3ae33e688d8a845a8b5f8cad65852e, type: 3}
+  m_Script: {fileID: 11500000, guid: 91737b417736b53448d403a77ebadf3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
