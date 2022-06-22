@@ -305,7 +305,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1162278550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,12 +318,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4941124fdf864694794e479b61f74cb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  perlinNoise: 0
-  scaler: 0.05
-  multiplier: 1
-  cubes: 15
+  scaler: 0.085
+  cubes: 20
   cubePrefab: {fileID: 8072358837824430961, guid: ab4d606ac2d494f479785cbe034fd88f,
     type: 3}
+  randomizeNoiseOffSet: 1
+  perlinOffset: {x: 0, y: 0, z: 0}
 --- !u!4 &1162278551
 Transform:
   m_ObjectHideFlags: 0
@@ -337,7 +337,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1162278552
 MonoBehaviour:
@@ -370,7 +370,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1487544951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,13 +384,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   perlinNoise: 0
-  scaler: 0.1
+  scaler: 0.125
   multiplier: 10
   cubes: 50
   cubePrefab: {fileID: 8072358837824430961, guid: ab4d606ac2d494f479785cbe034fd88f,
     type: 3}
   target: 0
-  duration: 0
+  duration: 5
+  randomizeNoiseOffSet: 1
+  perlinOffset: {x: 0, y: 0}
 --- !u!4 &1487544952
 Transform:
   m_ObjectHideFlags: 0
@@ -417,6 +419,7 @@ GameObject:
   - component: {fileID: 1930862342}
   - component: {fileID: 1930862341}
   - component: {fileID: 1930862340}
+  - component: {fileID: 1930862343}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -490,6 +493,39 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1930862343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930862339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1001 &7782413661563747047
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -516,7 +552,7 @@ PrefabInstance:
     - target: {fileID: 4827845750464887733, guid: 10c3f2f4ffb47604786e1f9806459bb8,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4827845750464887733, guid: 10c3f2f4ffb47604786e1f9806459bb8,
         type: 3}

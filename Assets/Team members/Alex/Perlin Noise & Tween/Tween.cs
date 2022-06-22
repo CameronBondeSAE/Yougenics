@@ -19,8 +19,6 @@ public class Tween : MonoBehaviour
     private void Setter(float pnenvalue)
     {
         zoomLevel = pnenvalue;
-        
-        
     }
 
     private float Getter()

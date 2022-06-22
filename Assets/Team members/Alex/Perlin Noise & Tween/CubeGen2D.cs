@@ -32,8 +32,8 @@ public class CubeGen2D : MonoBehaviour
             for (int z = 0; z < cubes; z++)
             {
                 perlinNoise = Mathf.PerlinNoise(x * scaler * perlinOffset.x, z * scaler * perlinOffset.y);
-                Instantiate(cubePrefab, new Vector3(x, perlinNoise * multiplier, z), Quaternion.identity);
-                cubePrefab.transform.DOMoveY(Mathf.PerlinNoise(Time.time, 0),duration);
+                GameObject instantiated = Instantiate(cubePrefab, new Vector3(x, 0, z), Quaternion.identity);
+                instantiated.transform.DOMoveY(perlinNoise,duration);
             }
         }     
         
