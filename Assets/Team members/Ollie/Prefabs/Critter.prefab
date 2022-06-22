@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 1220652111159811100}
+  npcTargets: []
 --- !u!1 &1220652111159811101
 GameObject:
   m_ObjectHideFlags: 0
@@ -81,7 +82,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1220652111159811094
 Transform:
   m_ObjectHideFlags: 0
@@ -237,10 +238,9 @@ MonoBehaviour:
   targetPos: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
   currentTarget: {fileID: 0}
-  npcTargets: []
   targetsInSight: []
   sleeping: 0
-  trigger: {fileID: 0}
+  trigger: {fileID: 1220652110637583819}
 --- !u!54 &1220652111159811093
 Rigidbody:
   m_ObjectHideFlags: 0

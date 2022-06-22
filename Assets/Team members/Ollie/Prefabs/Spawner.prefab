@@ -49,4 +49,4 @@ MonoBehaviour:
   predator: {fileID: 8956417045298381839, guid: c6e7fd0a0e5da584fa47abdbf86932b2,
     type: 3}
   critter: {fileID: 8639400809785660131, guid: f9fb2c1fb2960eb4995d0b66ade86063, type: 3}
-  spawnAmount: 50
+  spawnAmount: 10
