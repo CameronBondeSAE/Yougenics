@@ -4,32 +4,40 @@ using System.Collections.Generic;
 using Anthill.AI;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace Maya
 { 
-    public class FindFoodState : AntAIState
+    public class FindFoodState : AIBase
     {
-        public Vision myVision;
-        //private NavMeshAgent agent;
-        public static List<Food> foodIWant;
+        public Vector3 newPos;
+        public List<Food> foodIWant;
+        public float moveTimer;
+        public float moveCooldown;
+        public float moveDistance;
+        
 
-        public override void Create(GameObject aGameObject)
-        {
-            base.Create(aGameObject);
-            myVision = aGameObject.GetComponent<Vision>();
-        }
-
+        
         public override void Enter()
         {
             base.Enter();
-            //agent = GetComponentInParent<NavMeshAgent>();
-            //agent.speed = 10;
+            myAgent.speed = 10;
         }
 
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
             base.Execute(aDeltaTime, aTimeScale);
-            if (myVision.foodIveSeen != null)
+            moveTimer += aDeltaTime;
+            if (foodIWant == null)
+            {
+                if (moveTimer >= moveCooldown)
+                {
+                    newPos = RandomNavSphere(transform.position, moveDistance, -1);
+                    myAgent.SetDestination(newPos);
+                    moveTimer = 0;
+                }
+            }
+            else if (myVision.foodIveSeen != null)
             {
                 foreach (Food piece in myVision.foodIveSeen)
                 {
@@ -42,6 +50,18 @@ namespace Maya
         {
             base.Exit();
             Finish();
+        }
+        
+        public static Vector3 RandomNavSphere(Vector3 origin, float distance, int layerMask)
+        {
+            Vector3 randomDirection = Random.insideUnitSphere * distance;
+
+            randomDirection += origin;
+
+            NavMeshHit navHit;
+            NavMesh.SamplePosition(randomDirection, out navHit, distance, layerMask);
+
+            return navHit.position;
         }
     }
 }

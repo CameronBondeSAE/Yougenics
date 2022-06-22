@@ -56,8 +56,6 @@ MonoBehaviour:
     post:
     - id: 0
       value: 0
-    - id: 2
-      value: 1
   - name: Sleep
     isDefault: 0
     state: {fileID: 4366852732828214202, guid: d49fc77406f5dea42ac776bbee7adb06, type: 3}
