@@ -17,7 +17,7 @@ public class CubeGen1D : MonoBehaviour
         //Instantiate(cubePrefab, new Vector3(0, 0, 0), Quaternion.identity);
     }
     
-    private void GenerateMyCube()
+    public void GenerateMyCube()
     {
         for (int x = 1; x < cubes; x++)
         {
