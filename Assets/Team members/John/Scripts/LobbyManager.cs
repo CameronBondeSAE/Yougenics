@@ -52,13 +52,13 @@ public class LobbyManager : NetworkBehaviour
 
     private void Start()
     {
-        
+        NetworkManager.Singleton.OnClientConnectedCallback += OnClientJoin;
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientLeave;
     }
 
     public override void OnNetworkSpawn()
     {
-        NetworkManager.Singleton.OnClientConnectedCallback += OnClientJoin;
-        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientLeave;
+        
     }
 
     private void OnClientLeave(ulong obj)
