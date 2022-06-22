@@ -13,22 +13,16 @@ namespace Alex
         public Transform enterPoint;
         public Transform exitPoint;
         public Vector3 sittingOffSet;
-
         public float transitionSpeed = .2f;
-        
         CharacterController vehicleController;
         public float movementSpeed = 5f;
         
-
-        // Start is called before the first frame update
+        
         void Start()
         {
             vehicleActive = false;
             vehicleController = gameObject.AddComponent<CharacterController>();
         }
-
-        // Update is called once per frame
-        
         
         private void Update()
         {
@@ -45,8 +39,6 @@ namespace Alex
             {
                 isInTransition = true;
             }
-            
-            
         }
 
         void Enter()
@@ -67,7 +59,6 @@ namespace Alex
             {
                 isInTransition = false;
                 vehicleActive = true;
-                
             }
         }
 
