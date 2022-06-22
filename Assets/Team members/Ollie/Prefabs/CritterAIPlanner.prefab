@@ -193,6 +193,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foodLocationList: []
+  mateLocationList: []
+  moveSpeed: 0
   isSafe: 0
   isHungry: 0
   npcNearby: 0
@@ -203,7 +205,7 @@ MonoBehaviour:
   findingPrey: 0
   foodLocated: 0
   findingPredator: 0
-  findingMate: 0
+  mateLocated: 0
   isHorny: 0
   healthLow: 0
   runningAway: 0
@@ -260,6 +262,7 @@ MonoBehaviour:
   targetsInSight: []
   currentTarget: {fileID: 0}
   parent: {fileID: 968368501291413216}
+  myGender: 0
 --- !u!1 &8654584319481658008
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,6 +272,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2277595981832449}
+  - component: {fileID: 1538492516}
+  - component: {fileID: 1538492514}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -291,3 +296,32 @@ Transform:
   m_Father: {fileID: 1519623156087613634}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1538492516
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8654584319481658008}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.0711327, y: 1, z: 2.1308143}
+  m_Center: {x: 0.06347227, y: 0, z: 0.16441524}
+--- !u!114 &1538492514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8654584319481658008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c353b3ba3b4e3a448c1ad06f01a8603, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 968368501291413216}
+  collider: {fileID: 1538492516}
+  targetLocation: {x: 0, y: 0, z: 0}
+  target: {fileID: 0}

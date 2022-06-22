@@ -25,6 +25,7 @@ namespace Alex
             Eating eating = new Eating();
             eating.EatingTest();
             */
+            
 
             ChangeState(GetComponent<Wondering>());
         }
@@ -45,6 +46,7 @@ namespace Alex
             {
                 // Look for food
                 ChangeState(GetComponent<LookingForFood>());
+                
             }
             
             else if (GetComponent<Energy>().energyAmount <= 20)

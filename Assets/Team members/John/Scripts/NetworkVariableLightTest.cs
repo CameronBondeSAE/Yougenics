@@ -49,7 +49,6 @@ public class NetworkVariableLightTest : NetworkBehaviour
         MyPosition.OnValueChanged += UpdateMyPosition;
         IsLightActive.OnValueChanged += UpdateLightState;
 
-        //This check is causing null errors on client end when calling line 62
         if(IsServer)
         {
             dayNightManager = FindObjectOfType<DayNightManager>();

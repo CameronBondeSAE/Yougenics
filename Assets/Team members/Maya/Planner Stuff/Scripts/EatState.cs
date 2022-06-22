@@ -5,9 +5,8 @@ using UnityEngine;
 
 namespace Maya
 { 
-    public class EatState : AntAIState
+    public class EatState : AIBase
     {
-        public Touch myTouch;
         public Food food;
         public float eatTimer;
         public float timer;
@@ -15,7 +14,7 @@ namespace Maya
         public override void Create(GameObject aGameObject)
         {
             base.Create(aGameObject);
-            myTouch = aGameObject.GetComponent<Touch>();
+            food = aGameObject.GetComponent<Food>();
         }
         public override void Enter()
         {

@@ -38,7 +38,6 @@ public class VehicleController : MonoBehaviour
         }
         
         
-
         if (Input.GetKey(up))
         {
             foreach (Wheel wheel in wheels)

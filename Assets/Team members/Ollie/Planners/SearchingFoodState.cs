@@ -32,7 +32,7 @@ namespace Ollie
             }
             else
             {
-                parent.GetComponent<CritterAIPlanner>().SetFoodLocated();
+                parent.GetComponent<CritterAIPlanner>().SetFoodLocated(true);
                 parent.GetComponentInChildren<Controller>().StopMovement();
                 Finish();
             }

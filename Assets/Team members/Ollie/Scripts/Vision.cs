@@ -15,10 +15,16 @@ namespace Ollie
         public List<GameObject> targetsInSight;
         public GameObject currentTarget;
         public CritterAIPlanner parent;
+        public Critter.Gender myGender;
 
         public event Action FoodSpottedEvent;
         public event Action PreySpottedEvent;
         public event Action PredatorSpottedEvent;
+
+        public void Start()
+        {
+            myGender = Critter.Gender.Female;
+        }
 
         public void VisionRefresh()
         {
@@ -62,6 +68,17 @@ namespace Ollie
                             {
                                 parent.AddFoodToList(hitData.transform.gameObject);
                                 FoodSpottedEvent?.Invoke();
+                            }
+                            
+                            if (hitData.transform.gameObject.GetComponent<iCritter>() != null)
+                            {
+                                //if hitData is NOT nonbinary, and not the same gender as me
+                                if (hitData.transform.gameObject.GetComponent<Critter>().gender != myGender &&
+                                    hitData.transform.gameObject.GetComponent<Critter>().gender !=
+                                    Critter.Gender.NonBinary)
+                                {
+                                    parent.AddMateToList(hitData.transform.gameObject);
+                                }
                             }
                         }
                         else
