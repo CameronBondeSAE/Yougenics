@@ -6,41 +6,40 @@ using UnityEngine.AI;
 
 namespace Maya
 { 
-    public class GoToFoodState : AntAIState
+    public class GoToFoodState : AIBase
     {
-        public Vision myVision;
-        private NavMeshAgent agent;
-
+        public FindFoodState findFoodState;
+        public Vector3 newPos;
+        
         public override void Create(GameObject aGameObject)
         {
             base.Create(aGameObject);
-            myVision = aGameObject.GetComponent<Vision>();
+            findFoodState = GetComponentInChildren<FindFoodState>();
         }
-
         public override void Enter()
         {
             base.Enter();
-            agent = GetComponentInParent<NavMeshAgent>();
-            agent.speed = 10;
+            myAgent.speed = 10;
         }
 
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
             base.Execute(aDeltaTime, aTimeScale);
-            if (FindFoodState.foodIWant != null)
+            if (findFoodState.foodIWant.Count <= 0)
             {
-                agent.SetDestination(FindFoodState.foodIWant[0].transform.position);
+                newPos = findFoodState.foodIWant[0].transform.position;
+                myAgent.SetDestination(newPos);
             }
             else
             {
-                Vector3 newPos = WanderState.RandomNavSphere(transform.position, myVision.GetComponent<SphereCollider>().radius, -1);
-                agent.SetDestination(newPos);
+                
             }
         }
 
         public override void Exit()
         {
             base.Exit();
+            Finish();
         }
     }
 }

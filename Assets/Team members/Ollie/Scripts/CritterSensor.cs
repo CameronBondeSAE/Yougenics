@@ -24,7 +24,7 @@ namespace Ollie
             aWorldState.Set(Scenario.findingPrey, control.findingPrey);
             aWorldState.Set(Scenario.findingFood, control.foodLocated);
             aWorldState.Set(Scenario.findingPredator, control.findingPredator);
-            aWorldState.Set(Scenario.findingMate, control.findingMate);
+            aWorldState.Set(Scenario.mateLocated, control.mateLocated);
             aWorldState.Set(Scenario.isHorny, control.isHorny);
             aWorldState.Set(Scenario.healthLow, control.healthLow);
             aWorldState.Set(Scenario.runningAway, control.runningAway);

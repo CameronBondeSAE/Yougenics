@@ -10,7 +10,7 @@ namespace Maya
     public class Vision : MonoBehaviour
     {
         public List<Food> foodIveSeen;
-        public Vector3 myTarget;
+        public List<Vector3> foodBank;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -18,7 +18,6 @@ namespace Maya
             if (other.tag == "Food" && !foodIveSeen.Contains(onePiece))
             {
                 foodIveSeen.Add(onePiece);
-                myTarget = onePiece.transform.position;
             }
         }
     }

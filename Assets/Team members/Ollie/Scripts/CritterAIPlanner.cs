@@ -9,12 +9,13 @@ namespace Ollie
 {
     public class CritterAIPlanner : MonoBehaviour
     {
-        public List<Vector3> foodLocationList;
+        public List<Transform> foodLocationList;
+        public List<Transform> mateLocationList;
         public float moveSpeed;
 
         #region Bools for planner World State
-        [HideInInspector] public bool isSafe;
-        [HideInInspector] public bool isHungry;
+        public bool isSafe;
+        public bool isHungry;
         [HideInInspector] public bool npcNearby;
         [HideInInspector] public bool preyFound;
         [HideInInspector] public bool foodFound;
@@ -23,8 +24,8 @@ namespace Ollie
         [HideInInspector] public bool findingPrey;
         [HideInInspector] public bool foodLocated;
         [HideInInspector] public bool findingPredator;
-        [HideInInspector] public bool findingMate;
-        [HideInInspector] public bool isHorny;
+        [HideInInspector] public bool mateLocated;
+        public bool isHorny;
         [HideInInspector] public bool healthLow;
         [HideInInspector] public bool runningAway;
         [HideInInspector] public bool inDanger;
@@ -38,7 +39,6 @@ namespace Ollie
         private void Start()
         {
             moveSpeed = 0.25f;
-            
             //testing purposes only
             isHungry = true;
             healthLow = true;
@@ -46,15 +46,48 @@ namespace Ollie
 
         public void AddFoodToList(GameObject foodLocation)
         {
-            if (!foodLocationList.Contains(foodLocation.transform.position))
+            if (!foodLocationList.Contains(foodLocation.transform))
             {
-                foodLocationList.Add(foodLocation.transform.position);
+                foodLocationList.Add(foodLocation.transform);
             }
         }
 
-        public void SetFoodLocated()
+        public void AddMateToList(GameObject mateLocation)
         {
-            foodLocated = true;
+            if (!mateLocationList.Contains(mateLocation.transform))
+            {
+                mateLocationList.Add(mateLocation.transform);
+            }
+        }
+
+        public void SetFoodLocated(bool toggle)
+        {
+            foodLocated = toggle;
+        }
+
+        public void SetFoodFound(bool toggle)
+        {
+            foodFound = toggle;
+        }
+
+        public void SetMateLocated(bool toggle)
+        {
+            mateLocated = toggle;
+        }
+        
+        public void SetMateFound(bool toggle)
+        {
+            mateFound = toggle;
+        }
+
+        public void SetIsHungry(bool toggle)
+        {
+            isHungry = toggle;
+        }
+
+        public void SetIsHorny(bool toggle)
+        {
+            isHorny = toggle;
         }
     }
 }

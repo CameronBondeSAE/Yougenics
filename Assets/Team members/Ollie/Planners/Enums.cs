@@ -16,7 +16,7 @@ namespace Ollie
         findingPrey = 7,
         findingFood = 8,
         findingPredator = 9,
-        findingMate = 10,
+        mateLocated = 10,
         isHorny = 11,
         healthLow = 12,
         runningAway = 13,

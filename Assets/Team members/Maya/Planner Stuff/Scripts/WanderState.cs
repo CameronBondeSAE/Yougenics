@@ -6,16 +6,14 @@ using UnityEngine.AI;
 
 namespace Maya
 { 
-    public class WanderState : AntAIState
+    public class WanderState : AIBase
     {
         public float wanderRadius;
         public float wanderTimer;
-        private NavMeshAgent agent;
         public float timer;
         public override void Enter()
         {
             base.Enter();
-            agent = GetComponentInParent<NavMeshAgent>();
             timer = wanderTimer;
 
         }
@@ -28,7 +26,7 @@ namespace Maya
             if (timer >= wanderTimer)
             {
                 Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
-                agent.SetDestination(newPos);
+                myAgent.SetDestination(newPos);
                 timer = 0;
             }
         }

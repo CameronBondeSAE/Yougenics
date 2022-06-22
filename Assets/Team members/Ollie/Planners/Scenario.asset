@@ -35,7 +35,7 @@ MonoBehaviour:
     - id: 9
       name: findingPredator
     - id: 10
-      name: findingMate
+      name: mateLocated
     - id: 11
       name: isHorny
     - id: 12
@@ -76,7 +76,7 @@ MonoBehaviour:
     isDefault: 0
     state: {fileID: 3847709778611426878, guid: 172651b4bbb6e4043a33c9261504da19, type: 3}
     cost: 0
-    position: {x: 1180, y: 540}
+    position: {x: 1183, y: 544}
     pre:
     - id: 3
       value: 1
@@ -94,8 +94,6 @@ MonoBehaviour:
     post:
     - id: 1
       value: 0
-    - id: 0
-      value: 1
   - name: Mate
     isDefault: 0
     state: {fileID: 3847709778611426878, guid: 8c4e8e560cf9ae34d8b8f9849ecde591, type: 3}
@@ -107,8 +105,6 @@ MonoBehaviour:
     post:
     - id: 11
       value: 0
-    - id: 0
-      value: 1
   - name: SearchingFood
     isDefault: 0
     state: {fileID: 3847709778611426878, guid: 67dce29dd25efcf45a20697d223da1a5, type: 3}
@@ -128,11 +124,7 @@ MonoBehaviour:
     cost: 0
     position: {x: 1040, y: 800}
     pre:
-    - id: 11
-      value: 1
     - id: 10
-      value: 1
-    - id: 17
       value: 1
     post:
     - id: 6
@@ -152,7 +144,7 @@ MonoBehaviour:
     isDefault: 0
     state: {fileID: 809417914549644830, guid: 6f772ca34a473ba4196e8bee9c500777, type: 3}
     cost: 0
-    position: {x: 928, y: 546}
+    position: {x: 920, y: 548}
     pre:
     - id: 7
       value: 1
@@ -170,8 +162,6 @@ MonoBehaviour:
     post:
     - id: 10
       value: 1
-    - id: 17
-      value: 1
   - name: StopRunningAway
     isDefault: 0
     state: {fileID: 3847709778611426878, guid: 848deb683474da94a9900e0535c9dc44, type: 3}
@@ -185,8 +175,6 @@ MonoBehaviour:
     - id: 0
       value: 0
     post:
-    - id: 0
-      value: 1
     - id: 13
       value: 0
     - id: 18
@@ -198,8 +186,6 @@ MonoBehaviour:
     position: {x: 620, y: 40}
     pre:
     - id: 18
-      value: 1
-    - id: 0
       value: 1
     post:
     - id: 14
@@ -267,7 +253,7 @@ MonoBehaviour:
     - id: 3
       value: 0
     - id: 4
-      value: 0
+      value: 1
     - id: 5
       value: 0
     - id: 6
@@ -275,15 +261,15 @@ MonoBehaviour:
     - id: 7
       value: 0
     - id: 8
-      value: 0
+      value: 1
     - id: 9
       value: 0
     - id: 10
       value: 0
     - id: 11
-      value: 0
+      value: 1
     - id: 12
-      value: 0
+      value: 1
     - id: 13
       value: 0
     - id: 14
