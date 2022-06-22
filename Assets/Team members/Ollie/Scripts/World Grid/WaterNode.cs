@@ -8,35 +8,30 @@ namespace Ollie
 {
     public class WaterNode
     {
-        public WaterNode[,] gridNodeReferences;
         public bool isBlocked;
-        public Vector3 size;
-        public Vector3 gridSize;
-        
-        // Start is called before the first frame update
-        void Start()
-        {
-            ScanWorld();
-        }
+        public bool isTooSteep;
+        public Vector2 gridPosition;
+        public float fillAmount;
 
-        // Update is called once per frame
-        void Update()
-        {
+        public WaterNode[,] neighbours = new WaterNode[3, 3];
 
-        }
-
-        void ScanWorld()
+        public void FillNeighbours()
         {
-            for (int x = 0; x < size.x; x++)
+            for (int x = 0; x < 3; x++)
             {
-                for (int y = 0; y < size.y; y++)
+                for (int z = 0; z < 3; z++)
                 {
-                    // if (Physics.OverlapBox(new Vector3(x * gridSize.x, 0, y * gridSize.z),
-                    //     new Vector3(gridSize.x, gridSize.y, gridSize.z), quaternion.identity))
-                    // {
-                    //     //something is there
-                    //     gridNodeReferences[x, y].isBlocked = true;
-                    // }
+                    WaterNode neighbour = neighbours[x, z];
+
+                    //need to ask Luke about this bit
+                    if (!(neighbour == null || neighbour.isBlocked))
+                    {
+                        neighbour.fillAmount += 0.1f;
+                        if (neighbour.fillAmount >= 1)
+                        {
+                            neighbour.FillNeighbours();
+                        }
+                    }
                 }
             }
         }

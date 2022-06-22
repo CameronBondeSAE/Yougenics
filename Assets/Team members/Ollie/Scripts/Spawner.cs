@@ -20,7 +20,7 @@ namespace Ollie
         private int planeLength = 80;
         private int planeFloor = 1;
         
-        void Start()
+        void Awake()
         {
             CreateNPCs(spawnAmount);
         }
