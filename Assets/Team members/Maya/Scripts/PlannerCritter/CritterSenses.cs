@@ -33,7 +33,7 @@ namespace Maya
             aWorldState.Set(CritterAI.canSeeFood, vision.foodIveSeen != null);
             aWorldState.Set(CritterAI.canSeeMate, false);
             aWorldState.Set(CritterAI.isNearEnemy, false);
-            aWorldState.Set(CritterAI.isNearFood, false);
+            aWorldState.Set(CritterAI.isNearFood, touch.isNearFood);
             aWorldState.Set(CritterAI.isNearMate, false);
             aWorldState.Set(CritterAI.mateIsHorny, false);
         }

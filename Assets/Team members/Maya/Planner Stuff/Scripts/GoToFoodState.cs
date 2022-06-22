@@ -33,14 +33,14 @@ namespace Maya
             }
             else
             {
-                Vector3 newPos = WanderState.RandomNavSphere(transform.position, myVision.GetComponent<SphereCollider>().radius, -1);
-                agent.SetDestination(newPos);
+                
             }
         }
 
         public override void Exit()
         {
             base.Exit();
+            Finish();
         }
     }
 }
