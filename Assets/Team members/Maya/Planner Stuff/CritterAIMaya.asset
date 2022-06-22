@@ -1,0 +1,289 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f22e7053ea04ed0922308786facc8c, type: 3}
+  m_Name: CritterAIMaya
+  m_EditorClassIdentifier: 
+  conditions:
+    list:
+    - id: 0
+      name: isHungry
+    - id: 1
+      name: isTired
+    - id: 2
+      name: isHealthy
+    - id: 3
+      name: canSeeEnemy
+    - id: 4
+      name: isNearEnemy
+    - id: 5
+      name: isHorny
+    - id: 6
+      name: canSeeMate
+    - id: 7
+      name: isNearMate
+    - id: 8
+      name: canSeeFood
+    - id: 9
+      name: isNearFood
+    - id: 10
+      name: mateIsHorny
+  actions:
+  - name: Eat
+    isDefault: 0
+    state: {fileID: 6523148954972244928, guid: ada0f28880ea5094391389461e921468, type: 3}
+    cost: 1
+    position: {x: 1242, y: 392}
+    pre:
+    - id: 9
+      value: 1
+    - id: 0
+      value: 1
+    - id: 1
+      value: 0
+    - id: 3
+      value: 0
+    - id: 4
+      value: 0
+    post:
+    - id: 0
+      value: 0
+    - id: 2
+      value: 1
+  - name: Sleep
+    isDefault: 0
+    state: {fileID: 4366852732828214202, guid: d49fc77406f5dea42ac776bbee7adb06, type: 3}
+    cost: 0
+    position: {x: 841, y: 684}
+    pre:
+    - id: 1
+      value: 1
+    - id: 3
+      value: 0
+    - id: 4
+      value: 0
+    post:
+    - id: 1
+      value: 0
+    - id: 2
+      value: 1
+  - name: Attack
+    isDefault: 0
+    state: {fileID: 5725867073326099485, guid: 374cb78e945344a469d065381ec4ac61, type: 3}
+    cost: 2
+    position: {x: 1240, y: 740}
+    pre:
+    - id: 4
+      value: 1
+    - id: 2
+      value: 1
+    - id: 1
+      value: 0
+    - id: 3
+      value: 1
+    post:
+    - id: 4
+      value: 0
+    - id: 3
+      value: 0
+  - name: Mate
+    isDefault: 0
+    state: {fileID: 1146860657182672110, guid: bbf460f5a851eaf49b83b56491447fc0, type: 3}
+    cost: 2
+    position: {x: 1868, y: 407}
+    pre:
+    - id: 10
+      value: 1
+    - id: 5
+      value: 1
+    - id: 7
+      value: 1
+    - id: 2
+      value: 1
+    - id: 3
+      value: 0
+    - id: 4
+      value: 0
+    post:
+    - id: 5
+      value: 0
+    - id: 10
+      value: 0
+  - name: FindFood
+    isDefault: 0
+    state: {fileID: 4732975288301281584, guid: f14555d4be4b7244b8f44860a3059768, type: 3}
+    cost: 1
+    position: {x: 840, y: 400}
+    pre:
+    - id: 0
+      value: 1
+    - id: 1
+      value: 0
+    - id: 9
+      value: 0
+    - id: 4
+      value: 0
+    - id: 3
+      value: 0
+    post:
+    - id: 8
+      value: 1
+  - name: RunAway
+    isDefault: 0
+    state: {fileID: 9089406150732064398, guid: 62f3f71d542d1c44a961a14e69cf1542, type: 3}
+    cost: 0
+    position: {x: 1489, y: 720}
+    pre:
+    - id: 1
+      value: 1
+    - id: 3
+      value: 1
+    post:
+    - id: 3
+      value: 0
+    - id: 4
+      value: 0
+  - name: FindHornyMate
+    isDefault: 0
+    state: {fileID: 2639925370335305192, guid: bbc1536259e2a284eacb4a6b3cb74875, type: 3}
+    cost: 2
+    position: {x: 1444, y: 371}
+    pre:
+    - id: 5
+      value: 1
+    - id: 6
+      value: 0
+    - id: 7
+      value: 0
+    - id: 2
+      value: 1
+    - id: 3
+      value: 0
+    - id: 4
+      value: 0
+    post:
+    - id: 6
+      value: 1
+  - name: MoveToEnemy
+    isDefault: 0
+    state: {fileID: 6010666875743933134, guid: 74e764eae3ec0a94c917db3caa65563a, type: 3}
+    cost: 1
+    position: {x: 1040, y: 740}
+    pre:
+    - id: 3
+      value: 1
+    - id: 1
+      value: 0
+    - id: 2
+      value: 1
+    post:
+    - id: 4
+      value: 1
+  - name: Wander
+    isDefault: 1
+    state: {fileID: 3635880308102219773, guid: 9cfbf05a80b35f64cbcc7cb1e8f9bc21, type: 3}
+    cost: 0
+    position: {x: 620, y: 601}
+    pre:
+    - id: 0
+      value: 0
+    - id: 1
+      value: 0
+    - id: 3
+      value: 0
+    - id: 4
+      value: 0
+    - id: 5
+      value: 0
+    - id: 2
+      value: 1
+    post: []
+  - name: GoToFood
+    isDefault: 0
+    state: {fileID: 8382547209173337531, guid: 9691a6de7fd9f1940985d5c9cbcdc167, type: 3}
+    cost: 1
+    position: {x: 1040, y: 400}
+    pre:
+    - id: 8
+      value: 1
+    - id: 0
+      value: 1
+    - id: 1
+      value: 0
+    - id: 9
+      value: 0
+    - id: 3
+      value: 0
+    - id: 4
+      value: 0
+    post:
+    - id: 9
+      value: 1
+  - name: GoToMate
+    isDefault: 0
+    state: {fileID: 4576963448524238511, guid: 2fe50815a568dc241b1f3b99610ca20d, type: 3}
+    cost: 2
+    position: {x: 1647, y: 379}
+    pre:
+    - id: 5
+      value: 1
+    - id: 6
+      value: 1
+    - id: 7
+      value: 0
+    - id: 3
+      value: 0
+    - id: 4
+      value: 0
+    post:
+    - id: 7
+      value: 1
+  goals:
+  - name: IsAlive
+    isDefault: 1
+    position: {x: 379, y: 636}
+    conditions:
+    - id: 2
+      value: 1
+    - id: 1
+      value: 0
+    - id: 0
+      value: 0
+    - id: 5
+      value: 0
+    - id: 3
+      value: 0
+  worldStates:
+  - position: {x: 231, y: 971}
+    isAutoUpdate: 1
+    list:
+    - id: 0
+      value: 1
+    - id: 1
+      value: 1
+    - id: 2
+      value: 1
+    - id: 3
+      value: 0
+    - id: 4
+      value: 0
+    - id: 5
+      value: 1
+    - id: 6
+      value: 1
+    - id: 7
+      value: 1
+    - id: 8
+      value: 1
+    - id: 9
+      value: 1
+    - id: 10
+      value: 1

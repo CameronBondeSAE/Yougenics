@@ -5,15 +5,17 @@ using UnityEngine;
 
 namespace Cam
 {
+    public class Wheel
+    {
+        
+    }
+    
+    
     public class CamsDude : MonoBehaviour
     {
-        public bool doingThing;
-        public float amount;
-
-
-        public GameObject otherThing;
-
-
+        public Transform target;
+        
+        
         void Start()
         {
             // I am interested in this event, so I 'subscribe/listen/observe' to the event
@@ -28,11 +30,15 @@ namespace Cam
 
 
         public GameObject myGo;
-        public CamSmash camSmash;
-        public StateBase currentState;
+        public CamSmash   camSmash;
+        public StateBase  currentState;
+
+        public bool       isHealthy;
+        public bool       hasFood;
 
         private void Update()
         {
+            
             if (GetComponent<Energy>().energyAmount < 10)
             {
                 // Sleep

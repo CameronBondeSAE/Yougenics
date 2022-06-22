@@ -4,7 +4,7 @@ using UnityEngine;
 public class ClientInfo : NetworkBehaviour
 {
 
-    public string name = "test";
+    public string name = "test ";
 
     public override void OnNetworkSpawn()
     {

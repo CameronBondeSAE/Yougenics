@@ -1,0 +1,366 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f22e7053ea04ed0922308786facc8c, type: 3}
+  m_Name: LukeCritterScenario
+  m_EditorClassIdentifier: 
+  conditions:
+    list:
+    - id: 0
+      name: isVeryHungry
+    - id: 1
+      name: isInImminentDanger
+    - id: 2
+      name: isVeryTired
+    - id: 3
+      name: isHungry
+    - id: 4
+      name: predatorsPresent
+    - id: 5
+      name: isReadyToMate
+    - id: 6
+      name: isTired
+    - id: 7
+      name: foodNearby
+    - id: 8
+      name: matesNearby
+    - id: 9
+      name: hasFood
+    - id: 10
+      name: hasMate
+    - id: 11
+      name: isHealthy
+    - id: 12
+      name: isAsleep
+    - id: 13
+      name: DefaultBehaviourLovelorn
+    - id: 14
+      name: DefaultBehaviourTired
+    - id: 15
+      name: DefaultBehaviourHungry
+    - id: 16
+      name: DefaultBehaviourRestless
+  actions:
+  - name: MoveToFood
+    isDefault: 0
+    state: {fileID: 8370195556850952778, guid: 092c09a45594c124bb3d55f78679b155, type: 3}
+    cost: 0
+    position: {x: 733.37146, y: 296.45642}
+    pre:
+    - id: 9
+      value: 0
+    - id: 7
+      value: 1
+    - id: 12
+      value: 0
+    post:
+    - id: 9
+      value: 1
+  - name: EatHungry
+    isDefault: 0
+    state: {fileID: 8370195556850952778, guid: 32a8c42dee79d704aadccfa15b4cd7ec, type: 3}
+    cost: 0
+    position: {x: 528.7408, y: 289.9501}
+    pre:
+    - id: 9
+      value: 1
+    - id: 12
+      value: 0
+    - id: 1
+      value: 0
+    - id: 3
+      value: 1
+    - id: 2
+      value: 0
+    - id: 0
+      value: 0
+    post:
+    - id: 3
+      value: 0
+    - id: 11
+      value: 0
+  - name: FindFood
+    isDefault: 0
+    state: {fileID: 8370195556850952778, guid: 167dda51128316e4da5880d7b2b48b4d, type: 3}
+    cost: 0
+    position: {x: 950.25867, y: 288.9096}
+    pre:
+    - id: 7
+      value: 0
+    - id: 12
+      value: 0
+    post:
+    - id: 7
+      value: 1
+  - name: RunAwayImminentDanger
+    isDefault: 0
+    state: {fileID: 8370195556850952778, guid: b8bd39dd2f8132447bc37a70ac0f0210, type: 3}
+    cost: 0
+    position: {x: 302.93506, y: 590.7207}
+    pre:
+    - id: 1
+      value: 1
+    - id: 12
+      value: 0
+    - id: 0
+      value: 0
+    post:
+    - id: 1
+      value: 0
+    - id: 4
+      value: 1
+  - name: RunAway
+    isDefault: 0
+    state: {fileID: 8370195556850952778, guid: 8c4786730c2785f4db89a2cc490bf959, type: 3}
+    cost: 0
+    position: {x: 524.9077, y: 588.75305}
+    pre:
+    - id: 4
+      value: 1
+    - id: 12
+      value: 0
+    - id: 0
+      value: 0
+    - id: 1
+      value: 0
+    - id: 2
+      value: 0
+    - id: 3
+      value: 0
+    post:
+    - id: 4
+      value: 0
+  - name: MoveToMate
+    isDefault: 0
+    state: {fileID: 8370195556850952778, guid: 3a2421e3148da5142bdfaf26dc3269b3, type: 3}
+    cost: 0
+    position: {x: 525.28925, y: 880.2644}
+    pre:
+    - id: 10
+      value: 0
+    - id: 8
+      value: 1
+    - id: 12
+      value: 0
+    post:
+    - id: 10
+      value: 1
+  - name: Mate
+    isDefault: 0
+    state: {fileID: 8370195556850952778, guid: b757aade5cd807a41a5ab5de579b6b6f, type: 3}
+    cost: 0
+    position: {x: 297.21448, y: 876.03}
+    pre:
+    - id: 10
+      value: 1
+    - id: 5
+      value: 1
+    - id: 12
+      value: 0
+    - id: 1
+      value: 0
+    - id: 2
+      value: 0
+    - id: 0
+      value: 0
+    - id: 3
+      value: 0
+    - id: 4
+      value: 0
+    post:
+    - id: 5
+      value: 0
+  - name: DefaultBehaviourRestless
+    isDefault: 1
+    state: {fileID: 3207718892820481763, guid: 855b86230b96fc1499858455093340d9, type: 3}
+    cost: 1
+    position: {x: 521.00494, y: 49.552917}
+    pre: []
+    post:
+    - id: 16
+      value: 0
+  - name: WakeUp
+    isDefault: 0
+    state: {fileID: 8370195556850952778, guid: 8aa7941689eaf804d8efca2a6994e18e, type: 3}
+    cost: 0
+    position: {x: 739.67084, y: 1233.334}
+    pre:
+    - id: 12
+      value: 1
+    post:
+    - id: 12
+      value: 0
+  - name: GoToSleepTired
+    isDefault: 0
+    state: {fileID: 8370195556850952778, guid: df4b7da7cbd2cda43bf0e4a3166927ea, type: 3}
+    cost: 0
+    position: {x: 511.46136, y: 1227.404}
+    pre:
+    - id: 6
+      value: 1
+    - id: 0
+      value: 0
+    - id: 1
+      value: 0
+    - id: 2
+      value: 0
+    - id: 4
+      value: 0
+    - id: 3
+      value: 0
+    post:
+    - id: 12
+      value: 1
+    - id: 6
+      value: 0
+  - name: GoToSleepVeryTired
+    isDefault: 0
+    state: {fileID: 8370195556850952778, guid: 0fdc06656b97bbd4d851e5651d831975, type: 3}
+    cost: 0
+    position: {x: 301.27432, y: 1230.651}
+    pre:
+    - id: 2
+      value: 1
+    - id: 1
+      value: 0
+    - id: 0
+      value: 0
+    post:
+    - id: 12
+      value: 1
+    - id: 2
+      value: 0
+    - id: 6
+      value: 1
+  - name: EatVeryHungry
+    isDefault: 0
+    state: {fileID: 8370195556850952778, guid: f0cd6e75f5e7d5949a54b9ab4c0952db, type: 3}
+    cost: 0
+    position: {x: 304.07233, y: 290.70325}
+    pre:
+    - id: 9
+      value: 1
+    - id: 12
+      value: 0
+    - id: 0
+      value: 1
+    post:
+    - id: 0
+      value: 0
+    - id: 3
+      value: 1
+  - name: FindMate
+    isDefault: 0
+    state: {fileID: 8370195556850952778, guid: 49c2a63967f8046459bc7234686c60fb, type: 3}
+    cost: 0
+    position: {x: 734.3441, y: 876.67847}
+    pre:
+    - id: 12
+      value: 0
+    - id: 8
+      value: 0
+    - id: 6
+      value: 0
+    post:
+    - id: 8
+      value: 1
+  - name: DefaultBehaviourLovelorn
+    isDefault: 0
+    state: {fileID: 3207718892820481763, guid: 9c551b6ec55adbe44b47441f2426d5a7, type: 3}
+    cost: 1
+    position: {x: 723, y: 46}
+    pre: []
+    post:
+    - id: 13
+      value: 0
+  - name: DefaultBehaviourTired
+    isDefault: 0
+    state: {fileID: 3207718892820481763, guid: 22eb888f5d64db248a4a4802db4b019c, type: 3}
+    cost: 1
+    position: {x: 922, y: 46}
+    pre: []
+    post:
+    - id: 14
+      value: 0
+  - name: DefaultBehaviourHungry
+    isDefault: 0
+    state: {fileID: 3207718892820481763, guid: 7eb1e2a523e0378458ed2a244b22de3d, type: 3}
+    cost: 1
+    position: {x: 1117, y: 46}
+    pre: []
+    post:
+    - id: 15
+      value: 0
+  goals:
+  - name: isHealthy
+    isDefault: 1
+    position: {x: 308, y: 44.037407}
+    conditions:
+    - id: 5
+      value: 0
+    - id: 3
+      value: 0
+    - id: 6
+      value: 0
+    - id: 0
+      value: 0
+    - id: 2
+      value: 0
+    - id: 1
+      value: 0
+    - id: 4
+      value: 0
+    - id: 13
+      value: 0
+    - id: 14
+      value: 0
+    - id: 15
+      value: 0
+    - id: 16
+      value: 0
+  worldStates:
+  - position: {x: 259.7048, y: 1650.6781}
+    isAutoUpdate: 1
+    list:
+    - id: 0
+      value: 1
+    - id: 1
+      value: 0
+    - id: 2
+      value: 0
+    - id: 3
+      value: 0
+    - id: 4
+      value: 1
+    - id: 5
+      value: 1
+    - id: 6
+      value: 0
+    - id: 7
+      value: 1
+    - id: 8
+      value: 1
+    - id: 9
+      value: 0
+    - id: 10
+      value: 0
+    - id: 11
+      value: 0
+    - id: 12
+      value: 1
+    - id: 13
+      value: 0
+    - id: 14
+      value: 0
+    - id: 15
+      value: 0
+    - id: 16
+      value: 1

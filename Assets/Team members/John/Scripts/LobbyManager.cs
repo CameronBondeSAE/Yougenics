@@ -4,13 +4,15 @@ using UnityEngine;
 using Unity.Netcode;
 using TMPro;
 using UnityEngine.UI;
+using Unity.Collections;
+using System;
 
-public class LobbyManager : MonoBehaviour
+public class LobbyManager : NetworkBehaviour
 {
     public Canvas lobby;
     public TMP_Text clientUI;
 
-    public NetworkVariable<ulong> ClientID = new NetworkVariable<ulong>();
+    public string clientName;
 
     void OnGUI()
     {
@@ -50,39 +52,60 @@ public class LobbyManager : MonoBehaviour
 
     private void Start()
     {
-        NetworkManager.Singleton.OnClientConnectedCallback += OnClientJoin;
-
-        ClientID.OnValueChanged += UpdateLobbyUI;
-    }
-
-    public void OnClientJoin(ulong clientID)
-    {
-        if(NetworkManager.Singleton.IsServer)
-        {
-            ClientID.Value = clientID;
-        }
-        else
-        {
-            SubmitLobbyRequestServerRpc(clientID);
-        }
         
     }
 
-    [ServerRpc]
-    void SubmitLobbyRequestServerRpc(ulong clientID)
+    public override void OnNetworkSpawn()
     {
-        ClientID.Value = clientID;
+        NetworkManager.Singleton.OnClientConnectedCallback += OnClientJoin;
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientLeave;
     }
 
-    public void UpdateLobbyUI(ulong previousValue, ulong newValue)
+    private void OnClientLeave(ulong obj)
     {
-        if (NetworkManager.Singleton.ConnectedClientsList.Count <= 0)
+        if(NetworkManager.Singleton.IsServer)
+            HandleClientNames();
+    }
+
+
+    public void OnClientJoin(ulong clientID)
+    {
+        //Hack to work around Unity Calling this event before server is started
+        if(!IsOwner)
         {
-            clientUI.text = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(newValue).GetComponent<ClientInfo>().name;
+            StartCoroutine(OnClientJoinCoroutine());
         }
         else
         {
-            clientUI.text += NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(newValue).GetComponent<ClientInfo>().name;
+            HandleClientNames();
         }
+    }
+
+    public IEnumerator OnClientJoinCoroutine()
+    {
+        yield return new WaitForSeconds(2f);
+
+        if (IsOwner)
+        {
+            HandleClientNames();
+        }
+    }
+
+    void HandleClientNames()
+    {
+        clientName = "";
+
+        foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
+        {
+            clientName += client.PlayerObject.GetComponent<ClientInfo>().name;
+        }
+
+        UpdateLobbyClientRPC(clientName);
+    }
+
+    [ClientRpc]
+    public void UpdateLobbyClientRPC(string name)
+    {
+        clientUI.text = name;
     }
 }

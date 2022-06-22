@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Anthill.AI;
 using NodeCanvas.BehaviourTrees;
 using NodeCanvas.Framework;
+using ParadoxNotion;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -10,7 +12,7 @@ using Random = UnityEngine.Random;
 
 namespace Luke
 {
-	public class Critter : MonoBehaviour, IEdible
+	public class Critter : MonoBehaviour, IEdible, ISense
 	{
 		public event IEdible.RemoveFromListAction RemoveFromListEvent;
 
@@ -23,6 +25,7 @@ namespace Luke
 		public float acceleration;
 		public float maxSpeed;
 		public float regularMatingDelay;
+		public bool isChild = true;
 		public bool readyToMate = false;
 		public bool isSleeping = false;
 		public bool justAte = false;
@@ -35,6 +38,8 @@ namespace Luke
 		public Transform nearestPredator;
 		public Transform nearestMate;
 		public Transform nearestFood;
+		public Collider currentFood;
+		public Critter currentMate;
 		[SerializeField]
 		public BestNeighbourBiome bestNearbyBiome;
 		[SerializeField]
@@ -45,15 +50,15 @@ namespace Luke
 		[SerializeField]
 		private Transform birthingTransform;
 		private Rigidbody rb;
+		
 		[SerializeField]
-		private ParticleSystemRenderer ps;
-
+		public ParticleSystemRenderer ps;
 		[SerializeField]
-		private List<Material> psMats;
+		public List<Material> psMats;
 		
 #region IEnumerators
 		
-		private IEnumerator HealthRegen()
+		public IEnumerator HealthRegen()
 		{
 			yield return new WaitForSeconds(critterInfo.awakeDecayDelay);
 
@@ -69,7 +74,7 @@ namespace Luke
 			StartCoroutine(HealthRegen());
 		}
 
-		private IEnumerator EnergyDecay()
+		public IEnumerator EnergyDecay()
 		{
 			if (isSleeping)
 			{
@@ -98,7 +103,7 @@ namespace Luke
 			}
 		}
 
-		private IEnumerator EnergyDecayCooldown()
+		public IEnumerator EnergyDecayCooldown()
 		{
 			yield return new WaitForSeconds(10f);
 			justAte = false;
@@ -106,7 +111,7 @@ namespace Luke
 			StartCoroutine(EnergyDecay());
 		}
 		
-		private IEnumerator SleepLevelDecay()
+		public IEnumerator SleepLevelDecay()
 		{
 			if (isSleeping)
 			{
@@ -126,23 +131,24 @@ namespace Luke
 			StartCoroutine(SleepLevelDecay());
 		}
 		
-		private IEnumerator ComingOfAge(float delay)
+		public IEnumerator ComingOfAge(float delay)
 		{
 			yield return new WaitForSeconds(delay);
 
 			transform.Translate(Vector3.up*0.5f);
 			transform.localScale = Vector3.one;
+			isChild = false;
 			readyToMate = true;
 		}
 
-		private IEnumerator ReadyToMateReset(float delay)
+		public IEnumerator ReadyToMateReset(float delay)
 		{
 			yield return new WaitForSeconds(delay);
 			readyToMate = true;
 		}
 
 		// Every 30 seconds this runs a weighted randomisation for what the critter should do when not hungry or tired or near a mate when ready to mate. 
-		private IEnumerator RandomiseDefaultBehaviour()
+		public IEnumerator RandomiseDefaultBehaviour()
 		{
 			int lovelornWeight = readyToMate ? 3 : 0;
 			int tiredWeight = Mathf.RoundToInt(5 * (sleepLevel / critterInfo.maxSleepLevel));
@@ -167,50 +173,72 @@ namespace Luke
 			{
 				defaultBehaviour = DefaultBehaviours.Restless;
 			}
-			
-			//TEMP
-			bestNearbyBiome = (BestNeighbourBiome) Random.Range(0, (int)BestNeighbourBiome.LENGTH);
-			randomAdjustment = new Vector3(Random.Range(-30f, 30f), 0, Random.Range(-30f, 30f));
-			
+
 			yield return new WaitForSeconds(30f);
 			
 			StartCoroutine(RandomiseDefaultBehaviour());
 		}
 
-		private IEnumerator AttackCooldown()
+		public IEnumerator IterateBestBiome()
+		{
+			//TEMP
+			bestNearbyBiome = (BestNeighbourBiome) Random.Range(0, (int)BestNeighbourBiome.LENGTH);
+			randomAdjustment = new Vector3(Random.Range(-30f, 30f), 0, Random.Range(-30f, 30f));
+			
+			yield return new WaitForSeconds(3f);
+			StartCoroutine(IterateBestBiome());
+		}
+
+		public IEnumerator AttackCooldown()
 		{
 			isAttacking = true;
 			yield return new WaitForSeconds(critterInfo.awakeDecayDelay);
 			isAttacking = false;
 		}
 
-		private IEnumerator GiveBirth(CritterInfo childInfo)
+		public IEnumerator GiveBirth(CritterInfo childInfo)
 		{
-			if(!Physics.Raycast(birthingTransform.position, transform.position-birthingTransform.position, out RaycastHit raycastHit, Vector3.Magnitude(transform.position-birthingTransform.position)))
+			if(!Physics.Raycast(transform.position, birthingTransform.position - transform.position,
+				   out RaycastHit raycastHit, Vector3.Magnitude(birthingTransform.position - transform.position)))
 			{
-				yield return new WaitForSeconds(1f);
-				StartCoroutine(GiveBirth(childInfo));
+				GameObject go = Instantiate(childPrefab);
+				go.transform.position = birthingTransform.position;
+				Critter childCritter = go.GetComponent<Critter>();
+				childCritter.critterInfo = childInfo;
+				childCritter.isChild = true;
+				go.transform.localScale = Vector3.one * 0.5f;
+				yield return null;
 			}
 			else
 			{
-				if (!raycastHit.collider.transform == transform)
-				{
-					yield return new WaitForSeconds(1f);
-					StartCoroutine(GiveBirth(childInfo));
-				}
-				else
-				{
-					GameObject go = Instantiate(childPrefab);
-					go.transform.position = birthingTransform.position;
-					go.GetComponent<Critter>().critterInfo = childInfo;
-					go.transform.localScale = Vector3.one * 0.5f;
-					yield return null;
-				}
+				yield return new WaitForSeconds(1f);
+				StartCoroutine(GiveBirth(childInfo));
 			}
 		}
 		
 		#endregion
 
+		public void CollectConditions(AntAIAgent aAgent, AntAICondition aWorldState)
+		{
+			aWorldState.Set(LukeCritterScenario.foodNearby, !IsFoodListEmpty());
+			aWorldState.Set(LukeCritterScenario.isAsleep, isSleeping);
+			aWorldState.Set(LukeCritterScenario.hasFood, CheckHasFood());
+			aWorldState.Set(LukeCritterScenario.hasMate, CheckHasMate());
+			aWorldState.Set(LukeCritterScenario.isHealthy, IsFoodListEmpty());
+			aWorldState.Set(LukeCritterScenario.isHungry, IsQuiteHungry());
+			aWorldState.Set(LukeCritterScenario.isTired, IsTired());
+			aWorldState.Set(LukeCritterScenario.matesNearby, !IsMatesListEmpty());
+			aWorldState.Set(LukeCritterScenario.predatorsPresent, !IsPredatorsListEmpty());
+			aWorldState.Set(LukeCritterScenario.isVeryHungry, IsVeryHungry());
+			aWorldState.Set(LukeCritterScenario.isVeryTired, IsVeryTired());
+			aWorldState.Set(LukeCritterScenario.isInImminentDanger, IsInImminentDanger());
+			aWorldState.Set(LukeCritterScenario.isReadyToMate, IsReadyToMate());
+			aWorldState.Set(LukeCritterScenario.DefaultBehaviourHungry, defaultBehaviour == DefaultBehaviours.Hungry);
+			aWorldState.Set(LukeCritterScenario.DefaultBehaviourLovelorn, defaultBehaviour == DefaultBehaviours.Lovelorn);
+			aWorldState.Set(LukeCritterScenario.DefaultBehaviourRestless, defaultBehaviour == DefaultBehaviours.Restless);
+			aWorldState.Set(LukeCritterScenario.DefaultBehaviourTired, defaultBehaviour == DefaultBehaviours.Tired);
+		}
+		
 		void OnEnable()
 		{
 			rb = GetComponent<Rigidbody>();
@@ -235,6 +263,7 @@ namespace Luke
 			
 			StartCoroutine(ComingOfAge(critterInfo.firstMatingDelay));
 			StartCoroutine(RandomiseDefaultBehaviour());
+			StartCoroutine(IterateBestBiome());
 			StartCoroutine(HealthRegen());
 			StartCoroutine(EnergyDecay());
 			StartCoroutine(SleepLevelDecay());
@@ -271,15 +300,15 @@ namespace Luke
 				{
 					if (!matesList.Contains(other.transform))
 					{
-						Gender gender = other.GetComponent<Critter>().critterInfo.gender;
-						if (critterInfo.gender != gender)
+						Critter otherCritter = other.GetComponent<Critter>();
+						if (critterInfo.gender != otherCritter.critterInfo.gender && !otherCritter.isChild)
 						{
 							matesList.Add(other.transform);
 							go.RemoveFromListEvent += RemoveTransformFromList;
 						}
 					}
 				}
-				else
+				else if (critterInfo.isCarnivore)
 				{
 					if (!foodList.Contains(other.transform))
 					{
@@ -324,20 +353,22 @@ namespace Luke
 			transform.LookAt(new Vector3 (target.x, transform.position.y, target.z));
 		}
 
+		public bool CheckHasFood()
+		{
+			if (isSleeping) return false;
+			if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit raycastHit, 1)) return false;
+			if (!foodList.Contains(raycastHit.collider.transform)) return false;
+			if (isAttacking) return false;
+			StartCoroutine(AttackCooldown());
+			currentFood = raycastHit.collider;
+			return true;
+		}
+
 		public void Eat()
 		{
 			if (isSleeping) return;
-			if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit raycastHit, 1)) return;
-			if (!foodList.Contains(raycastHit.collider.transform)) return;
-			if (isAttacking) return;
-			StartCoroutine(AttackCooldown());
-			EatHealth(raycastHit.collider);
-		}
-
-		private void EatHealth(Collider target)
-		{
-			if (isSleeping) return;
-			IEdible go = target.GetComponent<IEdible>();
+			if (currentFood == null) return;
+			IEdible go = currentFood.GetComponent<IEdible>();
 			go.TakeDamage(critterInfo.deadliness);
 			energy += critterInfo.deadliness;
 			if (energy > critterInfo.maxEnergyLevel)
@@ -353,41 +384,47 @@ namespace Luke
 			}
 		}
 
-		public void Mate()
+		public bool CheckHasMate()
 		{
-			if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit raycastHit, 1)) return;
+			if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit raycastHit, 1)) return false;
 			
 			Collider other = raycastHit.collider;
-			if (!matesList.Contains(other.transform)) return;
+			if (!matesList.Contains(other.transform)) return false;
 			
-			if (critterInfo.gender == Gender.Female) return;
+			if (critterInfo.gender == Gender.Female) return false;
 			
 			Critter otherScript = other.GetComponent<Critter>();
-			if (!otherScript.IsReadyToMate()) return;
+			if (!otherScript.IsReadyToMate()) return false;
 			
 			readyToMate = false;
 			StartCoroutine(ReadyToMateReset(regularMatingDelay));
-			otherScript.Reproduce(critterInfo);
+			currentMate = otherScript;
+			otherScript.currentMate = this;
+			otherScript.Mate();
+			return true;
 		}
 
-		public void Reproduce(CritterInfo partnerInfo)
+		public void Mate()
 		{
 			if (critterInfo.gender == Gender.Female)
 			{
+				if (currentMate == null) return;
+				CritterInfo currentMateInfo = currentMate.critterInfo;
+
 				readyToMate = false;
 				StartCoroutine(ReadyToMateReset(regularMatingDelay));
 				
 				CritterInfo childInfo = new CritterInfo();
-				childInfo.maxHealth = RandomiseInfoValue(critterInfo.maxHealth, partnerInfo.maxHealth, 50f, 300f);
-				childInfo.maxSleepLevel = RandomiseInfoValue(critterInfo.maxSleepLevel, partnerInfo.maxSleepLevel, 50f, 300f);
-				childInfo.maxEnergyLevel = RandomiseInfoValue(critterInfo.maxEnergyLevel, partnerInfo.maxEnergyLevel, 50f, 300f);
-				childInfo.awakeDecayDelay = RandomiseInfoValue(critterInfo.awakeDecayDelay, partnerInfo.awakeDecayDelay, 0.5f, 5f);
-				childInfo.asleepDecayDelay = RandomiseInfoValue(critterInfo.asleepDecayDelay, partnerInfo.asleepDecayDelay, 2f, 10f);
-				childInfo.firstMatingDelay = RandomiseInfoValue(critterInfo.firstMatingDelay, partnerInfo.firstMatingDelay, 25f, 200f);
-				childInfo.isCarnivore = RandomiseInfoValue(critterInfo.isCarnivore, partnerInfo.isCarnivore);
-				childInfo.gender = RandomiseInfoValue(critterInfo.gender, partnerInfo.gender);
-				childInfo.deadliness = RandomiseInfoValue(critterInfo.deadliness, partnerInfo.deadliness, 1, 20);
-				childInfo.visionRadius = RandomiseInfoValue(critterInfo.visionRadius, partnerInfo.visionRadius, 7f, 15f);
+				childInfo.maxHealth = RandomiseInfoValue(critterInfo.maxHealth, currentMateInfo.maxHealth, 50f, 300f);
+				childInfo.maxSleepLevel = RandomiseInfoValue(critterInfo.maxSleepLevel, currentMateInfo.maxSleepLevel, 50f, 300f);
+				childInfo.maxEnergyLevel = RandomiseInfoValue(critterInfo.maxEnergyLevel, currentMateInfo.maxEnergyLevel, 50f, 300f);
+				childInfo.awakeDecayDelay = RandomiseInfoValue(critterInfo.awakeDecayDelay, currentMateInfo.awakeDecayDelay, 0.5f, 5f);
+				childInfo.asleepDecayDelay = RandomiseInfoValue(critterInfo.asleepDecayDelay, currentMateInfo.asleepDecayDelay, 2f, 10f);
+				childInfo.firstMatingDelay = RandomiseInfoValue(critterInfo.firstMatingDelay, currentMateInfo.firstMatingDelay, 25f, 200f);
+				childInfo.isCarnivore = RandomiseInfoValue(critterInfo.isCarnivore, currentMateInfo.isCarnivore);
+				childInfo.gender = RandomiseInfoValue(critterInfo.gender, currentMateInfo.gender);
+				childInfo.deadliness = RandomiseInfoValue(critterInfo.deadliness, currentMateInfo.deadliness, 1, 20);
+				childInfo.visionRadius = RandomiseInfoValue(critterInfo.visionRadius, currentMateInfo.visionRadius, 7f, 15f);
 
 				StartCoroutine(GiveBirth(childInfo));
 			}
@@ -395,7 +432,7 @@ namespace Luke
 		
 #region RandomiseInfoValue Methods
 
-		private float RandomiseInfoValue(float selfTrait, float partnerTrait, float baseMinimum, float baseMaximum)
+		public float RandomiseInfoValue(float selfTrait, float partnerTrait, float baseMinimum, float baseMaximum)
 		{
 			int determinant = Random.Range(0, 100);
 			float result;
@@ -416,7 +453,7 @@ namespace Luke
 			return result;
 		}
 		
-		private int RandomiseInfoValue(int selfTrait, int partnerTrait, int baseMinimum, int baseMaximum)
+		public int RandomiseInfoValue(int selfTrait, int partnerTrait, int baseMinimum, int baseMaximum)
 		{
 			int determinant = Random.Range(0, 100);
 			int result;
@@ -437,7 +474,7 @@ namespace Luke
 			return result;
 		}
 		
-		private bool RandomiseInfoValue(bool selfTrait, bool partnerTrait)
+		public bool RandomiseInfoValue(bool selfTrait, bool partnerTrait)
 		{
 			int determinant = Random.Range(0, 100);
 			bool result;
@@ -479,8 +516,6 @@ namespace Luke
 		
 		public void MoveToNearestFood()
 		{
-			ps.material = psMats[0];
-
 			if (isSleeping) return;
 			if (nearestFood == null) return;
 			LookAt(nearestFood.position);
@@ -490,8 +525,6 @@ namespace Luke
 		
 		public void MoveToNearestMate()
 		{
-			ps.material = psMats[1];
-			
 			if (isSleeping) return;
 			if (nearestMate == null) return;
 			LookAt(nearestMate.position);
@@ -501,8 +534,6 @@ namespace Luke
 		
 		public void MoveAwayFromPredator()
 		{
-			ps.material = psMats[2];
-
 			if (isSleeping) return;
 			if (nearestPredator == null) return;
 			Vector3 position = transform.position;
@@ -514,8 +545,6 @@ namespace Luke
 
 		public void MoveBiomes()
 		{
-			ps.material = psMats[4];
-
 			if (isSleeping) return;
 			float angle = 90f * (int)bestNearbyBiome;
 			//Check which way north should be or adjust bestBiome iteration to account for direction.
@@ -538,14 +567,15 @@ namespace Luke
 
 			nearestPredator = null;
 			Vector3 position = transform.position;
-			float distanceToCompare = critterInfo.visionRadius+5f;
+			float distanceToCompare = 2f*critterInfo.visionRadius;
 			foreach (Transform t in predatorsList)
 			{
-				Vector3 translation = t.position - position;
+				Vector3 targetPosition = t.position;
+				Vector3 translation = targetPosition - position;
 				float distance = Vector3.Magnitude(translation);
-				Physics.Raycast(new Ray(position, translation), out RaycastHit raycastHit);
-				if (raycastHit.transform != t.transform) continue;
+				Physics.Linecast(position, targetPosition, out RaycastHit raycastHit);
 				Debug.DrawRay(position, translation, new Color(1,0,0,0.5f));
+				if (raycastHit.transform != t.transform) continue;
 				if (!(distance < distanceToCompare)) continue;
 				nearestPredator = t;
 				distanceToCompare = distance;
@@ -563,11 +593,12 @@ namespace Luke
 			float distanceToCompare = critterInfo.visionRadius+5f;
 			foreach (Transform t in matesList)
 			{
-				Vector3 translation = t.position - position;
+				Vector3 targetPosition = t.position;
+				Vector3 translation = targetPosition - position;
 				float distance = Vector3.Magnitude(translation);
-				Physics.Raycast(new Ray(position, translation), out RaycastHit raycastHit);
-				if (raycastHit.transform != t.transform) continue;
+				Physics.Linecast(position, targetPosition, out RaycastHit raycastHit);
 				Debug.DrawRay(position, translation, new Color (1,0,1,0.5f));
+				if (raycastHit.transform != t.transform) continue;
 				if (!(distance < distanceToCompare)) continue;
 				nearestMate = t;
 				distanceToCompare = distance;
@@ -578,7 +609,6 @@ namespace Luke
 			return true;
 		}
 		
-		//Issues with blocked line of sight
 		public bool LocateNearestFood()
 		{
 			nearestFood = null;
@@ -586,11 +616,12 @@ namespace Luke
 			float distanceToCompare = critterInfo.visionRadius+5f;
 			foreach (Transform t in foodList)
 			{
-				Vector3 translation = t.position - position;
+				Vector3 targetPosition = t.position;
+				Vector3 translation = targetPosition - position;
 				float distance = Vector3.Magnitude(translation);
-				Physics.Raycast(new Ray(position, translation), out RaycastHit raycastHit);
-				if (raycastHit.transform != t.transform) continue;
+				Physics.Linecast(position, targetPosition, out RaycastHit raycastHit);
 				Debug.DrawRay(position, translation, new Color (0,1,0,0.5f));
+				if (raycastHit.transform != t.transform) continue;
 				if (!(distance < distanceToCompare)) continue;
 				
 				nearestFood = t;
@@ -681,7 +712,6 @@ namespace Luke
 		public void GoToSleep()
 		{
 			isSleeping = true;
-			ps.material = psMats[3];
 		}
 
 		public void WakeUp()
@@ -694,6 +724,32 @@ namespace Luke
 			return justAte;
 		}
 
+		public void ChangeEmote(int index)
+		{
+			ps.material = psMats[index];
+		}
+
 		#endregion
+	}
+	
+	public enum LukeCritterScenario
+	{
+		isVeryHungry = 0,
+		isInImminentDanger = 1,
+		isVeryTired = 2,
+		isHungry = 3,
+		predatorsPresent = 4,
+		isReadyToMate = 5,
+		isTired = 6,
+		foodNearby = 7,
+		matesNearby = 8,
+		hasFood = 9,
+		hasMate = 10,
+		isHealthy = 11,
+		isAsleep = 12,
+		DefaultBehaviourLovelorn = 13,
+		DefaultBehaviourTired = 14,
+		DefaultBehaviourHungry = 15,
+		DefaultBehaviourRestless = 16
 	}
 }
