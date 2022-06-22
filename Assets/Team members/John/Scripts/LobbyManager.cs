@@ -56,36 +56,17 @@ public class LobbyManager : NetworkBehaviour
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientLeave;
     }
 
-    public override void OnNetworkSpawn()
-    {
-        
-    }
-
     private void OnClientLeave(ulong obj)
     {
-        if(NetworkManager.Singleton.IsServer)
-            HandleClientNames();
+        //HACK to work around Unity Calling this event before ConnectedClientList is updated
+        if (NetworkManager.Singleton.IsServer)
+            Invoke("HandleClientNames", 1f);
     }
 
 
     public void OnClientJoin(ulong clientID)
     {
-        //Hack to work around Unity Calling this event before server is started
-        if(!IsOwner)
-        {
-            StartCoroutine(OnClientJoinCoroutine());
-        }
-        else
-        {
-            HandleClientNames();
-        }
-    }
-
-    public IEnumerator OnClientJoinCoroutine()
-    {
-        yield return new WaitForSeconds(2f);
-
-        if (IsOwner)
+        if(NetworkManager.Singleton.IsServer || IsOwner)
         {
             HandleClientNames();
         }
@@ -100,12 +81,22 @@ public class LobbyManager : NetworkBehaviour
             clientName += client.PlayerObject.GetComponent<ClientInfo>().name;
         }
 
+        if (NetworkManager.Singleton.IsServer)
+        {
+            UpdateLobbyClientListName(clientName);
+        }
+
         UpdateLobbyClientRPC(clientName);
     }
 
     [ClientRpc]
     public void UpdateLobbyClientRPC(string name)
     {
-        clientUI.text = name;
+        UpdateLobbyClientListName(name);
+    }
+
+    public void UpdateLobbyClientListName(string _name)
+    {
+        clientUI.text = _name;
     }
 }
