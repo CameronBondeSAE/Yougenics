@@ -44,6 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24b9ab483d85214583ef05b8b56c643, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myVision: {fileID: 0}
+  myTouch: {fileID: 0}
+  myAgent: {fileID: 0}
   wanderRadius: 50
-  wanderTimer: 7
+  wanderTimer: 3
   timer: 0

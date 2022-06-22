@@ -11,7 +11,6 @@ namespace Maya
         public bool isNearFood;
         private void OnTriggerEnter(Collider other)
         {
-            Food onePiece = other.gameObject.GetComponent<Food>();
             if (other.tag == "Food")
             {
                 isNearFood = true;

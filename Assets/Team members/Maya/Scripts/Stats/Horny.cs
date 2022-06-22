@@ -10,8 +10,8 @@ namespace Maya
         public float currentHorny;
         public float minHorny;
         public float maxHorny = 100;
-        public float drainSpeed;
-        public float drainFactor;
+        public float riseSpeed;
+        public float risingFactor;
 
         private void Update()
         {
@@ -20,11 +20,11 @@ namespace Maya
 
         private IEnumerator GettingHorny()
         {
-            while (currentHorny >= minHorny)
+            while (currentHorny <= maxHorny)
             {
-                yield return new WaitForSeconds(drainSpeed);
+                yield return new WaitForSeconds(riseSpeed);
                 {
-                    currentHorny -= drainFactor;
+                    currentHorny += risingFactor;
                 }
             }
         }

@@ -5,9 +5,8 @@ using UnityEngine;
 
 namespace Maya
 { 
-    public class EatState : AntAIState
+    public class EatState : AIBase
     {
-        public Touch myTouch;
         public Food food;
         public float eatTimer;
         public float timer;
