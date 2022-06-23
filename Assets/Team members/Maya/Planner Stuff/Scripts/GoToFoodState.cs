@@ -14,7 +14,7 @@ namespace Maya
         public override void Create(GameObject aGameObject)
         {
             base.Create(aGameObject);
-            findFoodState = GetComponentInChildren<FindFoodState>();
+            findFoodState = aGameObject.GetComponentInChildren<FindFoodState>();
         }
         public override void Enter()
         {
