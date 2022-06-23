@@ -33,6 +33,7 @@ namespace Maya
         public override void Exit()
         {
             base.Exit();
+            myAgent.velocity = Vector3.zero;
             Finish();
         }
     }

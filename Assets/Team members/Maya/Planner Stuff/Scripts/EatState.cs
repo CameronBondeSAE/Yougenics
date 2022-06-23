@@ -23,9 +23,11 @@ namespace Maya
             timer += aDeltaTime;
             if (timer >= eatTimer && myTouch.isNearFood)
             {
+                myAgent.velocity = Vector3.zero;
                 timer = 0;
                 myEnergy.energyAmount += (eatTimer * 2);
                 myTouch.isNearFood = false;
+
             }
             else
             {
@@ -37,6 +39,8 @@ namespace Maya
         public override void Exit()
         {
             base.Exit();
+            myTouch.foodImTouching.enabled = false;
+            myVision.foodIveSeen.Remove(myTouch.foodImTouching);
             Finish();
         }
     }
