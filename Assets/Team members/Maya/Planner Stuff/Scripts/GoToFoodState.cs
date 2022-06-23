@@ -22,7 +22,9 @@ namespace Maya
             if (myVision.foodIveSeen.Count >= 0)
             {
                 newPos = myVision.foodIveSeen[0].transform.position;
+                
                 myAgent.SetDestination(newPos);
+                myAgent.velocity = Vector3.zero;
             }
             else
             {
@@ -33,7 +35,7 @@ namespace Maya
         public override void Exit()
         {
             base.Exit();
-            myAgent.velocity = Vector3.zero;
+
             Finish();
         }
     }
