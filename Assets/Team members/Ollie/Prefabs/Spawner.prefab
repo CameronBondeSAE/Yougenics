@@ -50,7 +50,7 @@ MonoBehaviour:
   predator: {fileID: 8956417045298381839, guid: c6e7fd0a0e5da584fa47abdbf86932b2,
     type: 3}
   critter: {fileID: 8639400809785660131, guid: f9fb2c1fb2960eb4995d0b66ade86063, type: 3}
-  spawnAmount: 10
+  spawnAmount: 0
 --- !u!114 &1600512450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,11 +65,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 80, y: 5, z: 80}
+    m_Extent: {x: 3, y: 5, z: 3}
   gridTileHalfExtents: {x: 0.5, y: 0.5, z: 0.5}
   sizeX: 80
   sizeZ: 80
+  lengthX: 0
+  lengthZ: 0
   currentPosition: {x: 0, y: 0}
-  ignore:
+  layers:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 63
+  waterCube: {fileID: 2993987680324133567, guid: d608636e592f8614bbf798b0663dd69a,
+    type: 3}
+  testList: []
+  waterPosList: []
