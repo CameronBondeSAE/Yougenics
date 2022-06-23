@@ -10681,6 +10681,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4975839511339852216, guid: f5f9b2a5573faf64b894e372744d86f2,
         type: 3}
+      propertyPath: bounds.m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4975839511339852216, guid: f5f9b2a5573faf64b894e372744d86f2,
+        type: 3}
       propertyPath: spawningDelayPeriod
       value: 0.5
       objectReference: {fileID: 0}

@@ -27,9 +27,6 @@ public class Wheel : MonoBehaviour
     
     public float friction = 1f;
 
-
-
-    
     
     void FixedUpdate()
     {
