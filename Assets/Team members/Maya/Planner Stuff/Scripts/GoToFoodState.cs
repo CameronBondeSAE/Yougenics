@@ -8,14 +8,8 @@ namespace Maya
 { 
     public class GoToFoodState : AIBase
     {
-        public FindFoodState findFoodState;
         public Vector3 newPos;
         
-        public override void Create(GameObject aGameObject)
-        {
-            base.Create(aGameObject);
-            findFoodState = aGameObject.GetComponentInChildren<FindFoodState>();
-        }
         public override void Enter()
         {
             base.Enter();
@@ -25,9 +19,9 @@ namespace Maya
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
             base.Execute(aDeltaTime, aTimeScale);
-            if (findFoodState.foodIWant.Count <= 0)
+            if (myVision.foodIveSeen.Count >= 0)
             {
-                newPos = findFoodState.foodIWant[0].transform.position;
+                newPos = myVision.foodIveSeen[0].transform.position;
                 myAgent.SetDestination(newPos);
             }
             else

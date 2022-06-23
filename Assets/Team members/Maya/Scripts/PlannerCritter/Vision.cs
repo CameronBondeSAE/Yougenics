@@ -10,12 +10,11 @@ namespace Maya
     public class Vision : MonoBehaviour
     {
         public List<Food> foodIveSeen;
-        public List<Vector3> foodBank;
 
         private void OnTriggerEnter(Collider other)
         {
             Food onePiece = other.gameObject.GetComponent<Food>();
-            if (other.tag == "Food" && !foodIveSeen.Contains(onePiece))
+            if (other.CompareTag("Food"))
             {
                 foodIveSeen.Add(onePiece);
             }

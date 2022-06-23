@@ -28,14 +28,11 @@ namespace Maya
         {
             base.Execute(aDeltaTime, aTimeScale);
             moveTimer += aDeltaTime;
-            if (foodIWant == null)
+            if (moveTimer >= moveCooldown)
             {
-                if (moveTimer >= moveCooldown)
-                {
-                    newPos = RandomNavSphere(transform.position, moveDistance, -1);
-                    myAgent.SetDestination(newPos);
-                    moveTimer = 0;
-                }
+                newPos = RandomNavSphere(transform.position, moveDistance, -1);
+                myAgent.SetDestination(newPos);
+                moveTimer = 0;
             }
             else if (myVision.foodIveSeen != null)
             {

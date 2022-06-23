@@ -7,33 +7,29 @@ namespace Maya
 { 
     public class EatState : AIBase
     {
-        public Food food;
+
         public float eatTimer;
         public float timer;
-
-        public override void Create(GameObject aGameObject)
-        {
-            base.Create(aGameObject);
-            food = aGameObject.GetComponent<Food>();
-        }
+        
         public override void Enter()
         {
             base.Enter();
-            eatTimer = food.energyValue / 2;
+            eatTimer = myTouch.timeToEat;
         }
 
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
             base.Execute(aDeltaTime, aTimeScale);
             timer += aDeltaTime;
-            if (timer >= eatTimer)
+            if (timer >= eatTimer && myTouch.isNearFood)
             {
-                myTouch.isNearFood = true;
                 timer = 0;
+                myEnergy.energyAmount += (eatTimer * 2);
+                myTouch.isNearFood = false;
             }
             else
             {
-                myTouch.isNearFood = false;
+
             }
 
         }
