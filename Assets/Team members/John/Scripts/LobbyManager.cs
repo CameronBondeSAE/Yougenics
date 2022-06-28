@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine.UI;
 using Unity.Collections;
 using System;
-//using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class LobbyManager : NetworkBehaviour
 {
@@ -122,9 +122,15 @@ public class LobbyManager : NetworkBehaviour
         clientUI.text = _name;
     }
 
+    public SceneEventProgressStatus LoadScene(string sceneName, LoadSceneMode loadSceneMode)
+    {
+        SceneManager.LoadScene(sceneName, loadSceneMode);
+
+        return SceneEventProgressStatus.Started;
+    }
+
     public void StartGame()
     {
-        //Load Scene
-
+        LoadScene("JohnTestScene", LoadSceneMode.Single);
     }
 }
