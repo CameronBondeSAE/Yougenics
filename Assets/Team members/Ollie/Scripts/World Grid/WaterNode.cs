@@ -29,9 +29,9 @@ namespace Ollie
                     
                     if (!(neighbour == null || neighbour.isBlocked || neighbour.isWater))
                     {
-                        if (!levelManager.openWaterNodes.Contains(neighbour))
+                        if (!levelManager.openNodesToAdd.Contains(neighbour))
                         {
-                            levelManager.openWaterNodes.Add(neighbour);
+                            levelManager.openNodesToAdd.Add(neighbour);
                         }
                     }
                 }
