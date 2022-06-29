@@ -4,8 +4,9 @@ using UnityEngine;
 
 namespace Maya
 {
-    public class Node : MonoBehaviour
+    public class Node
     {
         public bool isBlocked;
+        public Vector3 myPos;
     }
 }

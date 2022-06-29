@@ -14,10 +14,10 @@ public class LobbyManager : NetworkBehaviour
     public TMP_Text clientUI;
 
     public string clientName;
-
     public GameObject player;
 
-    public NetworkVariable<bool> LobbyUIState = new NetworkVariable<bool>();
+    //Events
+    public event Action<NetworkClient> onLocalClientJoinEvent;
 
     #region NetworkButtons/Status Info
 
@@ -82,12 +82,6 @@ public class LobbyManager : NetworkBehaviour
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientLeave;
     }
 
-    public override void OnNetworkSpawn()
-    {
-       
-        LobbyUIState.OnValueChanged += UpateLobbyUIState;
-    }
-
 
     private void UpateLobbyUIState(bool previousValue, bool newValue)
     {
@@ -107,6 +101,15 @@ public class LobbyManager : NetworkBehaviour
         if(NetworkManager.Singleton.IsServer || IsOwner)
         {
             HandleClientNames();
+
+            NetworkClient tempClient;
+            if(NetworkManager.Singleton.ConnectedClients.TryGetValue(clientID, out tempClient))
+            {
+                if(tempClient.PlayerObject.IsLocalPlayer)
+                {
+                    onLocalClientJoinEvent?.Invoke(tempClient);
+                }
+            }
         }
     }
 

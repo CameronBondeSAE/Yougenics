@@ -15,7 +15,9 @@ namespace Maya
         {
             base.Enter();
             timer = wanderTimer;
-
+            myAgent.speed = 10;
+            UpdateEnergyDrainAmount();
+            myEnergy.drainAmount = energyBySpeed;
         }
 
         public override void Execute(float aDeltaTime, float aTimeScale)
@@ -34,6 +36,7 @@ namespace Maya
         public override void Exit()
         {
             base.Exit();
+            myEnergy.drainAmount = defaultEnergyDrain;
             Finish();
         }
 

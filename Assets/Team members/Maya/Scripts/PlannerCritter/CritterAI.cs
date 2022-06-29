@@ -1,3 +1,4 @@
+
 public enum CritterAI
 {
     isHungry = 0,
@@ -10,5 +11,5 @@ public enum CritterAI
     isNearMate = 7,
     canSeeFood = 8,
     isNearFood = 9,
-    mateIsHorny = 10
+    mateIsHorny = 10,
 }
