@@ -14,7 +14,7 @@ public class ClientInfo : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        inputField = FindObjectOfType<InputField>();
+        //inputField = FindObjectOfType<Canvas>().GetComponentInChildren<InputField>();
 
         if (IsOwner)
         {

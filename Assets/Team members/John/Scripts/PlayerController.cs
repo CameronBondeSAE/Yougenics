@@ -16,14 +16,20 @@ namespace John
             controller = gameObject.AddComponent<CharacterController>();
         }
 
+        public override void OnNetworkSpawn()
+        {
+            if(!IsOwner)
+            {
+                Destroy(this);
+            }
+        }
 
         void FixedUpdate()
         {
-            if(IsOwner)
-            {
-                Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-                controller.Move(move * Time.deltaTime * movementSpeed);
-            }
+
+            Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            controller.Move(move * Time.deltaTime * movementSpeed);
+
         }
     }
 }

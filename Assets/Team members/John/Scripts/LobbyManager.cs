@@ -15,6 +15,10 @@ public class LobbyManager : NetworkBehaviour
 
     public string clientName;
 
+    public GameObject player;
+
+    public NetworkVariable<bool> LobbyUIState = new NetworkVariable<bool>();
+
     #region NetworkButtons/Status Info
 
     public bool debugStatusLabels = true;
@@ -76,13 +80,18 @@ public class LobbyManager : NetworkBehaviour
     {
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientJoin;
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientLeave;
-
-        //NetworkManager.Singleton.OnServerStarted += DelayTest;
     }
 
-    void DelayTest()
+    public override void OnNetworkSpawn()
     {
-        
+       
+        LobbyUIState.OnValueChanged += UpateLobbyUIState;
+    }
+
+
+    private void UpateLobbyUIState(bool previousValue, bool newValue)
+    {
+        lobby.SetActive(newValue);
     }
 
     private void OnClientLeave(ulong obj)
@@ -143,9 +152,33 @@ public class LobbyManager : NetworkBehaviour
         Scene scene = sceneEvent.Scene;
 
         //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-        SceneManager.SetActiveScene(scene);
+        //SceneManager.SetActiveScene(scene);
 
+        if(IsServer)
+        {
+            lobby.SetActive(false);
+        }
+        
+        SubmitLobbyUIStateRequestClientRpc(false);
+        
+        
+        //Spawn a player for each client
+        foreach(NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
+        {
+            //spawn a player
+            GameObject tempPlayer = Instantiate(player);
+            
+            //set ownership
+            tempPlayer.GetComponent<NetworkObject>().SpawnWithOwnership(client.ClientId);
+
+        }
+        
+        //FindObjectOfType<Spawner>().SpawnMultiple();
+    }
+
+    [ClientRpc]
+    private void SubmitLobbyUIStateRequestClientRpc(bool value)
+    {
         lobby.SetActive(false);
-        FindObjectOfType<Spawner>().SpawnMultiple();
     }
 }
