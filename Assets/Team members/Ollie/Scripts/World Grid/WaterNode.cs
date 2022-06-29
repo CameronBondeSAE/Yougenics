@@ -17,18 +17,7 @@ namespace Ollie
         public LevelManager levelManager;
 
         public WaterNode[,] neighbours = new WaterNode[3, 3];
-
-        public void CheckNeighbours()
-        {
-            for (int neighbourX = -1; neighbourX < 2; neighbourX++)
-            {
-                for (int neighbourY = -1; neighbourY < 2; neighbourY++)
-                {
-                    //neighbours[gridPosition.x + neighbourX, gridPosition.y + neighbourY];
-                    
-                }
-            }
-        }
+        
         public void FillNeighbours()
         {
             for (int x = 0; x < 3; x++)
@@ -39,7 +28,7 @@ namespace Ollie
                     
                     if (!(neighbour == null || neighbour.isBlocked))
                     {
-                        levelManager.SpreadToNeighbours(this);
+                        levelManager.SpreadToNeighbours(neighbour, neighbour.gridPosition);
                     }
                 }
             }

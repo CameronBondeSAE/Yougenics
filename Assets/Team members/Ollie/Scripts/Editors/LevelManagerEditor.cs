@@ -17,17 +17,25 @@ namespace Ollie
                 ((LevelManager) target).ScanWorld();
             }
 
-            if (GUILayout.Button("Spawn Water"))
-            {
-                ((LevelManager) target).SpawnWater();
-            }
-
             if (GUILayout.Button("Assign Neighbours"))
             {
                 ((LevelManager) target).AssignNeighbours();
             }
             
+            if (GUILayout.Button("Spawn Water"))
+            {
+                ((LevelManager) target).SpawnWater();
+            }
             
+            if (GUILayout.Button("Fill Neighbours"))
+            {
+                ((LevelManager) target).FillNeighbours();
+            }
+            
+            if (GUILayout.Button("Print Neighbours"))
+            {
+                ((LevelManager) target).PrintNeighbourGridPos();
+            }
         }
     }
 }
