@@ -14,7 +14,7 @@ namespace Maya
         private void OnTriggerEnter(Collider other)
         {
             Food onePiece = other.gameObject.GetComponent<Food>();
-            if (other.CompareTag("Food") && !foodIveSeen.Contains(onePiece))
+            if (other.CompareTag("Food"))
             {
                 foodIveSeen.Add(onePiece);
             }

@@ -28,7 +28,7 @@ namespace Maya
         {
             base.Execute(aDeltaTime, aTimeScale);
             moveTimer += aDeltaTime;
-            if (moveTimer >= moveCooldown)
+            if (moveTimer >= moveCooldown && myVision.foodIveSeen ==  null)
             {
                 newPos = RandomNavSphere(transform.position, moveDistance, -1);
                 myAgent.SetDestination(newPos);
