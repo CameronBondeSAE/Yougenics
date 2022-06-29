@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Luke;
 using Ollie;
 using Unity.Mathematics;
 using UnityEngine;
@@ -67,14 +68,54 @@ namespace Ollie
                         blockedNodes.Add(gridNodeReferences[x,z]);
                         //allNodes.Remove(gridNodeReferences[x, z]);
                     }
+
+                    if (x == 4 && z == 4)
+                    {
+                        GameObject go = Instantiate(waterCube);
+                        go.transform.position = new Vector3(gridNodeReferences[x, z].gridPosition.x, 1,
+                            gridNodeReferences[x, z].gridPosition.y);
+                    }
+                }
+            }
+
+            //AssignNeighbours();
+        }
+
+        public void AssignNeighbours()
+        {
+            for (int x = 0; x < sizeX; x++)
+            {
+                for (int z = 0; z < sizeZ; z++)
+                {
+                    //if not top left, set top left neighbour
+                    if(x > 0 && z > 0) gridNodeReferences[x, z].neighbours[0,0] = gridNodeReferences[x-1,z-1];
+                    
+                    //if not top row, set top middle neighbour
+                    if(x > 0) gridNodeReferences[x, z].neighbours[0,1] = gridNodeReferences[x-1,z];
+                    
+                    //if not top right, set top right neighbour
+                    if(x < sizeX-1 && z > 0) gridNodeReferences[x, z].neighbours[0,2] = gridNodeReferences[x-1,z+1];
+                    
+                    //if not left side, set left middle neighbour
+                    if(z > 0) gridNodeReferences[x, z].neighbours[1,0] = gridNodeReferences[x,z-1];
+                    
+                    //if not right side, set right middle neighbour
+                    if(z < sizeZ - 1) gridNodeReferences[x, z].neighbours[1,2] = gridNodeReferences[x,z+1];
+                    
+                    //if not bottom left, set bottom left neighbour
+                    if(x > 0 && z < sizeZ - 1) gridNodeReferences[x, z].neighbours[2,0] = gridNodeReferences[x+1,z-1];
+                    
+                    //if not bottom row, set bottom middle neighbour
+                    if(z < sizeZ - 1) gridNodeReferences[x, z].neighbours[2,1] = gridNodeReferences[x+1,z];
+                    
+                    //if not bottom right, set bottom right neighbour
+                    if(x < sizeX - 1 && z < sizeZ - 1) gridNodeReferences[x, z].neighbours[2,2] = gridNodeReferences[x+1,z+1];
                 }
             }
         }
 
         public void SpawnWater()
         {
-            GameObject go = Instantiate(waterCube);
-            
             //can probably move this out to ScanWorld
             for (int x = 0; x < sizeX; x++)
             {
@@ -90,20 +131,28 @@ namespace Ollie
             // lengthZ = Mathf.RoundToInt(bounds.center.z - bounds.extents.z/2);
             //new Vector3(lengthX+x, 0, lengthZ+z)
 
-            Vector2Int transformPosition = openNodeV3List[UnityEngine.Random.Range(0,openNodeV3List.Capacity-1)].gridPosition;
+            WaterNode randomWaterNode = openNodeV3List[UnityEngine.Random.Range(0, openNodeV3List.Count)];
+            Vector2Int transformPosition = randomWaterNode.gridPosition;
+            
+            GameObject go = Instantiate(waterCube);
             go.transform.position = new Vector3(transformPosition.x+lengthX,1,transformPosition.y+lengthZ);
             waterPosList.Add(go.transform.position);
+            StartCoroutine(FillNeighbours(randomWaterNode));
         }
 
-        public void SpreadToNeighbours()
+        public IEnumerator FillNeighbours(WaterNode waterNode)
         {
-            for (int x = -1; x < 2; x++)
-            {
-                for (int z = -1; z < 2; z++)
-                {
-                    
-                }
-            }
+            yield return new WaitForSeconds(2f);
+            waterNode.FillNeighbours();
+        }
+
+        public void SpreadToNeighbours(WaterNode node)
+        {
+            Vector2Int transformPosition = node.gridPosition;
+            
+            GameObject go = Instantiate(waterCube);
+            go.transform.position = new Vector3(transformPosition.x+lengthX,1,transformPosition.y+lengthZ);
+            waterPosList.Add(go.transform.position);
         }
 
         //commented out so I could push without errors popping up for others

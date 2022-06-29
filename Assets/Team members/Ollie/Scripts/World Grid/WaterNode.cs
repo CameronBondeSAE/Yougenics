@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using NodeCanvas.Tasks.Actions;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -16,8 +17,6 @@ namespace Ollie
         public LevelManager levelManager;
 
         public WaterNode[,] neighbours = new WaterNode[3, 3];
-        
-        
 
         public void CheckNeighbours()
         {
@@ -38,15 +37,9 @@ namespace Ollie
                 {
                     WaterNode neighbour = neighbours[x, z];
                     
-
-                    //need to ask Luke about this bit
                     if (!(neighbour == null || neighbour.isBlocked))
                     {
-                        neighbour.fillAmount += 0.1f;
-                        if (neighbour.fillAmount >= 1)
-                        {
-                            neighbour.FillNeighbours();
-                        }
+                        levelManager.SpreadToNeighbours(this);
                     }
                 }
             }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1421293349195327508}
   - component: {fileID: 366707857008786223}
   - component: {fileID: 4155980898637526194}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TriggerSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -274,7 +274,7 @@ GameObject:
   - component: {fileID: 2277595981832449}
   - component: {fileID: 1538492516}
   - component: {fileID: 1538492514}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
