@@ -9,6 +9,7 @@ namespace Maya
     
     public class AIBase : AntAIState
     {
+        public Energy myEnergy;
         public Vision myVision;
         public Touch myTouch;
         public NavMeshAgent myAgent;
@@ -16,6 +17,7 @@ namespace Maya
         {
             base.Create(aGameObject);
             myVision = aGameObject.GetComponentInChildren<Vision>();
+            myEnergy = aGameObject.GetComponentInChildren<Energy>();
             myTouch = aGameObject.GetComponentInChildren<Touch>();
             myAgent = aGameObject.GetComponent<NavMeshAgent>();
         }

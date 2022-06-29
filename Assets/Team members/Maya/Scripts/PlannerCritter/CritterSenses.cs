@@ -30,7 +30,7 @@ namespace Maya
             aWorldState.Set(CritterAI.isHungry, myEnergy.energyAmount < 60);
             aWorldState.Set(CritterAI.isTired, myEnergy.energyAmount < 25);
             aWorldState.Set(CritterAI.canSeeEnemy, false);
-            aWorldState.Set(CritterAI.canSeeFood, vision.foodIveSeen.Capacity > 0);
+            aWorldState.Set(CritterAI.canSeeFood, !vision.foodIveSeen.Contains(null));
             aWorldState.Set(CritterAI.canSeeMate, false);
             aWorldState.Set(CritterAI.isNearEnemy, false);
             aWorldState.Set(CritterAI.isNearFood, touch.isNearFood);

@@ -16,6 +16,11 @@ namespace Ollie
             {
                 ((LevelManager) target).ScanWorld();
             }
+
+            if (GUILayout.Button("Spawn Water"))
+            {
+                ((LevelManager) target).SpawnWater();
+            }
         }
     }
 }
