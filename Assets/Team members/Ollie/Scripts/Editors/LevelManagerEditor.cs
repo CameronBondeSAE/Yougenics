@@ -26,6 +26,11 @@ namespace Ollie
             {
                 ((LevelManager) target).SpawnWater();
             }
+
+            if (GUILayout.Button("Check Neighbours"))
+            {
+                ((LevelManager) target).CheckNeighbours();
+            }
             
             if (GUILayout.Button("Fill Neighbours"))
             {

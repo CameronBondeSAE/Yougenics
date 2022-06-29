@@ -14,6 +14,10 @@ public class LobbyManager : NetworkBehaviour
     public TMP_Text clientUI;
 
     public string clientName;
+    public GameObject player;
+
+    //Events
+    public event Action<NetworkClient> onLocalClientJoinEvent;
 
     #region NetworkButtons/Status Info
 
@@ -76,13 +80,12 @@ public class LobbyManager : NetworkBehaviour
     {
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientJoin;
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientLeave;
-
-        //NetworkManager.Singleton.OnServerStarted += DelayTest;
     }
 
-    void DelayTest()
+
+    private void UpateLobbyUIState(bool previousValue, bool newValue)
     {
-        
+        lobby.SetActive(newValue);
     }
 
     private void OnClientLeave(ulong obj)
@@ -98,6 +101,15 @@ public class LobbyManager : NetworkBehaviour
         if(NetworkManager.Singleton.IsServer || IsOwner)
         {
             HandleClientNames();
+
+            NetworkClient tempClient;
+            if(NetworkManager.Singleton.ConnectedClients.TryGetValue(clientID, out tempClient))
+            {
+                if(tempClient.PlayerObject.IsLocalPlayer)
+                {
+                    onLocalClientJoinEvent?.Invoke(tempClient);
+                }
+            }
         }
     }
 
@@ -143,9 +155,33 @@ public class LobbyManager : NetworkBehaviour
         Scene scene = sceneEvent.Scene;
 
         //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-        SceneManager.SetActiveScene(scene);
+        //SceneManager.SetActiveScene(scene);
 
+        if(IsServer)
+        {
+            lobby.SetActive(false);
+        }
+        
+        SubmitLobbyUIStateRequestClientRpc(false);
+        
+        
+        //Spawn a player for each client
+        foreach(NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
+        {
+            //spawn a player
+            GameObject tempPlayer = Instantiate(player);
+            
+            //set ownership
+            tempPlayer.GetComponent<NetworkObject>().SpawnWithOwnership(client.ClientId);
+
+        }
+        
+        //FindObjectOfType<Spawner>().SpawnMultiple();
+    }
+
+    [ClientRpc]
+    private void SubmitLobbyUIStateRequestClientRpc(bool value)
+    {
         lobby.SetActive(false);
-        FindObjectOfType<Spawner>().SpawnMultiple();
     }
 }
