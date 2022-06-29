@@ -46,9 +46,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 3912303242066289817}
   suspensionLength: 1.5
-  force: 20
-  OffSet: {x: 0.5, y: 0, z: -0.5}
-  speed: 20
+  onGround: 0
+  friction: 1
+  steering: 50
+  speed: 200
+  suspensionForce: 1000
 --- !u!1 &2967110766598880524
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,9 +97,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 3912303242066289817}
   suspensionLength: 1.5
-  force: 20
-  OffSet: {x: -0.5, y: 0, z: -0.5}
-  speed: 20
+  onGround: 0
+  friction: 1
+  steering: 50
+  speed: 200
+  suspensionForce: 1000
 --- !u!1 &3532001769312515638
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,6 +115,7 @@ GameObject:
   - component: {fileID: 2985835184923699081}
   - component: {fileID: 2693963332133508170}
   - component: {fileID: 3912303242066289817}
+  - component: {fileID: 363343523}
   m_Layer: 0
   m_Name: Vehicle(Fixed)
   m_TagString: Untagged
@@ -209,14 +214,35 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3532001769312515638}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 1
-  m_AngularDrag: 5
+  m_Mass: 100
+  m_Drag: 0
+  m_AngularDrag: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &363343523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3532001769312515638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58009d46a867e1f48b3e0c0bb3133ffe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wheels:
+  - {fileID: 392720054664321577}
+  - {fileID: 8860035961690252253}
+  - {fileID: 1886384343663440452}
+  - {fileID: 6924147449041944588}
+  frontWheels:
+  - {fileID: 392720054664321577}
+  - {fileID: 8860035961690252253}
+  turningSpeed: 50
 --- !u!1 &5286236006526069945
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,14 +291,6 @@ MonoBehaviour:
   right: 275
   up: 273
   down: 274
-  wheels:
-  - {fileID: 392720054664321577}
-  - {fileID: 8860035961690252253}
-  - {fileID: 1886384343663440452}
-  - {fileID: 6924147449041944588}
-  steering: 20
-  turnForce: 10
-  speed: 20
 --- !u!1 &5837860151170081394
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,9 +337,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 3912303242066289817}
   suspensionLength: 1.5
-  force: 20
-  OffSet: {x: 0.5, y: 0, z: 0.5}
-  speed: 20
+  onGround: 0
+  friction: 1
+  steering: 50
+  speed: 200
+  suspensionForce: 1000
 --- !u!1 &7716709605948902966
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,6 +388,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 3912303242066289817}
   suspensionLength: 1.5
-  force: 20
-  OffSet: {x: -0.5, y: 0, z: 0.5}
-  speed: 20
+  onGround: 0
+  friction: 1
+  steering: 50
+  speed: 200
+  suspensionForce: 1000

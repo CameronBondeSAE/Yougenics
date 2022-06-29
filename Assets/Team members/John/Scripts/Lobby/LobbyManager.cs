@@ -14,6 +14,10 @@ public class LobbyManager : NetworkBehaviour
     public TMP_Text clientUI;
 
     public string clientName;
+    public GameObject player;
+
+    //Events
+    public event Action<NetworkClient> onLocalClientJoinEvent;
 
     #region NetworkButtons/Status Info
 
@@ -78,6 +82,12 @@ public class LobbyManager : NetworkBehaviour
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientLeave;
     }
 
+
+    private void UpateLobbyUIState(bool previousValue, bool newValue)
+    {
+        lobby.SetActive(newValue);
+    }
+
     private void OnClientLeave(ulong obj)
     {
         //HACK to work around Unity Calling this event before ConnectedClientList is updated
@@ -91,6 +101,15 @@ public class LobbyManager : NetworkBehaviour
         if(NetworkManager.Singleton.IsServer || IsOwner)
         {
             HandleClientNames();
+
+            NetworkClient tempClient;
+            if(NetworkManager.Singleton.ConnectedClients.TryGetValue(clientID, out tempClient))
+            {
+                if(tempClient.PlayerObject.IsLocalPlayer)
+                {
+                    onLocalClientJoinEvent?.Invoke(tempClient);
+                }
+            }
         }
     }
 
@@ -100,7 +119,8 @@ public class LobbyManager : NetworkBehaviour
 
         for (int i = 0; i < NetworkManager.Singleton.ConnectedClientsList.Count; i++)
         {
-            clientName += NetworkManager.Singleton.ConnectedClientsList[i].PlayerObject.GetComponent<ClientInfo>().clientName + " " + (i + 1) + " ";
+            NetworkClient client = NetworkManager.Singleton.ConnectedClientsList[i];
+            clientName += client.PlayerObject.GetComponent<ClientInfo>().clientName + (i + 1) + " ";
         }
 
         if (NetworkManager.Singleton.IsServer)
@@ -122,15 +142,46 @@ public class LobbyManager : NetworkBehaviour
         clientUI.text = _name;
     }
 
-    public SceneEventProgressStatus LoadScene(string sceneName, LoadSceneMode loadSceneMode)
-    {
-        SceneManager.LoadScene(sceneName, loadSceneMode);
-
-        return SceneEventProgressStatus.Started;
-    }
-
     public void StartGame()
     {
-        LoadScene("JohnTestScene", LoadSceneMode.Single);
+        NetworkManager.Singleton.SceneManager.OnSceneEvent += SceneManagerOnOnSceneEvent;
+
+        NetworkManager.Singleton.SceneManager.LoadScene("JohnTestScene", LoadSceneMode.Additive);
+    }
+
+    private void SceneManagerOnOnSceneEvent(SceneEvent sceneEvent)
+    {
+        NetworkManager.Singleton.SceneManager.OnSceneEvent -= SceneManagerOnOnSceneEvent;
+        Scene scene = sceneEvent.Scene;
+
+        //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        //SceneManager.SetActiveScene(scene);
+
+        if(IsServer)
+        {
+            lobby.SetActive(false);
+        }
+        
+        SubmitLobbyUIStateRequestClientRpc(false);
+        
+        
+        //Spawn a player for each client
+        foreach(NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
+        {
+            //spawn a player
+            GameObject tempPlayer = Instantiate(player);
+            
+            //set ownership
+            tempPlayer.GetComponent<NetworkObject>().SpawnWithOwnership(client.ClientId);
+
+        }
+        
+        //FindObjectOfType<Spawner>().SpawnMultiple();
+    }
+
+    [ClientRpc]
+    private void SubmitLobbyUIStateRequestClientRpc(bool value)
+    {
+        lobby.SetActive(false);
     }
 }

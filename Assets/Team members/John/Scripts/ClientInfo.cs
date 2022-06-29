@@ -1,5 +1,8 @@
 using Unity.Netcode;
 using UnityEngine;
+using System;
+using Unity.Collections;
+using UnityEngine.UI;
 
 public class ClientInfo : NetworkBehaviour
 {
@@ -8,9 +11,11 @@ public class ClientInfo : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+
         if (IsOwner)
         {
-            
+            //ClientName.Value = "Player " + OwnerClientId;
         }
     }
+
 }

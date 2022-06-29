@@ -25,21 +25,15 @@ namespace Maya
             {
                 myAgent.velocity = Vector3.zero;
                 timer = 0;
-                myEnergy.energyAmount += (eatTimer * 2);
+                myEnergy.energyAmount += (eatTimer * 1.5f);
                 myTouch.isNearFood = false;
-
             }
-            else
-            {
-
-            }
-
         }
 
         public override void Exit()
         {
             base.Exit();
-            myTouch.foodImTouching.enabled = false;
+            //Destroy(myTouch.foodImTouching);
             myVision.foodIveSeen.Remove(myTouch.foodImTouching);
             Finish();
         }

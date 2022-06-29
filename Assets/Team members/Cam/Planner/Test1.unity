@@ -238,45 +238,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &293177845 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2810053913193074319, guid: 17039b36573447248ae244cf03a6911f,
-    type: 3}
-  m_PrefabInstance: {fileID: 7173694600147049043}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &293177859
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 293177845}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd95a418070c3014eb6368bceeef6adf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Hp: 100
-  dead: 0
-  fullenergy: 1
-  noenergy: 0
---- !u!114 &293177860
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 293177845}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86b58142ff8a3804fa71c5004d10d94b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  energyAmount: 50
-  energyMax: 100
-  energyMin: 0
-  drainAmount: 1
-  drainSpeed: 1
 --- !u!1001 &951353133
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -672,6 +633,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 293177851, guid: 17039b36573447248ae244cf03a6911f, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 2050702457}
     - target: {fileID: 976931788533668752, guid: 17039b36573447248ae244cf03a6911f,
         type: 3}
       propertyPath: target

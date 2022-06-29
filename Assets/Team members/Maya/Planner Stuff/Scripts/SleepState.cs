@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Maya
 { 
-    public class SleepState : AntAIState
+    public class SleepState : AIBase
     {
         public override void Enter()
         {
