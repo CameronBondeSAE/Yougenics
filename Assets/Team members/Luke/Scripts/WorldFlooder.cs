@@ -6,12 +6,14 @@ using Random = UnityEngine.Random;
 
 namespace Luke
 {
-	public class LevelManager : MonoBehaviour
+	public class WorldFlooder : MonoBehaviour
 	{
+		#region Variables
+		
 		[SerializeField]
 		private Bounds bounds;
 
-		public Node[,] gridNodeReferences;
+		public FloodingNode[,] gridNodeReferences;
 		public Vector3 gridTileHalfExtents = new (0.5f ,0.5f, 0.5f);
 		private int worldSizeX;
 		private int worldSizeZ;
@@ -34,13 +36,16 @@ namespace Luke
 		[SerializeField]
 		private float spawningDelayPeriod = 3f;
 		
+		#endregion
+		
+		#region World Gridding
 		public void ScanWorld()
 		{
 			for (int x = 0; x < worldSizeX; x++)
 			{
 				for (int z = 0; z < worldSizeZ; z++)
 				{
-					gridNodeReferences[x, z] = new Node {lm = this};
+					gridNodeReferences[x, z] = new FloodingNode() {WF = this};
 					if (Physics.OverlapBox(new Vector3(worldEdgeX + x, 0, worldEdgeZ + z),
 						    gridTileHalfExtents, Quaternion.identity, 251).Length != 0)
 					{
@@ -95,20 +100,24 @@ namespace Luke
 			StartCoroutine(LoopFillNode(gridNodeReferences[centreCoords[0], centreCoords[1]]));
 		}
 
-		public void StartFillLoop(Node node)
+		public void StartFillLoop(FloodingNode floodingNode)
 		{
-			StartCoroutine(LoopFillNode(node));
+			StartCoroutine(LoopFillNode(floodingNode));
 		}
 		
-		private IEnumerator LoopFillNode(Node node)
+		private IEnumerator LoopFillNode(FloodingNode floodingNode)
 		{
-			node.FillSelfAndNeighbours(0.2f);
+			floodingNode.FillSelfAndNeighbours(0.2f);
 
 			yield return new WaitForSeconds(0.1f);
 			
-			if (node.FillAmount < 1) StartCoroutine(LoopFillNode(node));
+			if (floodingNode.FillAmount < 1) StartCoroutine(LoopFillNode(floodingNode));
 		}
+		
+		#endregion
 
+		#region Food Spawning
+		
 		private void RemoveFoodFromList(Transform _transform)
 		{
 			if (worldFoods.Contains(_transform))
@@ -145,6 +154,8 @@ namespace Luke
 			yield return new WaitForSeconds(spawningDelayPeriod);
 			StartCoroutine(SpawnFoodLoop());
 		}
+		
+		#endregion
 
 		// Start is called before the first frame update
 		void Start()
@@ -156,7 +167,7 @@ namespace Luke
 			worldSizeZ = Mathf.RoundToInt(bounds.extents.z) + 1;
 			worldEdgeX = Mathf.RoundToInt(bounds.center.x-bounds.extents.x/2);
 			worldEdgeZ = Mathf.RoundToInt(bounds.center.z-bounds.extents.z/2);
-			gridNodeReferences = new Node[worldSizeX,worldSizeZ];
+			gridNodeReferences = new FloodingNode[worldSizeX,worldSizeZ];
 			ScanWorld();
 		}
 
@@ -174,20 +185,20 @@ namespace Luke
 			{
 				for (int z = 0; z < worldSizeZ; z++)
 				{
-					Node node = gridNodeReferences[x, z];
-					if (node.isBlocked)
+					FloodingNode floodingNode = gridNodeReferences[x, z];
+					if (floodingNode.isBlocked)
 					{
 						Gizmos.color = Color.red;
 						Gizmos.DrawCube(new Vector3(worldEdgeX+x, 0, worldEdgeZ+z), Vector3.one);
 					}
-					else if (node.isCentre)
+					else if (floodingNode.isCentre)
 					{
-						Gizmos.color = new Color(1-node.FillAmount, node.FillAmount, 1);
+						Gizmos.color = new Color(1-floodingNode.FillAmount, floodingNode.FillAmount, 1);
 						Gizmos.DrawCube(new Vector3(worldEdgeX+x, 0, worldEdgeZ+z), Vector3.one);
 					}
 					else
 					{
-						Gizmos.color = new Color(1-node.FillAmount, node.FillAmount, 1-node.FillAmount);
+						Gizmos.color = new Color(1-floodingNode.FillAmount, floodingNode.FillAmount, 1-floodingNode.FillAmount);
 						Gizmos.DrawCube(new Vector3(worldEdgeX+x, 0, worldEdgeZ+z), Vector3.one);
 					}
 				}

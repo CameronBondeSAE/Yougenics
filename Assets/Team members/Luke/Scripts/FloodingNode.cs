@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace Luke
 {
-	public class Node
+	public class FloodingNode : NodeBase
 	{
+		public WorldFlooder WF;
+		
 		public bool isBlocked;
 		public bool isCentre;
 		public bool isFilling;
-
-		public LevelManager lm;
-
+		
 		private float fillAmount;
 		public float FillAmount
 		{
@@ -26,8 +26,6 @@ namespace Luke
 				else fillAmount = value;
 			}
 		}
-		
-		public Node[,] neighbours = new Node[3,3];
 
 		public void FillSelfAndNeighbours(float amount)
 		{
@@ -44,12 +42,12 @@ namespace Luke
 			{
 				for (int z = 0; z < 3; z++)
 				{
-					Node neighbour = neighbours[x, z];
+					FloodingNode neighbour = (FloodingNode)neighbours[x, z];
 					if (!(neighbour == null || neighbour.isBlocked))
 					{
 						if (x == 1 || z == 1) neighbour.FillAmount += amount/4;
 						else neighbour.FillAmount += amount/10;
-						if (FillAmount >= 1 && !neighbour.isFilling) lm.StartFillLoop(neighbour);
+						if (FillAmount >= 1 && !neighbour.isFilling) WF.StartFillLoop(neighbour);
 					}
 				}
 			}
