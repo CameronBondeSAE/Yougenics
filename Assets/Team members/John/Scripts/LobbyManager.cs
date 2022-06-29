@@ -122,15 +122,19 @@ public class LobbyManager : NetworkBehaviour
         clientUI.text = _name;
     }
 
+    /*
     public SceneEventProgressStatus LoadScene(string sceneName, LoadSceneMode loadSceneMode)
     {
         SceneManager.LoadScene(sceneName, loadSceneMode);
 
         return SceneEventProgressStatus.Started;
     }
+    */
 
     public void StartGame()
     {
-        LoadScene("JohnTestScene", LoadSceneMode.Single);
+        //LoadScene("JohnTestScene", LoadSceneMode.Single);
+
+        NetworkManager.Singleton.SceneManager.LoadScene("JohnTestScene", LoadSceneMode.Additive);
     }
 }
