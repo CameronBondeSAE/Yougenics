@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Anthill.AI;
 using UnityEngine;
 using UnityEngine.AI;
@@ -11,7 +12,7 @@ namespace Maya
     public class FindFoodState : AIBase
     {
         public Vector3 newPos;
-        public List<Food> foodIWant;
+        //public List<Food> foodIWant;
         public float moveTimer;
         public float moveCooldown;
         public float moveDistance;
@@ -21,26 +22,27 @@ namespace Maya
         public override void Enter()
         {
             base.Enter();
-            myAgent.speed = 10;
+            myAgent.speed = 50;
         }
 
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
             base.Execute(aDeltaTime, aTimeScale);
             moveTimer += aDeltaTime;
-            if (moveTimer >= moveCooldown && myVision.foodIveSeen ==  null)
+            if (moveTimer >= moveCooldown)
             {
                 newPos = RandomNavSphere(transform.position, moveDistance, -1);
                 myAgent.SetDestination(newPos);
                 moveTimer = 0;
             }
-            else if (myVision.foodIveSeen != null)
+            /*else if (myVision.foodIveSeen.Count > 0)
             {
                 foreach (Food piece in myVision.foodIveSeen)
                 {
-                    foodIWant.Add(piece);
+                    if(foodIWant.Count == 0)
+                        foodIWant.Add(piece);
                 }
-            }
+            }*/
         }
 
         public override void Exit()
