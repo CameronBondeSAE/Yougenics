@@ -29,7 +29,9 @@ namespace Ollie
         public List<WaterNode> openNodeV3List;
         public List<WaterNode> activeWaterNodes;
         public List<Vector3> waterPosList;
+        
         public List<WaterNode> temporaryOpen;
+        public List<WaterNode> openNodesToAdd;
         public List<WaterNode> openWaterNodes;
         public List<WaterNode> closedWaterNodes;
 
@@ -47,6 +49,7 @@ namespace Ollie
             activeWaterNodes = new List<WaterNode>();
             temporaryOpen = new List<WaterNode>();
             waterPosList = new List<Vector3>();
+            openNodesToAdd = new List<WaterNode>();
             openWaterNodes = new List<WaterNode>();
             closedWaterNodes = new List<WaterNode>();
         }
@@ -123,6 +126,12 @@ namespace Ollie
                     if (x > 0 && z < sizeZ-1) gridNodeReferences[x-1, z+1].neighbours[2,0] = gridNodeReferences[x, z];
                     if (x < sizeX-1 && z > 0) gridNodeReferences[x+1, z-1].neighbours[0,2] = gridNodeReferences[x, z];
                     if (x < sizeX-1 && z < sizeZ-1) gridNodeReferences[x+1, z+1].neighbours[0,0] = gridNodeReferences[x, z];
+                    
+                    //could just do two if statements
+                    //if within the X bounds
+                    //if within the Z bounds
+                    //then continue with the code
+                    //otherwise break
                 }
             }
         }
@@ -162,6 +171,12 @@ namespace Ollie
             foreach (WaterNode waterNode in temporaryOpen)
             {
                 waterNode.CheckNeighbours();
+            }
+
+            foreach (WaterNode waterNode in openNodesToAdd)
+            {
+                if(!openWaterNodes.Contains(waterNode)) openWaterNodes.Add(waterNode);
+                if(openNodesToAdd.Contains(waterNode)) openNodesToAdd.Remove(waterNode);
             }
         }
 
@@ -227,21 +242,25 @@ namespace Ollie
             {
                 for (int z = 0; z < sizeZ; z++)
                 {
-                    if (gridNodeReferences[x,z] != null && gridNodeReferences[x, z].isBlocked)
+                    if (gridNodeReferences[x, z] != null)
                     {
-                        Gizmos.color = Color.red;
-                        Gizmos.DrawCube(new Vector3(lengthX+x,0,lengthZ+z),Vector3.one);
-                    }
+                        if (gridNodeReferences[x, z].isBlocked)
+                        {
+                            Gizmos.color = Color.red;
+                            Gizmos.DrawCube(new Vector3(lengthX+x,0,lengthZ+z),Vector3.one);
+                        }
                     
-                    if (gridNodeReferences[x,z] != null && !gridNodeReferences[x, z].isBlocked && !gridNodeReferences[x,z].isWater)
-                    {
-                        Gizmos.color = Color.green;
-                        Gizmos.DrawCube(new Vector3(lengthX+x,0,lengthZ+z),Vector3.one);
-                    }
+                        if (!gridNodeReferences[x, z].isBlocked && !gridNodeReferences[x,z].isWater)
+                        {
+                            Gizmos.color = Color.green;
+                            Gizmos.DrawCube(new Vector3(lengthX+x,0,lengthZ+z),Vector3.one);
+                        }
 
-                    if (gridNodeReferences[x, z] != null && gridNodeReferences[x, z].isWater)
-                    {
-                        Gizmos.color = Color.blue;
+                        if (gridNodeReferences[x, z].isWater)
+                        {
+                            Gizmos.color = Color.blue;
+                            Gizmos.DrawCube(new Vector3(lengthX+x,0,lengthZ+z),Vector3.one);
+                        }
                     }
                 }
             }
