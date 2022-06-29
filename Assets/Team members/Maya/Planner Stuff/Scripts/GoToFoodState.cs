@@ -24,7 +24,11 @@ namespace Maya
                 newPos = myVision.foodIveSeen[0].transform.position;
                 
                 myAgent.SetDestination(newPos);
-                myAgent.velocity = Vector3.zero;
+                //.myAgent.velocity = Vector3.zero;
+            }
+            else
+            {
+                
             }
         }
 
