@@ -28,7 +28,7 @@ namespace Maya
             aWorldState.Set(CritterAI.isHealthy, myHealth.Hp < 40);
             aWorldState.Set(CritterAI.isHorny, false);
             aWorldState.Set(CritterAI.isHungry, myEnergy.energyAmount < 60);
-            aWorldState.Set(CritterAI.isTired, false);
+            aWorldState.Set(CritterAI.isTired, myEnergy.energyAmount <= 20);
             aWorldState.Set(CritterAI.canSeeEnemy, false);
             aWorldState.Set(CritterAI.canSeeFood, vision.foodIveSeen.Count > 0);
             aWorldState.Set(CritterAI.canSeeMate, false);
@@ -36,6 +36,7 @@ namespace Maya
             aWorldState.Set(CritterAI.isNearFood, touch.isNearFood);
             aWorldState.Set(CritterAI.isNearMate, false);
             aWorldState.Set(CritterAI.mateIsHorny, false);
+            
         }
     }
 }
