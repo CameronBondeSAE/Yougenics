@@ -8,12 +8,18 @@ namespace Luke
 {
 	public class LevelManager : MonoBehaviour
 	{
+		[SerializeField]
+		private Bounds bounds;
+
 		public Node[,] gridNodeReferences;
 		public Vector3 gridTileHalfExtents = new (0.5f ,0.5f, 0.5f);
-		
-		[SerializeField]
-		private Bounds bounds = new Bounds();
-		
+		private int worldSizeX;
+		private int worldSizeZ;
+		private int worldEdgeX;
+		private int worldEdgeZ;
+		int[] centreCoords;
+		private bool centreSet;
+
 		[SerializeField]
 		private List<GameObject> foodPrefabs;
 
@@ -27,22 +33,80 @@ namespace Luke
 
 		[SerializeField]
 		private float spawningDelayPeriod = 3f;
-
-		private void ScanWorld()
+		
+		public void ScanWorld()
 		{
-			for (int x = 0; x < Mathf.RoundToInt(bounds.extents.x); x++)
+			for (int x = 0; x < worldSizeX; x++)
 			{
-				for (int z = 0; z < Mathf.RoundToInt(bounds.extents.z); z++)
+				for (int z = 0; z < worldSizeZ; z++)
 				{
-					gridNodeReferences[x, z] = new Node();
-					if (Physics.OverlapBox(new Vector3(x * bounds.extents.x, 0, z * bounds.extents.z),
-						    gridTileHalfExtents,  Quaternion.identity) != null)
+					gridNodeReferences[x, z] = new Node {lm = this};
+					if (Physics.OverlapBox(new Vector3(worldEdgeX + x, 0, worldEdgeZ + z),
+						    gridTileHalfExtents, Quaternion.identity, 251).Length != 0)
 					{
-						// Something is there
 						gridNodeReferences[x, z].isBlocked = true;
 					}
 				}
 			}
+			IntroduceNeighbours();
+		}
+
+		private void IntroduceNeighbours()
+		{
+			for (int x = 0; x < worldSizeX; x++)
+			{
+				for (int z = 0; z < worldSizeZ; z++)
+				{
+					if (x > 0) gridNodeReferences[x-1, z].neighbours[2,1] = gridNodeReferences[x, z];
+					if (z > 0) gridNodeReferences[x, z-1].neighbours[1,2] = gridNodeReferences[x, z];
+					if (x < worldSizeX-1) gridNodeReferences[x+1, z].neighbours[0,1] = gridNodeReferences[x, z];
+					if (z < worldSizeZ-1) gridNodeReferences[x, z+1].neighbours[1,0] = gridNodeReferences[x, z];
+					if (x > 0 && z > 0) gridNodeReferences[x-1, z-1].neighbours[2,2] = gridNodeReferences[x, z];
+					if (x > 0 && z < worldSizeZ-1) gridNodeReferences[x-1, z+1].neighbours[2,0] = gridNodeReferences[x, z];
+					if (x < worldSizeX-1 && z > 0) gridNodeReferences[x+1, z-1].neighbours[0,2] = gridNodeReferences[x, z];
+					if (x < worldSizeX-1 && z < worldSizeZ-1) gridNodeReferences[x+1, z+1].neighbours[0,0] = gridNodeReferences[x, z];
+				}
+			}
+		}
+
+		public void FillWorld()
+		{
+			StopAllCoroutines();
+			
+			centreCoords = new int[2];
+			centreCoords[0] = Random.Range(0, worldSizeX);
+			centreCoords[1] = Random.Range(0, worldSizeZ);
+			int breaker = 0;
+			while (gridNodeReferences[centreCoords[0], centreCoords[1]].isBlocked && breaker < 100)
+			{
+				centreCoords[0] = Random.Range(0, worldSizeX);
+				centreCoords[1] = Random.Range(0, worldSizeZ);
+				breaker++;
+			}
+			if (breaker > 99)
+			{
+				Debug.Log("Too many blocked nodes!");
+				return;
+			}
+
+			centreSet = true;
+			gridNodeReferences[centreCoords[0], centreCoords[1]].isCentre = true;
+			gridNodeReferences[centreCoords[0], centreCoords[1]].FillAmount = 1;
+			StartCoroutine(LoopFillNode(gridNodeReferences[centreCoords[0], centreCoords[1]]));
+		}
+
+		public void StartFillLoop(Node node)
+		{
+			StartCoroutine(LoopFillNode(node));
+		}
+		
+		private IEnumerator LoopFillNode(Node node)
+		{
+			node.FillSelfAndNeighbours(0.2f);
+
+			yield return new WaitForSeconds(0.1f);
+			
+			if (node.FillAmount < 1) StartCoroutine(LoopFillNode(node));
 		}
 
 		private void RemoveFoodFromList(Transform _transform)
@@ -88,14 +152,46 @@ namespace Luke
 			worldEnergy = maxWorldEnergy;
 			SortFoodList();
 			StartCoroutine(SpawnFoodLoop());
-			gridNodeReferences = new Node[Mathf.RoundToInt(bounds.extents.x),Mathf.RoundToInt(bounds.extents.z)];
+			worldSizeX = Mathf.RoundToInt(bounds.extents.x) + 1;
+			worldSizeZ = Mathf.RoundToInt(bounds.extents.z) + 1;
+			worldEdgeX = Mathf.RoundToInt(bounds.center.x-bounds.extents.x/2);
+			worldEdgeZ = Mathf.RoundToInt(bounds.center.z-bounds.extents.z/2);
+			gridNodeReferences = new Node[worldSizeX,worldSizeZ];
 			ScanWorld();
+		}
+
+		void Update()
+		{
+			if (centreSet) gridNodeReferences[centreCoords[0], centreCoords[1]].FillSelfAndNeighbours(0.2f);
 		}
 
 		private void OnDrawGizmosSelected()
 		{
 			Gizmos.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
 			Gizmos.DrawCube(bounds.center, bounds.extents);
+			
+			for (int x = 0; x < worldSizeX; x++)
+			{
+				for (int z = 0; z < worldSizeZ; z++)
+				{
+					Node node = gridNodeReferences[x, z];
+					if (node.isBlocked)
+					{
+						Gizmos.color = Color.red;
+						Gizmos.DrawCube(new Vector3(worldEdgeX+x, 0, worldEdgeZ+z), Vector3.one);
+					}
+					else if (node.isCentre)
+					{
+						Gizmos.color = new Color(1-node.FillAmount, node.FillAmount, 1);
+						Gizmos.DrawCube(new Vector3(worldEdgeX+x, 0, worldEdgeZ+z), Vector3.one);
+					}
+					else
+					{
+						Gizmos.color = new Color(1-node.FillAmount, node.FillAmount, 1-node.FillAmount);
+						Gizmos.DrawCube(new Vector3(worldEdgeX+x, 0, worldEdgeZ+z), Vector3.one);
+					}
+				}
+			}
 		}
 	}
 }

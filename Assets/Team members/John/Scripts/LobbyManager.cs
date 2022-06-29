@@ -6,14 +6,18 @@ using TMPro;
 using UnityEngine.UI;
 using Unity.Collections;
 using System;
+using UnityEngine.SceneManagement;
 
 public class LobbyManager : NetworkBehaviour
 {
-    public Canvas lobby;
+    public GameObject lobby;
     public TMP_Text clientUI;
 
     public string clientName;
 
+    #region NetworkButtons/Status Info
+
+    public bool debugStatusLabels = true;
     void OnGUI()
     {
         GUILayout.BeginArea(new Rect(10, 10, 300, 300));
@@ -23,21 +27,32 @@ public class LobbyManager : NetworkBehaviour
         }
         else
         {
-            StatusLabels();
+            if(debugStatusLabels)
+                StatusLabels();
         }
 
         GUILayout.EndArea();
     }
 
-    static void StartButtons()
+    public void StartButtons()
     {
         if (GUILayout.Button("Host"))
         {
             NetworkManager.Singleton.StartHost();
+            lobby.SetActive(true);
         }
 
-        if (GUILayout.Button("Client")) NetworkManager.Singleton.StartClient();
-        if (GUILayout.Button("Server")) NetworkManager.Singleton.StartServer();
+        if (GUILayout.Button("Client"))
+        {
+            NetworkManager.Singleton.StartClient();
+            lobby.SetActive(true);
+        }
+
+        if (GUILayout.Button("Server"))
+        {
+            NetworkManager.Singleton.StartServer();
+            lobby.SetActive(true);
+        }
     }
 
     static void StatusLabels()
@@ -48,6 +63,13 @@ public class LobbyManager : NetworkBehaviour
         GUILayout.Label("Transport: " +
             NetworkManager.Singleton.NetworkConfig.NetworkTransport.GetType().Name);
         GUILayout.Label("Mode: " + mode);
+    }
+
+    #endregion
+
+    private void Awake()
+    {
+        lobby.SetActive(false);
     }
 
     private void Start()
@@ -72,13 +94,13 @@ public class LobbyManager : NetworkBehaviour
         }
     }
 
-    void HandleClientNames()
+    public void HandleClientNames()
     {
         clientName = "";
 
-        foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
+        for (int i = 0; i < NetworkManager.Singleton.ConnectedClientsList.Count; i++)
         {
-            clientName += client.PlayerObject.GetComponent<ClientInfo>().name;
+            clientName += NetworkManager.Singleton.ConnectedClientsList[i].PlayerObject.GetComponent<ClientInfo>().clientName + " " + (i + 1) + " ";
         }
 
         if (NetworkManager.Singleton.IsServer)
@@ -98,5 +120,17 @@ public class LobbyManager : NetworkBehaviour
     public void UpdateLobbyClientListName(string _name)
     {
         clientUI.text = _name;
+    }
+
+    public SceneEventProgressStatus LoadScene(string sceneName, LoadSceneMode loadSceneMode)
+    {
+        SceneManager.LoadScene(sceneName, loadSceneMode);
+
+        return SceneEventProgressStatus.Started;
+    }
+
+    public void StartGame()
+    {
+        LoadScene("JohnTestScene", LoadSceneMode.Single);
     }
 }
