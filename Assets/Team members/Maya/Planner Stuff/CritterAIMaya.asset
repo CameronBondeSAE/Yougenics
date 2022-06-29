@@ -115,6 +115,8 @@ MonoBehaviour:
       value: 0
     - id: 10
       value: 0
+    - id: 1
+      value: 1
   - name: FindFood
     isDefault: 0
     state: {fileID: 4732975288301281584, guid: f14555d4be4b7244b8f44860a3059768, type: 3}
@@ -266,7 +268,7 @@ MonoBehaviour:
     - id: 0
       value: 1
     - id: 1
-      value: 0
+      value: 1
     - id: 2
       value: 1
     - id: 3

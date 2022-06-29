@@ -15,6 +15,8 @@ namespace Maya
         {
             base.Enter();
             eatTimer = myTouch.timeToEat;
+            UpdateEnergyDrainAmount();
+            myEnergy.drainAmount = energyBySpeed;
         }
 
         public override void Execute(float aDeltaTime, float aTimeScale)
@@ -35,6 +37,7 @@ namespace Maya
             base.Exit();
             //Destroy(myTouch.foodImTouching);
             myVision.foodIveSeen.Remove(myTouch.foodImTouching);
+            myEnergy.drainAmount = defaultEnergyDrain;
             Finish();
         }
     }

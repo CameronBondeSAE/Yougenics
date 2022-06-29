@@ -22,7 +22,10 @@ namespace Maya
         public override void Enter()
         {
             base.Enter();
-            myAgent.speed = 50;
+            myAgent.speed = 25;
+            myEnergy.drainAmount = energyBySpeed;
+            UpdateEnergyDrainAmount();
+            myEnergy.drainAmount = energyBySpeed;
         }
 
         public override void Execute(float aDeltaTime, float aTimeScale)
@@ -48,6 +51,7 @@ namespace Maya
         public override void Exit()
         {
             base.Exit();
+            myEnergy.drainAmount = defaultEnergyDrain;
             Finish();
         }
         
