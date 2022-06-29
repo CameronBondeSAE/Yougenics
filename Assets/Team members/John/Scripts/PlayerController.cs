@@ -26,10 +26,23 @@ namespace John
 
         void FixedUpdate()
         {
+            if(IsServer)
+            {
+                Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+                controller.Move(move * Time.deltaTime * movementSpeed);
+            }
+            else
+            {
+                SubmitMovementServerRpc();
+            }
 
+        }
+
+        [ServerRpc]
+        void SubmitMovementServerRpc()
+        {
             Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             controller.Move(move * Time.deltaTime * movementSpeed);
-
         }
     }
 }
