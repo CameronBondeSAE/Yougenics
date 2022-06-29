@@ -19,12 +19,12 @@ namespace Maya
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
             base.Execute(aDeltaTime, aTimeScale);
-            if (myVision.foodIveSeen.Count >= 0)
+            if (myVision.foodIveSeen.Count != null)
             {
                 newPos = myVision.foodIveSeen[0].transform.position;
                 
                 myAgent.SetDestination(newPos);
-                myAgent.velocity = Vector3.zero;
+                //.myAgent.velocity = Vector3.zero;
             }
             else
             {

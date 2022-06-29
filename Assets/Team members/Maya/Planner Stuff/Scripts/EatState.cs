@@ -39,7 +39,7 @@ namespace Maya
         public override void Exit()
         {
             base.Exit();
-            myTouch.foodImTouching.enabled = false;
+            Destroy(myTouch.foodImTouching);
             myVision.foodIveSeen.Remove(myTouch.foodImTouching);
             Finish();
         }
