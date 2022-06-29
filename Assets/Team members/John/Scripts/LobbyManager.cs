@@ -76,6 +76,13 @@ public class LobbyManager : NetworkBehaviour
     {
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientJoin;
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientLeave;
+
+        //NetworkManager.Singleton.OnServerStarted += DelayTest;
+    }
+
+    void DelayTest()
+    {
+        
     }
 
     private void OnClientLeave(ulong obj)
@@ -100,7 +107,8 @@ public class LobbyManager : NetworkBehaviour
 
         for (int i = 0; i < NetworkManager.Singleton.ConnectedClientsList.Count; i++)
         {
-            clientName += NetworkManager.Singleton.ConnectedClientsList[i].PlayerObject.GetComponent<ClientInfo>().clientName + " " + (i + 1) + " ";
+            NetworkClient client = NetworkManager.Singleton.ConnectedClientsList[i];
+            clientName += client.PlayerObject.GetComponent<ClientInfo>().clientName + (i + 1) + " ";
         }
 
         if (NetworkManager.Singleton.IsServer)
@@ -122,19 +130,22 @@ public class LobbyManager : NetworkBehaviour
         clientUI.text = _name;
     }
 
-    /*
-    public SceneEventProgressStatus LoadScene(string sceneName, LoadSceneMode loadSceneMode)
-    {
-        SceneManager.LoadScene(sceneName, loadSceneMode);
-
-        return SceneEventProgressStatus.Started;
-    }
-    */
-
     public void StartGame()
     {
-        //LoadScene("JohnTestScene", LoadSceneMode.Single);
+        NetworkManager.Singleton.SceneManager.OnSceneEvent += SceneManagerOnOnSceneEvent;
 
         NetworkManager.Singleton.SceneManager.LoadScene("JohnTestScene", LoadSceneMode.Additive);
+    }
+
+    private void SceneManagerOnOnSceneEvent(SceneEvent sceneEvent)
+    {
+        NetworkManager.Singleton.SceneManager.OnSceneEvent -= SceneManagerOnOnSceneEvent;
+        Scene scene = sceneEvent.Scene;
+
+        //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        SceneManager.SetActiveScene(scene);
+
+        lobby.SetActive(false);
+        FindObjectOfType<Spawner>().SpawnMultiple();
     }
 }
