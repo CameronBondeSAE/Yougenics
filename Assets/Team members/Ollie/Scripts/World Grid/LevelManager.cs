@@ -172,12 +172,17 @@ namespace Ollie
             {
                 waterNode.CheckNeighbours();
             }
+            temporaryOpen.Clear();
+            openWaterNodes.Clear();
+        }
 
+        public void AddNodes()
+        {
             foreach (WaterNode waterNode in openNodesToAdd)
             {
                 if(!openWaterNodes.Contains(waterNode)) openWaterNodes.Add(waterNode);
-                if(openNodesToAdd.Contains(waterNode)) openNodesToAdd.Remove(waterNode);
             }
+            openNodesToAdd.Clear();
         }
 
         public void FillNeighbours()
@@ -202,11 +207,11 @@ namespace Ollie
             //     activeWaterNodes[i].FillNeighbours();
             //     activeWaterNodes.Remove(activeWaterNodes[i]);
             // }
-            foreach (WaterNode neighbour in openWaterNodes)
+            temporaryOpen = openWaterNodes;
+            foreach (WaterNode neighbour in temporaryOpen)
             {
-                neighbour.isWater = true;
+                if(!neighbour.isBlocked) neighbour.isWater = true;
                 if(!closedWaterNodes.Contains(neighbour)) closedWaterNodes.Add(neighbour);
-                if(openWaterNodes.Contains(neighbour))    openWaterNodes.Remove(neighbour);
             }
             
         }
