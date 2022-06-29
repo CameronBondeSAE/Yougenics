@@ -29,7 +29,9 @@ namespace Ollie
         public List<WaterNode> openNodeV3List;
         public List<WaterNode> activeWaterNodes;
         public List<Vector3> waterPosList;
-        public List<WaterNode> temporaryActiveWaterNodes;
+        public List<WaterNode> temporaryOpen;
+        public List<WaterNode> openWaterNodes;
+        public List<WaterNode> closedWaterNodes;
 
         void Start()
         {
@@ -43,8 +45,10 @@ namespace Ollie
             blockedNodes = new List<WaterNode>();
             openNodeV3List = new List<WaterNode>();
             activeWaterNodes = new List<WaterNode>();
-            temporaryActiveWaterNodes = new List<WaterNode>();
+            temporaryOpen = new List<WaterNode>();
             waterPosList = new List<Vector3>();
+            openWaterNodes = new List<WaterNode>();
+            closedWaterNodes = new List<WaterNode>();
         }
 
         public void ScanWorld()
@@ -141,13 +145,25 @@ namespace Ollie
             //new Vector3(lengthX+x, 0, lengthZ+z)
 
             WaterNode randomWaterNode = openNodeV3List[UnityEngine.Random.Range(0, openNodeV3List.Count)];
-            activeWaterNodes.Add(randomWaterNode);
-            Vector2Int transformPosition = randomWaterNode.gridPosition;
+            randomWaterNode.isWater = true;
+            openWaterNodes.Add(randomWaterNode);
             
-            GameObject go = Instantiate(waterCube);
-            go.transform.position = new Vector3(transformPosition.x+lengthX,1,transformPosition.y+lengthZ);
-            waterPosList.Add(go.transform.position);
+            // activeWaterNodes.Add(randomWaterNode);
+            // Vector2Int transformPosition = randomWaterNode.gridPosition;
+            
+            // GameObject go = Instantiate(waterCube);
+            // go.transform.position = new Vector3(transformPosition.x+lengthX,1,transformPosition.y+lengthZ);
+            // waterPosList.Add(go.transform.position);
             }
+
+        public void CheckNeighbours()
+        {
+            temporaryOpen = openWaterNodes;
+            foreach (WaterNode waterNode in temporaryOpen)
+            {
+                waterNode.CheckNeighbours();
+            }
+        }
 
         public void FillNeighbours()
         {
@@ -156,8 +172,8 @@ namespace Ollie
 
         public IEnumerator FillNeighboursCoroutine()
         {
-            int count = activeWaterNodes.Count;
-            yield return new WaitForSeconds(2f);
+            //int count = activeWaterNodes.Count;
+            yield return new WaitForSeconds(0.1f);
             // foreach (WaterNode waterNode in activeWaterNodes)
             // {
             //     waterNode.FillNeighbours();
@@ -166,28 +182,35 @@ namespace Ollie
             // temporaryActiveWaterNodes.Clear();
             // temporaryActiveWaterNodes = activeWaterNodes;
             
-            for (int i = 0; i < count; i++)
+            // for (int i = 0; i < count; i++)
+            // {
+            //     activeWaterNodes[i].FillNeighbours();
+            //     activeWaterNodes.Remove(activeWaterNodes[i]);
+            // }
+            foreach (WaterNode neighbour in openWaterNodes)
             {
-                activeWaterNodes[i].FillNeighbours();
-                activeWaterNodes.Remove(activeWaterNodes[i]);
+                neighbour.isWater = true;
+                if(!closedWaterNodes.Contains(neighbour)) closedWaterNodes.Add(neighbour);
+                if(openWaterNodes.Contains(neighbour))    openWaterNodes.Remove(neighbour);
             }
+            
         }
 
         public void SpreadToNeighbours(WaterNode waterNode, Vector2Int transformPosition)
         {
             activeWaterNodes.Add(waterNode);
-            GameObject go = Instantiate(waterCube);
-            go.transform.position = new Vector3(transformPosition.x+lengthX,1,transformPosition.y+lengthZ);
-            waterPosList.Add(go.transform.position);
+            // GameObject go = Instantiate(waterCube);
+            // go.transform.position = new Vector3(transformPosition.x+lengthX,1,transformPosition.y+lengthZ);
+            // waterPosList.Add(go.transform.position);
         }
 
         public void PrintNeighbourGridPos()
         {
             print(activeWaterNodes.Count);
-            foreach (WaterNode waterNode in activeWaterNodes)
-            {
-                print(waterNode.gridPosition);
-            }
+            // foreach (WaterNode waterNode in activeWaterNodes)
+            // {
+            //     print(waterNode.gridPosition);
+            // }
         }
 
         //commented out so I could push without errors popping up for others
@@ -210,10 +233,15 @@ namespace Ollie
                         Gizmos.DrawCube(new Vector3(lengthX+x,0,lengthZ+z),Vector3.one);
                     }
                     
-                    if (gridNodeReferences[x,z] != null && !gridNodeReferences[x, z].isBlocked)
+                    if (gridNodeReferences[x,z] != null && !gridNodeReferences[x, z].isBlocked && !gridNodeReferences[x,z].isWater)
                     {
                         Gizmos.color = Color.green;
                         Gizmos.DrawCube(new Vector3(lengthX+x,0,lengthZ+z),Vector3.one);
+                    }
+
+                    if (gridNodeReferences[x, z] != null && gridNodeReferences[x, z].isWater)
+                    {
+                        Gizmos.color = Color.blue;
                     }
                 }
             }
