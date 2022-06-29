@@ -17,16 +17,12 @@ public class Wheel : MonoBehaviour
     
     Vector3 localVelocity;
     public float suspensionLength = 3f;
-    public float force = 10;
-
-    private float maxForce = 20;
-    //public float minForce = 0;
-    //public Vector3 OffSet;
-    //public Vector3 Force;
-    //public float turnForce = 10f;
-    
-    public float friction = 1f;
-
+    private float force = 100;
+    private float maxHeight = 1f;
+    public bool onGround;
+    private float maxForce = 200;
+    private float friction = 1f;
+    public float suspensionForce = 100f;
     
     void FixedUpdate()
     {
@@ -38,28 +34,36 @@ public class Wheel : MonoBehaviour
     {
         RaycastHit hitInfo;
         hitInfo = new RaycastHit();
-        
-        
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hitInfo, suspensionLength,
+
+
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hitInfo,
+                suspensionLength,
                 255))
         {
+            float heightOffGround = hitInfo.distance;
+            force = maxHeight - heightOffGround;
+
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * hitInfo.distance,
                 Color.yellow);
-            //Debug.Log(hitInfo.distance);
 
-            force = maxForce;
-            rb.AddForceAtPosition(transform.up * force, transform.position);
+
+            rb.AddForceAtPosition(transform.up * (force * suspensionForce), transform.position);
+            onGround = true;
         }
         else
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * force, Color.white);
-            //Debug.Log("Did not Hit");
-            //force = maxForce;
-            force = (force - hitInfo.distance);
-            rb.AddForceAtPosition(transform.up * force, transform.position);
-            
+            onGround = false;
         }
     }
+
+    public void ApplyForwardForce(float f)
+    {
+        if (onGround)
+        {
+            rb.AddForceAtPosition(transform.forward * f, transform.position, ForceMode.Force);
+        }
+    }
+
 
     private void CalculateLateralFriction()
     {
