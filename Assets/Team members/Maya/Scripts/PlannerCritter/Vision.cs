@@ -9,15 +9,25 @@ namespace Maya
 
     public class Vision : MonoBehaviour
     {
-        public List<Food> foodIveSeen;
+        public List<IEdible> foodIveSeen;
+        public List<Transform> whereFoodIs;
         public List<CritterModel> potentialMatesIveSeen;
+        
+        
+        public Vision(List<IEdible> foodIveSeen)
+        {
+            this.foodIveSeen = foodIveSeen;
+        }
 
         private void OnTriggerEnter(Collider other)
         {
-            Food onePiece = other.gameObject.GetComponent<Food>();
-            if (other.CompareTag("Food") && !foodIveSeen.Contains(onePiece))
+            IEdible onePiece = other.gameObject.GetComponent<IEdible>();
+            if (other.GetComponent<IEdible>() != null && !foodIveSeen.Contains(onePiece))
             {
                 foodIveSeen.Add(onePiece);
+                Transform onePieceTransform = ((Component) GetComponent<IEdible>()).transform;
+                whereFoodIs.Add(onePieceTransform);
+
             }
             CritterModel oneOfUs = other.gameObject.GetComponent<CritterModel>();
             if (other.CompareTag("MayasCritter") && !potentialMatesIveSeen.Contains(oneOfUs))

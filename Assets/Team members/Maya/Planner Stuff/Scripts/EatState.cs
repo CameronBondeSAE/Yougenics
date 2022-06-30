@@ -7,7 +7,7 @@ namespace Maya
 { 
     public class EatState : AIBase
     {
-        public Food foodImEating;
+        private IEdible foodImEating;
         public float eatTimer;
         public float timer;
         
@@ -46,7 +46,8 @@ namespace Maya
             {
                 yield return new WaitForSeconds(1);
                 {
-                    float energyPerBite = myEnergy.energyAmount += foodImEating.energyValue / eatTimer;
+                    float energyPerBite = myEnergy.energyAmount += foodImEating.GetEnergyAmount() / eatTimer;
+                    foodImEating.EatMe(energyPerBite);
                 }
             }
         }

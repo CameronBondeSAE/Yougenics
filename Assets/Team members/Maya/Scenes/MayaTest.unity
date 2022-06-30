@@ -296,7 +296,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &973897262
 Transform:
   m_ObjectHideFlags: 0
@@ -765,7 +765,6 @@ MonoBehaviour:
   m_Cameras: []
   m_RendererIndex: -1
   m_VolumeLayerMask:
-    serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
@@ -1010,10 +1009,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1563931402386589663, guid: 9ecb880a42ca88648bb295e54c54f5d5, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: -635627586194204996, guid: c1fc35abc42d3494da48a6cfc3432d45, type: 3}
     - target: {fileID: 1913037232654221411, guid: 9ecb880a42ca88648bb295e54c54f5d5, type: 3}
       propertyPath: m_RootOrder
       value: 4
