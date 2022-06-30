@@ -44,3 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 688074e39f9d9c94ea0ba5fc5221d619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myEnergy: {fileID: 0}
+  myVision: {fileID: 0}
+  myTouch: {fileID: 0}
+  myAgent: {fileID: 0}
+  sleepEnergyRegen: -3
+  energyBySpeed: 0
+  defaultEnergyDrain: 1
+  newPos: {x: 0, y: 0, z: 0}
+  moveTimer: 0
+  moveCooldown: 10
+  moveDistance: 100

@@ -8,7 +8,6 @@ namespace Maya
     public class Horny : MonoBehaviour
     {
         public float currentHorny;
-        public float minHorny;
         public float maxHorny = 100;
         public float riseSpeed;
         public float risingFactor;

@@ -10,6 +10,7 @@ namespace Maya
     public class Vision : MonoBehaviour
     {
         public List<Food> foodIveSeen;
+        public List<CritterModel> potentialMatesIveSeen;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -17,6 +18,12 @@ namespace Maya
             if (other.CompareTag("Food") && !foodIveSeen.Contains(onePiece))
             {
                 foodIveSeen.Add(onePiece);
+            }
+            CritterModel oneOfUs = other.gameObject.GetComponent<CritterModel>();
+            if (other.CompareTag("MayasCritter") && !potentialMatesIveSeen.Contains(oneOfUs))
+            {
+                if(other.GetComponent<Horny>() != null && other.GetComponent<Horny>().currentHorny >= 75)
+                    potentialMatesIveSeen.Add(oneOfUs);
             }
         }
     }

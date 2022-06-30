@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foodIveSeen: []
+  potentialMatesIveSeen: []
 --- !u!135 &8892238821426794959
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -221,7 +222,7 @@ GameObject:
   - component: {fileID: 4730180432517699496}
   m_Layer: 0
   m_Name: CreatureP
-  m_TagString: Untagged
+  m_TagString: MayasCritter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -271,8 +272,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c94751e7c2dd487479141d93239b1fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  senses: {fileID: 7455062407162274048}
-  myHorny: 0
 --- !u!114 &7455062407162274048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,7 +359,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHorny: 100
-  minHorny: 0
   maxHorny: 100
   riseSpeed: 0
   risingFactor: 0
