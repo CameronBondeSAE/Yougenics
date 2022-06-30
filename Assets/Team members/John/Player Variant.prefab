@@ -27,6 +27,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 563052534330659026, guid: 0c22e79fef83ba644b4ade8cb60733ba, type: 3}
+      propertyPath: m_Drag
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 563052534330659026, guid: 0c22e79fef83ba644b4ade8cb60733ba, type: 3}
+      propertyPath: m_AngularDrag
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1894325770523995306, guid: 0c22e79fef83ba644b4ade8cb60733ba, type: 3}
       propertyPath: m_Name
       value: Player Variant
@@ -125,6 +133,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1894325770523995306, guid: 0c22e79fef83ba644b4ade8cb60733ba, type: 3}
   m_PrefabInstance: {fileID: 6008105989739386425}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &-4375090533697749474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5271722645839379091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8505158d613ace4da2671d0cec58b8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 1.2
 --- !u!114 &-831912313728853097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,6 +162,19 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &-794961352180479021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5271722645839379091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d0daea38e7e77e428afbad3412e7dfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clientName: Player
 --- !u!114 &1146536896495136872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,33 +188,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SyncPositionX: 1
-  SyncPositionY: 1
+  SyncPositionY: 0
   SyncPositionZ: 1
   SyncRotAngleX: 1
   SyncRotAngleY: 1
   SyncRotAngleZ: 1
-  SyncScaleX: 1
-  SyncScaleY: 1
-  SyncScaleZ: 1
+  SyncScaleX: 0
+  SyncScaleY: 0
+  SyncScaleZ: 0
   PositionThreshold: 0.001
   RotAngleThreshold: 0.01
   ScaleThreshold: 0.01
   InLocalSpace: 0
   Interpolate: 1
---- !u!114 &-4375090533697749474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5271722645839379091}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8505158d613ace4da2671d0cec58b8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 0}
-  movementSpeed: 5
 --- !u!114 &5412131489958237651 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1763955828344914922, guid: 0c22e79fef83ba644b4ade8cb60733ba, type: 3}

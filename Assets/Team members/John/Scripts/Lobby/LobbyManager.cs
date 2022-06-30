@@ -7,17 +7,20 @@ using UnityEngine.UI;
 using Unity.Collections;
 using System;
 using UnityEngine.SceneManagement;
+using Unity.Netcode.Transports.UNET;
 
 public class LobbyManager : NetworkBehaviour
 {
-    public GameObject lobby;
+    public GameObject lobbyCanvas;
     public TMP_Text clientUI;
+    public GameObject ipAddressCanvas;
+    public TMP_InputField serverIPInputField;
 
     public string clientName;
     public GameObject player;
 
     //Events
-    public event Action<NetworkClient> onLocalClientJoinEvent;
+    public event Action<NetworkObject> onLocalClientJoinEvent;
 
     #region NetworkButtons/Status Info
 
@@ -43,19 +46,22 @@ public class LobbyManager : NetworkBehaviour
         if (GUILayout.Button("Host"))
         {
             NetworkManager.Singleton.StartHost();
-            lobby.SetActive(true);
+            lobbyCanvas.SetActive(true);
+            ipAddressCanvas.SetActive(false);
         }
 
         if (GUILayout.Button("Client"))
         {
             NetworkManager.Singleton.StartClient();
-            lobby.SetActive(true);
+            lobbyCanvas.SetActive(true);
+            ipAddressCanvas.SetActive(false);
         }
 
         if (GUILayout.Button("Server"))
         {
             NetworkManager.Singleton.StartServer();
-            lobby.SetActive(true);
+            lobbyCanvas.SetActive(true);
+            ipAddressCanvas.SetActive(false);
         }
     }
 
@@ -73,19 +79,21 @@ public class LobbyManager : NetworkBehaviour
 
     private void Awake()
     {
-        lobby.SetActive(false);
+        ipAddressCanvas.SetActive(true);
+        lobbyCanvas.SetActive(false);
     }
 
     private void Start()
     {
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientJoin;
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientLeave;
+
+        serverIPInputField.text = NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectAddress;
     }
 
-
-    private void UpateLobbyUIState(bool previousValue, bool newValue)
+    public void OnNewServerIPAddress()
     {
-        lobby.SetActive(newValue);
+        NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectAddress = serverIPInputField.text;
     }
 
     private void OnClientLeave(ulong obj)
@@ -105,9 +113,10 @@ public class LobbyManager : NetworkBehaviour
             NetworkClient tempClient;
             if(NetworkManager.Singleton.ConnectedClients.TryGetValue(clientID, out tempClient))
             {
-                if(tempClient.PlayerObject.IsLocalPlayer)
+                NetworkObject player = tempClient.PlayerObject;
+                if(player.IsLocalPlayer)
                 {
-                    onLocalClientJoinEvent?.Invoke(tempClient);
+                    onLocalClientJoinEvent?.Invoke(player);
                 }
             }
         }
@@ -159,7 +168,7 @@ public class LobbyManager : NetworkBehaviour
 
         if(IsServer)
         {
-            lobby.SetActive(false);
+            lobbyCanvas.SetActive(false);
         }
         
         SubmitLobbyUIStateRequestClientRpc(false);
@@ -182,6 +191,6 @@ public class LobbyManager : NetworkBehaviour
     [ClientRpc]
     private void SubmitLobbyUIStateRequestClientRpc(bool value)
     {
-        lobby.SetActive(false);
+        lobbyCanvas.SetActive(false);
     }
 }

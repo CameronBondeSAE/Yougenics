@@ -7,13 +7,14 @@ namespace John
 {
     public class PlayerController : NetworkBehaviour
     {
-        public CharacterController controller;
+        Vector3 input;
         public float movementSpeed = 5f;
+        Rigidbody rb;
 
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
-            controller = gameObject.AddComponent<CharacterController>();
+            rb = GetComponent<Rigidbody>();
         }
 
         public override void OnNetworkSpawn()
@@ -24,25 +25,19 @@ namespace John
             }
         }
 
-        void FixedUpdate()
+        private void Update()
         {
-            if(IsServer)
-            {
-                Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-                controller.Move(move * Time.deltaTime * movementSpeed);
-            }
-            else
-            {
-                SubmitMovementServerRpc();
-            }
-
+            input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         }
 
-        [ServerRpc]
-        void SubmitMovementServerRpc()
+        void FixedUpdate()
         {
-            Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            controller.Move(move * Time.deltaTime * movementSpeed);
+            Movement();
+        }
+
+        void Movement()
+        {
+            rb.velocity += input.normalized * movementSpeed;
         }
     }
 }
