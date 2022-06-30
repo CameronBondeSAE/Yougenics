@@ -9,7 +9,7 @@ using System;
 public class Lobby_ViewModel : MonoBehaviour
 {
     public LobbyManager lobbyManager;
-    NetworkClient client;
+    NetworkObject player;
 
     public TMP_InputField inputField;
 
@@ -19,16 +19,16 @@ public class Lobby_ViewModel : MonoBehaviour
         lobbyManager.onLocalClientJoinEvent += HandleLocalClient;
     }
 
-    private void HandleLocalClient(NetworkClient obj)
+    private void HandleLocalClient(NetworkObject obj)
     {
-        client = obj;
+        player = obj;
     }
 
     public void UpdateClientName()
     {
-        if (client != null)
+        if (player != null)
         {
-            client.PlayerObject.GetComponent<ClientInfo>().clientName = inputField.text;
+            player.GetComponent<ClientInfo>().clientName = inputField.text;
             HandleClientNamesReqServerRpc();
         }
 
