@@ -109,12 +109,12 @@ namespace Cam
             Destroy(gameObject);
         }
 
-        public int GetEnergyAmount()
+        public float GetEnergyAmount()
         {
-            
+            return GetComponent<Energy>().energyAmount;
         }
 
-        public int EatMe(int energyRemoved)
+        public float EatMe(float energyRemoved)
         {
             return 0;
         }
