@@ -11,7 +11,7 @@ namespace Alex
         public float regenEnergySpeed = 2f;
         
 
-        private void OnEnable()
+        public void OnEnable()
         {
             rb = GetComponent<Rigidbody>();
             GetComponent<Renderer>().material.color = Color.white;

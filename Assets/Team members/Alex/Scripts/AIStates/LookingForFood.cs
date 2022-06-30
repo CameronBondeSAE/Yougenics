@@ -11,9 +11,10 @@ namespace Alex
         public Transform Target;
         public Food myFoodTarget;
 
-        private void OnEnabled()
+        public void OnEnable()
         {
             Debug.Log("Looking for food");
+            GetComponent<Renderer>().material.color = Color.blue;
         }
 
         private void OnDisable()

@@ -10,7 +10,7 @@ public class Energy : MonoBehaviour
     public float energyMax = 100;
     public float energyMin = 0;
     public float drainAmount = 1;
-    public event Action NoEnergyEvent;
+    public event Action NoEnergyEvent; 
     public event Action FullEnergyEvent;
     public float drainSpeed = 1;
     
@@ -24,67 +24,46 @@ public class Energy : MonoBehaviour
 
     }
 
-    void NoEnergy()
-    {
-        print("You have no energy");
-        
-    }
-
-    void FullEnergy()
-    {
-        print("You have max energy");
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        
         //EnergyDrain();
         CheckEnergyMax();
         CheckEnergyMin();
         EnergyDrainer();
-
     }
 
-    void CheckEnergyMax()
+    public void CheckEnergyMax()
     {
         if (energyAmount >= energyMax)
         {
             energyAmount = energyMax ; 
             FullEnergyEvent?.Invoke();
+            Debug.Log("Full Energy");
         }
     }
-    
-    void CheckEnergyMin()
+
+    public void CheckEnergyMin()
     {
         if (energyAmount <= energyMin)
         {
             energyAmount = energyMin;
             
             NoEnergyEvent?.Invoke();
+            Debug.Log("No Energy");
                         
         }
+        //Debug.Log("Editor test");
     }
-
-    /*
-    void EnergyDrain()
-    {
-
-        energyAmount = energyAmount - drainSpeed;
-           
-    }
-    */
-
-    private IEnumerator EnergyDrainer()
+    
+    public IEnumerator EnergyDrainer()
     {
         while (energyAmount >= energyMin)
         {
             yield return new WaitForSeconds(drainSpeed);
             {
                 energyAmount -= drainAmount;
+                Debug.Log("EnergyDraining");
             }
         }
     }   
-    
-
 }

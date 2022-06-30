@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6249698950740127493}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8718262690574713921
 MonoBehaviour:
@@ -46,8 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 3360166635889860820}
   suspensionLength: 0.6
-  force: 10
-  friction: 1
+  onGround: 0
+  suspensionForce: 100
 --- !u!1 &3021579139107893883
 GameObject:
   m_ObjectHideFlags: 0
@@ -61,6 +61,7 @@ GameObject:
   - component: {fileID: 3568310598528705476}
   - component: {fileID: 4433828682562473991}
   - component: {fileID: 3360166635889860820}
+  - component: {fileID: 3351566494898303402}
   m_Layer: 0
   m_Name: Vehicle(Fixed)
   m_TagString: Untagged
@@ -80,7 +81,6 @@ Transform:
   m_LocalScale: {x: 2.8863401, y: 1.1415226, z: 4.670996}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1389508205445700999}
   - {fileID: 4204073477810730948}
   - {fileID: 731193868608549646}
   - {fileID: 6903606623842997512}
@@ -167,6 +167,30 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3351566494898303402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3021579139107893883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58009d46a867e1f48b3e0c0bb3133ffe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wheels:
+  - {fileID: 2132953728554999396}
+  - {fileID: 7070604210514306960}
+  - {fileID: 200188367471064585}
+  - {fileID: 8718262690574713921}
+  frontWheels:
+  - {fileID: 2132953728554999396}
+  - {fileID: 7070604210514306960}
+  turningSpeed: 50
+  movementSpeed: 20
+  isSteering: 0
+  returnToZero: 0.1
 --- !u!1 &3587035013741361473
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,7 +221,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6249698950740127493}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &200188367471064585
 MonoBehaviour:
@@ -213,8 +237,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 3360166635889860820}
   suspensionLength: 0.6
-  force: 100
-  friction: 1
+  onGround: 0
+  suspensionForce: 100
 --- !u!1 &5327406730547258943
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,7 +269,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6249698950740127493}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7070604210514306960
 MonoBehaviour:
@@ -261,65 +285,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 3360166635889860820}
   suspensionLength: 0.6
-  force: 100
-  friction: 1
---- !u!1 &5888040285315819764
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1389508205445700999}
-  - component: {fileID: 9113047381415163615}
-  m_Layer: 0
-  m_Name: VehicleController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1389508205445700999
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5888040285315819764}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6249698950740127493}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9113047381415163615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5888040285315819764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abba6182808520641a8afe96db62a39e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  left: 276
-  right: 275
-  up: 273
-  down: 274
-  wheels:
-  - {fileID: 200188367471064585}
-  - {fileID: 8718262690574713921}
-  frontWheels:
-  - {fileID: 2132953728554999396}
-  - {fileID: 7070604210514306960}
-  steering: 50
-  mainBodyRB: {fileID: 3360166635889860820}
-  speed: 200
+  onGround: 0
+  suspensionForce: 100
 --- !u!1 &8358043547798080123
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,7 +317,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6249698950740127493}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2132953728554999396
 MonoBehaviour:
@@ -366,5 +333,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 3360166635889860820}
   suspensionLength: 0.6
-  force: 100
-  friction: 1
+  onGround: 0
+  suspensionForce: 100

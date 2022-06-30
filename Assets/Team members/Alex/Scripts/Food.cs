@@ -8,7 +8,7 @@ namespace Alex
     public class Food : MonoBehaviour
     {
         
-        public int myFoodAmount = 10;
+        public float myFoodAmount = 10f;
         Energy foodEnergy;
 
         // Start is called before the first frame update
@@ -16,14 +16,7 @@ namespace Alex
         {
             
             GetComponent<Minh.Health>();
-            foodEnergy = GetComponent<Energy>();
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-
+            //foodEnergy = GetComponent<Energy>();
         }
 
         private void OnTriggerEnter(Collider other)

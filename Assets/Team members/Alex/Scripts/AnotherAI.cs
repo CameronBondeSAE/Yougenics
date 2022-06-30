@@ -15,44 +15,41 @@ namespace Alex
         Energy myEnergy;
         Rigidbody rb;
         public StateBase currentState;
+        private StateBase wandering;
+        private StateBase sleeping;
+        private StateBase lookingForFood;
 
         // Start is called before the first frame update
-        void Start()
+        public void Awake()
         {
-            /*
-            StateBase stateBase = new StateBase();
-            stateBase.EatingTest();
-            Eating eating = new Eating();
-            eating.EatingTest();
-            */
-            
-
-            ChangeState(GetComponent<Wondering>());
+            wandering = GetComponent<Wandering>();
+            sleeping = GetComponent<Sleeping>();
+            lookingForFood = GetComponent<LookingForFood>();
+            ChangeState(wandering);
+            myEnergy = GetComponent<Energy>();
         }
               
         private void Update()
         {
             if (GetComponent<Energy>().energyAmount >= 100)
             {
-                ChangeState(GetComponent<Wondering>());
+                ChangeState(wandering);
             }
 
-            else if (GetComponent<Energy>().energyAmount >= 80 && currentState != GetComponent<Sleeping>()) 
-            {
-                ChangeState(GetComponent<Wondering>());
-            }
             
-            else if (GetComponent<Energy>().energyAmount < 80 && GetComponent<Energy>().energyAmount > 20 && currentState != GetComponent<Sleeping>())
+            else if (myEnergy.energyAmount < 80 && 
+                     myEnergy.energyAmount > 20 && 
+                     currentState != sleeping)
             {
                 // Look for food
-                ChangeState(GetComponent<LookingForFood>());
+                ChangeState(lookingForFood);
                 
             }
             
-            else if (GetComponent<Energy>().energyAmount <= 20)
+            else if (myEnergy.energyAmount <= 20)
             {
                 // Sleep
-                ChangeState(GetComponent<Sleeping>());
+                ChangeState(sleeping);
             }
         }
 
@@ -60,17 +57,11 @@ namespace Alex
         public void ChangeState(StateBase newState)
         {
             // Check if the state is the same and DON'T swap
-            if (newState == currentState)
-            {
-                return;
-            }
+            if (newState == currentState) return;
 
             // At first 'currentstate' will ALWAYS be null
-            if (currentState != null)
-            {
-                currentState.enabled = false;
-            }
-
+            if (currentState != null) currentState.enabled = false;
+            
             newState.enabled = true;
 
             // New state swap over to incoming state
