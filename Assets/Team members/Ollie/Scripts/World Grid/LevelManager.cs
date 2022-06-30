@@ -34,6 +34,13 @@ namespace Ollie
         public List<WaterNode> openNodesToAdd;
         public List<WaterNode> openWaterNodes;
         public List<WaterNode> closedWaterNodes;
+        public List<WaterNode> pathfindingUnblockedNodes;
+        public List<WaterNode> openPathNodes;
+        public List<WaterNode> closedPathNodes;
+        public WaterNode startLocation;
+        public WaterNode targetLocation;
+        public WaterNode currentLocation;
+        public bool AStar;
 
         void Start()
         {
@@ -52,6 +59,17 @@ namespace Ollie
             openNodesToAdd = new List<WaterNode>();
             openWaterNodes = new List<WaterNode>();
             closedWaterNodes = new List<WaterNode>();
+            pathfindingUnblockedNodes = new List<WaterNode>();
+            openPathNodes = new List<WaterNode>();
+            closedPathNodes = new List<WaterNode>();
+        }
+
+        private void Update()
+        {
+            // if (AStar)
+            // {
+            //     Pathfinding();
+            // }
         }
 
         public void ScanWorld()
@@ -216,6 +234,135 @@ namespace Ollie
             
         }
 
+        public void AStarPathfindingStart()
+        {
+            // AStar = !AStar;
+            // if (AStar)
+            // {
+
+            closedPathNodes.Clear();
+                for (int x = 0; x < sizeX; x++)
+                {
+                    for (int z = 0; z < sizeZ; z++)
+                    {
+                        if (!gridNodeReferences[x, z].isBlocked)
+                        {
+                            pathfindingUnblockedNodes.Add(gridNodeReferences[x,z]);
+                        }
+                    }
+                }
+
+                WaterNode random1 = pathfindingUnblockedNodes[UnityEngine.Random.Range(0, pathfindingUnblockedNodes.Count)];
+                WaterNode random2 = pathfindingUnblockedNodes[UnityEngine.Random.Range(0, pathfindingUnblockedNodes.Count)];
+                if (startLocation == null)
+                {
+                    startLocation = random1;
+                }
+
+                if (targetLocation == null)
+                {
+                    targetLocation = random2;
+                }
+            // }
+        }
+
+        public void FindPath()
+        {
+            //might need a fake "tick" via coroutine to slow this down
+            // if (startLocation != targetLocation)
+            // {
+                startLocation.isOpen = true;
+                openPathNodes.Add(startLocation);
+
+                while (openPathNodes.Count > 0)
+                {
+                    currentLocation = openPathNodes[0];
+                    for (int i = 1; i < openPathNodes.Count; i++)
+                    {
+                        if (openPathNodes[i].fCost < currentLocation.fCost ||
+                            openPathNodes[i].fCost == currentLocation.fCost &&
+                            openPathNodes[i].hCost < currentLocation.hCost)
+                        {
+                            currentLocation = openPathNodes[i];
+                        }
+                    }
+                
+                    openPathNodes.Remove(currentLocation);
+                    closedPathNodes.Add(currentLocation);
+                    for (int i = 0; i < closedPathNodes.Count; i++)
+                    {
+                        print(closedPathNodes[i].gridPosition);
+                    }
+                
+                    if (currentLocation == targetLocation)
+                    {
+                        CreatePath(startLocation,targetLocation);
+                        return;
+                    }
+
+                    foreach (WaterNode neighbour in currentLocation.neighbours)
+                    {
+                        if (neighbour == null)
+                        {
+                            continue;
+                        }
+                        
+                        if (neighbour.isBlocked || closedPathNodes.Contains(neighbour))
+                        {
+                            continue;
+                        }
+
+                        int newCostToNeighbour = currentLocation.gCost + GetDistance(currentLocation, neighbour);
+                        if (newCostToNeighbour < neighbour.gCost || !openPathNodes.Contains(neighbour))
+                        {
+                            neighbour.gCost = newCostToNeighbour;
+                            neighbour.hCost = GetDistance(neighbour, targetLocation);
+                            neighbour.parent = currentLocation;
+                            if (!openPathNodes.Contains(neighbour))
+                            {
+                                openPathNodes.Add(neighbour);
+                            }
+                        }
+                    
+                        // node.gCost = Vector2.Distance(node.gridPosition, startLocation.gridPosition);
+                        // node.hCost = Vector2.Distance(targetLocation.gridPosition, node.gridPosition);
+                        // node.fCost = node.gCost + node.hCost;
+                    }
+                }
+            //}
+            // else
+            // {
+            //     startLocation = targetLocation;
+            //     targetLocation = pathfindingUnblockedNodes[UnityEngine.Random.Range(0, pathfindingUnblockedNodes.Count)];
+            // }
+        }
+
+        void CreatePath(WaterNode startNode, WaterNode endNode)
+        {
+            List<WaterNode> path = new List<WaterNode>();
+            WaterNode currentNode = endNode;
+
+            while (currentNode != startNode)
+            {
+                path.Add(currentNode);
+                currentNode = currentNode.parent;
+            }
+            path.Reverse();
+            foreach (WaterNode node in path)
+            {
+                node.isPath = true;
+            }
+        }
+        
+        int GetDistance(WaterNode nodeA, WaterNode nodeB)
+        {
+            int distanceX = Mathf.Abs(nodeA.gridPosition.x - nodeB.gridPosition.x);
+            int distanceY = Mathf.Abs(nodeA.gridPosition.y - nodeB.gridPosition.y);
+
+            if (distanceX < distanceY) return 14 * distanceY + 10 * (distanceX - distanceY);
+            else return 14 * distanceX + 10 * (distanceY - distanceX);
+        }
+
         public void SpreadToNeighbours(WaterNode waterNode, Vector2Int transformPosition)
         {
             activeWaterNodes.Add(waterNode);
@@ -241,8 +388,7 @@ namespace Ollie
                 Gizmos.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
                 Gizmos.DrawCube(bounds.center,bounds.extents);
             }
-            
-            
+
             for (int x = 0; x < sizeX; x++)
             {
                 for (int z = 0; z < sizeZ; z++)
@@ -266,9 +412,52 @@ namespace Ollie
                             Gizmos.color = Color.blue;
                             Gizmos.DrawCube(new Vector3(lengthX+x,0,lengthZ+z),Vector3.one);
                         }
+
+                        if (gridNodeReferences[x, z].isPath)
+                        {
+                            Gizmos.color = Color.black;
+                            Gizmos.DrawCube(new Vector3(lengthX+x,0,lengthZ+z),Vector3.one);
+                        }
                     }
                 }
             }
+            
+
+            /*if (AStar)
+            {
+                for (int x = 0; x < sizeX; x++)
+                {
+                    for (int z = 0; z < sizeZ; z++)
+                    {
+                        if (gridNodeReferences[x, z] != null)
+                        {
+                            if (gridNodeReferences[x, z].isBlocked)
+                            {
+                                Gizmos.color = Color.red;
+                                Gizmos.DrawCube(new Vector3(lengthX+x,0,lengthZ+z),Vector3.one);
+                            }
+
+                            if (gridNodeReferences[x, z].isClosed)
+                            {
+                                Gizmos.color = Color.black;
+                                Gizmos.DrawCube(new Vector3(lengthX+x,0,lengthZ+z),Vector3.one);
+                            }
+                    
+                            if (!gridNodeReferences[x, z].isOpen)
+                            {
+                                Gizmos.color = Color.green;
+                                Gizmos.DrawCube(new Vector3(lengthX+x,0,lengthZ+z),Vector3.one);
+                            }
+
+                            if (gridNodeReferences[x, z].isPath)
+                            {
+                                Gizmos.color = Color.blue;
+                                Gizmos.DrawCube(new Vector3(lengthX+x,0,lengthZ+z),Vector3.one);
+                            }
+                        }
+                    }
+                }
+            }*/
         }
     }
 }
