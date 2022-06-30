@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = System.Object;
 
 namespace Cam
 {
@@ -11,10 +12,11 @@ namespace Cam
     }
     
     
-    public class CamsDude : MonoBehaviour
+    public class CamsDude : MonoBehaviour, IEdible
     {
         public Transform target;
-        
+
+        public MonoBehaviour ANYTHING;
         
         void Start()
         {
@@ -91,6 +93,7 @@ namespace Cam
         public void DoThing()
         {
             Debug.Log("I did a thing");
+            GetComponent<Renderer>().material.color = Color.green;
         }
 
         public void DoMoreThing(bool what)
@@ -106,5 +109,14 @@ namespace Cam
             Destroy(gameObject);
         }
 
+        public int GetEnergyAmount()
+        {
+            
+        }
+
+        public int EatMe(int energyRemoved)
+        {
+            return 0;
+        }
     }
 }
