@@ -8,7 +8,7 @@ using System;
 
 public class Lobby_ViewModel : MonoBehaviour
 {
-    public LobbyManager lobbyManager;
+    public LobbyUIManager lobbyManager;
     NetworkObject player;
 
     public TMP_InputField inputField;
