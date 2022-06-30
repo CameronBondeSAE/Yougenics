@@ -13,6 +13,7 @@ namespace Maya
         public Energy myEnergy;
         public Vision myVision;
         public Touch myTouch;
+        public Horny myHorny;
         public NavMeshAgent myAgent;
         
         public float sleepEnergyRegen = -3f;
@@ -23,13 +24,15 @@ namespace Maya
             base.Create(aGameObject);
             myVision = aGameObject.GetComponentInChildren<Vision>();
             myEnergy = aGameObject.GetComponentInChildren<Energy>();
+            myEnergy.energyMax += 100;
             myTouch = aGameObject.GetComponentInChildren<Touch>();
+            myHorny = aGameObject.GetComponent<Horny>();
             myAgent = aGameObject.GetComponent<NavMeshAgent>();
         }
 
         public void UpdateEnergyDrainAmount()
         {
-            energyBySpeed = (myEnergy.drainAmount * myAgent.speed) / 2;
+            energyBySpeed = (myEnergy.drainAmount * myAgent.speed) * 2;
         }
     }
 }
