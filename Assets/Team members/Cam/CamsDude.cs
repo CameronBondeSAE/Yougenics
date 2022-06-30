@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = System.Object;
 
 namespace Cam
 {
@@ -11,13 +12,16 @@ namespace Cam
     }
     
     
-    public class CamsDude : MonoBehaviour
+    public class CamsDude : MonoBehaviour, IEdible
     {
         public Transform target;
-        
+
+        public StateManager stateManager;
         
         void Start()
         {
+            stateManager = GetComponent<StateManager>();
+            
             // I am interested in this event, so I 'subscribe/listen/observe' to the event
             // GetComponent<Health>().DeathEvent += CamSuperDeath;
             GetComponent<Energy>().FullEnergyEvent += Hyper;
@@ -25,13 +29,12 @@ namespace Cam
             GetComponent<Minh.Health>().DeathEvent += CamSuperDeath;
             
             // Initialise states
-            ChangeState(GetComponent<DiscoState>());
+            stateManager.ChangeState(GetComponent<DiscoState>());
         }
 
 
         public GameObject myGo;
         public CamSmash   camSmash;
-        public StateBase  currentState;
 
         public bool       isHealthy;
         public bool       hasFood;
@@ -42,34 +45,13 @@ namespace Cam
             if (GetComponent<Energy>().energyAmount < 10)
             {
                 // Sleep
-                ChangeState(GetComponent<SleepingState>());
+                stateManager.ChangeState(GetComponent<SleepingState>());
             }
             else if (GetComponent<Energy>().energyAmount > 50)
             {
                 // Disco
-                ChangeState(GetComponent<DiscoState>());
+                stateManager.ChangeState(GetComponent<DiscoState>());
             }
-        }
-
-        // This works for ANY STATE
-        public void ChangeState(StateBase newState)
-        {
-            // Check if the state is the same and DON'T swap
-            if (newState == currentState)
-            {
-                return;
-            }
-
-            // At first 'currentstate' will ALWAYS be null
-            if (currentState != null)
-            {
-                currentState.enabled = false;
-            }
-
-            newState.enabled = true;
-
-            // New state swap over to incoming state
-            currentState = newState;
         }
 
         void FindFood()
@@ -91,6 +73,7 @@ namespace Cam
         public void DoThing()
         {
             Debug.Log("I did a thing");
+            GetComponent<Renderer>().material.color = Color.green;
         }
 
         public void DoMoreThing(bool what)
@@ -106,5 +89,14 @@ namespace Cam
             Destroy(gameObject);
         }
 
+        public float GetEnergyAmount()
+        {
+            return GetComponent<Energy>().energyAmount;
+        }
+
+        public float EatMe(float energyRemoved)
+        {
+            return 0;
+        }
     }
 }

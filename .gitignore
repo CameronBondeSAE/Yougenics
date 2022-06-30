@@ -63,3 +63,6 @@ UserSettings/EditorUserSettings.asset
 ProjectSettings/ProjectVersion.txt
 ProjectSettings/EditorSettings.asset
 *.dwlt
+UserSettings/Search.settings
+ProjectSettings/RiderScriptEditorPersistedState.asset
+Recordings/

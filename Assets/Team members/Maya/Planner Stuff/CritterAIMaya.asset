@@ -49,8 +49,6 @@ MonoBehaviour:
       value: 1
     - id: 1
       value: 0
-    - id: 3
-      value: 0
     - id: 4
       value: 0
     post:
@@ -59,8 +57,8 @@ MonoBehaviour:
   - name: Sleep
     isDefault: 0
     state: {fileID: 4366852732828214202, guid: d49fc77406f5dea42ac776bbee7adb06, type: 3}
-    cost: 0
-    position: {x: 841, y: 684}
+    cost: 10
+    position: {x: 833, y: 676}
     pre:
     - id: 1
       value: 1
@@ -131,20 +129,18 @@ MonoBehaviour:
       value: 0
     - id: 4
       value: 0
-    - id: 3
-      value: 0
     post:
     - id: 8
       value: 1
   - name: RunAway
     isDefault: 0
     state: {fileID: 9089406150732064398, guid: 62f3f71d542d1c44a961a14e69cf1542, type: 3}
-    cost: 0
+    cost: 3
     position: {x: 1489, y: 720}
     pre:
-    - id: 1
-      value: 1
     - id: 3
+      value: 1
+    - id: 1
       value: 1
     post:
     - id: 3
@@ -209,7 +205,7 @@ MonoBehaviour:
   - name: GoToFood
     isDefault: 0
     state: {fileID: 8382547209173337531, guid: 9691a6de7fd9f1940985d5c9cbcdc167, type: 3}
-    cost: 1
+    cost: 2
     position: {x: 1040, y: 400}
     pre:
     - id: 8
@@ -219,8 +215,6 @@ MonoBehaviour:
     - id: 1
       value: 0
     - id: 9
-      value: 0
-    - id: 3
       value: 0
     - id: 4
       value: 0
@@ -268,11 +262,11 @@ MonoBehaviour:
     - id: 0
       value: 1
     - id: 1
-      value: 1
+      value: 0
     - id: 2
       value: 1
     - id: 3
-      value: 0
+      value: 1
     - id: 4
       value: 0
     - id: 5

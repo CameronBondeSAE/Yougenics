@@ -7,56 +7,51 @@ using UnityEngine.UI;
 using Unity.Collections;
 using System;
 using UnityEngine.SceneManagement;
+using Unity.Netcode.Transports.UNET;
 
-public class LobbyManager : NetworkBehaviour
+public class LobbyUIManager : NetworkBehaviour
 {
-    public GameObject lobby;
+    public GameObject lobbyCanvas;
     public TMP_Text clientUI;
+    public GameObject ipAddressCanvas;
+    public TMP_InputField serverIPInputField;
+    public TMP_InputField playerNameField;
 
     public string clientName;
     public GameObject player;
 
+    NetworkObject myLocalClient;
+
     //Events
-    public event Action<NetworkClient> onLocalClientJoinEvent;
+    public event Action<NetworkObject> onLocalClientJoinEvent;
 
     #region NetworkButtons/Status Info
+
+    public void HostGame()
+    {
+        NetworkManager.Singleton.StartHost();
+        lobbyCanvas.SetActive(true);
+        ipAddressCanvas.SetActive(false);
+    }
+
+    public void JoinGame()
+    {
+        NetworkManager.Singleton.StartClient();
+        lobbyCanvas.SetActive(true);
+        ipAddressCanvas.SetActive(false);
+    }
 
     public bool debugStatusLabels = true;
     void OnGUI()
     {
         GUILayout.BeginArea(new Rect(10, 10, 300, 300));
-        if (!NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsServer)
-        {
-            StartButtons();
-        }
-        else
+        if (NetworkManager.Singleton.IsClient && NetworkManager.Singleton.IsServer)
         {
             if(debugStatusLabels)
                 StatusLabels();
         }
 
         GUILayout.EndArea();
-    }
-
-    public void StartButtons()
-    {
-        if (GUILayout.Button("Host"))
-        {
-            NetworkManager.Singleton.StartHost();
-            lobby.SetActive(true);
-        }
-
-        if (GUILayout.Button("Client"))
-        {
-            NetworkManager.Singleton.StartClient();
-            lobby.SetActive(true);
-        }
-
-        if (GUILayout.Button("Server"))
-        {
-            NetworkManager.Singleton.StartServer();
-            lobby.SetActive(true);
-        }
     }
 
     static void StatusLabels()
@@ -73,19 +68,21 @@ public class LobbyManager : NetworkBehaviour
 
     private void Awake()
     {
-        lobby.SetActive(false);
+        ipAddressCanvas.SetActive(true);
+        lobbyCanvas.SetActive(false);
     }
 
     private void Start()
     {
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientJoin;
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientLeave;
+
+        serverIPInputField.text = NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectAddress;
     }
 
-
-    private void UpateLobbyUIState(bool previousValue, bool newValue)
+    public void OnNewServerIPAddress()
     {
-        lobby.SetActive(newValue);
+        NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectAddress = serverIPInputField.text;
     }
 
     private void OnClientLeave(ulong obj)
@@ -105,9 +102,11 @@ public class LobbyManager : NetworkBehaviour
             NetworkClient tempClient;
             if(NetworkManager.Singleton.ConnectedClients.TryGetValue(clientID, out tempClient))
             {
-                if(tempClient.PlayerObject.IsLocalPlayer)
+                NetworkObject playerObject = tempClient.PlayerObject;
+                if(playerObject.IsLocalPlayer)
                 {
-                    onLocalClientJoinEvent?.Invoke(tempClient);
+                    //onLocalClientJoinEvent?.Invoke(player);
+                    myLocalClient = playerObject;
                 }
             }
         }
@@ -120,7 +119,7 @@ public class LobbyManager : NetworkBehaviour
         for (int i = 0; i < NetworkManager.Singleton.ConnectedClientsList.Count; i++)
         {
             NetworkClient client = NetworkManager.Singleton.ConnectedClientsList[i];
-            clientName += client.PlayerObject.GetComponent<ClientInfo>().clientName + (i + 1) + " ";
+            clientName += client.PlayerObject.GetComponent<ClientInfo>().clientName + " ";
         }
 
         if (NetworkManager.Singleton.IsServer)
@@ -142,6 +141,23 @@ public class LobbyManager : NetworkBehaviour
         clientUI.text = _name;
     }
 
+    public void UpdateClientName()
+    {
+        if (myLocalClient != null)
+        {
+            myLocalClient.GetComponent<ClientInfo>().clientName = playerNameField.text;
+            Debug.Log(playerNameField.text);
+            HandleClientNames();
+            //HandleClientNamesReqServerRpc();
+        }
+        else
+        {
+            Debug.Log("No local client found");
+        }
+
+        
+    }
+
     public void StartGame()
     {
         NetworkManager.Singleton.SceneManager.OnSceneEvent += SceneManagerOnOnSceneEvent;
@@ -159,7 +175,7 @@ public class LobbyManager : NetworkBehaviour
 
         if(IsServer)
         {
-            lobby.SetActive(false);
+            lobbyCanvas.SetActive(false);
         }
         
         SubmitLobbyUIStateRequestClientRpc(false);
@@ -182,6 +198,6 @@ public class LobbyManager : NetworkBehaviour
     [ClientRpc]
     private void SubmitLobbyUIStateRequestClientRpc(bool value)
     {
-        lobby.SetActive(false);
+        lobbyCanvas.SetActive(false);
     }
 }

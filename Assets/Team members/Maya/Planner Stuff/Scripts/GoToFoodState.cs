@@ -23,7 +23,7 @@ namespace Maya
             base.Execute(aDeltaTime, aTimeScale);
             if (myVision.foodIveSeen.Count > 0)
             {
-                newPos = myVision.foodIveSeen[0].transform.position;
+                newPos = myVision.whereFoodIs[0].position;
                 
                 myAgent.SetDestination(newPos);
                 //.myAgent.velocity = Vector3.zero;

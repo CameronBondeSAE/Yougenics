@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,8 +6,13 @@ using UnityEngine;
 
 namespace Cam
 {
-	public class StateBase : MonoBehaviour
+	public abstract class StateBase : MonoBehaviour
 	{
-	
+		public StateManager stateManager;
+
+		public virtual void Awake()
+		{
+			stateManager = GetComponent<StateManager>();
+		}
 	}
 }
