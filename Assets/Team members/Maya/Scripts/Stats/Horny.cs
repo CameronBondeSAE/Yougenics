@@ -12,6 +12,12 @@ namespace Maya
         public float riseSpeed;
         public float risingFactor;
 
+
+        private void Start()
+        {
+            StartCoroutine(GettingHorny());
+        }
+
         private void Update()
         {
             GettingHorny();
