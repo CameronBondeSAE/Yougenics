@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 [CustomEditor(typeof(BiomeManager))]
-public class BiomeManager_Inspector : Editor
+public class BiomeManagerEditor : Editor
 {
 	public override void OnInspectorGUI()
 	{
@@ -15,7 +15,7 @@ public class BiomeManager_Inspector : Editor
 
 		if (GUILayout.Button("Fill Grid"))
 		{
-			((BiomeManager) target).FillGrid();
+			((BiomeManager) target)?.FillGrid();
 		}
 
 		if (GUILayout.Button("FastForward"))

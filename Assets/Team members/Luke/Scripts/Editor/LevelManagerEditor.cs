@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 [CustomEditor(typeof(WorldFlooder))]
-public class LevelManager_Inspector : Editor
+public class LevelManagerEditor : Editor
 {
 	public override void OnInspectorGUI()
 	{
@@ -15,12 +15,12 @@ public class LevelManager_Inspector : Editor
 
 		if (GUILayout.Button("Scan World"))
 		{
-			((WorldFlooder) target).ScanWorld();
+			((WorldFlooder) target)?.ScanWorld();
 		}
 
 		if (GUILayout.Button("Fill World"))
 		{
-			((WorldFlooder) target).FillWorld();
+			((WorldFlooder) target)?.FillWorld();
 		}
 	}
 }

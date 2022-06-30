@@ -14,7 +14,6 @@ namespace Luke
 		public BiomeGroundTypes groundType;
 		private float fertility;
 		private float temperature;
-		public Vector3 worldPosition;
 
 		public Vector2Int iterators = new (0,0);
 		public float blueness = 0;
