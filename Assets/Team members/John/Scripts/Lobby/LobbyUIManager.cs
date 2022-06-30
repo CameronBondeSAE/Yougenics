@@ -70,6 +70,8 @@ public class LobbyUIManager : NetworkBehaviour
     {
         ipAddressCanvas.SetActive(true);
         lobbyCanvas.SetActive(false);
+
+        onLocalClientJoinEvent += GetMyLocalClient;
     }
 
     private void Start()
@@ -98,16 +100,38 @@ public class LobbyUIManager : NetworkBehaviour
         if(NetworkManager.Singleton.IsServer || IsOwner)
         {
             HandleClientNames();
+            HandleLocalClient(clientID);
+        }
+    }
 
-            NetworkClient tempClient;
-            if(NetworkManager.Singleton.ConnectedClients.TryGetValue(clientID, out tempClient))
+    private void GetMyLocalClient(NetworkObject obj)
+    {
+        onLocalClientJoinEvent -= GetMyLocalClient;
+
+        if(obj.IsLocalPlayer)
+            myLocalClient = obj;
+    }
+
+    [ServerRpc]
+    private void SubmitLocalClientRequestServerRpc(ulong ClientId)
+    {
+        HandleLocalClient(ClientId);
+    }
+
+    void HandleLocalClient(ulong clientID)
+    {
+        NetworkClient tempClient;
+        if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientID, out tempClient))
+        {
+            NetworkObject playerObject = tempClient.PlayerObject;
+            if (playerObject.IsLocalPlayer)
             {
-                NetworkObject playerObject = tempClient.PlayerObject;
-                if(playerObject.IsLocalPlayer)
-                {
-                    //onLocalClientJoinEvent?.Invoke(player);
-                    myLocalClient = playerObject;
-                }
+                //onLocalClientJoinEvent?.Invoke(player);
+                myLocalClient = playerObject;
+            }
+            else
+            {
+                onLocalClientJoinEvent?.Invoke(playerObject);
             }
         }
     }
