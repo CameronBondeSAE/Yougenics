@@ -11,20 +11,11 @@ public class StateBaseEditor : Editor
     {
         base.OnInspectorGUI();
         
-        GUILayout.BeginHorizontal();
-        if (GUILayout.Button("Sleeping"))
+        
+        if (GUILayout.Button("Change to this state"))
         {
-            (target as Sleeping)?.OnEnable();
+            (target as StateBase)?.GetComponent<StateManager>().ChangeState(target as StateBase);
         }
         
-        if (GUILayout.Button("Wandering"))
-        {
-            (target as Wandering)?.OnEnable();
-        }
-        if (GUILayout.Button("Looking for food"))
-        {
-            (target as LookingForFood)?.OnEnable();
-        }
-        GUILayout.EndHorizontal();
     }
 }

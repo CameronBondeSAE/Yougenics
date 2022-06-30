@@ -62,7 +62,6 @@ public class Energy : MonoBehaviour
             yield return new WaitForSeconds(drainSpeed);
             {
                 energyAmount -= drainAmount;
-                Debug.Log("EnergyDraining");
             }
         }
     }   
