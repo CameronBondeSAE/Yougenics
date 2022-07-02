@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Luke
 {
@@ -10,17 +11,30 @@ namespace Luke
         public bool isClosed;
         
         public AStarNode parent;
-        public float distanceToEnd;
-        private float cumulativePathDistance;
-        public float fCost;
+        private int _gCost;
+        private int _hCost;
+        public int fCost;
 
-        public float CumulativePathDistance
+        public int gCostWeight = 1;
+        public int hCostWeight = 1;
+
+        public int GCost
         {
-            get => cumulativePathDistance;
+	        get => _gCost;
+	        set
+	        {
+		        _gCost = value;
+		        fCost = gCostWeight*_gCost + hCostWeight*_hCost;
+	        }
+        }
+        
+        public int HCost
+        {
+            get => _hCost;
             set
             {
-                cumulativePathDistance = value;
-                fCost = distanceToEnd + cumulativePathDistance;
+                _hCost = value;
+                fCost = gCostWeight*_gCost + hCostWeight*_hCost;
             }
         }
     }

@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.PlasticSCM.Editor.WebApi;
+using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Luke
 {
@@ -10,19 +13,25 @@ namespace Luke
         
         #region MyRegion
 
-        private AStarNode[,] _nodes;
+        public AStarNode[,] Nodes;
 
         [SerializeField] private Vector2Int numberOfTiles;
         [SerializeField] private float gridTileHeight;
         [SerializeField] private Vector2 gridSize;
         [SerializeField] private Vector3 gridOrigin;
 
+        [SerializeField] private int gCostWeight = 1;
+        [SerializeField] private int hCostWeight = 1;
+
         private Vector3 _gridTileSize;
 
-        public AStarNode currentNode;
+        public AStarNode CurrentNode;
+        public AStarNode EndNode;
         public Vector3 startLocation;
         public Vector3 endLocation;
-        public List<AStarNode> openNodes = new();
+        private List<AStarNode> _openNodes = new();
+
+        public Coroutine coroutineInstance = null; //For stopping and resetting algorithm.
 
         #endregion
 
@@ -32,20 +41,22 @@ namespace Luke
         {
             _gridTileSize = new Vector3(gridSize.x/numberOfTiles.x, gridTileHeight, gridSize.y/numberOfTiles.y);
             
-			_nodes = new AStarNode[numberOfTiles.x, numberOfTiles.y];
+			Nodes = new AStarNode[numberOfTiles.x, numberOfTiles.y];
 			for (int x = 0; x < numberOfTiles.x; x++)
 			{
 				for (int y = 0; y < numberOfTiles.y; y++)
 				{
-                    _nodes[x, y] = new AStarNode
+                    Nodes[x, y] = new AStarNode
 					{
-						worldPosition = ConvertIndexAndPosition(new []{x,y})
-                    };
+						worldPosition = ConvertIndexAndPosition(new []{x,y}),
+						gCostWeight = gCostWeight,
+						hCostWeight = hCostWeight
+					};
                     
-                    if (Physics.OverlapBox(_nodes[x,y].worldPosition, _gridTileSize*0.5f, 
+                    if (Physics.OverlapBox(Nodes[x,y].worldPosition, _gridTileSize*0.5f, 
                             Quaternion.identity, 251).Length != 0)
                     {
-                        _nodes[x, y].isBlocked = true;
+                        Nodes[x, y].isBlocked = true;
                     }
 				}
 			}
@@ -58,14 +69,14 @@ namespace Luke
 			{
 				for (int y = 0; y < numberOfTiles.y; y++)
 				{
-					if (x > 0) _nodes[x-1, y].neighbours[2,1] = _nodes[x, y];
-					if (y > 0) _nodes[x, y-1].neighbours[1,2] = _nodes[x, y];
-					if (x < numberOfTiles.x-1) _nodes[x+1, y].neighbours[0,1] = _nodes[x, y];
-					if (y < numberOfTiles.y-1) _nodes[x, y+1].neighbours[1,0] = _nodes[x, y];
-					if (x > 0 && y > 0) _nodes[x-1, y-1].neighbours[2,2] = _nodes[x, y];
-					if (x > 0 && y < numberOfTiles.y-1) _nodes[x-1, y+1].neighbours[2,0] = _nodes[x, y];
-					if (x < numberOfTiles.x-1 && y > 0) _nodes[x+1, y-1].neighbours[0,2] = _nodes[x, y];
-					if (x < numberOfTiles.x-1 && y < numberOfTiles.y-1) _nodes[x+1, y+1].neighbours[0,0] = _nodes[x, y];
+					if (x > 0) Nodes[x-1, y].neighbours[2,1] = Nodes[x, y];
+					if (y > 0) Nodes[x, y-1].neighbours[1,2] = Nodes[x, y];
+					if (x < numberOfTiles.x-1) Nodes[x+1, y].neighbours[0,1] = Nodes[x, y];
+					if (y < numberOfTiles.y-1) Nodes[x, y+1].neighbours[1,0] = Nodes[x, y];
+					if (x > 0 && y > 0) Nodes[x-1, y-1].neighbours[2,2] = Nodes[x, y];
+					if (x > 0 && y < numberOfTiles.y-1) Nodes[x-1, y+1].neighbours[2,0] = Nodes[x, y];
+					if (x < numberOfTiles.x-1 && y > 0) Nodes[x+1, y-1].neighbours[0,2] = Nodes[x, y];
+					if (x < numberOfTiles.x-1 && y < numberOfTiles.y-1) Nodes[x+1, y+1].neighbours[0,0] = Nodes[x, y];
 				}
 			}
 		}
@@ -74,35 +85,33 @@ namespace Luke
         {
             int[] startIndex = ConvertIndexAndPosition(startLocation);
             int[] endIndex = ConvertIndexAndPosition(endLocation);
-            AStarNode endNode = _nodes[endIndex[0], endIndex[1]];
+            AStarNode endNode = Nodes[endIndex[0], endIndex[1]];
 
-            currentNode = _nodes[startIndex[0], startIndex[1]];
-            currentNode.distanceToEnd = Vector3.Distance(currentNode.worldPosition, endLocation);
-            currentNode.CumulativePathDistance = 0;
-            openNodes.Add(currentNode);
+            CurrentNode = Nodes[startIndex[0], startIndex[1]];
+            CurrentNode.GCost = Mathf.RoundToInt(1000*Vector3.Distance(CurrentNode.worldPosition, endLocation));
+            CurrentNode.HCost = 0;
+            _openNodes.Add(CurrentNode);
 
             CheckNeighbours();
-            openNodes.Sort(FCostComparison);
             
             yield return new WaitForEndOfFrame();
             
-            currentNode = openNodes[0];
+            CurrentNode = _openNodes[OpenNodesComparison()];
             //move and draw line
 
-            if (currentNode != endNode) StartCoroutine(AStarLoop(endNode));
+            if (CurrentNode != endNode) coroutineInstance = StartCoroutine(AStarLoop(endNode));
         }
 
         private IEnumerator AStarLoop(AStarNode endNode)
         {
-            CheckNeighbours(currentNode);
-            openNodes.Sort(FCostComparison);
+            CheckNeighbours(CurrentNode);
             
             yield return new WaitForEndOfFrame();
             
-            currentNode = openNodes[0];
+            CurrentNode = _openNodes[OpenNodesComparison()];
             //move and draw line
 
-            if (currentNode != endNode) StartCoroutine(AStarLoop(endNode));
+            if (CurrentNode != endNode) coroutineInstance = StartCoroutine(AStarLoop(endNode));
         }
 
         //Case: First Node
@@ -113,20 +122,20 @@ namespace Luke
             {
                 for (int y = 0; y < 3; y++)
                 {
-                    AStarNode neighbour = (AStarNode)currentNode.neighbours[x, y];
+                    AStarNode neighbour = (AStarNode)CurrentNode.neighbours[x, y];
                     if (neighbour == null) continue;
-                    if (neighbour.isBlocked || neighbour.isClosed || openNodes.Contains(neighbour)) continue;
+                    if (neighbour.isBlocked || neighbour.isClosed || _openNodes.Contains(neighbour)) continue;
                     i++;
-                    openNodes.Add(neighbour);
-                    neighbour.distanceToEnd = Vector3.Distance(neighbour.worldPosition, endLocation);
-                    neighbour.parent = currentNode;
-                    neighbour.CumulativePathDistance =
-                            Vector3.Distance(neighbour.worldPosition, currentNode.worldPosition) +
-                            currentNode.CumulativePathDistance;
+                    _openNodes.Add(neighbour);
+                    neighbour.GCost = Mathf.RoundToInt(1000*Vector3.Distance(neighbour.worldPosition, endLocation));
+                    neighbour.parent = CurrentNode;
+                    neighbour.HCost =
+                            Mathf.RoundToInt(1000*Vector3.Distance(neighbour.worldPosition, CurrentNode.worldPosition) +
+                                             CurrentNode.HCost);
                 }
             }
-            currentNode.isClosed = true;
-            openNodes.Remove(currentNode);
+            CurrentNode.isClosed = true;
+            _openNodes.Remove(CurrentNode);
         }
         
         private void CheckNeighbours(AStarNode node)
@@ -138,32 +147,53 @@ namespace Luke
                 {
                     AStarNode neighbour = (AStarNode)node.neighbours[x, y];
                     if (neighbour == null) continue;
-                    if (neighbour.isBlocked || neighbour.isClosed || openNodes.Contains(neighbour)) continue;
+                    if (neighbour.isBlocked || neighbour.isClosed || _openNodes.Contains(neighbour)) continue;
                     i++;
-                    openNodes.Add(neighbour);
-                    neighbour.distanceToEnd = Vector3.Distance(neighbour.worldPosition, endLocation);
-                    if (neighbour.CumulativePathDistance < node.parent.CumulativePathDistance)
+                    _openNodes.Add(neighbour);
+                    neighbour.GCost = Mathf.RoundToInt(1000*Vector3.Distance(neighbour.worldPosition, endLocation));
+                    if (neighbour.parent != null && neighbour.HCost < node.parent.HCost)
                     {
                         node.parent = neighbour;
-                        node.CumulativePathDistance = Vector3.Distance(neighbour.worldPosition, node.worldPosition) +
-                                                      neighbour.CumulativePathDistance;
+                        node.HCost = Mathf.RoundToInt(1000*Vector3.Distance(neighbour.worldPosition, node.worldPosition) +
+                                                      neighbour.HCost);
                     }
                     else
                     {
                         neighbour.parent = node;
-                        neighbour.CumulativePathDistance =
-                            Vector3.Distance(neighbour.worldPosition, node.worldPosition) +
-                            node.CumulativePathDistance;
+                        neighbour.HCost =
+                            Mathf.RoundToInt(1000*Vector3.Distance(neighbour.worldPosition, node.worldPosition) +
+                                             node.HCost);
                     }
                 }
             }
             node.isClosed = true;
-            openNodes.Remove(node);
+            _openNodes.Remove(node);
         }
 
-        private int FCostComparison(AStarNode x, AStarNode y)
+        private int OpenNodesComparison()
         {
-            return Mathf.RoundToInt(y.fCost-x.fCost);
+	        int lowestFCostIndex = 0;
+	        int lowestGCostIndex = 0;
+	        int lowestFCost = _openNodes[lowestFCostIndex].fCost;
+	        int lowestGCost = _openNodes[lowestFCostIndex].GCost;
+	        for (int i=0; i < _openNodes.Count; i++)
+	        {
+		        if (_openNodes[i].fCost < lowestFCost)
+		        {
+			        lowestFCost = _openNodes[i].fCost;
+			        lowestFCostIndex = i;
+			        lowestGCost = _openNodes[i].GCost;
+			        lowestGCostIndex = i;
+		        }
+		        else if (_openNodes[i].fCost == lowestFCost && _openNodes[i].GCost < lowestGCost)
+		        {
+			        lowestGCost = _openNodes[i].GCost;
+			        lowestGCostIndex = i;
+		        }
+	        }
+
+	        if (lowestFCostIndex == lowestGCostIndex) return lowestFCostIndex;
+	        return lowestGCostIndex;
         }
 
 
@@ -173,7 +203,7 @@ namespace Luke
                 gridOrigin.z + index[1] * _gridTileSize.z);
         }
         
-        private int[] ConvertIndexAndPosition(Vector3 position)
+        public int[] ConvertIndexAndPosition(Vector3 position)
         {
             return new [] {Mathf.RoundToInt((position.x-gridOrigin.x)/_gridTileSize.x), 
                 Mathf.RoundToInt((position.z-gridOrigin.z)/_gridTileSize.z)};
@@ -185,15 +215,27 @@ namespace Luke
                 Random.Range(gridOrigin.z, gridOrigin.z+gridSize.y));
             int[] index = ConvertIndexAndPosition(result);
 
-            if (_nodes[index[0], index[1]].isBlocked)
+            if (Nodes[index[0], index[1]].isBlocked)
             {
                 result = RandomLocation();
             }
             
             return result;
         }
-		
-		#endregion
+
+        public void ResetNodes()
+        {
+	        if(coroutineInstance != null) StopCoroutine(coroutineInstance);
+	        _openNodes.Clear();
+	        foreach (AStarNode node in Nodes)
+	        {
+		        node.isClosed = false;
+	        }
+	        int[] startIndex = ConvertIndexAndPosition(startLocation);
+	        CurrentNode = Nodes[startIndex[0], startIndex[1]];
+        }
+
+        #endregion
 
         void Awake()
         {
@@ -206,31 +248,36 @@ namespace Luke
             {
                 for (int y = 0; y < numberOfTiles.y; y++)
                 {
-                    if (_nodes == null) return;
-                    if (_nodes[x, y] == currentNode)
+                    if (Nodes == null) return;
+                    if (Nodes[x, y] == CurrentNode)
                     {
                         Gizmos.color = new Color(0f, 0f, 1f, 0.5f);
-                        Gizmos.DrawCube(_nodes[x, y].worldPosition, _gridTileSize);
+                        Gizmos.DrawCube(Nodes[x, y].worldPosition, _gridTileSize);
                     }
-                    else if (_nodes[x, y].isBlocked)
+                    else if (Nodes[x, y] == EndNode)
+                    {
+	                    Gizmos.color = new Color(1f, 1f, 1f, 0.5f);
+	                    Gizmos.DrawCube(Nodes[x, y].worldPosition, _gridTileSize);
+                    }
+                    else if (Nodes[x, y].isBlocked)
                     {
                         Gizmos.color = new Color(1f, 0f, 0f, 0.5f);
-                        Gizmos.DrawCube(_nodes[x, y].worldPosition, _gridTileSize);
+                        Gizmos.DrawCube(Nodes[x, y].worldPosition, _gridTileSize);
                     }
-                    else if (_nodes[x, y].isClosed)
+                    else if (Nodes[x, y].isClosed)
                     {
                         Gizmos.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
-                        Gizmos.DrawCube(_nodes[x, y].worldPosition, _gridTileSize);
+                        Gizmos.DrawCube(Nodes[x, y].worldPosition, _gridTileSize);
                     }
-                    else if (openNodes.Contains(_nodes[x, y]))
+                    else if (_openNodes.Contains(Nodes[x, y]))
                     {
                         Gizmos.color = new Color(1f, 1f, 0f, 0.5f);
-                        Gizmos.DrawCube(_nodes[x, y].worldPosition, _gridTileSize);
+                        Gizmos.DrawCube(Nodes[x, y].worldPosition, _gridTileSize);
                     }
                     else
                     {
                         Gizmos.color = new Color(0f, 1f, 0f, 0.5f);
-                        Gizmos.DrawCube(_nodes[x, y].worldPosition, _gridTileSize);
+                        Gizmos.DrawCube(Nodes[x, y].worldPosition, _gridTileSize);
                     }
                 }
             }

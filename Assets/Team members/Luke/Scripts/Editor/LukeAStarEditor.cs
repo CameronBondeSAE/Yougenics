@@ -12,17 +12,32 @@ public class LukeAStarEditor : Editor
 
 		if (GUILayout.Button("Randomise Start Location"))
 		{
-			((LukeAStar) target).startLocation = (Vector3)((LukeAStar) target)?.RandomLocation();
+			LukeAStar aStar = (LukeAStar) target;
+			aStar.ResetNodes();
+			aStar.startLocation = aStar.RandomLocation();
+			int[] index = aStar.ConvertIndexAndPosition(aStar.startLocation);
+			aStar.CurrentNode = aStar.Nodes[index[0], index[1]];
 		}
 
 		if (GUILayout.Button("Randomise End Location"))
 		{
-            ((LukeAStar) target).endLocation = (Vector3)((LukeAStar) target)?.RandomLocation();
+            LukeAStar aStar = (LukeAStar) target;
+            aStar.ResetNodes();
+            aStar.endLocation = aStar.RandomLocation();
+			int[] index = aStar.ConvertIndexAndPosition(aStar.endLocation);
+			aStar.EndNode = aStar.Nodes[index[0], index[1]];
 		}
         
         if (GUILayout.Button("Begin AStar Algorithm"))
         {
-            ((LukeAStar) target).StartCoroutine(((LukeAStar) target).AStarAlgorithm());
+	        LukeAStar aStar = (LukeAStar) target;
+            aStar.coroutineInstance = aStar.StartCoroutine(((LukeAStar) target).AStarAlgorithm());
+        }
+        
+        if (GUILayout.Button("Reset Nodes"))
+        {
+	        LukeAStar aStar = (LukeAStar) target;
+	        aStar.ResetNodes();
         }
 	}
 }
