@@ -2,42 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.InputSystem;
 
 namespace John
 {
     public class PlayerController : NetworkBehaviour
     {
-        Vector3 input;
-        public float movementSpeed = 5f;
-        Rigidbody rb;
+        public PlayerInput playerInput;
+        public PlayerModel playerModel;
+        public PlayerCameraModel playerCameraModel;
 
-        // Start is called before the first frame update
-        void Awake()
+        public void OnPlayerAssigned()
         {
-            rb = GetComponent<Rigidbody>();
+            playerInput.actions.FindAction("Interact").performed += aContext => playerModel.Interact();
+            playerInput.actions.FindAction("Jump").performed += aContext => playerModel.Jump();
+
+            //Player Movement
+            playerInput.actions.FindAction("Movement").performed += OnMovementOnperformed;
+            playerInput.actions.FindAction("Movement").canceled += OnMovementOnperformed;
+
+            //Player Look Direction
+            playerInput.actions.FindAction("MouseX").performed += aContext => playerCameraModel.mouseX = aContext.ReadValue<float>();
+            playerInput.actions.FindAction("MouseY").performed += aContext => playerCameraModel.mouseY = aContext.ReadValue<float>();
+
         }
 
-        public override void OnNetworkSpawn()
+        private void OnMovementOnperformed(InputAction.CallbackContext aContext)
         {
-            if(!IsOwner)
+            if (aContext.phase == InputActionPhase.Performed)
             {
-                Destroy(this);
+                playerModel.Movement(aContext.ReadValue<Vector2>());
             }
-        }
-
-        private void Update()
-        {
-            input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        }
-
-        void FixedUpdate()
-        {
-            Movement();
-        }
-
-        void Movement()
-        {
-            rb.velocity += input.normalized * movementSpeed;
+            else if (aContext.phase == InputActionPhase.Canceled)
+            {
+                playerModel.Movement(Vector2.zero);
+            }
         }
     }
 }

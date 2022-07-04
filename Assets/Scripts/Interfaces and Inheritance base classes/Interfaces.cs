@@ -37,3 +37,8 @@ public class CreatureBase : MonoBehaviour
 {
 	
 }
+
+public interface IInteractable
+{
+	void Interact();
+}
