@@ -24,7 +24,7 @@ public class PlayerModel : MonoBehaviour
 
     private void Update()
     {
-        
+        transform.Rotate(Vector3.up * mouseX);
     }
     private void FixedUpdate()
     {
@@ -53,6 +53,10 @@ public class PlayerModel : MonoBehaviour
             {
                 interactable.Interact();
             }
+        }
+        else
+        {
+            Debug.Log("Nothing found");
         }
     }
 

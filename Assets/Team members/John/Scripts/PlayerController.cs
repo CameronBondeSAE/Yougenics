@@ -22,7 +22,7 @@ namespace John
             playerInput.actions.FindAction("Movement").canceled += OnMovementOnperformed;
 
             //Player Look Direction
-            playerInput.actions.FindAction("MouseX").performed += aContext => playerCameraModel.mouseX = aContext.ReadValue<float>();
+            playerInput.actions.FindAction("MouseX").performed += aContext => playerModel.mouseX = aContext.ReadValue<float>();
             playerInput.actions.FindAction("MouseY").performed += aContext => playerCameraModel.mouseY = aContext.ReadValue<float>();
 
         }
