@@ -30,6 +30,7 @@ namespace Alex
             if (myFoodTarget != null)
             {
                 Target = myFoodTarget.transform;
+                Target.position = new Vector3(Target.position.x, rb.position.y, Target.position.z);
                 transform.LookAt(Target);
                 
             }

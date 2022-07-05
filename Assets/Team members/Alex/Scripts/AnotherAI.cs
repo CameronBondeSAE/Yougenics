@@ -14,7 +14,6 @@ namespace Alex
         //public Alex.Food myFoodTarget;
         Energy myEnergy;
         Rigidbody rb;
-        public StateBase currentState;
         private StateBase wandering;
         private StateBase sleeping;
         private StateBase lookingForFood;
@@ -38,7 +37,7 @@ namespace Alex
 
             else if (myEnergy.energyAmount < 80 && 
                      myEnergy.energyAmount > 20 && 
-                     currentState != sleeping)
+                     GetComponent<StateManager>().currentState != sleeping)
             {
                 // Look for food
                 GetComponent<StateManager>().ChangeState(lookingForFood);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Alex
 {
-    public class StateManager : StateBase
+    public class StateManager : MonoBehaviour
     {
         public StateBase currentState;
 

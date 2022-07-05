@@ -6,8 +6,6 @@ namespace Alex
 {
     public class StateBase : MonoBehaviour
     {
-        
-
     }
 }
 

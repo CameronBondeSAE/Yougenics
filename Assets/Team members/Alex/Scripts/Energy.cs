@@ -5,7 +5,7 @@ using System;
 
 public class Energy : MonoBehaviour
 {
-
+    //[SerializeField]
     public float energyAmount = 50;
     public float energyMax = 100;
     public float energyMin = 0;
@@ -26,10 +26,14 @@ public class Energy : MonoBehaviour
 
     void Update()
     {
-        //EnergyDrain();
+        EnergyDrainer();
+    }
+
+    public void ChangeEnergy(float f)
+    {
+        energyAmount = energyAmount + f;
         CheckEnergyMax();
         CheckEnergyMin();
-        EnergyDrainer();
     }
 
     public void CheckEnergyMax()
@@ -39,6 +43,8 @@ public class Energy : MonoBehaviour
             energyAmount = energyMax ; 
             FullEnergyEvent?.Invoke();
             Debug.Log("Full Energy");
+            FindObjectOfType<AudioManager>().Play("Energy Full");
+
         }
     }
 
@@ -64,5 +70,5 @@ public class Energy : MonoBehaviour
                 energyAmount -= drainAmount;
             }
         }
-    }   
+    }
 }

@@ -14,7 +14,7 @@ public class StateBaseEditor : Editor
         
         if (GUILayout.Button("Change to this state"))
         {
-            (target as StateBase)?.GetComponent<StateManager>().ChangeState(target as StateBase);
+            (target as StateBase)?.GetComponent<StateManager>()?.ChangeState(target as StateBase);
         }
         
     }

@@ -9,7 +9,7 @@ namespace Alex
     {
         
         public float myFoodAmount = 10f;
-        Energy foodEnergy;
+        
 
         // Start is called before the first frame update
         void Start()
@@ -23,10 +23,12 @@ namespace Alex
         {
             if (other.GetComponent<Energy>() != null)// ‘Fire’ the event
             {
-                GetComponent<Minh.Health>().Hp += 35;
+                //GetComponent<Minh.Health>().Hp += 35;
                 other.GetComponent<Energy>().energyAmount += myFoodAmount;
+                FindObjectOfType<AudioManager>().Play("Energy Gain");
                 Destroy(gameObject);
                 //print("Cheer");
+                
             }
 
         }
