@@ -183,10 +183,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50357d34566a21647a9d61ec8d228b8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 10
+  movementSpeed: 7.5
   lookSensitivity: 1.5
-  jumpHeight: 5
-  interactDistance: 1
+  jumpHeight: 10
+  interactDistance: 3
   interactRayOffset: {x: 0, y: 0.5, z: 0}
   rb: {fileID: 8611620220612625321}
   mouseX: 0

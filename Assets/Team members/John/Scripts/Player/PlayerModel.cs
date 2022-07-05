@@ -39,7 +39,7 @@ public class PlayerModel : MonoBehaviour
 
     public void Movement(Vector2 movementInput)
     {
-        movement = new Vector3(movementInput.x, 0, movementInput.y);
+        movement = transform.right * movementInput.x + transform.forward * movementInput.y;
     }
 
     public void Interact()
@@ -62,8 +62,7 @@ public class PlayerModel : MonoBehaviour
 
     public void Jump()
     {
-        if (rb.velocity.y > 0)
-            return;
+        //TODO: Add jump restriction when already in the air
 
         rb.AddForce(0, jumpHeight, 0, ForceMode.VelocityChange);
     }
