@@ -15,10 +15,8 @@ namespace Alex
         
 
         public Minh.Health health;
-        public HealthBarAlex healthBarAlex;
-        public EnergyBarAlex energyBarAlex;
         public Energy energy;
-        public TaskList taskList;
+        
 
         // Start is called before the first frame update
         void Start()
@@ -28,9 +26,7 @@ namespace Alex
             Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             controller.Move(move * Time.deltaTime * movementSpeed);
 
-            energyBarAlex.SetMaxEnergy(energy.energyAmount);
-            healthBarAlex.SetMaxHealth(health.Hp);
-            taskList.ToggleTest();
+            
 
         }
         
@@ -38,8 +34,7 @@ namespace Alex
         void TakeDamage(int damage)
         {
             health.Hp -= damage;
-                
-            healthBarAlex.SetHealth(health.Hp);
+            
         }
         
         void Update()

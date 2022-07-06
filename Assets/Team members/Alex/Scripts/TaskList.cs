@@ -1,49 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using Alex;
-using ParadoxNotion;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
+
 
 public class TaskList : MonoBehaviour
 {
-
-
-    public bool toggle;
+    //private bool toggle;
     public Player player;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        ToggleTest();
-    }
+    public bool outOfEnergy;
+
 
     // Update is called once per frame
     void Update()
     {
-        
-        if (GetComponent<Player>().energy.energyAmount <= 0)
-        {
-            toggle = true;
-        }
-        else
-        {
-            toggle = false;
-        }
-        
-        ToggleTest();
+        OutOfEnergy();
     }
 
-    public void ToggleTest()
+    public void OutOfEnergy()
     {
-        if (GetComponent<Player>().energy.energyAmount <= 0)
+        if (player.energy.energyAmount <= 0)
         {
-            toggle = true;
-        }
-        else
-        {
-            toggle = false;
+            outOfEnergy = true;
         }
     }
-    
+
 }

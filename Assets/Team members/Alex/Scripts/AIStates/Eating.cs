@@ -12,14 +12,7 @@ namespace Alex
             Debug.Log("Eating");
         }
         
-        public override void EatingTest()
-        {
-            //Overide.DebugLog("Test");
-            //base.Test();    
-            //Testing();
-            base.EatingTest();
-            Debug.Log("We're doing an eating test");
-        }
+  
 
 
 

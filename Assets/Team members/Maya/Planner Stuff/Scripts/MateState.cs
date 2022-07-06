@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Maya
 { 
-    public class MateState : AntAIState
+    public class MateState : AIBase
     {
         public override void Enter()
         {

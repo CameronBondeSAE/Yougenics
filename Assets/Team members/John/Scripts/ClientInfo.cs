@@ -11,10 +11,9 @@ public class ClientInfo : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-
         if (IsOwner)
         {
-            //ClientName.Value = "Player " + OwnerClientId;
+            clientName = "Player " + (OwnerClientId + 1);
         }
     }
 

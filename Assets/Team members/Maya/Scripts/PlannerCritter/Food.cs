@@ -7,24 +7,29 @@ namespace Maya
 
 
 
-    public class Food : MonoBehaviour
+    public class Food : MonoBehaviour, IEdible
     {
-        public float energyValue;
-        public float scaleFactor;
+        public int energyValue;
+        public int scaleFactor;
         public int maxScale = 5;
-
-        // Start is called before the first frame update
         void Awake()
         {
             scaleFactor = Random.Range(1, maxScale);
-            this.gameObject.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
-            energyValue = scaleFactor * 10;
+            gameObject.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+            
         }
 
-        // Update is called once per frame
-        void Update()
+        public float GetEnergyAmount()
         {
+            energyValue = scaleFactor * 10;
+            return energyValue;
+        }
 
+        public float EatMe(float energyRemoved)
+        {
+            gameObject.transform.localScale = new Vector3(scaleFactor - energyRemoved, scaleFactor - energyRemoved,
+                scaleFactor - energyRemoved);
+            return energyRemoved;
         }
     }
 }

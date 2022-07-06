@@ -21,6 +21,16 @@ namespace Ollie
             {
                 ((LevelManager) target).AssignNeighbours();
             }
+
+            if (GUILayout.Button("Pick Random Targets"))
+            {
+                ((LevelManager) target).AStarPathfindingStart();
+            }
+
+            if (GUILayout.Button("Find Path"))
+            {
+                ((LevelManager) target).FindPath();
+            }
             
             if (GUILayout.Button("Spawn Water"))
             {

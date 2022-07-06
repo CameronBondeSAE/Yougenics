@@ -11,9 +11,10 @@ namespace Alex
         public Transform Target;
         public Food myFoodTarget;
 
-        private void OnEnabled()
+        public void OnEnable()
         {
             Debug.Log("Looking for food");
+            GetComponent<Renderer>().material.color = Color.blue;
         }
 
         private void OnDisable()
@@ -29,6 +30,7 @@ namespace Alex
             if (myFoodTarget != null)
             {
                 Target = myFoodTarget.transform;
+                Target.position = new Vector3(Target.position.x, rb.position.y, Target.position.z);
                 transform.LookAt(Target);
                 
             }

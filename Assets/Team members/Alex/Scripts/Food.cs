@@ -8,32 +8,27 @@ namespace Alex
     public class Food : MonoBehaviour
     {
         
-        public int myFoodAmount = 10;
-        Energy foodEnergy;
+        public float myFoodAmount = 10f;
+        
 
         // Start is called before the first frame update
         void Start()
         {
             
             GetComponent<Minh.Health>();
-            foodEnergy = GetComponent<Energy>();
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-
+            //foodEnergy = GetComponent<Energy>();
         }
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.GetComponent<Energy>() != null)// ‘Fire’ the event
             {
-                GetComponent<Minh.Health>().Hp += 35;
+                //GetComponent<Minh.Health>().Hp += 35;
                 other.GetComponent<Energy>().energyAmount += myFoodAmount;
+                FindObjectOfType<AudioManager>().Play("Energy Gain");
                 Destroy(gameObject);
                 //print("Cheer");
+                
             }
 
         }

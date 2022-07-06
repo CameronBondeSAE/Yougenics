@@ -17,21 +17,59 @@ namespace Ollie
         public LevelManager levelManager;
         public bool isWater;
 
+        public bool isOpen;
+        public bool isClosed;
+        public bool isPath;
+
+        public int gCost;
+        public int hCost;
+
+        public int fCost
+        {
+            get
+            {
+                return gCost + hCost;
+            }
+        }
+        public WaterNode parent;
+
         public WaterNode[,] neighbours = new WaterNode[3, 3];
 
         public void CheckNeighbours()
         {
-            for (int x = 0; x < 3; x++)
+            if (!levelManager.AStar)
             {
-                for (int z = 0; z < 3; z++)
+                for (int x = 0; x < 3; x++)
                 {
-                    WaterNode neighbour = neighbours[x, z];
-                    
-                    if (!(neighbour == null || neighbour.isBlocked || neighbour.isWater))
+                    for (int z = 0; z < 3; z++)
                     {
-                        if (!levelManager.openNodesToAdd.Contains(neighbour))
+                        WaterNode neighbour = neighbours[x, z];
+                    
+                        if (!(neighbour == null || neighbour.isBlocked || neighbour.isWater))
                         {
-                            levelManager.openNodesToAdd.Add(neighbour);
+                            if (!levelManager.openNodesToAdd.Contains(neighbour))
+                            {
+                                levelManager.openNodesToAdd.Add(neighbour);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (levelManager.AStar)
+            {
+                for (int x = 0; x < 3; x++)
+                {
+                    for (int z = 0; z < 3; z++)
+                    {
+                        WaterNode neighbour = neighbours[x, z];
+                    
+                        if (!(neighbour == null || neighbour.isBlocked || neighbour.isOpen))
+                        {
+                            if (!levelManager.openNodesToAdd.Contains(neighbour))
+                            {
+                                levelManager.openNodesToAdd.Add(neighbour);
+                            }
                         }
                     }
                 }

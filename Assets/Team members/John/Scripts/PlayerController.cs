@@ -2,47 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.InputSystem;
 
 namespace John
 {
     public class PlayerController : NetworkBehaviour
     {
-        public CharacterController controller;
-        public float movementSpeed = 5f;
+        public PlayerInput playerInput;
+        public PlayerModel playerModel;
+        public PlayerCameraModel playerCameraModel;
 
-        // Start is called before the first frame update
-        void Start()
+        public void OnPlayerAssigned()
         {
-            controller = gameObject.AddComponent<CharacterController>();
-        }
+            playerInput.actions.FindAction("Interact").performed += aContext => playerModel.Interact();
+            playerInput.actions.FindAction("Jump").performed += aContext => playerModel.Jump();
 
-        public override void OnNetworkSpawn()
-        {
-            if(!IsOwner)
-            {
-                Destroy(this);
-            }
-        }
+            //Player Movement
+            playerInput.actions.FindAction("Movement").performed += OnMovementOnperformed;
+            playerInput.actions.FindAction("Movement").canceled += OnMovementOnperformed;
 
-        void FixedUpdate()
-        {
-            if(IsServer)
-            {
-                Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-                controller.Move(move * Time.deltaTime * movementSpeed);
-            }
-            else
-            {
-                SubmitMovementServerRpc();
-            }
+            //Player Look Direction
+            playerInput.actions.FindAction("MouseX").performed += aContext => playerModel.mouseX = aContext.ReadValue<float>();
+            playerInput.actions.FindAction("MouseY").performed += aContext => playerCameraModel.mouseY = aContext.ReadValue<float>();
 
         }
 
-        [ServerRpc]
-        void SubmitMovementServerRpc()
+        private void OnMovementOnperformed(InputAction.CallbackContext aContext)
         {
-            Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            controller.Move(move * Time.deltaTime * movementSpeed);
+            if (aContext.phase == InputActionPhase.Performed)
+            {
+                playerModel.Movement(aContext.ReadValue<Vector2>());
+            }
+            else if (aContext.phase == InputActionPhase.Canceled)
+            {
+                playerModel.Movement(Vector2.zero);
+            }
         }
     }
 }
