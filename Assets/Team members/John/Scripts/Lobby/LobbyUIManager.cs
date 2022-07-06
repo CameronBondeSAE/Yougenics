@@ -19,6 +19,7 @@ public class LobbyUIManager : NetworkBehaviour
 
     public string clientName;
     public GameObject player;
+    public GameObject lobbyCam;
 
     NetworkObject myLocalClient;
 
@@ -186,6 +187,7 @@ public class LobbyUIManager : NetworkBehaviour
     {
         NetworkManager.Singleton.SceneManager.OnSceneEvent += SceneManagerOnOnSceneEvent;
 
+        lobbyCam.SetActive(false);
         NetworkManager.Singleton.SceneManager.LoadScene("JohnTestScene", LoadSceneMode.Additive);
     }
 
@@ -210,10 +212,9 @@ public class LobbyUIManager : NetworkBehaviour
         {
             //spawn a player
             GameObject tempPlayer = Instantiate(player);
-            
+
             //set ownership
             tempPlayer.GetComponent<NetworkObject>().SpawnWithOwnership(client.ClientId);
-
         }
         
         //FindObjectOfType<Spawner>().SpawnMultiple();

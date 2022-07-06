@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.Netcode;
 using UnityEngine.InputSystem;
+using Unity.Netcode;
 
 namespace John
 {
@@ -11,6 +11,12 @@ namespace John
         public PlayerInput playerInput;
         public PlayerModel playerModel;
         public PlayerCameraModel playerCameraModel;
+
+        public override void OnNetworkSpawn()
+        {
+            if (!IsOwner)
+                Destroy(this);
+        }
 
         public void OnPlayerAssigned()
         {
