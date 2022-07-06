@@ -74,6 +74,6 @@ public class DayNightManager : NetworkBehaviour
         CurrentPhase.Value = newPhase;
         CurrentTime.Value = (float)newPhase;
         PhaseChangeEvent?.Invoke(newPhase);
-        print(newPhase);
+        //print(newPhase);
     }
 }

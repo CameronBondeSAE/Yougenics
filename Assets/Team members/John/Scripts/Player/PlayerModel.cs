@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class PlayerModel : MonoBehaviour
+public class PlayerModel : NetworkBehaviour
 {
     [Header("Player Setup")]
     public float movementSpeed = 10f;
@@ -11,15 +12,24 @@ public class PlayerModel : MonoBehaviour
     public float interactDistance = 1f;
     public Vector3 interactRayOffset = new Vector3(0, 0.5f, 0);
     public Rigidbody rb;
+    public GameObject myCam;
 
     //Input control variables
     Vector3 movement;
     [HideInInspector]
     public float mouseX;
 
-    private void Start()
+    public override void OnNetworkSpawn()
     {
-        GetComponent<John.PlayerController>().OnPlayerAssigned();
+        if(IsOwner)
+        {
+            GetComponent<John.PlayerController>().OnPlayerAssigned();
+        }
+        else
+        {
+            myCam.SetActive(false);
+            Destroy(this);
+        }
     }
 
     private void Update()

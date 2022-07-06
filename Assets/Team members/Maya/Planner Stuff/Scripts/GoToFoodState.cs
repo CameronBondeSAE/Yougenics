@@ -21,7 +21,7 @@ namespace Maya
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
             base.Execute(aDeltaTime, aTimeScale);
-            if (myVision.foodIveSeen.Count > 0)
+            if (myVision.whereFoodIs.Count > 0)
             {
                 newPos = myVision.whereFoodIs[0].position;
                 

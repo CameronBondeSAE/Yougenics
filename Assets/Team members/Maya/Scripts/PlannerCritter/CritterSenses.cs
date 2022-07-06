@@ -28,11 +28,11 @@ namespace Maya
             aWorldState.Set(CritterAI.isHungry, myEnergy.energyAmount < 65);
             aWorldState.Set(CritterAI.isTired, myEnergy.energyAmount <= 25);
             aWorldState.Set(CritterAI.canSeeEnemy, false);
-            aWorldState.Set(CritterAI.canSeeFood, vision.foodIveSeen.Count > 0);
-            aWorldState.Set(CritterAI.canSeeMate, false);
+            aWorldState.Set(CritterAI.canSeeFood, vision.whereFoodIs.Count >= 0);
+            aWorldState.Set(CritterAI.canSeeMate, vision.potentialMatesIveSeen.Count > 0);
             aWorldState.Set(CritterAI.isNearEnemy, false);
             aWorldState.Set(CritterAI.isNearFood, touch.isNearFood);
-            aWorldState.Set(CritterAI.isNearMate, false);
+            aWorldState.Set(CritterAI.isNearMate, touch.isNearMate && touch.myMatesHornyToo);
             aWorldState.Set(CritterAI.mateIsHorny, false);
             
         }
