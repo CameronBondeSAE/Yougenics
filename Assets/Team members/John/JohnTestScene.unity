@@ -1666,6 +1666,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 4652307625278588674, guid: b0214eb16992e344693781cd639d68be, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4652307625278588702, guid: b0214eb16992e344693781cd639d68be, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -1726,6 +1730,10 @@ PrefabInstance:
     - target: {fileID: 8611620220612625317, guid: cc02e9a49a115264eb5ef1f88085b227, type: 3}
       propertyPath: m_Name
       value: PlayerModel
+      objectReference: {fileID: 0}
+    - target: {fileID: 8611620220612625317, guid: cc02e9a49a115264eb5ef1f88085b227, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8611620220612625322, guid: cc02e9a49a115264eb5ef1f88085b227, type: 3}
       propertyPath: GlobalObjectIdHash

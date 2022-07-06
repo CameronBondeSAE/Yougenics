@@ -3204,7 +3204,8 @@ MonoBehaviour:
   serverIPInputField: {fileID: 781790613}
   playerNameField: {fileID: 413580457}
   clientName: 
-  player: {fileID: 5271722645839379091, guid: 7817b2fb632160346b9bef802fd57301, type: 3}
+  player: {fileID: 8611620220612625317, guid: cc02e9a49a115264eb5ef1f88085b227, type: 3}
+  lobbyCam: {fileID: 1640972067}
   debugStatusLabels: 1
 --- !u!4 &1799434293
 Transform:

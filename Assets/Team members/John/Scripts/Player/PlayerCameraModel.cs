@@ -15,7 +15,10 @@ public class PlayerCameraModel : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
 
-        transform.SetParent(target.transform);
+        //Wanted to set players camera to their active camera? - not working
+        //Camera.SetupCurrent(GetComponent<Camera>());
+
+        //transform.SetParent(target.transform);
     }
 
     // Update is called once per frame
