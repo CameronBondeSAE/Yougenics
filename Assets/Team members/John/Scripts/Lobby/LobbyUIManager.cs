@@ -38,6 +38,7 @@ public class LobbyUIManager : NetworkBehaviour
     public void JoinGame()
     {
         NetworkManager.Singleton.StartClient();
+        lobbyCanvas.GetComponentInChildren<Button>().gameObject.SetActive(false);
         lobbyCanvas.SetActive(true);
         ipAddressCanvas.SetActive(false);
     }
@@ -72,7 +73,7 @@ public class LobbyUIManager : NetworkBehaviour
         ipAddressCanvas.SetActive(true);
         lobbyCanvas.SetActive(false);
 
-        onLocalClientJoinEvent += GetMyLocalClient;
+        //onLocalClientJoinEvent += GetMyLocalClient;
     }
 
     private void Start()
@@ -105,12 +106,13 @@ public class LobbyUIManager : NetworkBehaviour
         }
     }
 
-    private void GetMyLocalClient(NetworkObject obj)
+    [ClientRpc]
+    private void GetMyLocalClientRpc()
     {
-        onLocalClientJoinEvent -= GetMyLocalClient;
+        //onLocalClientJoinEvent -= GetMyLocalClient;
 
-        if(obj.IsLocalPlayer)
-            myLocalClient = obj;
+        //if(obj.IsLocalPlayer)
+           // myLocalClient = obj;
     }
 
     [ServerRpc]
@@ -122,6 +124,7 @@ public class LobbyUIManager : NetworkBehaviour
     void HandleLocalClient(ulong clientID)
     {
         NetworkClient tempClient;
+
         if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientID, out tempClient))
         {
             NetworkObject playerObject = tempClient.PlayerObject;
@@ -132,7 +135,8 @@ public class LobbyUIManager : NetworkBehaviour
             }
             else
             {
-                onLocalClientJoinEvent?.Invoke(playerObject);
+                //onLocalClientJoinEvent?.Invoke(playerObject);
+                //GetMyLocalClientRpc(playerObject);
             }
         }
     }
@@ -171,7 +175,6 @@ public class LobbyUIManager : NetworkBehaviour
         if (myLocalClient != null)
         {
             myLocalClient.GetComponent<ClientInfo>().clientName = playerNameField.text;
-            Debug.Log(playerNameField.text);
             HandleClientNames();
             //HandleClientNamesReqServerRpc();
         }
@@ -179,8 +182,6 @@ public class LobbyUIManager : NetworkBehaviour
         {
             Debug.Log("No local client found");
         }
-
-        
     }
 
     public void StartGame()
@@ -204,7 +205,7 @@ public class LobbyUIManager : NetworkBehaviour
             lobbyCanvas.SetActive(false);
         }
         
-        SubmitLobbyUIStateRequestClientRpc(false);
+        SubmitLobbyUIStateClientRpc(false);
         
         
         //Spawn a player for each client
@@ -215,14 +216,29 @@ public class LobbyUIManager : NetworkBehaviour
 
             //set ownership
             tempPlayer.GetComponent<NetworkObject>().SpawnWithOwnership(client.ClientId);
+
+            //Posses that player object
+            client.PlayerObject.GetComponent<John.PlayerController>().playerModel = tempPlayer.GetComponent<PlayerModel>();
+            client.PlayerObject.GetComponent<John.PlayerController>().playerCameraModel = tempPlayer.GetComponentInChildren<PlayerCameraModel>();
+            client.PlayerObject.GetComponent<John.PlayerController>().OnPlayerAssigned();
+
+            //SetPlayerPossessionClientRpc(client, tempPlayer);
         }
         
         //FindObjectOfType<Spawner>().SpawnMultiple();
     }
 
     [ClientRpc]
-    private void SubmitLobbyUIStateRequestClientRpc(bool value)
+    private void SubmitLobbyUIStateClientRpc(bool value)
     {
-        lobbyCanvas.SetActive(false);
+        lobbyCanvas.SetActive(value);
+    }
+
+    [ClientRpc]
+    private void SetPlayerPossessionClientRpc()
+    {
+        //client.PlayerObject.GetComponent<John.PlayerController>().playerModel = tempPlayer.GetComponent<PlayerModel>();
+        //client.PlayerObject.GetComponent<John.PlayerController>().playerCameraModel = tempPlayer.GetComponentInChildren<PlayerCameraModel>();
+        //client.PlayerObject.GetComponent<John.PlayerController>().OnPlayerAssigned();
     }
 }

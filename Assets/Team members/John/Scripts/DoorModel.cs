@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.Netcode;
 
-public class DoorModel : MonoBehaviour, IInteractable
+public class DoorModel : NetworkBehaviour, IInteractable
 {
 
     bool isOpen = false;
@@ -12,15 +13,28 @@ public class DoorModel : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        if(isOpen)
+        if(IsServer)
         {
-            isOpen = false;
+            if (isOpen)
+            {
+                isOpen = false;
+            }
+            else
+            {
+                isOpen = true;
+            }
+
+            onDoorInteractEvent?.Invoke(isOpen);
         }
         else
         {
-            isOpen = true;
+            SubmitInteractRequestClientRpc();
         }
+    }
 
-        onDoorInteractEvent?.Invoke(isOpen);
+    [ClientRpc]
+    private void SubmitInteractRequestClientRpc()
+    {
+        Interact();
     }
 }

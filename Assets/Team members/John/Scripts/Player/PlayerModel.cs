@@ -21,15 +21,8 @@ public class PlayerModel : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if(IsOwner)
-        {
-            GetComponent<John.PlayerController>().OnPlayerAssigned();
-        }
-        else
-        {
+        if (!IsOwner)
             myCam.SetActive(false);
-            Destroy(this);
-        }
     }
 
     private void Update()
@@ -70,7 +63,8 @@ public class PlayerModel : NetworkBehaviour
         }
     }
 
-    public void Jump()
+    [ClientRpc]
+    public void JumpClientRpc()
     {
         //TODO: Add jump restriction when already in the air
 

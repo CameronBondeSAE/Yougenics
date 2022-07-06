@@ -14,14 +14,16 @@ namespace John
 
         public override void OnNetworkSpawn()
         {
-            if (!IsOwner)
-                Destroy(this);
+
         }
 
         public void OnPlayerAssigned()
         {
+            if (!IsLocalPlayer)
+                return;
+
             playerInput.actions.FindAction("Interact").performed += aContext => playerModel.Interact();
-            playerInput.actions.FindAction("Jump").performed += aContext => playerModel.Jump();
+            playerInput.actions.FindAction("Jump").performed += aContext => RequestJumpServerRpc();
 
             //Player Movement
             playerInput.actions.FindAction("Movement").performed += OnMovementOnperformed;
@@ -31,6 +33,12 @@ namespace John
             playerInput.actions.FindAction("MouseX").performed += aContext => playerModel.mouseX = aContext.ReadValue<float>();
             playerInput.actions.FindAction("MouseY").performed += aContext => playerCameraModel.mouseY = aContext.ReadValue<float>();
 
+        }
+
+        [ServerRpc]
+        void RequestJumpServerRpc()
+        {
+            playerModel.JumpClientRpc();
         }
 
         private void OnMovementOnperformed(InputAction.CallbackContext aContext)
