@@ -240,6 +240,21 @@ MonoBehaviour:
     post:
     - id: 7
       value: 1
+  - name: Recover
+    isDefault: 0
+    state: {fileID: 4366852732828214202, guid: d49fc77406f5dea42ac776bbee7adb06, type: 3}
+    cost: 0
+    position: {x: 842, y: 944}
+    pre:
+    - id: 2
+      value: 0
+    - id: 3
+      value: 0
+    - id: 4
+      value: 0
+    post:
+    - id: 2
+      value: 1
   goals:
   - name: IsAlive
     isDefault: 1
@@ -256,17 +271,17 @@ MonoBehaviour:
     - id: 3
       value: 0
   worldStates:
-  - position: {x: 231, y: 971}
+  - position: {x: 232, y: 970}
     isAutoUpdate: 1
     list:
     - id: 0
-      value: 1
+      value: 0
     - id: 1
       value: 0
     - id: 2
       value: 1
     - id: 3
-      value: 1
+      value: 0
     - id: 4
       value: 0
     - id: 5

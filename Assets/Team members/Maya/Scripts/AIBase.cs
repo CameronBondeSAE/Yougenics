@@ -32,7 +32,7 @@ namespace Maya
 
         public void UpdateEnergyDrainAmount()
         {
-            energyBySpeed = (myEnergy.drainAmount * myAgent.speed) * 2;
+            energyBySpeed = (myEnergy.drainAmount * myAgent.speed) / 25 ;
         }
     }
 }
