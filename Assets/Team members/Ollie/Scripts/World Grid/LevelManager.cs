@@ -44,6 +44,7 @@ namespace Ollie
         public WaterNode currentLocation;
         public bool AStar;
         private bool worldScanned;
+        public float pathDelay;
 
         void Start()
         {
@@ -386,7 +387,7 @@ namespace Ollie
                         // node.hCost = Vector2.Distance(targetLocation.gridPosition, node.gridPosition);
                         // node.fCost = node.gCost + node.hCost;
                     }
-                    yield return new WaitForSeconds(0.1f);
+                    yield return new WaitForSeconds(pathDelay);
                 }
             //}
             // else
