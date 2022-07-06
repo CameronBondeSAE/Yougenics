@@ -33,12 +33,12 @@ public interface IEdible
 	float EatMe(float energyRemoved);
 }
 
-public class CreatureBase : MonoBehaviour
-{
-	
-}
-
 public interface IInteractable
 {
 	void Interact();
+}
+
+public class CreatureBase : MonoBehaviour
+{
+	
 }
