@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Minh;
 using UnityEngine;
 
 namespace Maya
@@ -16,6 +17,9 @@ namespace Maya
         public bool myMatesHornyToo;
         public float timeToMate;
         public bool isNearMate;
+
+        public Health victimImTouching;
+        public bool isNearVictim;
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Food"))
@@ -35,6 +39,12 @@ namespace Maya
                 timeToMate = mateImTouching.currentHorny / 3;
                 isNearMate = true;
                 
+            }
+
+            if (other.GetComponent<Health>() && !other.CompareTag("MayasCritter"))
+            {
+                victimImTouching = other.GetComponent<Health>();
+                isNearVictim = true;
             }
         }
     }

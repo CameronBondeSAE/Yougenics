@@ -27,10 +27,10 @@ namespace Maya
             aWorldState.Set(CritterAI.isHorny, myHorny.currentHorny > 75);
             aWorldState.Set(CritterAI.isHungry, myEnergy.energyAmount < 65);
             aWorldState.Set(CritterAI.isTired, myEnergy.energyAmount <= 25);
-            aWorldState.Set(CritterAI.canSeeEnemy, false);
+            aWorldState.Set(CritterAI.canSeeEnemy, vision.potentialVictimsIveSeen.Count > 0);
             aWorldState.Set(CritterAI.canSeeFood, vision.whereFoodIs.Count >= 0);
             aWorldState.Set(CritterAI.canSeeMate, vision.potentialMatesIveSeen.Count > 0);
-            aWorldState.Set(CritterAI.isNearEnemy, false);
+            aWorldState.Set(CritterAI.isNearEnemy, touch.isNearVictim);
             aWorldState.Set(CritterAI.isNearFood, touch.isNearFood);
             aWorldState.Set(CritterAI.isNearMate, touch.isNearMate);
             aWorldState.Set(CritterAI.mateIsHorny, touch.myMatesHornyToo);

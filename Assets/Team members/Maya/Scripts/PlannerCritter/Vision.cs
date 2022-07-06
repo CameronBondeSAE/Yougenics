@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Minh;
 using UnityEngine;
 
 namespace Maya
@@ -13,9 +14,10 @@ namespace Maya
         public List<Transform> whereFoodIs;
         
         public List<Horny> potentialMatesIveSeen;
-        
-        
-        
+
+        public List<Health> potentialVictimsIveSeen;
+
+
         public Vision(List<IEdible> foodIveSeen)
         {
             this.foodIveSeen = foodIveSeen;
@@ -36,6 +38,12 @@ namespace Maya
             {
                 if(other.GetComponent<Horny>() != null && other.GetComponent<Horny>().currentHorny >= 75)
                     potentialMatesIveSeen.Add(oneOfUs);
+            }
+
+            Health oneOfThem = other.gameObject.GetComponent<Health>();
+            if (!other.CompareTag("MayasCritter") && other.GetComponent<Health>())
+            {
+                potentialVictimsIveSeen.Add(oneOfThem);
             }
         }
     }
