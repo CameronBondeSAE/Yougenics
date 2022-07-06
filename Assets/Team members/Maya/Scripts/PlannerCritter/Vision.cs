@@ -11,7 +11,9 @@ namespace Maya
     {
         public List<IEdible> foodIveSeen;
         public List<Transform> whereFoodIs;
+        
         public List<Horny> potentialMatesIveSeen;
+        
         
         
         public Vision(List<IEdible> foodIveSeen)

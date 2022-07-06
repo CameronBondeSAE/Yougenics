@@ -32,8 +32,8 @@ namespace Maya
             aWorldState.Set(CritterAI.canSeeMate, vision.potentialMatesIveSeen.Count > 0);
             aWorldState.Set(CritterAI.isNearEnemy, false);
             aWorldState.Set(CritterAI.isNearFood, touch.isNearFood);
-            aWorldState.Set(CritterAI.isNearMate, touch.isNearMate && touch.myMatesHornyToo);
-            aWorldState.Set(CritterAI.mateIsHorny, false);
+            aWorldState.Set(CritterAI.isNearMate, touch.isNearMate);
+            aWorldState.Set(CritterAI.mateIsHorny, touch.myMatesHornyToo);
             
         }
     }
