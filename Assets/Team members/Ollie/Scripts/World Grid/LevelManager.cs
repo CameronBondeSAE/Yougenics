@@ -5,6 +5,7 @@ using System.Text;
 using Luke;
 using Ollie;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = System.Random;
 
@@ -43,6 +44,7 @@ namespace Ollie
         public WaterNode currentLocation;
         public bool AStar;
         private bool worldScanned;
+        public float pathDelay;
 
         void Start()
         {
@@ -274,6 +276,8 @@ namespace Ollie
             foreach (WaterNode node in gridNodeReferences)
             {
                 node.isPath = false;
+                node.startLocation = false;
+                node.targetLocation = false;
             }
             openPathNodes.Clear();
             closedPathNodes.Clear();
@@ -294,10 +298,17 @@ namespace Ollie
                 WaterNode random2 = pathfindingUnblockedNodes[UnityEngine.Random.Range(0, pathfindingUnblockedNodes.Count)];
                 startLocation = random1;
                 targetLocation = random2;
+                startLocation.startLocation = true;
+                targetLocation.targetLocation = true;
                 // }
         }
 
         public void FindPath()
+        {
+            StartCoroutine(FindPathCoroutine());
+        }
+
+        public IEnumerator FindPathCoroutine()
         {
             //might need a fake "tick" via coroutine to slow this down
             // if (startLocation != targetLocation)
@@ -325,12 +336,17 @@ namespace Ollie
                     //so remove from Open and add to Closed
                     openPathNodes.Remove(currentLocation);
                     closedPathNodes.Add(currentLocation);
+                    
 
                     //exit here if we're now at our desired destination
                     if (currentLocation == targetLocation)
                     {
                         CreatePath(startLocation,targetLocation);
-                        return;
+
+                        //NOTE: Switch these two depending on if function or coroutine
+                        //return;
+                        yield break;
+                        StopCoroutine(FindPathCoroutine());
                     }
 
                     //check all neighbours of current node
@@ -362,13 +378,16 @@ namespace Ollie
                             if (!openPathNodes.Contains(neighbour))
                             {
                                 openPathNodes.Add(neighbour);
+                                
                             }
                         }
                     
+                        
                         // node.gCost = Vector2.Distance(node.gridPosition, startLocation.gridPosition);
                         // node.hCost = Vector2.Distance(targetLocation.gridPosition, node.gridPosition);
                         // node.fCost = node.gCost + node.hCost;
                     }
+                    yield return new WaitForSeconds(pathDelay);
                 }
             //}
             // else
@@ -380,6 +399,7 @@ namespace Ollie
 
         void CreatePath(WaterNode startNode, WaterNode endNode)
         {
+            //StopCoroutine(FindPathCoroutine());
             List<WaterNode> path = new List<WaterNode>();
             WaterNode currentNode = endNode;
 
@@ -393,6 +413,8 @@ namespace Ollie
             {
                 node.isPath = true;
             }
+            openPathNodes.Clear();
+            closedPathNodes.Clear();
         }
         
         int GetDistance(WaterNode nodeA, WaterNode nodeB)
@@ -467,6 +489,12 @@ namespace Ollie
                 if (closedPathNodes.Contains(node) && !node.isPath)
                 {
                     Gizmos.color = Color.gray;
+                    Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
+                }
+
+                if (node.targetLocation || node.startLocation)
+                {
+                    Gizmos.color = Color.yellow;
                     Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
                 }
             }

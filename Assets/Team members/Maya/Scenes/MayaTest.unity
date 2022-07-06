@@ -123,6 +123,27 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: 9697c3ce029009846afae07b47d5f19f, type: 2}
+--- !u!1 &11089909 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6025809690385764721, guid: 9ecb880a42ca88648bb295e54c54f5d5, type: 3}
+  m_PrefabInstance: {fileID: 4730180432517699487}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &11089918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11089909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07dde79655c074b46ab7b6b752f0c857, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentRage: 0
+  maxRage: 100
+  riseSpeed: 0.5
+  risingFactor: 0.5
 --- !u!1001 &30784326
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -765,6 +786,7 @@ MonoBehaviour:
   m_Cameras: []
   m_RendererIndex: -1
   m_VolumeLayerMask:
+    serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2

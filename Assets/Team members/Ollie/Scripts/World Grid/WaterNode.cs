@@ -16,6 +16,8 @@ namespace Ollie
         public float fillAmount;
         public LevelManager levelManager;
         public bool isWater;
+        public bool startLocation;
+        public bool targetLocation;
 
         public bool isOpen;
         public bool isClosed;
