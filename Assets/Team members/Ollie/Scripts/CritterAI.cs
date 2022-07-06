@@ -31,6 +31,7 @@ namespace Ollie
         private bool foundTarget;
         public bool sleeping;
         public CritterTrigger trigger;
+        public Material shader;
 
         private void Start()
         {
@@ -39,6 +40,7 @@ namespace Ollie
             energy = maxEnergy;
             foundTarget = false;
             interactingTarget = false;
+            shader = GetComponent<Renderer>().material;
         }
 
         private void Update()
@@ -49,6 +51,7 @@ namespace Ollie
             }
             LookForTargets();
             StatChanges();
+            shader.SetFloat("_energy",energy);
         }
 
         private void FixedUpdate()
