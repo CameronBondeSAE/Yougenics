@@ -100,41 +100,13 @@ namespace Ollie
                 worldScanned = true;
             }
 
-            if (worldScanned == true)
+            if (worldScanned)
             {
-                //double for loop
-                /*for (int x = 0; x < sizeX; x++)
-                {
-                    for (int z = 0; z < sizeZ; z++)
-                    {
-                        var vector3 = new Vector3(lengthX+x, 0, lengthZ+z);
-                        if (Physics.OverlapBox(vector3, gridTileHalfExtents,
-                            Quaternion.identity,layers).Length != 0)
-                        {
-                            gridNodeReferences[x, z].isBlocked = true;
-                            blockedNodes.Add(gridNodeReferences[x,z]);
-                        }
-
-                        if (Physics.OverlapBox(vector3, gridTileHalfExtents,
-                            Quaternion.identity, layers).Length == 0)
-                        {
-                            if (blockedNodes.Contains(gridNodeReferences[x, z]))
-                            {
-                                gridNodeReferences[x, z].isBlocked = false;
-                                blockedNodes.Remove(gridNodeReferences[x, z]);
-                            }
-                        }
-                    }
-                }*/
-                
-                //foreach
                 foreach (WaterNode node in gridNodeReferences)
                 {
                     node.ScanMyself();
                 }
             }
-
-
             //AssignNeighbours();
         }
 
@@ -346,7 +318,6 @@ namespace Ollie
                         //NOTE: Switch these two depending on if function or coroutine
                         //return;
                         yield break;
-                        StopCoroutine(FindPathCoroutine());
                     }
 
                     //check all neighbours of current node
@@ -399,7 +370,6 @@ namespace Ollie
 
         void CreatePath(WaterNode startNode, WaterNode endNode)
         {
-            //StopCoroutine(FindPathCoroutine());
             List<WaterNode> path = new List<WaterNode>();
             WaterNode currentNode = endNode;
 
