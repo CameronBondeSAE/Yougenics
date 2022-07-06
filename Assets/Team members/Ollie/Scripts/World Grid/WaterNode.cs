@@ -35,6 +35,24 @@ namespace Ollie
 
         public WaterNode[,] neighbours = new WaterNode[3, 3];
 
+        public void ScanMyself()
+        {
+            var vector3 = new Vector3(levelManager.lengthX+gridPosition.x, 0, levelManager.lengthZ+gridPosition.y);
+            if (Physics.OverlapBox(vector3, levelManager.gridTileHalfExtents, Quaternion.identity, levelManager.layers)
+                    .Length != 0)
+            {
+                isBlocked = true;
+                if(!levelManager.blockedNodes.Contains(this)) levelManager.blockedNodes.Add(this);
+            }
+
+            if (Physics.OverlapBox(vector3, levelManager.gridTileHalfExtents, Quaternion.identity, levelManager.layers)
+                    .Length == 0)
+            {
+                isBlocked = false;
+                if(levelManager.blockedNodes.Contains(this)) levelManager.blockedNodes.Remove(this);
+            }
+        }
+        
         public void CheckNeighbours()
         {
             if (!levelManager.AStar)

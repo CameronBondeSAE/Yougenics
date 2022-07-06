@@ -100,7 +100,8 @@ namespace Ollie
 
             if (worldScanned == true)
             {
-                for (int x = 0; x < sizeX; x++)
+                //double for loop
+                /*for (int x = 0; x < sizeX; x++)
                 {
                     for (int z = 0; z < sizeZ; z++)
                     {
@@ -122,6 +123,12 @@ namespace Ollie
                             }
                         }
                     }
+                }*/
+                
+                //foreach
+                foreach (WaterNode node in gridNodeReferences)
+                {
+                    node.ScanMyself();
                 }
             }
 
@@ -264,8 +271,14 @@ namespace Ollie
             // AStar = !AStar;
             // if (AStar)
             // {
+            foreach (WaterNode node in gridNodeReferences)
+            {
+                node.isPath = false;
+            }
             openPathNodes.Clear();
             closedPathNodes.Clear();
+            
+            //this is expensive and I should scale it down somehow
             for (int x = 0; x < sizeX; x++)
                 {
                     for (int z = 0; z < sizeZ; z++)
@@ -295,8 +308,11 @@ namespace Ollie
                 while (openPathNodes.Count > 0)
                 {
                     currentLocation = openPathNodes[0];
+                    //i = 1 because we've already assigned the starting node to address 0
                     for (int i = 1; i < openPathNodes.Count; i++)
                     {
+                        //if the f cost is less than current location OR if it's the same and it's H COST is lower
+                        //then make that the new current location
                         if (openPathNodes[i].fCost < currentLocation.fCost ||
                             openPathNodes[i].fCost == currentLocation.fCost &&
                             openPathNodes[i].hCost < currentLocation.hCost)
@@ -305,35 +321,41 @@ namespace Ollie
                         }
                     }
                 
+                    //since we're now at a new current location, it's now closed
+                    //so remove from Open and add to Closed
                     openPathNodes.Remove(currentLocation);
                     closedPathNodes.Add(currentLocation);
-                    for (int i = 0; i < closedPathNodes.Count; i++)
-                    {
-                        print(closedPathNodes[i].gridPosition);
-                    }
-                
+
+                    //exit here if we're now at our desired destination
                     if (currentLocation == targetLocation)
                     {
                         CreatePath(startLocation,targetLocation);
-                        print("path found!");
                         return;
                     }
 
+                    //check all neighbours of current node
                     foreach (WaterNode neighbour in currentLocation.neighbours)
                     {
+                        //basically ignore itself, since it will always be null in it's own neighbour list
                         if (neighbour == null)
                         {
                             continue;
                         }
                         
+                        //if the neighbour is blocked or closed, ie. already been checked!
+                        //then continue
                         if (neighbour.isBlocked || closedPathNodes.Contains(neighbour))
                         {
                             continue;
                         }
 
+                        //update parents and F cost according to the best distance from start location to current
+                        //f cost is not manually set
+                        //g cost and h cost are set, and whenever F cost is required, it's automatically calculated on the node
                         int newCostToNeighbour = currentLocation.gCost + GetDistance(currentLocation, neighbour);
                         if (newCostToNeighbour < neighbour.gCost || !openPathNodes.Contains(neighbour))
                         {
+                            //current gCost is best so far, so neighbour's new gCost is cheapest cost from current to neighbour, + current cost
                             neighbour.gCost = newCostToNeighbour;
                             neighbour.hCost = GetDistance(neighbour, targetLocation);
                             neighbour.parent = currentLocation;
@@ -375,10 +397,12 @@ namespace Ollie
         
         int GetDistance(WaterNode nodeA, WaterNode nodeB)
         {
+            //gets vertical and horizontal distance between nodes
             int distanceX = Mathf.Abs(nodeA.gridPosition.x - nodeB.gridPosition.x);
             int distanceY = Mathf.Abs(nodeA.gridPosition.y - nodeB.gridPosition.y);
 
-            if (distanceX < distanceY) return 14 * distanceY + 10 * (distanceX - distanceY);
+            //14 is the diagonal cost to move, 10 is the cost to move in a cardinal direction
+            if (distanceX > distanceY) return 14 * distanceY + 10 * (distanceX - distanceY);
             else return 14 * distanceX + 10 * (distanceY - distanceX);
         }
 
@@ -408,7 +432,47 @@ namespace Ollie
                 Gizmos.DrawCube(bounds.center,bounds.extents);
             }
 
-            for (int x = 0; x < sizeX; x++)
+            foreach (WaterNode node in gridNodeReferences)
+            {
+                if (node.isBlocked)
+                {
+                    Gizmos.color = Color.red;
+                    Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
+                }
+
+                if (!node.isBlocked && !node.isWater)
+                {
+                    Gizmos.color = Color.green;
+                    Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
+                }
+
+                if (node.isWater)
+                {
+                    Gizmos.color = Color.blue;
+                    Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
+                }
+
+                if (node.isPath)
+                {
+                    Gizmos.color = Color.black;
+                    Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
+                }
+
+                if (openPathNodes.Contains(node) && !node.isPath)
+                {
+                    Gizmos.color = Color.magenta;
+                    Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
+                }
+
+                if (closedPathNodes.Contains(node) && !node.isPath)
+                {
+                    Gizmos.color = Color.gray;
+                    Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
+                }
+            }
+
+            //double for loop, too expensive
+            /*for (int x = 0; x < sizeX; x++)
             {
                 for (int z = 0; z < sizeZ; z++)
                 {
@@ -438,20 +502,20 @@ namespace Ollie
                             Gizmos.DrawCube(new Vector3(lengthX+x,0,lengthZ+z),Vector3.one);
                         }
 
-                        if (openPathNodes.Contains(gridNodeReferences[x, z]))
+                        if (openPathNodes.Contains(gridNodeReferences[x, z]) && !gridNodeReferences[x,z].isPath)
                         {
                             Gizmos.color = Color.magenta;
                             Gizmos.DrawCube(new Vector3(lengthX+x,0,lengthZ+z),Vector3.one);
                         }
 
-                        if (closedPathNodes.Contains(gridNodeReferences[x, z]))
+                        if (closedPathNodes.Contains(gridNodeReferences[x, z]) && !gridNodeReferences[x,z].isPath)
                         {
                             Gizmos.color = Color.gray;
                             Gizmos.DrawCube(new Vector3(lengthX+x,0,lengthZ+z),Vector3.one);
                         }
                     }
                 }
-            }
+            }*/
             
 
             /*if (AStar)
