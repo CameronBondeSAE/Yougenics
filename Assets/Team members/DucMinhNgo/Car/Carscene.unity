@@ -457,149 +457,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8918827319094169, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: damper
-      value: 4000
-      objectReference: {fileID: 0}
-    - target: {fileID: 8918827319094169, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: forceall
-      value: 6000
-      objectReference: {fileID: 0}
-    - target: {fileID: 8918827319094169, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: grounded
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8918827319094169, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: velocity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8918827319094169, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: stiffness
-      value: 30000
-      objectReference: {fileID: 0}
-    - target: {fileID: 8918827319094169, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: wheelRadius
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 708419216117308166, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.29
-      objectReference: {fileID: 0}
-    - target: {fileID: 708419216117308166, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.492
-      objectReference: {fileID: 0}
-    - target: {fileID: 1019281713180183580, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.388
-      objectReference: {fileID: 0}
-    - target: {fileID: 2301024535659009534, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: damper
-      value: 4000
-      objectReference: {fileID: 0}
-    - target: {fileID: 2301024535659009534, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: forceall
-      value: 6000
-      objectReference: {fileID: 0}
-    - target: {fileID: 2301024535659009534, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: grounded
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2301024535659009534, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: velocity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2301024535659009534, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: stiffness
-      value: 30000
-      objectReference: {fileID: 0}
-    - target: {fileID: 2301024535659009534, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: wheelRadius
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3793314618847237996, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: damper
-      value: 4000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3793314618847237996, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: forceall
-      value: 6000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3793314618847237996, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: grounded
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3793314618847237996, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: velocity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3793314618847237996, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: stiffness
-      value: 30000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3793314618847237996, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: wheelRadius
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5025823192498682239, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
       propertyPath: m_Name
       value: Cube (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 5080124809943200120, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: speed
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 5080124809943200120, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: damper
-      value: 4000
-      objectReference: {fileID: 0}
-    - target: {fileID: 5080124809943200120, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: forceall
-      value: 6000
-      objectReference: {fileID: 0}
-    - target: {fileID: 5080124809943200120, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: grounded
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5080124809943200120, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: velocity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5080124809943200120, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: stiffness
-      value: 30000
-      objectReference: {fileID: 0}
-    - target: {fileID: 5080124809943200120, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: wheelRadius
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6839608169583211191, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.395
-      objectReference: {fileID: 0}
-    - target: {fileID: 7354147495165743476, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.342
-      objectReference: {fileID: 0}
-    - target: {fileID: 7354147495165743476, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.493
-      objectReference: {fileID: 0}
     - target: {fileID: 8096429527941459459, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
       propertyPath: m_RootOrder
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8096429527941459459, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 5.4708
-      objectReference: {fileID: 0}
-    - target: {fileID: 8096429527941459459, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.4294
-      objectReference: {fileID: 0}
-    - target: {fileID: 8096429527941459459, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.2515
       objectReference: {fileID: 0}
     - target: {fileID: 8096429527941459459, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -639,18 +503,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8096429527941459459, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9093261768159887334, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: m_Mass
-      value: 1499
-      objectReference: {fileID: 0}
-    - target: {fileID: 9093261768159887334, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: m_AngularDrag
-      value: 1516
-      objectReference: {fileID: 0}
-    - target: {fileID: 9093261768159887334, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
-      propertyPath: m_Constraints
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

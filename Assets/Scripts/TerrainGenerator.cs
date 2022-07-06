@@ -29,9 +29,11 @@ public class TerrainGenerator : MonoBehaviour
 	[Header("Demo")]
 	public bool randomHeightTest = false;
 	public TerrainData terrainDataFile;
+	public event Action Generatorformin;
 	
 	private void Start()
 	{
+		
 		// Demo code. So this in your own script
 		if (randomHeightTest)
 		{
@@ -48,6 +50,7 @@ public class TerrainGenerator : MonoBehaviour
 
 		terrainDataFile.SetHeights(0, 0, GenerateHeights());
 		return terrainDataFile;
+		Generatorformin?.Invoke();
 	}
 
 	float[,] GenerateHeights()
