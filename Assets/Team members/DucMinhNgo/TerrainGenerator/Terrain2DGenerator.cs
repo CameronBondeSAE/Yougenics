@@ -17,7 +17,7 @@ namespace Minh
         public GameObject cubeprefab;
         public int adjustNo = 10;
         public float noisevalue3D = 0f;
-       
+        public Vector3 noise;
         void Start()
         {
             

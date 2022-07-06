@@ -34,11 +34,24 @@ namespace Minh
         {
             if (Hp <= 0)
             {
+                
                 dead = true;
                 GetComponent<Renderer>().material.color = Color.yellow;
+                Destroy(gameObject);
                 DeathEvent?.Invoke();
                 
             }
+        }
+
+        public void FullHp()
+        {
+            Hp = 100f;
+            
+        }
+
+        public void Deadtrigger()
+        {
+            Destroy(gameObject);
         }
 
         void OnCollisionEnter(Collision collision)
