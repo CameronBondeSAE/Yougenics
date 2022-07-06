@@ -11,7 +11,9 @@ namespace Maya
     {
         public List<IEdible> foodIveSeen;
         public List<Transform> whereFoodIs;
-        public List<CritterModel> potentialMatesIveSeen;
+        
+        public List<Horny> potentialMatesIveSeen;
+        
         
         
         public Vision(List<IEdible> foodIveSeen)
@@ -29,7 +31,7 @@ namespace Maya
                 whereFoodIs.Add(onePieceTransform);
 
             }
-            CritterModel oneOfUs = other.gameObject.GetComponent<CritterModel>();
+            Horny oneOfUs = other.gameObject.GetComponent<Horny>();
             if (other.CompareTag("MayasCritter") && !potentialMatesIveSeen.Contains(oneOfUs))
             {
                 if(other.GetComponent<Horny>() != null && other.GetComponent<Horny>().currentHorny >= 75)
