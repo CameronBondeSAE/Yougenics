@@ -13,26 +13,25 @@ namespace Alex
     {
 
         public float interactDistance = 10f;
-        public bool canInteract;
+        public bool canInteract = true;
         public event Action buttonPressedEvent;
 
         public void Interact()
         {
             Press();
         }
-
+        
         public void Press()
         {
             if (canInteract)
             {
-                transform.DOMoveX(transform.position.x - 1, 1);
                 buttonPressedEvent?.Invoke();
             }
         }
 
         public void Update()
         {
-            CheckForPlayer();
+            //CheckForPlayer();
         }
 
         public void CheckForPlayer()

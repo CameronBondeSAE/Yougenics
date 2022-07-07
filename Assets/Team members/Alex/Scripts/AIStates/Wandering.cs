@@ -16,11 +16,7 @@ namespace Alex
             //rb.velocity = new Vector3(Random.Range(-1,1), 0, Random.Range(-1,1));
             GetComponent<Renderer>().material.color = Color.yellow;
         }
-
-        public void OnDisable()
-        {
-        }
-
+        
         public void FixedUpdate()
         {
             if (Random.Range(0, 100) == 0)
