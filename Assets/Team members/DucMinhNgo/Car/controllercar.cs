@@ -55,7 +55,11 @@ public class Controllercar : MonoBehaviour, IVehicleControls
         steering = amount * 30f;
     }
 
-
+    public Vector3 GetExitPosition()
+    {
+        // TODO
+        return Vector3.zero;
+    }
 }
 
 }

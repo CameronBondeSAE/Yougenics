@@ -27,4 +27,9 @@ public class VehicleModel : MonoBehaviour, IVehicleControls
             frontWheel.transform.localRotation = Quaternion.Euler(0, (turningSpeed * amount), 0);
         }
     }
+
+    public Vector3 GetExitPosition()
+    {
+        return Vector3.zero;
+    }
 }

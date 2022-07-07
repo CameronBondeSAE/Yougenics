@@ -21,6 +21,16 @@ public class PlayerController : MonoBehaviour
                 vehicleControls.AccelerateAndReverse(Input.GetAxis("Vertical"));
                 
             }
+            
+            IFlyable flyable = vehicleToControl.GetComponent<IFlyable>();
+
+            if (flyable != null)
+            {
+                flyable.AccelerateAndReverse(Input.GetAxis("Vertical"));
+                flyable.StrafeLeftAndRight(Input.GetAxis("Horizontal"));
+                flyable.UpAndDown(Input.GetAxis("UpDown"));
+                // TODO camera
+            }
         }
     }
 }

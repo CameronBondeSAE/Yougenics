@@ -32,7 +32,13 @@ public class DroneModel : MonoBehaviour, IVehicleControls
             backwing.transform.localRotation = Quaternion.Euler(0, (turningSpeed * amount * -1f), 0);
         }
     }
-    
+
+    public Vector3 GetExitPosition()
+    {
+        // TODO
+        return Vector3.zero;
+    }
+
     public void UpAndDown(float amount)
     {
         foreach (DroneWing wing in wings)

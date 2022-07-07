@@ -15,6 +15,21 @@ public interface IVehicleControls
 	/// <param name="amount">-1 to 1. NOT angle, but total steer amount determined by individual vehicles</param>
 	/// <returns></returns>
 	public void Steer(float amount);
+
+	public Vector3 GetExitPosition();
+}
+
+public interface IFlyable
+{
+	public void AccelerateAndReverse(float amount);
+	public void StrafeLeftAndRight(float   amount);
+	public void UpAndDown(float            amount);
+	
+	/// <summary>
+	/// Camera vertical amount
+	/// </summary>
+	/// <param name="amount">0 to 1. 0 = straight down, 1 = forward</param>
+	public void CameraUpAndDown(float      amount);
 }
 
 public interface IEdible
