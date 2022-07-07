@@ -5060,17 +5060,7 @@ MonoBehaviour:
   nearestMate: {fileID: 0}
   nearestFood: {fileID: 0}
   currentFood: {fileID: 0}
-  currentMateInfo:
-    maxHealth: 0
-    maxSleepLevel: 0
-    maxEnergyLevel: 0
-    awakeDecayDelay: 0
-    asleepDecayDelay: 0
-    firstMatingDelay: 0
-    isCarnivore: 0
-    gender: 0
-    deadliness: 0
-    visionRadius: 0
+  currentMate: {fileID: 0}
   bestNearbyBiome: 0
   randomAdjustment: {x: 0, y: 0, z: 0}
   childPrefab: {fileID: 7004539971532304000}
@@ -5110,7 +5100,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 7afd8e09d7bb65549abdd10ff6949652, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
