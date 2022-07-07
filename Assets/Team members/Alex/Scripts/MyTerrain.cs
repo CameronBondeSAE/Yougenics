@@ -20,11 +20,9 @@ public class MyTerrain : MonoBehaviour
 
     public float YourHeightCalculatorFunction(int x, int z)
     {
-        
         perlinNoise = Mathf.PerlinNoise(x * scaler, z * scaler);
 
         return perlinNoise * heightMultiplier;
-
     }
         
 }
