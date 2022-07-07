@@ -23,6 +23,7 @@ namespace Ollie
         public Vector2 currentPosition;
         public LayerMask layers;
         public GameObject waterCube;
+        public AStar aStar;
         
         public List<WaterNode> blockedNodes;
         //public List<WaterNode> allNodes;
@@ -242,6 +243,17 @@ namespace Ollie
 
         public void AStarPathfindingStart()
         {
+            aStar.AStarPathfindingStart();
+        }
+
+        public void FindPath()
+        {
+            aStar.FindPath();
+        }
+
+        #region Old Pathfinding Before Separating into it's own script
+        /*public void AStarPathfindingStart()
+        {
             // AStar = !AStar;
             // if (AStar)
             // {
@@ -396,7 +408,8 @@ namespace Ollie
             //14 is the diagonal cost to move, 10 is the cost to move in a cardinal direction
             if (distanceX > distanceY) return 14 * distanceY + 10 * (distanceX - distanceY);
             else return 14 * distanceX + 10 * (distanceY - distanceX);
-        }
+        }*/
+        #endregion
 
         public void SpreadToNeighbours(WaterNode waterNode, Vector2Int transformPosition)
         {
@@ -450,13 +463,13 @@ namespace Ollie
                     Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
                 }
 
-                if (openPathNodes.Contains(node) && !node.isPath)
+                if (aStar.openPathNodes.Contains(node) && !node.isPath)
                 {
                     Gizmos.color = Color.magenta;
                     Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
                 }
 
-                if (closedPathNodes.Contains(node) && !node.isPath)
+                if (aStar.closedPathNodes.Contains(node) && !node.isPath)
                 {
                     Gizmos.color = Color.gray;
                     Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
