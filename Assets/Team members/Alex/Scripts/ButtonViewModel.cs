@@ -13,6 +13,8 @@ namespace Alex
         public Transform resetPos;
         public Button buttonModel;
         public Transform buttonHolder;
+        public ParticleSystem particles;
+        
 
 
         void Start()
@@ -22,9 +24,11 @@ namespace Alex
         // Start is called before the first frame update
         public void Press()
         {
+            
             if (buttonModel.canInteract)
             {
                 buttonMesh.DOMove(buttonHolder.position, 1);
+                particles.Play();
                 buttonModel.canInteract = false;
                 StartCoroutine(ResetButtonPos());
             }
@@ -37,6 +41,7 @@ namespace Alex
                 yield return new WaitForSeconds(2f);
                 {
                     buttonMesh.position = resetPos.position;
+                    particles.Stop();
                     buttonModel.canInteract = true;
                 }
             }

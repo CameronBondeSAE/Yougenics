@@ -12,7 +12,7 @@ namespace Alex
     public class Button : MonoBehaviour, IInteractable
     {
 
-        public float interactDistance = 10f;
+       // public float interactDistance = 10f;
         public bool canInteract = true;
         public event Action buttonPressedEvent;
 
@@ -28,7 +28,7 @@ namespace Alex
                 buttonPressedEvent?.Invoke();
             }
         }
-
+/*
         public void Update()
         {
             //CheckForPlayer();
@@ -60,6 +60,7 @@ namespace Alex
         }
 
 
-
+*/
     }
+    
 }

@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
             {
                 vehicleControls.Steer(Input.GetAxis("Horizontal"));
                 vehicleControls.AccelerateAndReverse(Input.GetAxis("Vertical"));
+                
             }
         }
     }
