@@ -231,8 +231,10 @@ namespace Luke
 	        {
 		        node.isClosed = false;
 	        }
-	        int[] startIndex = ConvertIndexAndPosition(startLocation);
-	        CurrentNode = Nodes[startIndex[0], startIndex[1]];
+	        int[] index = ConvertIndexAndPosition(startLocation);
+	        CurrentNode = Nodes[index[0], index[1]];
+	        index = ConvertIndexAndPosition(endLocation); 
+	        EndNode = Nodes[index[0], index[1]];
         }
 
         #endregion
