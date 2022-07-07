@@ -12,12 +12,22 @@ namespace Alex
       public Button button;
       void Start()
       {
-         button.buttonPressedEvent += DestroyThis;
+         {
+            button.buttonPressedEvent += DestroyThis;
+         }
+      }
+
+      private void OnDisable()
+      {
+         button.buttonPressedEvent -= DestroyThis;
       }
 
       public void DestroyThis()
       {
-         Destroy(gameObject);
+         if (gameObject != null)
+         {
+            Destroy(gameObject);
+         }
       }
 
    }

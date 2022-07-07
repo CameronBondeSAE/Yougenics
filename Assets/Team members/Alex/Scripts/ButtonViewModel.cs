@@ -10,10 +10,9 @@ namespace Alex
     {
 
         public Transform buttonMesh;
-        public Transform offset;
-
+        public Transform resetPos;
         public Button buttonModel;
-        public Transform buttonholder;
+        public Transform buttonHolder;
 
 
         void Start()
@@ -25,7 +24,7 @@ namespace Alex
         {
             if (buttonModel.canInteract)
             {
-                buttonMesh.DOMove(buttonholder.position, 1);
+                buttonMesh.DOMove(buttonHolder.position, 1);
                 buttonModel.canInteract = false;
                 StartCoroutine(ResetButtonPos());
             }
@@ -37,7 +36,7 @@ namespace Alex
             {
                 yield return new WaitForSeconds(2f);
                 {
-                    buttonMesh.position = offset.position;
+                    buttonMesh.position = resetPos.position;
                     buttonModel.canInteract = true;
                 }
             }
