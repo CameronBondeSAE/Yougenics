@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1894793142528315593
 Transform:
   m_ObjectHideFlags: 0
@@ -75,6 +75,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 63
   waterCube: {fileID: 2993987680324133567, guid: d608636e592f8614bbf798b0663dd69a, type: 3}
+  aStar: {fileID: 0}
   testList: []
   waterPosList: []
   AStar: 0

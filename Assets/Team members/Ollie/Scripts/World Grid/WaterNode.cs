@@ -33,6 +33,15 @@ namespace Ollie
                 return gCost + hCost;
             }
         }
+
+        public Vector3 gridPosVector3
+        {
+            get
+            {
+                //will need to update Y pos when heights are implemented
+                return new Vector3(gridPosition.x,1,gridPosition.y);
+            }
+        }
         public WaterNode parent;
 
         public WaterNode[,] neighbours = new WaterNode[3, 3];
