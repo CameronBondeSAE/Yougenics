@@ -6,10 +6,22 @@ using Unity.Netcode;
 
 public class DoorModel : NetworkBehaviour, IInteractable
 {
-
+    [SerializeField]
     bool isOpen = false;
+    public NetworkVariable<bool> IsDoorOpen = new NetworkVariable<bool>();
 
     public event Action<bool> onDoorInteractEvent;
+
+    public override void OnNetworkSpawn()
+    {
+        IsDoorOpen.OnValueChanged += UpdateDoorState;
+    }
+
+    private void UpdateDoorState(bool previousValue, bool newValue)
+    {
+        isOpen = newValue;
+        onDoorInteractEvent?.Invoke(isOpen);
+    }
 
     public void Interact()
     {
@@ -17,23 +29,22 @@ public class DoorModel : NetworkBehaviour, IInteractable
         {
             if (isOpen)
             {
-                isOpen = false;
+                IsDoorOpen.Value = false;
             }
             else
             {
-                isOpen = true;
+                IsDoorOpen.Value = true;
             }
-
-            onDoorInteractEvent?.Invoke(isOpen);
         }
         else
         {
-            SubmitInteractRequestClientRpc();
+            if(IsOwner)
+                SubmitInteractRequestServerRpc();
         }
     }
 
-    [ClientRpc]
-    private void SubmitInteractRequestClientRpc()
+    [ServerRpc]
+    private void SubmitInteractRequestServerRpc()
     {
         Interact();
     }

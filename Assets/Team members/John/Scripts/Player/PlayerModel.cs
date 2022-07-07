@@ -70,6 +70,8 @@ public class PlayerModel : NetworkBehaviour
             {
                 interactable.Interact();
             }
+            else
+                Debug.Log("Collider Not Interactable");
         }
         else
         {
