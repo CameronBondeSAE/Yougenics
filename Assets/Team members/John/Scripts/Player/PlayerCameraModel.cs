@@ -7,8 +7,6 @@ public class PlayerCameraModel : MonoBehaviour
     public PlayerModel target;
     public float heightOffset;
 
-    [HideInInspector]
-    public float mouseX, mouseY;
     float xRotation;
 
     private void Start()
@@ -27,7 +25,7 @@ public class PlayerCameraModel : MonoBehaviour
         transform.position = target.gameObject.transform.position;
 
         //Setting x rotation to match mouse direction + locking it at 90 angle
-        xRotation -= mouseY * target.lookSensitivity;
+        xRotation -= target.mouseY * target.lookSensitivity;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         transform.localRotation = Quaternion.Euler(xRotation, 0, 0);

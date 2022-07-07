@@ -17,7 +17,7 @@ public class PlayerModel : NetworkBehaviour
     //Input control variables
     Vector3 movement;
     [HideInInspector]
-    public float mouseX;
+    public float mouseX, mouseY;
 
     public override void OnNetworkSpawn()
     {
@@ -40,12 +40,26 @@ public class PlayerModel : NetworkBehaviour
 
     #region Input Controlls
 
-    public void Movement(Vector2 movementInput)
+    [ClientRpc]
+    public void MovementClientRpc(Vector2 movementInput)
     {
         movement = transform.right * movementInput.x + transform.forward * movementInput.y;
     }
 
-    public void Interact()
+    [ClientRpc]
+    public void MouseXClientRpc(float value)
+    {
+        mouseX = value;
+    }
+
+    [ClientRpc]
+    public void MouseYClientRpc(float value)
+    {
+        mouseY = value;
+    }
+
+    [ClientRpc]
+    public void InteractClientRpc()
     {
         RaycastHit hit = CheckWhatsInFrontOfMe();
 

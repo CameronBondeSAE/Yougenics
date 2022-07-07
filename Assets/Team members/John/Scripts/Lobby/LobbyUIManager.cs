@@ -200,10 +200,7 @@ public class LobbyUIManager : NetworkBehaviour
         //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         //SceneManager.SetActiveScene(scene);
 
-        if(IsServer)
-        {
-            lobbyCanvas.SetActive(false);
-        }
+        lobbyCanvas.SetActive(false);
         
         SubmitLobbyUIStateClientRpc(false);
         
@@ -220,25 +217,12 @@ public class LobbyUIManager : NetworkBehaviour
             //Posses that player object
             client.PlayerObject.GetComponent<John.PlayerController>().playerModel = tempPlayer.GetComponent<PlayerModel>();
             client.PlayerObject.GetComponent<John.PlayerController>().playerCameraModel = tempPlayer.GetComponentInChildren<PlayerCameraModel>();
-            client.PlayerObject.GetComponent<John.PlayerController>().OnPlayerAssigned();
-
-            //SetPlayerPossessionClientRpc(client, tempPlayer);
         }
-        
-        //FindObjectOfType<Spawner>().SpawnMultiple();
     }
 
     [ClientRpc]
     private void SubmitLobbyUIStateClientRpc(bool value)
     {
         lobbyCanvas.SetActive(value);
-    }
-
-    [ClientRpc]
-    private void SetPlayerPossessionClientRpc()
-    {
-        //client.PlayerObject.GetComponent<John.PlayerController>().playerModel = tempPlayer.GetComponent<PlayerModel>();
-        //client.PlayerObject.GetComponent<John.PlayerController>().playerCameraModel = tempPlayer.GetComponentInChildren<PlayerCameraModel>();
-        //client.PlayerObject.GetComponent<John.PlayerController>().OnPlayerAssigned();
     }
 }

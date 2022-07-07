@@ -129,7 +129,6 @@ GameObject:
   - component: {fileID: 8611620220612625320}
   - component: {fileID: 8611620220612625324}
   - component: {fileID: 8611620220612625322}
-  - component: {fileID: 8611620220612625327}
   m_Layer: 0
   m_Name: JohnPlayerModel
   m_TagString: Untagged
@@ -190,6 +189,7 @@ MonoBehaviour:
   rb: {fileID: 8611620220612625321}
   myCam: {fileID: 8638494978573017827}
   mouseX: 0
+  mouseY: 0
 --- !u!136 &8611620220612625324
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -220,32 +220,6 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &8611620220612625327
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8611620220612625317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SyncPositionX: 1
-  SyncPositionY: 1
-  SyncPositionZ: 1
-  SyncRotAngleX: 1
-  SyncRotAngleY: 1
-  SyncRotAngleZ: 0
-  SyncScaleX: 0
-  SyncScaleY: 0
-  SyncScaleZ: 0
-  PositionThreshold: 0.001
-  RotAngleThreshold: 0.01
-  ScaleThreshold: 0.01
-  InLocalSpace: 0
-  Interpolate: 1
 --- !u!1 &8611620220984584861
 GameObject:
   m_ObjectHideFlags: 0
