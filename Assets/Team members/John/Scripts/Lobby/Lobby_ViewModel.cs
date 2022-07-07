@@ -16,7 +16,7 @@ public class Lobby_ViewModel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        lobbyManager.onLocalClientJoinEvent += HandleLocalClient;
+        //lobbyManager.onLocalClientJoinEvent += HandleLocalClient;
     }
 
     private void HandleLocalClient(NetworkObject obj)

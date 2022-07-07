@@ -11,6 +11,8 @@ using Unity.Netcode.Transports.UNET;
 
 public class LobbyUIManager : NetworkBehaviour
 {
+    public bool autoLoadLevel;
+
     public GameObject lobbyCanvas;
     public TMP_Text clientUI;
     public GameObject ipAddressCanvas;
@@ -21,10 +23,8 @@ public class LobbyUIManager : NetworkBehaviour
     public GameObject player;
     public GameObject lobbyCam;
 
+    ulong myLocalClientId;
     NetworkObject myLocalClient;
-
-    //Events
-    public event Action<NetworkObject> onLocalClientJoinEvent;
 
     #region NetworkButtons/Status Info
 
@@ -72,8 +72,6 @@ public class LobbyUIManager : NetworkBehaviour
     {
         ipAddressCanvas.SetActive(true);
         lobbyCanvas.SetActive(false);
-
-        //onLocalClientJoinEvent += GetMyLocalClient;
     }
 
     private void Start()
@@ -99,26 +97,14 @@ public class LobbyUIManager : NetworkBehaviour
 
     public void OnClientJoin(ulong clientID)
     {
-        if(NetworkManager.Singleton.IsServer || IsOwner)
+        if (NetworkManager.Singleton.IsServer || IsOwner)
         {
             HandleClientNames();
             HandleLocalClient(clientID);
         }
-    }
 
-    [ClientRpc]
-    private void GetMyLocalClientRpc()
-    {
-        //onLocalClientJoinEvent -= GetMyLocalClient;
-
-        //if(obj.IsLocalPlayer)
-           // myLocalClient = obj;
-    }
-
-    [ServerRpc]
-    private void SubmitLocalClientRequestServerRpc(ulong ClientId)
-    {
-        HandleLocalClient(ClientId);
+        if (clientID == NetworkManager.Singleton.LocalClientId)
+            myLocalClientId = clientID;
     }
 
     void HandleLocalClient(ulong clientID)
@@ -130,13 +116,7 @@ public class LobbyUIManager : NetworkBehaviour
             NetworkObject playerObject = tempClient.PlayerObject;
             if (playerObject.IsLocalPlayer)
             {
-                //onLocalClientJoinEvent?.Invoke(player);
                 myLocalClient = playerObject;
-            }
-            else
-            {
-                //onLocalClientJoinEvent?.Invoke(playerObject);
-                //GetMyLocalClientRpc(playerObject);
             }
         }
     }
@@ -172,16 +152,29 @@ public class LobbyUIManager : NetworkBehaviour
 
     public void UpdateClientName()
     {
-        if (myLocalClient != null)
+        if(IsServer)
         {
-            myLocalClient.GetComponent<ClientInfo>().clientName = playerNameField.text;
-            HandleClientNames();
-            //HandleClientNamesReqServerRpc();
+            if (myLocalClient != null)
+            {
+                myLocalClient.GetComponent<ClientInfo>().clientName = playerNameField.text;
+                HandleClientNames();
+            }
+            else
+            {
+                Debug.Log("No local client found");
+            }
         }
         else
         {
-            Debug.Log("No local client found");
+            RequestClientNameChangeServerRpc(myLocalClientId, playerNameField.text);
         }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    void RequestClientNameChangeServerRpc(ulong clientId, string name)
+    {
+        NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject.GetComponent<ClientInfo>().clientName = name;
+        HandleClientNames();
     }
 
     public void StartGame()
@@ -189,7 +182,9 @@ public class LobbyUIManager : NetworkBehaviour
         NetworkManager.Singleton.SceneManager.OnSceneEvent += SceneManagerOnOnSceneEvent;
 
         lobbyCam.SetActive(false);
-        NetworkManager.Singleton.SceneManager.LoadScene("JohnTestScene", LoadSceneMode.Additive);
+
+        if(autoLoadLevel)
+            NetworkManager.Singleton.SceneManager.LoadScene("JohnTestScene", LoadSceneMode.Additive);
     }
 
     private void SceneManagerOnOnSceneEvent(SceneEvent sceneEvent)

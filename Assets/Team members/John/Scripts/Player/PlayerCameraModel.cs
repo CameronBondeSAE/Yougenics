@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerCameraModel : MonoBehaviour
 {
+    public bool lockMouse;
     public PlayerModel target;
     public float heightOffset;
 
@@ -11,7 +12,8 @@ public class PlayerCameraModel : MonoBehaviour
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        if(lockMouse)
+            Cursor.lockState = CursorLockMode.Locked;
 
         //Wanted to set players camera to their active camera? - not working
         //Camera.SetupCurrent(GetComponent<Camera>());
