@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 3866805762410317302}
   - component: {fileID: 8912036284193795689}
   m_Layer: 0
-  m_Name: AnotherAI
+  m_Name: AlexAI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

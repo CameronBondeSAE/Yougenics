@@ -5,7 +5,6 @@ using Alex;
 
 namespace Alex
 {
-
     public class SimpleAI : MonoBehaviour
     {
         //Health health;
@@ -83,7 +82,6 @@ namespace Alex
                 transform.LookAt(Target);
             }
 
-
             /*
             foreach (Food item in FindObjectsOfType<Food>())
                 {
@@ -105,6 +103,7 @@ namespace Alex
 
         public void MoveToFood()
         {
+            
             if (myEnergy.energyAmount <= 20 && Target != null)
             {
                 //print("Low energy find food");

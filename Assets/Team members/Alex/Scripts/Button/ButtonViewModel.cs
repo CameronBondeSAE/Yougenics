@@ -14,14 +14,11 @@ namespace Alex
         public Button buttonModel;
         public Transform buttonHolder;
         public ParticleSystem particles;
-        
-
 
         void Start()
         {
             buttonModel.buttonPressedEvent += Press;
         }
-        // Start is called before the first frame update
         public void Press()
         {
             
@@ -31,6 +28,7 @@ namespace Alex
                 particles.Play();
                 buttonModel.canInteract = false;
                 StartCoroutine(ResetButtonPos());
+                //FindObjectOfType<AudioManager>().Play("Button");
             }
         }
         
@@ -40,6 +38,7 @@ namespace Alex
             {
                 yield return new WaitForSeconds(2f);
                 {
+                    //Puts the button back to its starting position, cancels the particle animation and allows the button to be used again
                     buttonMesh.position = resetPos.position;
                     particles.Stop();
                     buttonModel.canInteract = true;

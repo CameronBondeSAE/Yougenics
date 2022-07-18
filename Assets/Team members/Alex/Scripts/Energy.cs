@@ -21,7 +21,6 @@ public class Energy : MonoBehaviour
         GetComponent<Minh.Health>();
         CheckEnergyMax();
         StartCoroutine(EnergyDrainer());
-
     }
 
     void Update()

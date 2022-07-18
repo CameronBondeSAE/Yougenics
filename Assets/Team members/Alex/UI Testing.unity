@@ -197,7 +197,7 @@ RectTransform:
   m_GameObject: {fileID: 70957836}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6124243, y: 0.6864359, z: 0.6864359}
+  m_LocalScale: {x: 2.258131, y: 2.5310264, z: 2.5310264}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1228878177}
@@ -207,7 +207,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.7, y: -8}
+  m_AnchoredPosition: {x: 6.98761, y: -25}
   m_SizeDelta: {x: 155.5393, y: 23.8658}
   m_Pivot: {x: 1, y: 1}
 --- !u!1 &317414309
@@ -932,7 +932,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 127
 --- !u!114 &1629082668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1013,10 +1013,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 708620354, guid: 0c22e79fef83ba644b4ade8cb60733ba, type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 127
+      objectReference: {fileID: 0}
     - target: {fileID: 708620358, guid: 0c22e79fef83ba644b4ade8cb60733ba, type: 3}
       propertyPath: camera
       value: 
       objectReference: {fileID: 1239239734}
+    - target: {fileID: 842629770, guid: 0c22e79fef83ba644b4ade8cb60733ba, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 706386e617690ac4f9bbc31d9fe6b1da, type: 3}
     - target: {fileID: 1695147768, guid: 0c22e79fef83ba644b4ade8cb60733ba, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1027,7 +1035,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1763955828344914922, guid: 0c22e79fef83ba644b4ade8cb60733ba, type: 3}
       propertyPath: energyAmount
-      value: 5
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 1894325770523995306, guid: 0c22e79fef83ba644b4ade8cb60733ba, type: 3}
       propertyPath: m_Name

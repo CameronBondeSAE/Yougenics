@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Alex
 {
-    public class Ancor : MonoBehaviour
+    public class Anchor : MonoBehaviour
     {
         public Transform camera;
         

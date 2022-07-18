@@ -13,18 +13,19 @@ namespace Alex
 
         public void OnEnable()
         {
-            Debug.Log("Looking for food");
+            //Changes colour to blue when entering this state 
             GetComponent<Renderer>().material.color = Color.blue;
         }
 
         private void OnDisable()
         {
+            //Stop movmement when leaving this state 
             rb.velocity = Vector3.zero;
         }
 
         private void Update()
         {
-
+            //Sets the food as the target and makes the AI look towards its position
             rb = GetComponent<Rigidbody>();
             myFoodTarget = FindObjectOfType<Alex.Food>();
             if (myFoodTarget != null)
@@ -34,6 +35,7 @@ namespace Alex
                 transform.LookAt(Target);
                 
             }
+            //Moves AI 
             rb.AddRelativeForce(0, 0, movementSpeed);
         }
 

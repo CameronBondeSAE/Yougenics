@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 499121207}
   - component: {fileID: 499121208}
   m_Layer: 0
-  m_Name: SimpleAI
+  m_Name: SimpleAI(NotUsed)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -12,22 +12,21 @@ namespace Alex
 
         public void OnEnable()
         {
+            //Changes color to yellow when entering this state
             rb = GetComponent<Rigidbody>();
-            //rb.velocity = new Vector3(Random.Range(-1,1), 0, Random.Range(-1,1));
             GetComponent<Renderer>().material.color = Color.yellow;
         }
         
         public void FixedUpdate()
         {
+            //Stops them from always moving 
             if (Random.Range(0, 100) == 0)
                 WonderAround();
         }
-
-
         private void WonderAround()
         {
+            //Move to a new location within the range given, low values used so they dont go to the other side of the terrain
             rb.velocity = new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
-            //Debug.Log("Wondering");
         }
     }
 }

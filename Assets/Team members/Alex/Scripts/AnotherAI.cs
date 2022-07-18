@@ -8,17 +8,12 @@ namespace Alex
 {
     public class AnotherAI : MonoBehaviour
     {
-        //public float movementSpeed;
-        //public float lookingSpeed = 1f;
-        //public Transform Target;
-        //public Alex.Food myFoodTarget;
         Energy myEnergy;
         Rigidbody rb;
         private StateBase wandering;
         private StateBase sleeping;
         private StateBase lookingForFood;
-
-        // Start is called before the first frame update
+        
         public void Awake()
         {
             wandering = GetComponent<Wandering>();
@@ -30,11 +25,13 @@ namespace Alex
               
         private void Update()
         {
+            //If energy is greater than or equal to 100 AI will change to wondering state 
             if (GetComponent<Energy>().energyAmount >= 100)
             {
                 GetComponent<StateManager>().ChangeState(wandering);
             }
 
+            //AI will look for food if they're energy value is between 20 and 80 and they are not in their sleeping state
             else if (myEnergy.energyAmount < 80 && 
                      myEnergy.energyAmount > 20 && 
                      GetComponent<StateManager>().currentState != sleeping)
@@ -43,13 +40,12 @@ namespace Alex
                 GetComponent<StateManager>().ChangeState(lookingForFood);
             }
             
+            //If energy is at 20 or less the AI goes to sleep
             else if (myEnergy.energyAmount <= 20)
             {
                 // Sleep
                 GetComponent<StateManager>().ChangeState(sleeping);
             }
         }
-
-        // This works for ANY STATE
     }
 }
