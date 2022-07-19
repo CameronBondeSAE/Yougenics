@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System; 
+using System;
+using Unity.Netcode;
 
-public class Energy : MonoBehaviour
+
+public class Energy : NetworkBehaviour
 {
     //[SerializeField]
+    public NetworkVariable<float> EnergyAmount = new NetworkVariable<float>();
+
     public float energyAmount = 50;
     public float energyMax = 100;
     public float energyMin = 0;
@@ -30,43 +34,51 @@ public class Energy : MonoBehaviour
 
     public void ChangeEnergy(float f)
     {
-        energyAmount = energyAmount + f;
+        if (IsOwner)
+            EnergyAmount.Value += f;
+
+        //energyAmount = energyAmount + f;
         CheckEnergyMax();
         CheckEnergyMin();
     }
 
     public void CheckEnergyMax()
     {
-        if (energyAmount >= energyMax)
+        if (EnergyAmount.Value >= energyMax)
         {
-            energyAmount = energyMax ; 
-            FullEnergyEvent?.Invoke();
-            Debug.Log("Full Energy");
-            FindObjectOfType<AudioManager>().Play("Energy Full");
-
+            if(IsOwner)
+            {
+                EnergyAmount.Value = energyMax;
+                FullEnergyEvent?.Invoke();
+                Debug.Log("Full Energy");
+                FindObjectOfType<AudioManager>().Play("Energy Full");
+            }
         }
     }
 
     public void CheckEnergyMin()
     {
-        if (energyAmount <= energyMin)
+        if (EnergyAmount.Value <= energyMin)
         {
-            energyAmount = energyMin;
-            
-            NoEnergyEvent?.Invoke();
-            Debug.Log("No Energy");
-                        
+            if(IsOwner)
+            {
+                EnergyAmount.Value = energyMin;
+
+                NoEnergyEvent?.Invoke();
+                Debug.Log("No Energy");
+            }            
         }
         //Debug.Log("Editor test");
     }
     
     public IEnumerator EnergyDrainer()
     {
-        while (energyAmount >= energyMin)
+        while (EnergyAmount.Value >= energyMin)
         {
             yield return new WaitForSeconds(drainSpeed);
             {
-                energyAmount -= drainAmount;
+                if(IsOwner)
+                    EnergyAmount.Value -= drainAmount;
             }
         }
     }

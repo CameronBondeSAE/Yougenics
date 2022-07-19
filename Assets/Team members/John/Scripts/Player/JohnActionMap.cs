@@ -71,6 +71,15 @@ public partial class @JohnActionMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Menu"",
+                    ""type"": ""Button"",
+                    ""id"": ""319b2e1a-2278-4f0b-8ef3-29452ce2d0e6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -227,6 +236,17 @@ public partial class @JohnActionMap : IInputActionCollection2, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""54a4ab20-1172-444e-8d22-740c82dcf3ec"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -268,6 +288,7 @@ public partial class @JohnActionMap : IInputActionCollection2, IDisposable
         m_InGame_MouseY = m_InGame.FindAction("MouseY", throwIfNotFound: true);
         m_InGame_Jump = m_InGame.FindAction("Jump", throwIfNotFound: true);
         m_InGame_Interact = m_InGame.FindAction("Interact", throwIfNotFound: true);
+        m_InGame_Menu = m_InGame.FindAction("Menu", throwIfNotFound: true);
         // InMenu
         m_InMenu = asset.FindActionMap("InMenu", throwIfNotFound: true);
         m_InMenu_Newaction = m_InMenu.FindAction("New action", throwIfNotFound: true);
@@ -335,6 +356,7 @@ public partial class @JohnActionMap : IInputActionCollection2, IDisposable
     private readonly InputAction m_InGame_MouseY;
     private readonly InputAction m_InGame_Jump;
     private readonly InputAction m_InGame_Interact;
+    private readonly InputAction m_InGame_Menu;
     public struct InGameActions
     {
         private @JohnActionMap m_Wrapper;
@@ -344,6 +366,7 @@ public partial class @JohnActionMap : IInputActionCollection2, IDisposable
         public InputAction @MouseY => m_Wrapper.m_InGame_MouseY;
         public InputAction @Jump => m_Wrapper.m_InGame_Jump;
         public InputAction @Interact => m_Wrapper.m_InGame_Interact;
+        public InputAction @Menu => m_Wrapper.m_InGame_Menu;
         public InputActionMap Get() { return m_Wrapper.m_InGame; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -368,6 +391,9 @@ public partial class @JohnActionMap : IInputActionCollection2, IDisposable
                 @Interact.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnInteract;
+                @Menu.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnMenu;
+                @Menu.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnMenu;
+                @Menu.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnMenu;
             }
             m_Wrapper.m_InGameActionsCallbackInterface = instance;
             if (instance != null)
@@ -387,6 +413,9 @@ public partial class @JohnActionMap : IInputActionCollection2, IDisposable
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
+                @Menu.started += instance.OnMenu;
+                @Menu.performed += instance.OnMenu;
+                @Menu.canceled += instance.OnMenu;
             }
         }
     }
@@ -431,6 +460,7 @@ public partial class @JohnActionMap : IInputActionCollection2, IDisposable
         void OnMouseY(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnMenu(InputAction.CallbackContext context);
     }
     public interface IInMenuActions
     {

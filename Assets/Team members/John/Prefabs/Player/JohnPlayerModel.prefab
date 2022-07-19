@@ -407,6 +407,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 8611620220612625320}
+    - target: {fileID: 4652307625278588703, guid: b0214eb16992e344693781cd639d68be, type: 3}
+      propertyPath: lockMouse
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0214eb16992e344693781cd639d68be, type: 3}
 --- !u!1 &8638494978573017827 stripped

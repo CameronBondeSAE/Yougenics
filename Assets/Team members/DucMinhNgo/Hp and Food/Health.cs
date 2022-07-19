@@ -3,19 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using Minh;
 using UnityEngine;
+using Unity.Netcode;
 
 namespace Minh
 {
-    public class Health : MonoBehaviour
+    public class Health : NetworkBehaviour
     {
+        public NetworkVariable<float> CurrentHealth = new NetworkVariable<float>();
+        public NetworkVariable<bool> IsDead = new NetworkVariable<bool>();
+        public NetworkVariable<bool> FullEnergy = new NetworkVariable<bool>();
+        public NetworkVariable<bool> NoEnergy = new NetworkVariable<bool>();
+
         public float Hp = 100f;
         public bool dead;
         public bool fullenergy = true;
+        public bool noenergy;
+        Food food;
 
         public event Action DeathEvent;
-        Food food;
         public event Action Collectfood;
-        public bool noenergy;
 
         void Start()
         {

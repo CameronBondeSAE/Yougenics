@@ -11,20 +11,32 @@ using Unity.Netcode.Transports.UNET;
 
 public class LobbyUIManager : NetworkBehaviour
 {
+    [Header("Testing Setup")]
+    public bool autoHost;
     public bool autoLoadLevel;
+    public string sceneToLoad;
 
+    [Header("Lobby UI Setup")]
     public GameObject lobbyCanvas;
     public TMP_Text clientUI;
-    public GameObject ipAddressCanvas;
-    public TMP_InputField serverIPInputField;
+    public Button startButton;
+    public Button lobbyButton;
     public TMP_InputField playerNameField;
 
-    public string clientName;
+    [Header("IP Canvas Setup")]
+    public GameObject ipAddressCanvas;
+    public TMP_InputField serverIPInputField;
+
+    [Header("Hack for now/Ignore")]
     public GameObject player;
     public GameObject lobbyCam;
+    bool inGame = false;
 
     ulong myLocalClientId;
     NetworkObject myLocalClient;
+    string clientName;
+
+    public static LobbyUIManager instance;
 
     #region NetworkButtons/Status Info
 
@@ -38,7 +50,8 @@ public class LobbyUIManager : NetworkBehaviour
     public void JoinGame()
     {
         NetworkManager.Singleton.StartClient();
-        lobbyCanvas.GetComponentInChildren<Button>().gameObject.SetActive(false);
+        //lobbyCanvas.GetComponentInChildren<Button>().gameObject.SetActive(false);
+        startButton.gameObject.SetActive(false);
         lobbyCanvas.SetActive(true);
         ipAddressCanvas.SetActive(false);
     }
@@ -72,6 +85,8 @@ public class LobbyUIManager : NetworkBehaviour
     {
         ipAddressCanvas.SetActive(true);
         lobbyCanvas.SetActive(false);
+
+        instance = this;
     }
 
     private void Start()
@@ -80,6 +95,21 @@ public class LobbyUIManager : NetworkBehaviour
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientLeave;
 
         serverIPInputField.text = NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectAddress;
+
+        if(autoHost)
+        {
+            HostGame();
+        }
+
+        if(autoLoadLevel)
+        {
+            StartGame();
+        }
+    }
+
+    public void SetSceneToLoad()
+    {
+        sceneToLoad = this.GetComponentInChildren<TMP_Text>().text;
     }
 
     public void OnNewServerIPAddress()
@@ -179,12 +209,19 @@ public class LobbyUIManager : NetworkBehaviour
 
     public void StartGame()
     {
+        if(sceneToLoad == "")
+        {
+            Debug.Log("Select a level to load!");
+            return;
+        }
+
         NetworkManager.Singleton.SceneManager.OnSceneEvent += SceneManagerOnOnSceneEvent;
+        //NetworkManager.Singleton.SceneManager.OnLoadComplete
 
         lobbyCam.SetActive(false);
-
-        if(autoLoadLevel)
-            NetworkManager.Singleton.SceneManager.LoadScene("JohnTestScene", LoadSceneMode.Additive);
+        InGameLobbyUI(true);
+        
+        NetworkManager.Singleton.SceneManager.LoadScene(sceneToLoad, LoadSceneMode.Additive);
     }
 
     private void SceneManagerOnOnSceneEvent(SceneEvent sceneEvent)
@@ -193,10 +230,9 @@ public class LobbyUIManager : NetworkBehaviour
         Scene scene = sceneEvent.Scene;
 
         //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-        //SceneManager.SetActiveScene(scene);
+        //SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneToLoad));
 
-        lobbyCanvas.SetActive(false);
-        
+        //lobbyCanvas.SetActive(false);
         SubmitLobbyUIStateClientRpc(false);
         
         
@@ -211,13 +247,51 @@ public class LobbyUIManager : NetworkBehaviour
 
             //Posses that player object
             client.PlayerObject.GetComponent<John.PlayerController>().playerModel = tempPlayer.GetComponent<PlayerModel>();
-            client.PlayerObject.GetComponent<John.PlayerController>().playerCameraModel = tempPlayer.GetComponentInChildren<PlayerCameraModel>();
         }
     }
 
     [ClientRpc]
-    private void SubmitLobbyUIStateClientRpc(bool value)
+    public void SubmitLobbyUIStateClientRpc(bool value)
     {
         lobbyCanvas.SetActive(value);
+    }
+
+    //Using this for when a client wants to display lobby during a game
+    public void DisplayLobby(bool display)
+    {
+        lobbyCanvas.SetActive(display);
+    }
+
+    public void ReturnToLobby()
+    {
+        //Load lobby
+        //NetworkManager.Singleton.SceneManager.LoadScene("ManagerScene", LoadSceneMode.Single);
+        SceneManager.UnloadSceneAsync(sceneToLoad);
+        ipAddressCanvas.SetActive(false);
+        lobbyCanvas.SetActive(true);
+        InGameLobbyUI(false);
+
+        foreach(NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
+        {
+            client.PlayerObject.GetComponent<John.PlayerController>().OnPlayerUnassigned();
+        }
+
+        //Unload the active scene
+    }
+
+    public void InGameLobbyUI(bool inGame)
+    {
+        if(inGame)
+        {
+            startButton.gameObject.SetActive(false);
+            playerNameField.gameObject.SetActive(false);
+            lobbyButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            startButton.gameObject.SetActive(true);
+            playerNameField.gameObject.SetActive(true);
+            lobbyButton.gameObject.SetActive(false);
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Netcode;
+using System;
 
 namespace John
 {
@@ -10,7 +11,8 @@ namespace John
     {
         public PlayerInput playerInput;
         public PlayerModel playerModel;
-        public PlayerCameraModel playerCameraModel;
+
+        bool inMenu = false;
 
         public override void OnNetworkSpawn()
         {
@@ -32,6 +34,38 @@ namespace John
             //Player Look Direction
             playerInput.actions.FindAction("MouseX").performed += aContext => RequestPlayerMouseXServerRpc(aContext.ReadValue<float>());
             playerInput.actions.FindAction("MouseY").performed += aContext => RequestPlayerMouseYServerRpc(aContext.ReadValue<float>());
+
+            playerInput.actions.FindAction("Menu").performed += aContext => RequestLobbyDisplay();
+        }
+
+        public void OnPlayerUnassigned()
+        {
+            playerInput.actions.FindAction("Interact").performed -= aContext => RequestInteractServerRpc();
+            playerInput.actions.FindAction("Jump").performed -= aContext => RequestJumpServerRpc();
+
+            //Player Movement
+            playerInput.actions.FindAction("Movement").performed -= OnMovementOnperformed;
+            playerInput.actions.FindAction("Movement").canceled -= OnMovementOnperformed;
+
+            //Player Look Direction
+            playerInput.actions.FindAction("MouseX").performed -= aContext => RequestPlayerMouseXServerRpc(aContext.ReadValue<float>());
+            playerInput.actions.FindAction("MouseY").performed -= aContext => RequestPlayerMouseYServerRpc(aContext.ReadValue<float>());
+
+            playerInput.actions.FindAction("Menu").performed -= aContext => RequestLobbyDisplay();
+        }
+
+        private void RequestLobbyDisplay()
+        {
+            if(inMenu)
+            {
+                inMenu = false;
+            }
+            else
+            {
+                inMenu = true;
+            }
+
+            LobbyUIManager.instance.DisplayLobby(inMenu);
         }
 
         [ServerRpc]
