@@ -25,8 +25,10 @@ namespace Minh
 
         void Start()
         {
-            noenergy = false;
-            fullenergy = true;
+            //noenergy = false;
+            //fullenergy = true;
+            NoEnergy.Value = false;
+            FullEnergy.Value = true;
             
             Deathcheck();
             GetComponent<Energy>().NoEnergyEvent += startHealthdepeting;
@@ -38,21 +40,34 @@ namespace Minh
 
         public void Deathcheck()
         {
-            if (Hp <= 0)
+            /*if (Hp <= 0)
             {
-                
+
                 dead = true;
                 GetComponent<Renderer>().material.color = Color.yellow;
                 Destroy(gameObject);
                 DeathEvent?.Invoke();
-                
+
+            }*/
+
+            if (!IsOwner)
+                return;
+
+            if (CurrentHealth.Value <= 0)
+            {
+
+                IsDead.Value = true;
+                //GetComponent<Renderer>().material.color = Color.yellow;
+                Destroy(gameObject);
+                DeathEvent?.Invoke();
+
             }
         }
 
         public void FullHp()
         {
-            Hp = 100f;
-            
+            //Hp = 100f;
+            CurrentHealth.Value = 100f;
         }
 
         public void Deadtrigger()
