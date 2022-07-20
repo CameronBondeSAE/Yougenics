@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Unity.Netcode;
 
-public class NetworkClient_Disabler : MonoBehaviour
+public class NetworkClient_Disabler : NetworkBehaviour
 {
     public List<Component> disableModelComponents;
 
@@ -12,14 +13,17 @@ public class NetworkClient_Disabler : MonoBehaviour
 
     void Awake()
     {
-        foreach (Component component in disableModelComponents)
+        if(IsClient)
         {
-            Destroy(component);
-        }
+            foreach (Component component in disableModelComponents)
+            {
+                Destroy(component);
+            }
 
-        foreach (UnityEvent unityEvent in doTheseAswell)
-        {
-            unityEvent?.Invoke();
+            foreach (UnityEvent unityEvent in doTheseAswell)
+            {
+                unityEvent?.Invoke();
+            }
         }
     }
 }

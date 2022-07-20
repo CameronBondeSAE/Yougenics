@@ -4986,7 +4986,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5740045485675583768}
   - component: {fileID: 8941976803134259905}
-  - component: {fileID: 5716284552366654202}
   m_Layer: 0
   m_Name: View
   m_TagString: Untagged
@@ -5030,22 +5029,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 96240af5348d1a04f88deb9ba933582b, type: 2}
   - {fileID: 2100000, guid: 9504e54f998961c43a11acc619b53cf8, type: 2}
   critter: {fileID: 3124390809528273905}
---- !u!114 &5716284552366654202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3256794994744034578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 951099334
-  AlwaysReplicateAsRoot: 0
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
 --- !u!1 &7004539971532304000
 GameObject:
   m_ObjectHideFlags: 0
@@ -5061,6 +5044,7 @@ GameObject:
   - component: {fileID: 1273279505411371279}
   - component: {fileID: 3128564274136016781}
   - component: {fileID: -7329730064323366979}
+  - component: {fileID: 697295525}
   m_Layer: 0
   m_Name: LukeCritterPlanner
   m_TagString: Untagged
@@ -5230,3 +5214,19 @@ MonoBehaviour:
   manualUpdate: 0
   thinkInterval: 0.1
   scenario: {fileID: 11400000, guid: 0440dda3c090d3d4faeb808d25ac7f01, type: 2}
+--- !u!114 &697295525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7004539971532304000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1

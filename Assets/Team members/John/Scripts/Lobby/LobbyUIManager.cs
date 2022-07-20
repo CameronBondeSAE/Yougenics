@@ -31,6 +31,7 @@ public class LobbyUIManager : NetworkBehaviour
     public GameObject player;
     public GameObject lobbyCam;
     bool inGame = false;
+    public GameObject lukeAITest;
 
     ulong myLocalClientId;
     NetworkObject myLocalClient;
@@ -255,6 +256,10 @@ public class LobbyUIManager : NetworkBehaviour
             //Posses that player object
             client.PlayerObject.GetComponent<John.PlayerController>().playerModel = tempPlayer.GetComponent<PlayerModel>();
         }
+
+        //Spawn Luke AI For Testing
+        GameObject lukeAI = Instantiate(lukeAITest);
+        lukeAI.GetComponent<NetworkObject>().Spawn();
     }
 
     [ClientRpc]
