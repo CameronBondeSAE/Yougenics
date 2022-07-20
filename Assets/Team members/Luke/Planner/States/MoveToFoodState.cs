@@ -9,7 +9,7 @@ namespace Luke
 		public override void Enter()
 		{
 			base.Enter();
-			critter.ChangeEmote(0);
+			critter.ChangeEmotion(0);
 		}
 
 		public override void Execute(float aDeltaTime, float aTimeScale)
