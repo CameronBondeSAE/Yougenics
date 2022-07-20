@@ -22,8 +22,9 @@ public class RestState : Basestate
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        GetComponent<Renderer>().material.color = Color.red;
         GetComponent<Energy>().energyAmount += regenEnergy * Time.deltaTime;
     }
 }

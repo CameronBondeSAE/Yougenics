@@ -20,7 +20,7 @@ namespace Luke
 				Wander();
 				return;
 			}
-			critter.ChangeEmote(0);
+			critter.ChangeEmotion(Critter.Emotions.Hungry);
 			if (!critter.LocateNearestFood())
 			{
 				Wander();
@@ -33,7 +33,7 @@ namespace Luke
 
 		private void Wander()
 		{
-			critter.ChangeEmote(4);
+			critter.ChangeEmotion(Critter.Emotions.Wander);
 			critter.IterateBiomes();
 			critter.MoveBiomes();
 		}

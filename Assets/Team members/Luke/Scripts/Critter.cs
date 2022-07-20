@@ -5,6 +5,7 @@ using Anthill.AI;
 using NodeCanvas.BehaviourTrees;
 using NodeCanvas.Framework;
 using ParadoxNotion;
+using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -51,10 +52,6 @@ namespace Luke
 		private Transform birthingTransform;
 		private Rigidbody rb;
 		
-		[SerializeField]
-		public ParticleSystemRenderer ps;
-		[SerializeField]
-		public List<Material> psMats;
 		
 #region IEnumerators
 		
@@ -724,9 +721,22 @@ namespace Luke
 			return justAte;
 		}
 
-		public void ChangeEmote(int index)
+		public enum Emotions
 		{
-			ps.material = psMats[index];
+			Hungry,
+			Tired,
+			Lovelorn,
+			Wander
+		}
+
+		public event Action<Emotions> ChangeEmotionEvent;
+
+		public Emotions currentEmotion;
+		
+		public void ChangeEmotion(Emotions type)
+		{
+			currentEmotion = type;
+			ChangeEmotionEvent?.Invoke(currentEmotion);
 		}
 
 		#endregion
