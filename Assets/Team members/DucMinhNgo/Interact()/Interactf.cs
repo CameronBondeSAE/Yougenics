@@ -28,7 +28,7 @@ namespace Minh
         {
            
                 hp = curhp = hp - 10;
-                GetComponent<Renderer>().material.color = Color.gray;
+                GetComponent<Renderer>().material.color = Color.red;
                 if (hp == 0)
                 {
                     Destroy(gameObject);
