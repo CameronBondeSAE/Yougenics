@@ -12,6 +12,8 @@ namespace Ollie
         public List<Transform> foodLocationList;
         public List<Transform> mateLocationList;
         public float moveSpeed;
+        public WaterNode currentLocation;
+        public LevelManager lm;
 
         #region Bools for planner World State
         public bool isSafe;
@@ -42,6 +44,11 @@ namespace Ollie
             //testing purposes only
             isHungry = true;
             healthLow = true;
+        }
+
+        private void Update()
+        {
+            currentLocation = lm.ConvertToGrid(transform.position);
         }
 
         public void AddFoodToList(GameObject foodLocation)

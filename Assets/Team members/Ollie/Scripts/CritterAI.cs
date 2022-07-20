@@ -23,8 +23,9 @@ namespace Ollie
         public GameObject target;
         public GameObject currentTarget = null;
         public RaycastHit hitData;
-        
-        
+        public List<Vector3> path;
+
+
         public List<GameObject> targetsInSight;
         private bool rayCooldown;
         private bool interactingTarget;
@@ -32,6 +33,10 @@ namespace Ollie
         public bool sleeping;
         public CritterTrigger trigger;
         public Material shader;
+
+        public LevelManager lm;
+        public AStar aStar;
+        public WaterNode currentLocation;
 
         private void Start()
         {
@@ -52,11 +57,24 @@ namespace Ollie
             LookForTargets();
             StatChanges();
             shader.SetFloat("_energy",energy);
+            
+            currentLocation = lm.ConvertToGrid(transform.position);
         }
 
         private void FixedUpdate()
         {
-            StandardMovement();
+            //StandardMovement();
+            if (path.Count > 0)
+            {
+                if (transform.position != path[0])
+                {
+                    transform.position = Vector3.MoveTowards(transform.position,path[0],moveSpeed);
+                }
+                else if (transform.position == path[0])
+                {
+                    path.Remove(path[0]);
+                }
+            }
         }
 
         public IEnumerator RayCoroutine()
@@ -140,6 +158,8 @@ namespace Ollie
             {
                 StartCoroutine(RandomLocation());
             }
+            
+            
         }
 
         public IEnumerator RandomLocation()
