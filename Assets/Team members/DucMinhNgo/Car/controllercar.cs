@@ -8,7 +8,7 @@ using Unity.VisualScripting;
 
 namespace Minh
 {
-public class Controllercar : MonoBehaviour, IVehicleControls
+public class controllercar : MonoBehaviour, IVehicleControls
 {
     public List<Wheel> steeringWheels;
 
