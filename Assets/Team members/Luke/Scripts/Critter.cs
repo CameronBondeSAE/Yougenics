@@ -726,7 +726,8 @@ namespace Luke
 			Hungry,
 			Tired,
 			Lovelorn,
-			Wander
+			Wander,
+			RunAway
 		}
 
 		public event Action<Emotions> ChangeEmotionEvent;
