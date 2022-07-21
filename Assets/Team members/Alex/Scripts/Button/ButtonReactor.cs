@@ -10,16 +10,16 @@ namespace Alex
    {
       
       public Button button;
-      public Button button1;
+      //public Button button1;
       void Start()
       {
-         button1.buttonPressedEvent += DestroyThis;
+         //button1.buttonPressedEvent += DestroyThis;
          button.buttonPressedEvent += DestroyThis;
       }
 
       private void OnDisable()
       {
-         button1.buttonPressedEvent -= DestroyThis;
+         //button1.buttonPressedEvent -= DestroyThis;
          button.buttonPressedEvent -= DestroyThis;
       }
 

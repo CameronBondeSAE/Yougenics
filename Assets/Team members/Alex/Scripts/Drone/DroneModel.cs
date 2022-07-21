@@ -5,6 +5,7 @@ using NodeCanvas.Tasks.Actions;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+[SelectionBase]
 public class DroneModel : MonoBehaviour, IFlyable, IInteractable
 {
     public Rigidbody rb;

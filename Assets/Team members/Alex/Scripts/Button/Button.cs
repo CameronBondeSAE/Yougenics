@@ -10,6 +10,7 @@ using Unity.Netcode;
 
 namespace Alex
 {
+    [SelectionBase]
     public class Button : NetworkBehaviour, IInteractable
     {
         public bool canInteract = true;
