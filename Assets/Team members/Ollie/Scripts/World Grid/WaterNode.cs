@@ -39,7 +39,7 @@ namespace Ollie
             get
             {
                 //will need to update Y pos when heights are implemented
-                return new Vector3(gridPosition.x,1,gridPosition.y);
+                return new Vector3(gridPosition.x+levelManager.lengthX,1,gridPosition.y+levelManager.lengthZ);
             }
         }
         public WaterNode parent;

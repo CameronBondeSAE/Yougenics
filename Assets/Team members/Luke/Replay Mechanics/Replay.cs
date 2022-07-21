@@ -65,6 +65,8 @@ public class Replay : MonoBehaviour
     {
         yield return new WaitForSeconds(timeStamps[i+1] - timeStamps[i]);
         inputs[i].Invoke(Time.time-replayStartTime);
+        float error = Time.time - replayStartTime - timeStamps[i+1];
+            Debug.Log("Error = " + error);
 
         if (++i < timeStamps.Count-1) StartCoroutine(PlayReplay());
     }
