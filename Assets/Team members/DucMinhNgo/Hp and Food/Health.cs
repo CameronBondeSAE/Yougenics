@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Minh;
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.UI;
 
 namespace Minh
 {
@@ -14,45 +15,64 @@ namespace Minh
         public NetworkVariable<bool> FullEnergy = new NetworkVariable<bool>();
         public NetworkVariable<bool> NoEnergy = new NetworkVariable<bool>();
 
-        public float Hp = 100f;
+        public int Hp = 100;
+        public int curHp;
         public bool dead;
         public bool fullenergy = true;
         public bool noenergy;
         Food food;
+        public HpUI hpui;
 
         public event Action DeathEvent;
         public event Action Collectfood;
 
         void Start()
         {
-            noenergy = false;
-            fullenergy = true;
+            
+            hpui.SetMaxHealth(Hp);
+            //noenergy = false;
+            //fullenergy = true;
+            NoEnergy.Value = false;
+            FullEnergy.Value = true;
             
             Deathcheck();
             GetComponent<Energy>().NoEnergyEvent += startHealthdepeting;
             GetComponent<Energy>().FullEnergyEvent += startHealthincreasing;
         }
 
-        //health generate overtime
+       
         
 
         public void Deathcheck()
         {
-            if (Hp <= 0)
+            /*if (Hp <= 0)
             {
-                
+
                 dead = true;
                 GetComponent<Renderer>().material.color = Color.yellow;
                 Destroy(gameObject);
                 DeathEvent?.Invoke();
-                
+
+            }*/
+
+            if (!IsOwner)
+                return;
+
+            if (CurrentHealth.Value <= 0)
+            {
+
+                IsDead.Value = true;
+                //GetComponent<Renderer>().material.color = Color.yellow;
+                Destroy(gameObject);
+                DeathEvent?.Invoke();
+
             }
         }
 
         public void FullHp()
         {
-            Hp = 100f;
-            
+            //Hp = 100f;
+            CurrentHealth.Value = 100f;
         }
 
         public void Deadtrigger()
@@ -62,25 +82,26 @@ namespace Minh
 
         void OnCollisionEnter(Collision collision)
         {
-            Hp -= 0;
+            curHp = Hp -= 80;
             Collectfood?.Invoke();
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             Deathcheck();
+            curHp = Hp;
         }
         
         // health increase and depleting overtime code
         IEnumerator Healthdepleting()
         {
-            while (noenergy == true)
+            while (noenergy)
             {
                 // loops forever...
                 if (Hp <= 100)
                 {
                     // if health < 100...
-                    Hp -= 1f; // increase health and wait the specified time
+                    Hp -= 1; // increase health and wait the specified time
                     yield return new WaitForSeconds(1);
                 }
                 else
@@ -88,28 +109,29 @@ namespace Minh
                     // if health >= 100, just yield 
                     yield return null;
                 }
+                hpui.SetHealth(curHp);
             }
         }
 
-        void startHealthdepeting()
+       public void startHealthdepeting()
         {
 
             StartCoroutine(Healthdepleting());
         }
-        void startHealthincreasing()
+        public void startHealthincreasing()
         {
 
             StartCoroutine(Healthincreasing());
         }
         IEnumerator Healthincreasing()
         {
-            while (fullenergy == true)
+            while (fullenergy)
             {
                 // loops forever...
                 if (Hp <= 100)
                 {
                     // if health < 100...
-                    Hp += 1f; // increase health and wait the specified time
+                    Hp += 1; // increase health and wait the specified time
                     yield return new WaitForSeconds(1);
                 }
                 else
@@ -117,6 +139,7 @@ namespace Minh
                     // if health >= 100, just yield 
                     yield return null;
                 }
+                hpui.SetHealth(curHp);
             }
         }
     }

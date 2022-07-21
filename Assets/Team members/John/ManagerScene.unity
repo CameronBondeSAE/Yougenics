@@ -4212,6 +4212,7 @@ MonoBehaviour:
   serverIPInputField: {fileID: 781790613}
   player: {fileID: 8611620220612625317, guid: cc02e9a49a115264eb5ef1f88085b227, type: 3}
   lobbyCam: {fileID: 1640972067}
+  lukeAITest: {fileID: 7004539971532304000, guid: 429a275c45a89484a8851ad97df49258, type: 3}
   debugStatusLabels: 1
 --- !u!4 &1799434293
 Transform:

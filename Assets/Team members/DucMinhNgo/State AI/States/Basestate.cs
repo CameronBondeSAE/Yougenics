@@ -8,22 +8,12 @@ namespace Minh
     public class Basestate : MonoBehaviour
     {
         // Start is called before the first frame update
-        private void Awake()
-        {
-            GetComponent<Renderer>().material.color = Color.red;
-        }
+        public Statemanager stateManager;
 
-        public Basestate()
+        public void Awake()
         {
-            
-            Debug.Log("idle animation play");
-        }
+            stateManager = GetComponent<Minh.Statemanager>();
 
-
-        // Update is called once per frame
-        void Update()
-        {
-        
         }
     }
 }

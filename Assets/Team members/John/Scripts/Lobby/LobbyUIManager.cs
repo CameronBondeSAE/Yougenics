@@ -31,6 +31,7 @@ public class LobbyUIManager : NetworkBehaviour
     public GameObject player;
     public GameObject lobbyCam;
     bool inGame = false;
+    public GameObject lukeAITest;
 
     ulong myLocalClientId;
     NetworkObject myLocalClient;
@@ -216,12 +217,19 @@ public class LobbyUIManager : NetworkBehaviour
         }
 
         NetworkManager.Singleton.SceneManager.OnSceneEvent += SceneManagerOnOnSceneEvent;
-        //NetworkManager.Singleton.SceneManager.OnLoadComplete
+        //NetworkManager.Singleton.SceneManager.OnLoadComplete += OnLevelLoaded;
 
         lobbyCam.SetActive(false);
         InGameLobbyUI(true);
         
         NetworkManager.Singleton.SceneManager.LoadScene(sceneToLoad, LoadSceneMode.Additive);
+    }
+
+    private void OnLevelLoaded(ulong clientId, string sceneName, LoadSceneMode loadSceneMode)
+    {
+        NetworkManager.Singleton.SceneManager.OnLoadComplete -= OnLevelLoaded;
+
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
     }
 
     private void SceneManagerOnOnSceneEvent(SceneEvent sceneEvent)
@@ -248,6 +256,10 @@ public class LobbyUIManager : NetworkBehaviour
             //Posses that player object
             client.PlayerObject.GetComponent<John.PlayerController>().playerModel = tempPlayer.GetComponent<PlayerModel>();
         }
+
+        //Spawn Luke AI For Testing
+        GameObject lukeAI = Instantiate(lukeAITest);
+        lukeAI.GetComponent<NetworkObject>().Spawn();
     }
 
     [ClientRpc]

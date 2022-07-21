@@ -75,6 +75,18 @@ namespace Ollie
             if(worldScanned) ScanWorld();
         }
 
+        public WaterNode ConvertToGrid(Vector3 position)
+        {
+            WaterNode node = gridNodeReferences[(int)position.x-lengthX,(int)position.z-lengthZ];
+            return node;
+        }
+
+        public Vector3 ConvertToWorld(WaterNode node)
+        {
+            Vector3 position = node.gridPosVector3;
+            return position;
+        }
+
         public void ScanWorld()
         {
             if (worldScanned == false)
@@ -244,6 +256,7 @@ namespace Ollie
         public void AStarPathfindingStart()
         {
             aStar.AStarPathfindingStart();
+            aStar.active = true;
         }
 
         public void FindPath()
