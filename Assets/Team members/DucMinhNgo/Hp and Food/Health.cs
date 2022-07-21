@@ -28,8 +28,7 @@ namespace Minh
 
         void Start()
         {
-            
-            hpui.SetMaxHealth(Hp);
+            if (hpui != null) hpui.SetMaxHealth(Hp);
             //noenergy = false;
             //fullenergy = true;
             NoEnergy.Value = false;

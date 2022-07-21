@@ -27,11 +27,6 @@ public class Energy : NetworkBehaviour
         StartCoroutine(EnergyDrainer());
     }
 
-    void Update()
-    {
-        EnergyDrainer();
-    }
-
     public void ChangeEnergy(float f)
     {
         if (IsOwner)
