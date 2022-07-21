@@ -26,6 +26,11 @@ public class Buttoninspector : Editor
             Health health = target as Health;
             health.Deadtrigger();
         }
+        if (GUILayout.Button("starthealthincreasing"))
+        {
+            Health health = target as Health;
+            health.startHealthincreasing();
+        }
     }
     // Start is called before the first frame update
    
