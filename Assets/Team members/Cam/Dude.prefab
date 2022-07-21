@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 1057062405}
   - component: {fileID: 1803907236113378963}
   - component: {fileID: 974450663}
+  - component: {fileID: -98636685822751051}
   m_Layer: 0
   m_Name: Dude
   m_TagString: Untagged
@@ -204,10 +205,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd95a418070c3014eb6368bceeef6adf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentHealth:
+    m_InternalValue: 0
+  IsDead:
+    m_InternalValue: 0
+  FullEnergy:
+    m_InternalValue: 0
+  NoEnergy:
+    m_InternalValue: 0
   Hp: 100
+  curHp: 0
   dead: 0
   fullenergy: 1
   noenergy: 0
+  hpui: {fileID: 0}
 --- !u!114 &3854144349731642703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,6 +231,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86b58142ff8a3804fa71c5004d10d94b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnergyAmount:
+    m_InternalValue: 0
   energyAmount: 50
   energyMax: 100
   energyMin: 0
@@ -281,3 +294,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: {fileID: 0}
+--- !u!114 &-98636685822751051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5627932282388674726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
