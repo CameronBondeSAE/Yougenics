@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using NodeCanvas.Tasks.Actions;
 using UnityEditor;
 using UnityEngine;
@@ -42,7 +43,7 @@ public class ToolBoxEditor : EditorWindow
             SceneView.FrameLastActiveSceneView();
         }
         
-        if (GUILayout.Button("Focus on random AI below 50 energy(Alex'sAI)"))
+        if (GUILayout.Button("Focus on random AI"))
         {
             
             Alex.AnotherAI[] findObjectsOfType = FindObjectsOfType<Alex.AnotherAI>();
@@ -50,17 +51,33 @@ public class ToolBoxEditor : EditorWindow
             SceneView.FrameLastActiveSceneView();
         }
 
-        if (GUILayout.Button("Focus on random object below 50 energy"))
+        if (GUILayout.Button("Focus on random object below 20 energy"))
         {
-            Energy[] findObjectsOfType = FindObjectsOfType<Energy>();
-            foreach (Energy energy in findObjectsOfType)
+            Energy[] thingsWithEnergy = FindObjectsOfType<Energy>();
+            List<Energy> thingsWithLowEnergy = new List<Energy>();
+            
+            //Check every object that has energy
+            foreach (Energy energy in thingsWithEnergy)
             {
-                if (energy.energyAmount < 50)
+                //Checking if energy is less than 20
+                if (energy.energyAmount < 20)
                 {
-                    Selection.activeGameObject = findObjectsOfType[Random.Range(0, findObjectsOfType.Length)].gameObject;
+                    //Adding to the low energy list
+                    thingsWithLowEnergy.Add(energy);
                 }
             }
+            //Selecting random object from the low energy list and focusing on it
+            Selection.activeGameObject = thingsWithLowEnergy[Random.Range(0, thingsWithLowEnergy.Count)].gameObject;
+            SceneView.FrameLastActiveSceneView();
         }
-
+        
+        if (GUILayout.Button("Create drone"))
+        {
+            DroneModel drone = FindObjectOfType<DroneModel>();
+            Instantiate(drone);
+            
+            //Selection.activeGameObject = findObjectsOfType[Random.Range(0, findObjectsOfType.Length)].gameObject;
+            //SceneView.FrameLastActiveSceneView();
+        }
     }
 }
