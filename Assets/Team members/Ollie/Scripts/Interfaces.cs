@@ -24,4 +24,13 @@ namespace Ollie
     {
         
     }
+
+    public interface iHeapItem<T> : IComparable<T>
+    {
+        int heapIndex
+        {
+            get;
+            set;
+        }
+    }
 }

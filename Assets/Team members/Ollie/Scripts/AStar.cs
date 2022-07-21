@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace Ollie
@@ -8,7 +9,8 @@ namespace Ollie
     public class AStar : MonoBehaviour
     {
         public LevelManager lm;
-        public List<WaterNode> openPathNodes;
+        private PathManager pathManager;
+        public Heap<WaterNode> openPathNodes;
         public List<WaterNode> closedPathNodes;
         public WaterNode startLocation;
         public WaterNode targetLocation;
@@ -23,9 +25,13 @@ namespace Ollie
         //only keep this for visualizing path creation
         public float pathDelay;
 
+        private void Awake()
+        {
+            pathManager = GetComponent<PathManager>();
+        }
+
         private void Start()
         {
-            openPathNodes = new List<WaterNode>();
             closedPathNodes = new List<WaterNode>();
             pathfindingUnblockedNodes = new List<WaterNode>();
             vector3Path = new List<Vector3>();
@@ -40,7 +46,7 @@ namespace Ollie
                 node.startLocation = false;
                 node.targetLocation = false;
             }
-            openPathNodes.Clear();
+            //openPathNodes.Clear();
             closedPathNodes.Clear();
             
             //this is expensive and I should scale it down somehow
@@ -66,7 +72,7 @@ namespace Ollie
         private void Update()
         {
             timer += Time.deltaTime;
-            if (timer > 2)
+            if (timer > 0.5f)
             {
                 timer = 0;
                 if (active)
@@ -76,6 +82,12 @@ namespace Ollie
                 }
             }
             
+        }
+
+        public void StartFindPath(Vector3 startPos, Vector3 targetPos)
+        {
+            critter.path.Clear();
+            StartCoroutine(FindPathCoroutine(startPos, targetPos));
         }
 
         public void FindPath()
@@ -95,27 +107,13 @@ namespace Ollie
             // if (startLocation != targetLocation)
             // {
                 startLocation.isOpen = true;
+                
+                openPathNodes = new Heap<WaterNode>(lm.MaxSize);
                 openPathNodes.Add(startLocation);
 
                 while (openPathNodes.Count > 0)
                 {
-                    currentLocation = openPathNodes[0];
-                    //i = 1 because we've already assigned the starting node to address 0
-                    for (int i = 1; i < openPathNodes.Count; i++)
-                    {
-                        //if the f cost is less than current location OR if it's the same and it's H COST is lower
-                        //then make that the new current location
-                        if (openPathNodes[i].fCost < currentLocation.fCost ||
-                            openPathNodes[i].fCost == currentLocation.fCost &&
-                            openPathNodes[i].hCost < currentLocation.hCost)
-                        {
-                            currentLocation = openPathNodes[i];
-                        }
-                    }
-                
-                    //since we're now at a new current location, it's now closed
-                    //so remove from Open and add to Closed
-                    openPathNodes.Remove(currentLocation);
+                    currentLocation = openPathNodes.RemoveFirst();
                     closedPathNodes.Add(currentLocation);
                     
 
@@ -170,95 +168,96 @@ namespace Ollie
             //     targetLocation = pathfindingUnblockedNodes[UnityEngine.Random.Range(0, pathfindingUnblockedNodes.Count)];
             // }
         }
-        public IEnumerator FindPathCoroutine()
+        public IEnumerator FindPathCoroutine(Vector3 startPos, Vector3 targetPos)
         {
             //might need a fake "tick" via coroutine to slow this down
             // if (startLocation != targetLocation)
             // {
-                startLocation.isOpen = true;
-                openPathNodes.Add(startLocation);
-
-                while (openPathNodes.Count > 0)
-                {
-                    currentLocation = openPathNodes[0];
-                    //i = 1 because we've already assigned the starting node to address 0
-                    for (int i = 1; i < openPathNodes.Count; i++)
-                    {
-                        //if the f cost is less than current location OR if it's the same and it's H COST is lower
-                        //then make that the new current location
-                        if (openPathNodes[i].fCost < currentLocation.fCost ||
-                            openPathNodes[i].fCost == currentLocation.fCost &&
-                            openPathNodes[i].hCost < currentLocation.hCost)
-                        {
-                            currentLocation = openPathNodes[i];
-                        }
-                    }
                 
-                    //since we're now at a new current location, it's now closed
-                    //so remove from Open and add to Closed
-                    openPathNodes.Remove(currentLocation);
-                    closedPathNodes.Add(currentLocation);
-                    
 
-                    //exit here if we're now at our desired destination
-                    if (currentLocation == targetLocation)
+                Vector3[] waypoints = Array.Empty<Vector3>();
+                bool pathSuccess = false;
+
+                WaterNode startNode = lm.ConvertToGrid(startPos);
+                WaterNode targetNode = lm.ConvertToGrid(targetPos);
+                
+                startNode.isOpen = true;
+
+                if (!startNode.isBlocked && !targetNode.isBlocked)
+                {
+                    openPathNodes = new Heap<WaterNode>(lm.MaxSize);
+                    openPathNodes.Add(startNode);
+
+                    while (openPathNodes.Count > 0)
                     {
-                        CreatePath(startLocation,targetLocation);
-
-                        //NOTE: Switch these two depending on if function or coroutine
-                        //return;
-                        yield break;
-                    }
-
-                    //check all neighbours of current node
-                    foreach (WaterNode neighbour in currentLocation.neighbours)
-                    {
-                        //basically ignore itself, since it will always be null in it's own neighbour list
-                        if (neighbour == null)
-                        {
-                            continue;
-                        }
+                        currentLocation = openPathNodes.RemoveFirst();
+                        closedPathNodes.Add(currentLocation);
                         
-                        //if the neighbour is blocked or closed, ie. already been checked!
-                        //then continue
-                        if (neighbour.isBlocked || closedPathNodes.Contains(neighbour))
+
+                        //exit here if we're now at our desired destination
+                        if (currentLocation == targetNode)
                         {
-                            continue;
+                            pathSuccess = true;
+                            //NOTE: Switch these two depending on if function or coroutine
+                            //return;
+                            break;
                         }
 
-                        //update parents and F cost according to the best distance from start location to current
-                        //f cost is not manually set
-                        //g cost and h cost are set, and whenever F cost is required, it's automatically calculated on the node
-                        int newCostToNeighbour = currentLocation.gCost + GetDistance(currentLocation, neighbour);
-                        if (newCostToNeighbour < neighbour.gCost || !openPathNodes.Contains(neighbour))
+                        //check all neighbours of current node
+                        foreach (WaterNode neighbour in currentLocation.neighbours)
                         {
-                            //current gCost is best so far, so neighbour's new gCost is cheapest cost from current to neighbour, + current cost
-                            neighbour.gCost = newCostToNeighbour;
-                            neighbour.hCost = GetDistance(neighbour, targetLocation);
-                            neighbour.parent = currentLocation;
-                            if (!openPathNodes.Contains(neighbour))
+                            //basically ignore itself, since it will always be null in it's own neighbour list
+                            if (neighbour == null)
                             {
-                                openPathNodes.Add(neighbour);
-                                
+                                continue;
                             }
-                        }
-                    
+                            
+                            //if the neighbour is blocked or closed, ie. already been checked!
+                            //then continue
+                            if (neighbour.isBlocked || closedPathNodes.Contains(neighbour))
+                            {
+                                continue;
+                            }
+
+                            //update parents and F cost according to the best distance from start location to current
+                            //f cost is not manually set
+                            //g cost and h cost are set, and whenever F cost is required, it's automatically calculated on the node
+                            int newCostToNeighbour = currentLocation.gCost + GetDistance(currentLocation, neighbour);
+                            if (newCostToNeighbour < neighbour.gCost || !openPathNodes.Contains(neighbour))
+                            {
+                                //current gCost is best so far, so neighbour's new gCost is cheapest cost from current to neighbour, + current cost
+                                neighbour.gCost = newCostToNeighbour;
+                                neighbour.hCost = GetDistance(neighbour, targetNode);
+                                neighbour.parent = currentLocation;
+                                if (!openPathNodes.Contains(neighbour))
+                                {
+                                    openPathNodes.Add(neighbour);
+                                    
+                                }
+                            }
                         
-                        // node.gCost = Vector2.Distance(node.gridPosition, startLocation.gridPosition);
-                        // node.hCost = Vector2.Distance(targetLocation.gridPosition, node.gridPosition);
-                        // node.fCost = node.gCost + node.hCost;
+                            
+                            // node.gCost = Vector2.Distance(node.gridPosition, startLocation.gridPosition);
+                            // node.hCost = Vector2.Distance(targetLocation.gridPosition, node.gridPosition);
+                            // node.fCost = node.gCost + node.hCost;
+                        }
                     }
-                    yield return new WaitForSeconds(pathDelay);
                 }
-            //}
-            // else
-            // {
-            //     startLocation = targetLocation;
-            //     targetLocation = pathfindingUnblockedNodes[UnityEngine.Random.Range(0, pathfindingUnblockedNodes.Count)];
-            // }
+                yield return null;
+                if (pathSuccess)
+                {
+                    waypoints = CreatePath(startNode,targetNode);
+                }
+                pathManager.FinishedProcessingPath(waypoints,pathSuccess);
+                //}
+                // else
+                // {
+                //     startLocation = targetLocation;
+                //     targetLocation = pathfindingUnblockedNodes[UnityEngine.Random.Range(0, pathfindingUnblockedNodes.Count)];
+                // }
         }
 
-        void CreatePath(WaterNode startNode, WaterNode endNode)
+        Vector3[] CreatePath(WaterNode startNode, WaterNode endNode)
         {
             vector3Path.Clear();
             List<WaterNode> path = new List<WaterNode>();
@@ -269,16 +268,38 @@ namespace Ollie
                 path.Add(currentNode);
                 currentNode = currentNode.parent;
             }
-            path.Reverse();
+
+            Vector3[] waypoints = SimplifyPath(path);
+            Array.Reverse(waypoints);
+
             foreach (WaterNode node in path)
             {
                 node.isPath = true; 
                 critter.path.Add(lm.ConvertToWorld(node));
             }
-            openPathNodes.Clear();
+            //openPathNodes.Clear();
             closedPathNodes.Clear();
+            return waypoints;
         }
-        
+
+        Vector3[] SimplifyPath(List<WaterNode> path)
+        {
+            List<Vector3> waypoints = new List<Vector3>();
+            Vector2 directionOld = Vector2.zero;
+            for (int i = 1; i < path.Count; i++)
+            {
+                Vector2 directionNew = new Vector2(path[i - 1].levelManager.sizeX - path[i].levelManager.sizeX,
+                    path[i - 1].levelManager.sizeZ - path[i].levelManager.sizeZ);
+                if (directionNew != directionOld)
+                {
+                    waypoints.Add(path[i].levelManager.ConvertToWorld(path[i]));
+                }
+
+                directionOld = directionNew;
+            }
+
+            return waypoints.ToArray();
+        }
         
         
         int GetDistance(WaterNode nodeA, WaterNode nodeB)

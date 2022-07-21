@@ -38,14 +38,50 @@ namespace Ollie
         public AStar aStar;
         public WaterNode currentLocation;
 
+
+        public Transform targetTransform;
+        private Vector3[] pathArray;
+        private int targetIndex;
+
         private void Start()
         {
+            
             rayCooldown = false;
             health = maxHealth;
             energy = maxEnergy;
             foundTarget = false;
             interactingTarget = false;
             shader = GetComponent<Renderer>().material;
+        }
+
+        public void OnPathFound(Vector3[] newPath, bool pathSuccessful)
+        {
+            if (pathSuccessful)
+            {
+                pathArray = newPath;
+                StopCoroutine("FollowPathCoroutine");
+                StartCoroutine("FollowPathCoroutine");
+            }
+        }
+
+        IEnumerator FollowPathCoroutine()
+        {
+            Vector3 currentWaypoint = pathArray[0];
+
+            while (true)
+            {
+                if (transform.position == currentWaypoint)
+                {
+                    targetIndex++;
+                    if (targetIndex >= pathArray.Length)
+                    {
+                        yield break;
+                    }
+                    currentWaypoint = pathArray[targetIndex];
+                }
+                transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, moveSpeed);
+                yield return null;
+            }
         }
 
         private void Update()
@@ -56,9 +92,13 @@ namespace Ollie
             }
             LookForTargets();
             StatChanges();
-            shader.SetFloat("_energy",energy);
+            //shader.SetFloat("_energy",energy);
             
             currentLocation = lm.ConvertToGrid(transform.position);
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                PathManager.RequestPath(transform.position, targetTransform.position, OnPathFound);
+            }
         }
 
         private void FixedUpdate()

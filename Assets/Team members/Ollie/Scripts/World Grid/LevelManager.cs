@@ -47,7 +47,7 @@ namespace Ollie
         private bool worldScanned;
         public float pathDelay;
 
-        void Start()
+        void Awake()
         {
             sizeX = Mathf.RoundToInt(bounds.extents.x) + 1;
             sizeZ = Mathf.RoundToInt(bounds.extents.z) + 1;
@@ -73,6 +73,14 @@ namespace Ollie
         private void Update()
         {
             if(worldScanned) ScanWorld();
+        }
+
+        public int MaxSize
+        {
+            get
+            {
+                return lengthX * lengthZ;
+            }
         }
 
         public WaterNode ConvertToGrid(Vector3 position)
@@ -120,7 +128,6 @@ namespace Ollie
                     node.ScanMyself();
                 }
             }
-            //AssignNeighbours();
         }
 
         public void AssignNeighbours()
@@ -464,19 +471,19 @@ namespace Ollie
                     Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
                 }
 
-                if (node.isWater)
-                {
-                    Gizmos.color = Color.blue;
-                    Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
-                }
+                // if (node.isWater)
+                // {
+                //     Gizmos.color = Color.blue;
+                //     Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
+                // }
 
-                if (node.isPath)
-                {
-                    Gizmos.color = Color.black;
-                    Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
-                }
+                // if (node.isPath)
+                // {
+                //     Gizmos.color = Color.black;
+                //     Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
+                // }
 
-                if (aStar.openPathNodes.Contains(node) && !node.isPath)
+                /*if (aStar.openPathNodes.Contains(node) && !node.isPath)
                 {
                     Gizmos.color = Color.magenta;
                     Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
@@ -486,13 +493,13 @@ namespace Ollie
                 {
                     Gizmos.color = Color.gray;
                     Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
-                }
+                }*/
 
-                if (node.targetLocation || node.startLocation)
-                {
-                    Gizmos.color = Color.yellow;
-                    Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
-                }
+                // if (node.targetLocation || node.startLocation)
+                // {
+                //     Gizmos.color = Color.yellow;
+                //     Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
+                // }
             }
 
             //double for loop, too expensive
