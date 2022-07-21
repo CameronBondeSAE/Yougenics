@@ -12,7 +12,7 @@ public class Energy : NetworkBehaviour
 
     public float energyAmount = 50;
     public float energyMax = 100;
-    public float energyMin = 0;
+    public float energyMin = 0f;
     public float drainAmount = 1;
     public event Action NoEnergyEvent; 
     public event Action FullEnergyEvent;
