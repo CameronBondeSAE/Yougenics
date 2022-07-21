@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -58,9 +59,43 @@ public class CamsToolboxWindow : EditorWindow
 		}
 		
 		
-		if (GUILayout.Button("Fold all open hierarchy"))
+		if (GUILayout.Button("Spawn thing in front of scene camera"))
 		{
+			// Find the first scene camera in scene view window (not game cameras)
+			Camera sceneCamera = SceneView.GetAllSceneCameras()[0];
+
+			Instantiate(prefabToSpawn, sceneCamera.transform.position + sceneCamera.transform.forward * 5f, sceneCamera.transform.rotation);
+		}
+		if (GUILayout.Button("Spawn thing against solid in front of scene camera"))
+		{
+			// Find the first scene camera in scene view window (not game cameras)
+			Camera sceneCamera = SceneView.GetAllSceneCameras()[0];
+
+			RaycastHit Hitinfo;
+			if (Physics.Raycast(new Ray(sceneCamera.transform.position, sceneCamera.transform.forward), out Hitinfo, 100f, 255, QueryTriggerInteraction.Ignore))
+			{
+				Instantiate(prefabToSpawn, Hitinfo.point, Quaternion.identity);
+			}
 			
+		}
+		
+		
+		
+		if (GUILayout.Button("Focus on random object below 50 energy"))
+		{
+			Energy[]     thingsWithEnergy    = FindObjectsOfType<Energy>();
+			List<Energy> thingsWithLowEnergy = new List<Energy>();
+			
+			foreach (Energy energy in thingsWithEnergy)
+			{
+				if (energy.energyAmount < 20)
+				{
+					thingsWithLowEnergy.Add(energy);
+				}
+			}
+			
+			Selection.activeGameObject = thingsWithLowEnergy[Random.Range(0, thingsWithLowEnergy.Count)].gameObject;
+			SceneView.FrameLastActiveSceneView();
 		}
 	}
 }
