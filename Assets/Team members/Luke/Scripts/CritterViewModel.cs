@@ -26,7 +26,6 @@ public class CritterViewModel : NetworkBehaviour
 	public void ChangeEmotionClientRpc(Critter.Emotions type)
 	{
 		ps.material = psMats[(int)type];
-		Debug.Log(type);
 	}
 
 }

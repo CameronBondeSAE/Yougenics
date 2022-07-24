@@ -738,7 +738,6 @@ namespace Luke
 		{
 			currentEmotion = type;
 			ChangeEmotionEvent?.Invoke(currentEmotion);
-			Debug.Log(currentEmotion);
 		}
 
 		#endregion
