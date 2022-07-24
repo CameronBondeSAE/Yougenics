@@ -733,11 +733,12 @@ namespace Luke
 		public event Action<Emotions> ChangeEmotionEvent;
 
 		public Emotions currentEmotion;
-		
+
 		public void ChangeEmotion(Emotions type)
 		{
 			currentEmotion = type;
 			ChangeEmotionEvent?.Invoke(currentEmotion);
+			Debug.Log(currentEmotion);
 		}
 
 		#endregion

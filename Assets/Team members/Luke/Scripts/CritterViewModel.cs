@@ -13,8 +13,8 @@ public class CritterViewModel : NetworkBehaviour
 	public List<Material> psMats;
 
 	public Critter critter;
-	
-	void OnEnable()
+
+    public override void OnNetworkSpawn()
 	{
 		if (IsServer)
 		{
@@ -26,6 +26,7 @@ public class CritterViewModel : NetworkBehaviour
 	public void ChangeEmotionClientRpc(Critter.Emotions type)
 	{
 		ps.material = psMats[(int)type];
+		Debug.Log(type);
 	}
 
 }
