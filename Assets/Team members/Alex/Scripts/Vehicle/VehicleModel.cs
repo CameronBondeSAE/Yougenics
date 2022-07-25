@@ -1,13 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Tanks;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
-public class VehicleModel : MonoBehaviour, IVehicleControls
+public class VehicleModel : MonoBehaviour, IVehicleControls, IItem
 {
+    public GameObject thisItem;
     public List<Wheel> wheels;
     public List<Wheel> frontWheels;
     public float turningSpeed = 50f;
     public float movementSpeed = 20f;
+    
+
     public void AccelerateAndReverse(float amount)
     {
         //Moves each wheel attached to vehicle forward and backwards
@@ -27,5 +33,12 @@ public class VehicleModel : MonoBehaviour, IVehicleControls
     public Vector3 GetExitPosition()
     {
         return Vector3.zero;
+    }
+    
+
+    public GameObject Item()
+    {
+        thisItem = GetComponent<GameObject>();
+        return thisItem;
     }
 }

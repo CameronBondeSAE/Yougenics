@@ -54,6 +54,11 @@ public interface IInteractable
 	void Interact();
 }
 
+public interface IItem
+{
+	GameObject Item();
+}
+
 public class CreatureBase : MonoBehaviour
 {
 	

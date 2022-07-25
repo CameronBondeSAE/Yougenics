@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5643461991005875016}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6924147449041944588
 MonoBehaviour:
@@ -47,9 +47,6 @@ MonoBehaviour:
   rb: {fileID: 3912303242066289817}
   suspensionLength: 1.5
   onGround: 0
-  friction: 1
-  steering: 50
-  speed: 200
   suspensionForce: 1000
 --- !u!1 &2967110766598880524
 GameObject:
@@ -81,7 +78,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5643461991005875016}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1886384343663440452
 MonoBehaviour:
@@ -98,9 +95,6 @@ MonoBehaviour:
   rb: {fileID: 3912303242066289817}
   suspensionLength: 1.5
   onGround: 0
-  friction: 1
-  steering: 50
-  speed: 200
   suspensionForce: 1000
 --- !u!1 &3532001769312515638
 GameObject:
@@ -135,7 +129,6 @@ Transform:
   m_LocalScale: {x: 2.8863401, y: 1.1415226, z: 4.670996}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 838365020327320010}
   - {fileID: 2503192561693324169}
   - {fileID: 1355379122741114691}
   - {fileID: 5126353630342926661}
@@ -243,54 +236,7 @@ MonoBehaviour:
   - {fileID: 392720054664321577}
   - {fileID: 8860035961690252253}
   turningSpeed: 50
---- !u!1 &5286236006526069945
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 838365020327320010}
-  - component: {fileID: 7391236698553725586}
-  m_Layer: 0
-  m_Name: VehicleController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &838365020327320010
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5286236006526069945}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5643461991005875016}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7391236698553725586
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5286236006526069945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abba6182808520641a8afe96db62a39e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  left: 276
-  right: 275
-  up: 273
-  down: 274
+  movementSpeed: 20
 --- !u!1 &5837860151170081394
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,7 +267,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5643461991005875016}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8860035961690252253
 MonoBehaviour:
@@ -338,9 +284,6 @@ MonoBehaviour:
   rb: {fileID: 3912303242066289817}
   suspensionLength: 1.5
   onGround: 0
-  friction: 1
-  steering: 50
-  speed: 200
   suspensionForce: 1000
 --- !u!1 &7716709605948902966
 GameObject:
@@ -372,7 +315,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5643461991005875016}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &392720054664321577
 MonoBehaviour:
@@ -389,7 +332,4 @@ MonoBehaviour:
   rb: {fileID: 3912303242066289817}
   suspensionLength: 1.5
   onGround: 0
-  friction: 1
-  steering: 50
-  speed: 200
   suspensionForce: 1000

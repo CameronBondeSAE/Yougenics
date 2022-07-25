@@ -110,4 +110,9 @@ public class DroneModel : MonoBehaviour, IFlyable, IInteractable
     {
         throw new System.NotImplementedException();
     }
+
+    public bool isItem()
+    {
+        return true;
+    }
 }
