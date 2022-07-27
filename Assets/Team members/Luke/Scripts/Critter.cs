@@ -51,19 +51,26 @@ namespace Luke
 		[SerializeField]
 		private Transform birthingTransform;
 		private Rigidbody rb;
-		private LukeAStar aStar;
+		[SerializeField] private AStarUser aStarUser;
 
-		private CurrentTarget currentTarget = CurrentTarget.nothing;
+		private CurrentTarget currentTarget = CurrentTarget.Nothing;
 		private enum CurrentTarget
 		{
-			food,
-			mate,
-			predator,
-			wander,
-			nothing
+			Food,
+			Mate,
+			Predator,
+			Wander,
+			Nothing
 		}
 
 		#region IEnumerators
+
+		private IEnumerator AStarReactionTime(float delay, Vector3 target)
+		{
+			yield return new WaitForSeconds(delay);
+			aStarUser.ResetNodes(transform.position, target);
+			aStarUser.AStarAlgorithmFast();
+		}
 		
 		public IEnumerator HealthRegen()
 		{
@@ -249,7 +256,6 @@ namespace Luke
 		void OnEnable()
 		{
 			rb = GetComponent<Rigidbody>();
-			aStar = GetComponent<LukeAStar>();
 			health = critterInfo.maxHealth;
 			energy = critterInfo.maxEnergyLevel;
 			sleepLevel = critterInfo.maxSleepLevel;
@@ -364,7 +370,7 @@ namespace Luke
 		public Vector3 GetMoveTargetAStar()
 		{
 			Vector3 target = transform.position;
-			foreach (AStarNode node in aStar.path)
+			foreach (AStarNode node in aStarUser.path)
 			{
 				if (Physics.Linecast(node.worldPosition, target))
 				{
@@ -540,11 +546,10 @@ namespace Luke
 		{
 			if (isSleeping) return;
 			if (nearestFood == null) return;
-			if (currentTarget != CurrentTarget.food)
+			if (currentTarget != CurrentTarget.Food)
 			{
-				currentTarget = CurrentTarget.food;
-				aStar.ResetNodes(transform.position, nearestFood.position);
-				aStar.AStarAlgorithmFast();
+				currentTarget = CurrentTarget.Food;
+				StartCoroutine(AStarReactionTime(Random.Range(0f,1f), nearestFood.position));
 			}
 			LookAt(GetMoveTargetAStar());
 			rb.AddForce(transform.TransformDirection(Vector3.forward)*acceleration);
@@ -555,11 +560,10 @@ namespace Luke
 		{
 			if (isSleeping) return;
 			if (nearestMate == null) return;
-			if (currentTarget != CurrentTarget.mate)
+			if (currentTarget != CurrentTarget.Mate)
 			{
-				currentTarget = CurrentTarget.mate;
-				aStar.ResetNodes(transform.position, nearestMate.position);
-				aStar.AStarAlgorithmFast();
+				currentTarget = CurrentTarget.Mate;
+				StartCoroutine(AStarReactionTime(Random.Range(0f,1f), nearestMate.position));
 			}
 			LookAt(GetMoveTargetAStar());
 			rb.AddForce(transform.TransformDirection(Vector3.forward)*acceleration);
@@ -570,7 +574,7 @@ namespace Luke
 		{
 			if (isSleeping) return;
 			if (nearestPredator == null) return;
-			currentTarget = CurrentTarget.predator;
+			currentTarget = CurrentTarget.Predator;
 			Vector3 position = transform.position;
 			Vector3 heading = position - nearestPredator.position;
 			LookAt(position + heading);
@@ -585,7 +589,7 @@ namespace Luke
 			//Check which way north should be or adjust bestBiome iteration to account for direction.
 			Vector3 mainHeading = Quaternion.AngleAxis(angle, Vector3.up)*Vector3.forward;
 			mainHeading += randomAdjustment;
-			currentTarget = CurrentTarget.wander;
+			currentTarget = CurrentTarget.Wander;
 			LookAt(transform.position + mainHeading);
 			rb.AddForce(transform.TransformDirection(Vector3.forward)*acceleration);
 			rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
@@ -764,7 +768,7 @@ namespace Luke
 		{
 			Hungry,
 			Tired,
-			Lovelorn,
+			Mate,
 			Wander,
 			RunAway
 		}

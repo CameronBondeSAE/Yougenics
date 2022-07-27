@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.InputSystem;
 
 public class PlayerModel : NetworkBehaviour
 {
@@ -19,10 +20,26 @@ public class PlayerModel : NetworkBehaviour
     [HideInInspector]
     public float mouseX, mouseY;
 
+    [Header("For Non Networking Setup")]
+    public John.PlayerController controller;
+    public PlayerInput playerInput;
+
     public override void OnNetworkSpawn()
     {
         if (!IsOwner)
             myCam.SetActive(false);
+    }
+
+    //Setting up controller if non-networked
+    private void Start()
+    {
+        if(NetworkManager.Singleton == null)
+        {
+            Debug.Log("No Network Manager found - Using local controller");
+            controller.enabled = true;
+            playerInput.enabled = true;
+            controller.OnPlayerAssignedNonNetworked(this);
+        }
     }
 
     private void Update()
@@ -34,15 +51,11 @@ public class PlayerModel : NetworkBehaviour
         //Using forces & mass for movement
         //rb.AddForce(movement * speed, ForceMode2D.Force);
 
-
-        //--TODO: Get the player movement to update with look direction/rotation--
-
         //instant reactive movement
         rb.MovePosition(rb.position + movement * movementSpeed * Time.fixedDeltaTime);
-        //rb.AddRelativeForce(transform.forward + transform.InverseTransformDirection(movement) * movementSpeed, ForceMode.Impulse);
     }
 
-    #region Input Controlls
+    #region Input Controlls Networked
 
     [ClientRpc]
     public void MovementClientRpc(Vector2 movementInput)
@@ -91,6 +104,50 @@ public class PlayerModel : NetworkBehaviour
         rb.AddForce(0, jumpHeight, 0, ForceMode.VelocityChange);
     }
 
+    #endregion
+
+    #region Input Controlls Non-Networked
+    public void Movement(Vector2 movementInput)
+    {
+        movement = transform.right * movementInput.x + transform.forward * movementInput.y;
+    }
+
+    public void MouseX(float value)
+    {
+        mouseX = value;
+    }
+
+    public void MouseY(float value)
+    {
+        mouseY = value;
+    }
+
+    public void Interact()
+    {
+        RaycastHit hit = CheckWhatsInFrontOfMe();
+
+        if (hit.collider != null)
+        {
+            IInteractable interactable = hit.collider.gameObject.GetComponentInParent<IInteractable>();
+            if (interactable != null)
+            {
+                interactable.Interact();
+            }
+            else
+                Debug.Log("Collider Not Interactable");
+        }
+        else
+        {
+            Debug.Log("Nothing found");
+        }
+    }
+
+    public void Jump()
+    {
+        //TODO: Add jump restriction when already in the air
+
+        rb.AddForce(0, jumpHeight, 0, ForceMode.VelocityChange);
+    }
     #endregion
 
     RaycastHit CheckWhatsInFrontOfMe()

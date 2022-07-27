@@ -65,13 +65,13 @@ public struct ItemInfo
 	public float  height;
 	public float  buildTime;
 }
-	
+
 public interface IItem
 {
 	void SpawnedAsNormal();
 
 	//SpawnedAsHologram();
-	
+
 	/// <summary>
 	///	Mostly just make your own ItemInfo variable and return it
 	///		<br/>
@@ -86,4 +86,32 @@ public interface IItem
 
 public class CreatureBase : MonoBehaviour
 {
+	public float age;
+	public float ageOfMatingStart;
+	public float ageOfMatingEnd;
+	public float maxAge;
+	public bool  isPregnant;
+	public float gestationTime;
+	public int   litterSizeMax;
+	public float metabolism; // Energy efficiency and energy absorbing speed
+	
+	// Optional
+	public float empathy;
+	public float aggression;
+	public float dangerLevel;
+	public float size;
+	public Color colour;
+
+	public enum Sex
+	{
+		Male,
+		Female
+	}
+
+	public Sex sex;
+
+	public void FixedUpdate()
+	{
+		// age
+	}
 }

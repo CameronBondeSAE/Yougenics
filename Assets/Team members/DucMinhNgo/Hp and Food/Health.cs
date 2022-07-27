@@ -29,7 +29,7 @@ namespace Minh
             IsDead.OnValueChanged += UpdateDeadState;
             CurrentHealth.OnValueChanged += UpdateHealth;
 
-            if(IsServer)
+            if (IsServer)
             {
                 GetComponent<Energy>().NoEnergyEvent += startHealthdepeting;
                 GetComponent<Energy>().FullEnergyEvent += startHealthincreasing;
@@ -38,9 +38,10 @@ namespace Minh
 
         void Start()
         {
+            if (NetworkManager.Singleton == null)
+                Debug.Log("No Network Manager Found - ADD ManagerScene For Testing To Your Scene");
+
             if (hpui != null) hpui.SetMaxHealth(Hp);
-            //noenergy = false;
-            //fullenergy = true;
         }
 
         public void Deathcheck()
@@ -77,7 +78,7 @@ namespace Minh
             curHp = Hp -= 80;
             Collectfood?.Invoke();
         }
-        
+
         // health increase and depleting overtime code
         IEnumerator Healthdepleting()
         {
@@ -112,7 +113,7 @@ namespace Minh
             }
         }
 
-       public void startHealthdepeting()
+        public void startHealthdepeting()
         {
             noenergy = true;
             StartCoroutine(Healthdepleting());
@@ -163,7 +164,7 @@ namespace Minh
 
         private void UpdateHealth(float previousValue, float newValue)
         {
-            if(hpui != null)
+            if (hpui != null)
                 hpui.SetHealth((int)newValue);
 
             if (IsServer)
@@ -180,4 +181,5 @@ namespace Minh
 
         #endregion
     }
+
 }

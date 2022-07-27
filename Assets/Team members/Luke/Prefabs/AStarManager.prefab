@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4975839511339852219}
-  - component: {fileID: 4975839511339852216}
+  - component: {fileID: 535072923990192017}
   m_Layer: 0
-  m_Name: FoodSpawner
+  m_Name: AStarManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4975839511339852216
+--- !u!114 &535072923990192017
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,15 +41,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 4975839511339852217}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37946218ff695134fa1669237cf5743c, type: 3}
+  m_Script: {fileID: 11500000, guid: 046c4bb8c64df154b915ef1b9816c656, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounds:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 100, y: 1, z: 100}
-  gridTileHalfExtents: {x: 0.5, y: 0.5, z: 0.5}
-  foodPrefabs:
-  - {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
-  worldEnergy: 0
-  maxWorldEnergy: 10000
-  spawningDelayPeriod: 2
+  slowMode: 0
+  numberOfTiles: {x: 99, y: 99}
+  gridTileHeight: 0.1
+  gridSize: {x: 99, y: 99}
+  gridOrigin: {x: -49, y: 0, z: -49}
+  gCostWeight: 2
+  hCostWeight: 1
+  startLocation: {x: 0, y: 0, z: 0}
+  endLocation: {x: 0, y: 0, z: 0}
