@@ -12,12 +12,16 @@ public class Energy : NetworkBehaviour
 
     public float energyAmount = 50;
     public float energyMax = 100;
-    public float energyMin = 0;
+    public float energyMin = 0f;
     public float drainAmount = 1;
     public event Action NoEnergyEvent; 
     public event Action FullEnergyEvent;
     public float drainSpeed = 1;
-    
+
+    public override void OnNetworkSpawn()
+    {
+        EnergyAmount.OnValueChanged += CheckEnergy;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -27,32 +31,26 @@ public class Energy : NetworkBehaviour
         StartCoroutine(EnergyDrainer());
     }
 
-    void Update()
-    {
-        EnergyDrainer();
-    }
-
     public void ChangeEnergy(float f)
     {
-        if (IsOwner)
+        if (IsServer)
             EnergyAmount.Value += f;
 
         //energyAmount = energyAmount + f;
-        CheckEnergyMax();
-        CheckEnergyMin();
+        //CheckEnergyMax();
+        //CheckEnergyMin();
     }
 
     public void CheckEnergyMax()
     {
         if (EnergyAmount.Value >= energyMax)
         {
-            if(IsOwner)
-            {
-                EnergyAmount.Value = energyMax;
-                FullEnergyEvent?.Invoke();
-                Debug.Log("Full Energy");
-                FindObjectOfType<AudioManager>().Play("Energy Full");
-            }
+
+            //EnergyAmount.Value = energyMax;
+            FullEnergyEvent?.Invoke();
+            Debug.Log("Full Energy");
+            //FindObjectOfType<AudioManager>().Play("Energy Full");
+
         }
     }
 
@@ -60,26 +58,44 @@ public class Energy : NetworkBehaviour
     {
         if (EnergyAmount.Value <= energyMin)
         {
-            if(IsOwner)
-            {
-                EnergyAmount.Value = energyMin;
+            //EnergyAmount.Value = energyMin;
 
-                NoEnergyEvent?.Invoke();
-                Debug.Log("No Energy");
-            }            
+            NoEnergyEvent?.Invoke();
+            Debug.Log("No Energy");
+
         }
         //Debug.Log("Editor test");
     }
     
     public IEnumerator EnergyDrainer()
     {
-        while (EnergyAmount.Value >= energyMin)
+        while (EnergyAmount.Value > energyMin)
         {
             yield return new WaitForSeconds(drainSpeed);
             {
-                if(IsOwner)
+                if(IsServer)
                     EnergyAmount.Value -= drainAmount;
+                //else
+                    //RequestEnergyDrainServerRpc()
             }
         }
     }
+
+    #region Networking Implementation
+
+    private void CheckEnergy(float previousValue, float newValue)
+    {
+        if (previousValue < newValue)
+            CheckEnergyMax();
+        else
+            CheckEnergyMin();
+    }
+
+    [ServerRpc]
+    private void RequestEnergyDrainServerRpc()
+    {
+        EnergyAmount.Value -= drainAmount;
+    }
+
+    #endregion
 }

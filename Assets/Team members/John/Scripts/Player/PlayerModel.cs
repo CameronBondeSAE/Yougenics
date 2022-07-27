@@ -34,8 +34,12 @@ public class PlayerModel : NetworkBehaviour
         //Using forces & mass for movement
         //rb.AddForce(movement * speed, ForceMode2D.Force);
 
+
+        //--TODO: Get the player movement to update with look direction/rotation--
+
         //instant reactive movement
         rb.MovePosition(rb.position + movement * movementSpeed * Time.fixedDeltaTime);
+        //rb.AddRelativeForce(transform.forward + transform.InverseTransformDirection(movement) * movementSpeed, ForceMode.Impulse);
     }
 
     #region Input Controlls

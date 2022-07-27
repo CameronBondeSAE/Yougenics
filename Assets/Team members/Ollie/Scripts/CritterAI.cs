@@ -7,7 +7,7 @@ using Random = System.Random;
 
 namespace Ollie
 {
-    public class CritterAI : MonoBehaviour
+    public class CritterAI : MonoBehaviour, iPathable
     {
         public float health;
         public float maxHealth;
@@ -21,6 +21,7 @@ namespace Ollie
         
         public Vector3 targetPos;
         public GameObject target;
+        public Transform targetTransform;
         public GameObject currentTarget = null;
         public RaycastHit hitData;
         public List<Vector3> path;
@@ -37,6 +38,7 @@ namespace Ollie
         public LevelManager lm;
         public AStar aStar;
         public WaterNode currentLocation;
+        private iPathable _iPathableImplementation;
 
         private void Start()
         {
@@ -46,6 +48,7 @@ namespace Ollie
             foundTarget = false;
             interactingTarget = false;
             shader = GetComponent<Renderer>().material;
+            path = new List<Vector3>();
         }
 
         private void Update()
@@ -59,6 +62,15 @@ namespace Ollie
             shader.SetFloat("_energy",energy);
             
             currentLocation = lm.ConvertToGrid(transform.position);
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (!lm.ConvertToGrid(targetTransform.position).isBlocked)
+                {
+                    aStar.FindPath(transform.position, targetTransform.position);
+                }
+                else print("target is in a blocked location, cannot find path");
+            }
         }
 
         private void FixedUpdate()
@@ -338,5 +350,15 @@ namespace Ollie
             }
         }
         #endregion
+
+        public void GeneratePath(WaterNode node)
+        {
+            path.Add(lm.ConvertToWorld(node));
+        }
+
+        public void ClearPath()
+        {
+            path.Clear();
+        }
     }
 }

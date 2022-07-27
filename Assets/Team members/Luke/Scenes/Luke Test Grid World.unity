@@ -6614,6 +6614,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 046c4bb8c64df154b915ef1b9816c656, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slowMode: 0
   numberOfTiles: {x: 99, y: 99}
   gridTileHeight: 0.1
   gridSize: {x: 99, y: 99}

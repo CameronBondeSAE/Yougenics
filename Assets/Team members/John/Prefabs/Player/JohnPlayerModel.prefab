@@ -130,6 +130,8 @@ GameObject:
   - component: {fileID: 8611620220612625324}
   - component: {fileID: 8611620220612625322}
   - component: {fileID: 315835940407813397}
+  - component: {fileID: 6484856671035641714}
+  - component: {fileID: 246153594134181686}
   m_Layer: 0
   m_Name: JohnPlayerModel
   m_TagString: Untagged
@@ -247,6 +249,47 @@ MonoBehaviour:
   ScaleThreshold: 0.01
   InLocalSpace: 0
   Interpolate: 1
+--- !u!114 &6484856671035641714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8611620220612625317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd95a418070c3014eb6368bceeef6adf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentHealth:
+    m_InternalValue: 25
+  IsDead:
+    m_InternalValue: 0
+  Hp: 100
+  curHp: 0
+  dead: 0
+  fullenergy: 1
+  noenergy: 0
+  hpui: {fileID: 0}
+--- !u!114 &246153594134181686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8611620220612625317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86b58142ff8a3804fa71c5004d10d94b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnergyAmount:
+    m_InternalValue: 25
+  energyAmount: 50
+  energyMax: 100
+  energyMin: 0
+  drainAmount: 1
+  drainSpeed: 1
 --- !u!1 &8611620220984584861
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,7 +19,8 @@ GameObject:
   - component: {fileID: 21439739}
   - component: {fileID: 21439740}
   - component: {fileID: 3866805762410317302}
-  - component: {fileID: 8912036284193795689}
+  - component: {fileID: 1918078857}
+  - component: {fileID: 1918078869}
   m_Layer: 0
   m_Name: AlexAI
   m_TagString: Untagged
@@ -99,7 +100,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 727704201344060695}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: f81d4f0414c86284aa5e84693826e1c9, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
@@ -115,12 +116,12 @@ Rigidbody:
   m_GameObject: {fileID: 727704201344060695}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 1
-  m_AngularDrag: 0.05
+  m_Drag: 5
+  m_AngularDrag: 5
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &-3532916594918715489
 MonoBehaviour:
@@ -134,7 +135,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86b58142ff8a3804fa71c5004d10d94b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyAmount: 20
+  EnergyAmount:
+    m_InternalValue: 0
+  energyAmount: 100
   energyMax: 100
   energyMin: 0
   drainAmount: 1
@@ -151,10 +154,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd95a418070c3014eb6368bceeef6adf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentHealth:
+    m_InternalValue: 0
+  IsDead:
+    m_InternalValue: 0
+  FullEnergy:
+    m_InternalValue: 0
+  NoEnergy:
+    m_InternalValue: 0
   Hp: 100
+  curHp: 0
   dead: 0
   fullenergy: 1
   noenergy: 0
+  hpui: {fileID: 0}
 --- !u!114 &-2689833668260180319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,7 +180,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a49a1fa0d6872704eb41c45a9195c1d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: {fileID: 0}
 --- !u!114 &21439739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,7 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ea75eb972a5c3543aaf2a0e3c93e199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 5
+  movementSpeed: 25
   Target: {fileID: 0}
   myFoodTarget: {fileID: 0}
 --- !u!114 &3866805762410317302
@@ -209,8 +221,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f83e17178a5de44697f38f126576729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 5
---- !u!114 &8912036284193795689
+  movementSpeed: 25
+--- !u!114 &1918078857
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -219,6 +231,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 727704201344060695}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 610708ce81eb78d48b5995fb05945e4c, type: 3}
+  m_Script: {fileID: 11500000, guid: 439f4ddd6b366234f950f18a542a8e9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: {fileID: 0}
+--- !u!114 &1918078869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727704201344060695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1

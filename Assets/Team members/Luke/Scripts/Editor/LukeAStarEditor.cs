@@ -16,7 +16,8 @@ public class LukeAStarEditor : Editor
 			aStar.ResetNodes();
 			aStar.startLocation = aStar.RandomLocation();
 			int[] index = aStar.ConvertIndexAndPosition(aStar.startLocation);
-			aStar.CurrentNode = aStar.Nodes[index[0], index[1]];
+			aStar.StartNode = aStar.Nodes[index[0], index[1]];
+			aStar.CurrentNode = aStar.StartNode;
 		}
 
 		if (GUILayout.Button("Randomise End Location"))
@@ -31,7 +32,8 @@ public class LukeAStarEditor : Editor
         if (GUILayout.Button("Begin AStar Algorithm"))
         {
 	        LukeAStar aStar = (LukeAStar) target;
-            aStar.coroutineInstance = aStar.StartCoroutine(((LukeAStar) target).AStarAlgorithm());
+	        if (!aStar.slowMode) ((LukeAStar) target).AStarAlgorithmFast();
+	        else aStar.coroutineInstance = aStar.StartCoroutine(((LukeAStar) target).AStarAlgorithm());
         }
         
         if (GUILayout.Button("Reset Nodes"))

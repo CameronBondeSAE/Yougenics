@@ -13,8 +13,8 @@ public class CritterViewModel : NetworkBehaviour
 	public List<Material> psMats;
 
 	public Critter critter;
-	
-	void OnEnable()
+
+    public override void OnNetworkSpawn()
 	{
 		if (IsServer)
 		{
@@ -27,5 +27,4 @@ public class CritterViewModel : NetworkBehaviour
 	{
 		ps.material = psMats[(int)type];
 	}
-
 }

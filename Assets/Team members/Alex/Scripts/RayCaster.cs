@@ -39,7 +39,7 @@ public class RayCaster : MonoBehaviour
                 Debug.DrawRay(transform.position, transform.right * hitInfo.distance,
                     Color.red);
 
-                Debug.Log("HIT");
+                //Debug.Log("HIT");
 
                 canSpawn = true;
             }

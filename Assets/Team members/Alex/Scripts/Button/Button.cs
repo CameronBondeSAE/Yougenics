@@ -1,15 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using Alex;
-using Anthill.Effects;
-using DG.Tweening;
-using UnityEditor;
 using UnityEngine;
 using System;
 using Unity.Netcode;
 
 namespace Alex
 {
+    [SelectionBase]
     public class Button : NetworkBehaviour, IInteractable
     {
         public bool canInteract = true;

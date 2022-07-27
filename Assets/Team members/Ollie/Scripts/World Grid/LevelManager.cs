@@ -75,6 +75,14 @@ namespace Ollie
             if(worldScanned) ScanWorld();
         }
 
+        public int MaxSize
+        {
+            get
+            {
+                return lengthX * lengthZ;
+            }
+        }
+
         public WaterNode ConvertToGrid(Vector3 position)
         {
             WaterNode node = gridNodeReferences[(int)position.x-lengthX,(int)position.z-lengthZ];
@@ -261,7 +269,7 @@ namespace Ollie
 
         public void FindPath()
         {
-            aStar.FindPath();
+            //aStar.FindPath();
         }
 
         #region Old Pathfinding Before Separating into it's own script
@@ -470,7 +478,7 @@ namespace Ollie
                     Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
                 }
 
-                if (node.isPath)
+                /*if (node.isPath)
                 {
                     Gizmos.color = Color.black;
                     Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
@@ -486,7 +494,7 @@ namespace Ollie
                 {
                     Gizmos.color = Color.gray;
                     Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
-                }
+                }*/
 
                 if (node.targetLocation || node.startLocation)
                 {

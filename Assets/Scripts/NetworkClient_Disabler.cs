@@ -11,9 +11,9 @@ public class NetworkClient_Disabler : NetworkBehaviour
 
     public List<UnityEvent> doTheseAswell;
 
-    void Awake()
+    public override void OnNetworkSpawn()
     {
-        if(IsClient)
+        if(!IsOwner)
         {
             foreach (Component component in disableModelComponents)
             {
