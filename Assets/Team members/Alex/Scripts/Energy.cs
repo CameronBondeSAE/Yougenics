@@ -26,6 +26,9 @@ public class Energy : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (NetworkManager.Singleton == null)
+            Debug.Log("No Network Manager Found - ADD ManagerScene For Testing To Your Scene");
+
         GetComponent<Minh.Health>();
         CheckEnergyMax();
         StartCoroutine(EnergyDrainer());

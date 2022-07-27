@@ -218,10 +218,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: JohnPlayerModel
       objectReference: {fileID: 0}
-    - target: {fileID: 8611620220612625317, guid: cc02e9a49a115264eb5ef1f88085b227, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8611620220612625322, guid: cc02e9a49a115264eb5ef1f88085b227, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 2238621998
