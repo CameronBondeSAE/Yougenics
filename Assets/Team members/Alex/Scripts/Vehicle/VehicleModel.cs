@@ -7,7 +7,6 @@ using Object = UnityEngine.Object;
 
 public class VehicleModel : MonoBehaviour, IVehicleControls, IItem
 {
-	public GameObject  thisItem;
 	public ItemInfo    itemInfo;
 	public List<Wheel> wheels;
 	public List<Wheel> frontWheels;

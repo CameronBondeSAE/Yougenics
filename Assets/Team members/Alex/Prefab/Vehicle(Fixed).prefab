@@ -227,6 +227,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58009d46a867e1f48b3e0c0bb3133ffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemInfo:
+    name: Alex's Car
+    description: Drive around the area in this awesome car
+    energyRequired: 50
+    height: 2
+    buildTime: 10
   wheels:
   - {fileID: 392720054664321577}
   - {fileID: 8860035961690252253}
