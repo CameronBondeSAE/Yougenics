@@ -10,6 +10,9 @@ namespace Luke
 {
     public class LukeAStar : MonoBehaviour
     {
+	    public static LukeAStar Instance;
+        
+	    
         
         #region MyRegion
 
@@ -37,6 +40,8 @@ namespace Luke
 
         public Coroutine coroutineInstance = null; //For stopping and resetting algorithm.
 
+        public Action FinishedFillingGridEvent;
+        
         #endregion
 
         #region Methods
@@ -54,18 +59,20 @@ namespace Luke
 					{
 						worldPosition = ConvertIndexAndPosition(new []{x,y}),
 						gCostWeight = gCostWeight,
-						hCostWeight = hCostWeight
+						hCostWeight = hCostWeight,
+						indices = new []{x,y}
 					};
                     
                     if (Physics.OverlapBox(Nodes[x,y].worldPosition, _gridTileSize*0.5f, 
-                            Quaternion.identity, 251).Length != 0)
+                            Quaternion.identity, 128).Length != 0)
                     {
                         Nodes[x, y].isBlocked = true;
                     }
 				}
 			}
 			IntroduceNeighbours();
-		}
+			FinishedFillingGridEvent?.Invoke();
+        }
 		
 		private void IntroduceNeighbours()
 		{
@@ -98,7 +105,6 @@ namespace Luke
             yield return new WaitForEndOfFrame();
             
             CurrentNode = _openNodes[OpenNodesComparison()];
-            //move and draw line
 
             if (CurrentNode != EndNode && !slowMode) AStarLoopFast();
             else if (CurrentNode != EndNode) coroutineInstance = StartCoroutine(AStarLoop());
@@ -115,7 +121,6 @@ namespace Luke
 	        CheckNeighbours();
             
 	        CurrentNode = _openNodes[OpenNodesComparison()];
-	        //move and draw line
 
 	        if (CurrentNode != EndNode && !slowMode) AStarLoopFast();
 	        else if (CurrentNode != EndNode) coroutineInstance = StartCoroutine(AStarLoop());
@@ -297,6 +302,7 @@ namespace Luke
 
         void Awake()
         {
+	        Instance = this;
             FillGrid();
         }
         
