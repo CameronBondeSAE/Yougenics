@@ -65,7 +65,7 @@ namespace Minh
 
         public void FullHp()
         {
-            Hp = 100;
+            //Hp = 100f;
             CurrentHealth.Value = 100f;
         }
 
@@ -96,7 +96,7 @@ namespace Minh
                 {
                     // if health < 100...
                     Hp -= 1; // increase health and wait the specified time
-                    yield return new WaitForSeconds(1);
+                    yield return new WaitForSeconds(0.5f);
                 }
                 else
                 {
@@ -126,7 +126,7 @@ namespace Minh
                 {
                     // if health < 100...
                     Hp += 1; // increase health and wait the specified time
-                    yield return new WaitForSeconds(1);
+                    yield return new WaitForSeconds(0.5f);
                 }
                 else
                 {

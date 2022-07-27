@@ -4860,7 +4860,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonMesh: {fileID: 6777066245424214521}
-  buttonModel: {fileID: 0}
+  buttonModel: {fileID: 4912908021999284637}
   buttonHolder: {fileID: 1850748503756273271}
   particles: {fileID: 1850748503142908941}
 --- !u!1 &1850748503756273270
