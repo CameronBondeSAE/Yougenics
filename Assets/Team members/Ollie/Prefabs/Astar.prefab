@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4622200647424559283
 Transform:
   m_ObjectHideFlags: 0
@@ -45,4 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lm: {fileID: 0}
+  critter: {fileID: 0}
+  targetCritter: {fileID: 0}
+  vector3Path: []
+  active: 0
+  timer: 0
   pathDelay: 0

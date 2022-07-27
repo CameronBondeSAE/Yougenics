@@ -44,7 +44,7 @@ namespace Ollie
         public WaterNode targetLocation;
         public WaterNode currentLocation;
         public bool AStar;
-        private bool worldScanned;
+        private bool worldInitialised;
         public float pathDelay;
 
         void Start()
@@ -54,8 +54,6 @@ namespace Ollie
             lengthX = Mathf.RoundToInt(bounds.center.x - bounds.extents.x/2);
             lengthZ = Mathf.RoundToInt(bounds.center.z - bounds.extents.z/2);
             gridNodeReferences = new WaterNode[sizeX, sizeZ];
-
-            //ScanWorld();
             blockedNodes = new List<WaterNode>();
             openNodeV3List = new List<WaterNode>();
             activeWaterNodes = new List<WaterNode>();
@@ -67,12 +65,13 @@ namespace Ollie
             pathfindingUnblockedNodes = new List<WaterNode>();
             openPathNodes = new List<WaterNode>();
             closedPathNodes = new List<WaterNode>();
-            worldScanned = false;
+            worldInitialised = false;
+            ScanWorld();
         }
 
         private void Update()
         {
-            if(worldScanned) ScanWorld();
+            if(worldInitialised) ScanWorld();
         }
 
         public int MaxSize
@@ -97,7 +96,7 @@ namespace Ollie
 
         public void ScanWorld()
         {
-            if (worldScanned == false)
+            if (worldInitialised == false)
             {
                 for (int x = 0; x < sizeX; x++)
                 {
@@ -118,17 +117,17 @@ namespace Ollie
                         }
                     }
                 }
-                worldScanned = true;
+                worldInitialised = true;
             }
 
-            if (worldScanned)
+            if (worldInitialised)
             {
                 foreach (WaterNode node in gridNodeReferences)
                 {
                     node.ScanMyself();
                 }
             }
-            //AssignNeighbours();
+            AssignNeighbours();
         }
 
         public void AssignNeighbours()
@@ -137,32 +136,6 @@ namespace Ollie
             {
                 for (int z = 0; z < sizeZ; z++)
                 {
-                    /*//if not top left, set top left neighbour
-                    if(x > 0 && z > 0) gridNodeReferences[x, z].neighbours[0,0] = gridNodeReferences[x-1,z-1];
-                    
-                    //if not top row, set top middle neighbour
-                    if(x > 0) gridNodeReferences[x, z].neighbours[0,1] = gridNodeReferences[x-1,z];
-                    
-                    //if not top right, set top right neighbour
-                    if(x < sizeX-2 && z > 0) gridNodeReferences[x, z].neighbours[0,2] = gridNodeReferences[x-1,z+1];
-                    
-                    //if not left side, set left middle neighbour
-                    if(z > 0) gridNodeReferences[x, z].neighbours[1,0] = gridNodeReferences[x,z-1];
-                    
-                    //if not right side, set right middle neighbour
-                    if(z < sizeZ - 2) gridNodeReferences[x, z].neighbours[1,2] = gridNodeReferences[x,z+1];
-                    
-                    //if not bottom left, set bottom left neighbour
-                    if(x > 0 && z < sizeZ - 2) gridNodeReferences[x, z].neighbours[2,0] = gridNodeReferences[x+1,z-1];
-                    
-                    //if not bottom row, set bottom middle neighbour
-                    if(z < sizeZ - 2) gridNodeReferences[x, z].neighbours[2,1] = gridNodeReferences[x+1,z];
-                    
-                    //if not bottom right, set bottom right neighbour
-                    if(x < sizeX - 2 && z < sizeZ - 2) gridNodeReferences[x, z].neighbours[2,2] = gridNodeReferences[x+1,z+1];*/
-                    
-                    //can't figure out why mine isn't working above
-                    //copied luke's below to just make some progress
                     if (x > 0) gridNodeReferences[x-1, z].neighbours[2,1] = gridNodeReferences[x, z];
                     if (z > 0) gridNodeReferences[x, z-1].neighbours[1,2] = gridNodeReferences[x, z];
                     if (x < sizeX-1) gridNodeReferences[x+1, z].neighbours[0,1] = gridNodeReferences[x, z];
@@ -171,12 +144,6 @@ namespace Ollie
                     if (x > 0 && z < sizeZ-1) gridNodeReferences[x-1, z+1].neighbours[2,0] = gridNodeReferences[x, z];
                     if (x < sizeX-1 && z > 0) gridNodeReferences[x+1, z-1].neighbours[0,2] = gridNodeReferences[x, z];
                     if (x < sizeX-1 && z < sizeZ-1) gridNodeReferences[x+1, z+1].neighbours[0,0] = gridNodeReferences[x, z];
-                    
-                    //could just do two if statements
-                    //if within the X bounds
-                    //if within the Z bounds
-                    //then continue with the code
-                    //otherwise break
                 }
             }
         }
@@ -261,7 +228,8 @@ namespace Ollie
             
         }
 
-        public void AStarPathfindingStart()
+        #region Old Pathfinding Before Separating into it's own script
+        /*public void AStarPathfindingStart()
         {
             aStar.AStarPathfindingStart();
             aStar.active = true;
@@ -272,8 +240,8 @@ namespace Ollie
             //aStar.FindPath();
         }
 
-        #region Old Pathfinding Before Separating into it's own script
-        /*public void AStarPathfindingStart()
+        
+        public void AStarPathfindingStart()
         {
             // AStar = !AStar;
             // if (AStar)
@@ -452,7 +420,7 @@ namespace Ollie
         //commented out so I could push without errors popping up for others
         private void OnDrawGizmos()
         {
-            if (!Application.isPlaying)
+            /*if (!Application.isPlaying)
             {
                 Gizmos.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
                 Gizmos.DrawCube(bounds.center,bounds.extents);
@@ -494,14 +462,14 @@ namespace Ollie
                 {
                     Gizmos.color = Color.gray;
                     Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
-                }*/
+                }#1#
 
                 if (node.targetLocation || node.startLocation)
                 {
                     Gizmos.color = Color.yellow;
                     Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
                 }
-            }
+            }*/
 
             //double for loop, too expensive
             /*for (int x = 0; x < sizeX; x++)

@@ -10,6 +10,8 @@ namespace Ollie
     public class FoundFoodState : AntAIState
     {
         private GameObject parent;
+        private CritterAIPlanner brain;
+        
         private Vector3 parentPos;
         private GameObject controller;
         private BoxCollider parentCollider;
@@ -21,6 +23,7 @@ namespace Ollie
         {
             base.Create(aGameObject);
             parent = aGameObject;
+            brain = parent.GetComponent<CritterAIPlanner>();
             controller = aGameObject.GetComponentInChildren<Controller>().gameObject;
             parentPos = parent.transform.position;
         }
@@ -36,7 +39,6 @@ namespace Ollie
                  i++)
             {
                 float distance = Vector3.Distance(positionsList[i].position, parentPos);
-                
             }
             
             float smallestdistance = 99999999;
@@ -49,13 +51,19 @@ namespace Ollie
                 }
                 closest = position;
             }
-            Finish();
+
+            brain.path.Clear();
         }
 
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
             base.Execute(aDeltaTime, aTimeScale);
-            MoveToFood(closest);
+            
+            if (brain.path.Count == 0)
+            {
+                brain.SetTarget(closest.position);
+            }
+            
             //move to closest food
             //if food exists
             //Finish(); ---- ie, move on to EatState

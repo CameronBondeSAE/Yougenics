@@ -61,16 +61,13 @@ namespace Ollie
             StatChanges();
             shader.SetFloat("_energy",energy);
             
-            currentLocation = lm.ConvertToGrid(transform.position);
+            //currentLocation = lm.ConvertToGrid(transform.position);
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (!lm.ConvertToGrid(targetTransform.position).isBlocked)
             {
-                if (!lm.ConvertToGrid(targetTransform.position).isBlocked)
-                {
-                    aStar.FindPath(transform.position, targetTransform.position);
-                }
-                else print("target is in a blocked location, cannot find path");
+                aStar.FindPath(transform.position, targetTransform.position);
             }
+            else print("target is in a blocked location, cannot find path");
         }
 
         private void FixedUpdate()
@@ -351,6 +348,8 @@ namespace Ollie
         }
         #endregion
 
+        #region iPathable Interface - must have a List<Vector3> path
+
         public void GeneratePath(WaterNode node)
         {
             path.Add(lm.ConvertToWorld(node));
@@ -360,5 +359,8 @@ namespace Ollie
         {
             path.Clear();
         }
+
+        #endregion
+        
     }
 }

@@ -9,31 +9,33 @@ namespace Ollie
     public class SearchingFoodState : AntAIState
     {
         private GameObject parent;
+        private CritterAIPlanner brain;
         public float moveTime;
         public override void Create(GameObject aGameObject)
         {
             base.Create(aGameObject);
             parent = aGameObject;
+            brain = parent.GetComponent<CritterAIPlanner>();
         }
 
         public override void Enter()
         {
             base.Enter();
-            moveTime = 5;
-            Finish();
         }
 
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
             base.Execute(aDeltaTime, aTimeScale);
-            if (parent.GetComponent<CritterAIPlanner>().foodLocationList.Count == 0)
+            if (brain.foodLocationList.Count == 0)
             {
-                StandardMovement();
+                if (brain.path.Count == 0)
+                {
+                    brain.RandomTarget();
+                }
             }
             else
             {
                 parent.GetComponent<CritterAIPlanner>().SetFoodLocated(true);
-                parent.GetComponentInChildren<Controller>().StopMovement();
                 Finish();
             }
         }
@@ -48,19 +50,5 @@ namespace Ollie
             base.Destroy(aGameObject);
         }
         
-        public void StandardMovement()
-        {
-            if (parent.transform.position == parent.GetComponentInChildren<Controller>().targetLocation)// && !interactingTarget)
-            {
-                StartCoroutine(RandomLocation());
-            }
-        }
-
-        public IEnumerator RandomLocation()
-        {
-            parent.GetComponentInChildren<Controller>().targetLocation = new Vector3((UnityEngine.Random.Range(-40,40)), 1, (UnityEngine.Random.Range(-40,40)));
-            yield return new WaitForSeconds(moveTime);
-            print("noLocationSet = true");
-        }
     }
 }
