@@ -1,4 +1,5 @@
 using Minh;
+using System;
 using UnityEngine;
 
 public interface IVehicleControls
@@ -9,7 +10,7 @@ public interface IVehicleControls
 	/// <param name="amount">-1 to 1. -1 = full reverse force. 1 = full accelerate</param>
 	/// <returns></returns>
 	public void AccelerateAndReverse(float amount);
-	
+
 	/// <summary>
 	/// Steering value.
 	/// </summary>
@@ -25,12 +26,12 @@ public interface IFlyable
 	public void AccelerateAndReverse(float amount);
 	public void StrafeLeftAndRight(float   amount);
 	public void UpAndDown(float            amount);
-	
+
 	/// <summary>
 	/// Camera vertical amount
 	/// </summary>
 	/// <param name="amount">0 to 1. 0 = straight down, 1 = forward</param>
-	public void CameraUpAndDown(float      amount);
+	public void CameraUpAndDown(float amount);
 }
 
 public interface IEdible
@@ -54,12 +55,35 @@ public interface IInteractable
 	void Interact();
 }
 
+
+[Serializable]
+public struct ItemInfo
+{
+	public string name;
+	public string description;
+	public float  energyRequired;
+	public float  height;
+	public float  buildTime;
+}
+	
 public interface IItem
 {
-	GameObject Item();
+	void SpawnedAsNormal();
+
+	//SpawnedAsHologram();
+	
+	/// <summary>
+	///	Mostly just make your own ItemInfo variable and return it
+	///		<br/>
+	///		public ItemInfo GetInfo()<br/>
+	///		{<br/>
+	///			return itemInfo;<br/>
+	///		}
+	/// </summary>
+	/// <returns></returns>
+	ItemInfo GetInfo();
 }
 
 public class CreatureBase : MonoBehaviour
 {
-	
 }

@@ -108,15 +108,12 @@ public class LobbyUIManager : NetworkBehaviour
         }
     }
 
-    public void SetSceneToLoad()
-    {
-        sceneToLoad = this.GetComponentInChildren<TMP_Text>().text;
-    }
-
     public void OnNewServerIPAddress()
     {
         NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectAddress = serverIPInputField.text;
     }
+
+    #region Handle Clients Joining/Leaving
 
     private void OnClientLeave(ulong obj)
     {
@@ -124,7 +121,6 @@ public class LobbyUIManager : NetworkBehaviour
         if (NetworkManager.Singleton.IsServer)
             Invoke("HandleClientNames", 1f);
     }
-
 
     public void OnClientJoin(ulong clientID)
     {
@@ -152,6 +148,9 @@ public class LobbyUIManager : NetworkBehaviour
         }
     }
 
+    #endregion
+
+    #region Handle Client Names/Lobby UI
     public void HandleClientNames()
     {
         clientName = "";
@@ -207,6 +206,7 @@ public class LobbyUIManager : NetworkBehaviour
         NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject.GetComponent<ClientInfo>().clientName = name;
         HandleClientNames();
     }
+    #endregion
 
     public void StartGame()
     {
@@ -217,33 +217,36 @@ public class LobbyUIManager : NetworkBehaviour
         }
 
         NetworkManager.Singleton.SceneManager.OnSceneEvent += SceneManagerOnOnSceneEvent;
-        //NetworkManager.Singleton.SceneManager.OnLoadComplete += OnLevelLoaded;
 
+        //Update UI
         lobbyCam.SetActive(false);
         InGameLobbyUI(true);
         
+        //Load the selected scene
         NetworkManager.Singleton.SceneManager.LoadScene(sceneToLoad, LoadSceneMode.Additive);
+
+        //TODO: use this to know when the scene IS loaded - ligting doesn't load when this is called?
+        //NetworkManager.Singleton.SceneManager.OnLoadComplete += OnLevelLoaded;
     }
 
-    private void OnLevelLoaded(ulong clientId, string sceneName, LoadSceneMode loadSceneMode)
+    /*private void OnLevelLoaded(ulong clientId, string sceneName, LoadSceneMode loadSceneMode)
     {
         NetworkManager.Singleton.SceneManager.OnLoadComplete -= OnLevelLoaded;
 
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
-    }
+    }*/
 
     private void SceneManagerOnOnSceneEvent(SceneEvent sceneEvent)
     {
         NetworkManager.Singleton.SceneManager.OnSceneEvent -= SceneManagerOnOnSceneEvent;
         Scene scene = sceneEvent.Scene;
 
-        //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-        //SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneToLoad));
+        //BUG: Scene is not yet loaded when this is called
+        //SceneManager.SetActiveScene(scene);
 
-        //lobbyCanvas.SetActive(false);
         SubmitLobbyUIStateClientRpc(false);
         
-        
+        //TODO: Refactor this out of this script?
         //Spawn a player for each client
         foreach(NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
         {
@@ -277,18 +280,26 @@ public class LobbyUIManager : NetworkBehaviour
     public void ReturnToLobby()
     {
         //Load lobby
-        //NetworkManager.Singleton.SceneManager.LoadScene("ManagerScene", LoadSceneMode.Single);
-        SceneManager.UnloadSceneAsync(sceneToLoad);
-        ipAddressCanvas.SetActive(false);
-        lobbyCanvas.SetActive(true);
+
+        //unload active scene (HACK: Having issues setting the active scene on scene loaded)
+        NetworkManager.Singleton.SceneManager.UnloadScene(SceneManager.GetSceneByName(sceneToLoad));
+
+        //Update Lobby UI
+        SubmitLobbyUIStateClientRpc(true);
         InGameLobbyUI(false);
 
-        foreach(NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
+        //Despawn Player Objects?
+        foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
         {
             client.PlayerObject.GetComponent<John.PlayerController>().OnPlayerUnassigned();
-        }
 
-        //Unload the active scene
+            //client.PlayerObject.GetComponent<John.PlayerController>().playerModel.GetComponent<NetworkObject>().Despawn();
+
+            /*foreach(NetworkObject obj in client.OwnedObjects)
+            {
+                obj.Despawn();
+            }*/
+        }
     }
 
     public void InGameLobbyUI(bool inGame)
