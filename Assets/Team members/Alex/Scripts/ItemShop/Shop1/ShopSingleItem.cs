@@ -1,48 +1,23 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Alex;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.InputSystem.HID;
-using Unity.Netcode;
 
-class ShopSingleItem : MonoBehaviour, IInteractable
+class ShopSingleItem : MonoBehaviour
 {
-  [HideInInspector]
-  public GameObject itemToSpawn;
-  [HideInInspector]
-  public Transform spawningPoint;
-  public Spawner spawner;
-  
-  
-  public ShopButton[] shopButtons;
-  
-  // Spawn point etc
-  // Other stuff like price etc
+	private IItem      itemInterface; // Unity doesn't show interfaces in inspector
+	public  GameObject itemToSpawn;   // So we'll use normal GameObject (the trouble is you can drag ANYTHING now, we need to check for the interface)
 
-  void Start()
-  {
-    foreach (ShopButton shopButton in shopButtons)
-    {
-      shopButton.buttonPressedEvent += SpawnItem;
-    }
-    
-  }
-  public void Interact()
-  {
-    
-    spawner.SpawnSingle(itemToSpawn, spawningPoint.position, quaternion.identity);
-    
-  }
+	public  Transform  spawningPoint;
+	public  Spawner    spawner;
+	public  Button     button;
+	
 
-  public void SpawnItem(GameObject item, Transform spawnPoint)
-  {
-    itemToSpawn = item;
-    spawningPoint = spawnPoint;
-    Interact();
-  }
-  
-  
+	void Start()
+	{
+		button.buttonPressedEvent += SpawnItem;
+	}
+
+	public void SpawnItem()
+	{
+		spawner.SpawnSingle(itemToSpawn, spawningPoint.position, spawningPoint.rotation);
+	}
 }
-
