@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Ollie
 {
-    public class WaterNode
+    public class WaterNode : iHeapItem<WaterNode>
     {
         public bool isBlocked;
         public bool isTooSteep;
@@ -22,6 +22,8 @@ namespace Ollie
         public bool isOpen;
         public bool isClosed;
         public bool isPath;
+
+        private int _heapIndex;
 
         public int gCost;
         public int hCost;
@@ -127,6 +129,33 @@ namespace Ollie
             //     levelManager.closedWaterNodes.Add(neighbour);
             //     levelManager.openWaterNodes.Remove(neighbour);
             // }
+        }
+        
+        public int CompareTo(WaterNode nodeToCompare) //returns 1 if nodeToCompare is HIGHER
+        {
+            //check this node's fCost against node to compare
+            int compare = fCost.CompareTo(nodeToCompare.fCost);
+            
+            //0 if identical f cost, so check h cost
+            if (compare == 0)
+            {
+                compare = hCost.CompareTo(nodeToCompare.hCost);
+            }
+            
+            //we want to return 1 if higher priority, but this returns 1 if nodeToCompare is higher so need to reverse
+            return -compare;
+        }
+
+        public int heapIndex
+        {
+            get
+            {
+                return _heapIndex;
+            }
+            set
+            {
+                _heapIndex = value;
+            }
         }
     }
 }

@@ -51,9 +51,19 @@ namespace Luke
 		[SerializeField]
 		private Transform birthingTransform;
 		private Rigidbody rb;
-		
-		
-#region IEnumerators
+		private LukeAStar aStar;
+
+		private CurrentTarget currentTarget = CurrentTarget.nothing;
+		private enum CurrentTarget
+		{
+			food,
+			mate,
+			predator,
+			wander,
+			nothing
+		}
+
+		#region IEnumerators
 		
 		public IEnumerator HealthRegen()
 		{
@@ -239,6 +249,7 @@ namespace Luke
 		void OnEnable()
 		{
 			rb = GetComponent<Rigidbody>();
+			aStar = GetComponent<LukeAStar>();
 			health = critterInfo.maxHealth;
 			energy = critterInfo.maxEnergyLevel;
 			sleepLevel = critterInfo.maxSleepLevel;
@@ -348,6 +359,20 @@ namespace Luke
 		private void LookAt(Vector3 target)
 		{
 			transform.LookAt(new Vector3 (target.x, transform.position.y, target.z));
+		}
+
+		public Vector3 GetMoveTargetAStar()
+		{
+			Vector3 target = transform.position;
+			foreach (AStarNode node in aStar.path)
+			{
+				if (Physics.Linecast(node.worldPosition, target))
+				{
+					target = node.worldPosition;
+					break;
+				}
+			}
+			return target;
 		}
 
 		public bool CheckHasFood()
@@ -515,7 +540,13 @@ namespace Luke
 		{
 			if (isSleeping) return;
 			if (nearestFood == null) return;
-			LookAt(nearestFood.position);
+			if (currentTarget != CurrentTarget.food)
+			{
+				currentTarget = CurrentTarget.food;
+				aStar.ResetNodes(transform.position, nearestFood.position);
+				aStar.AStarAlgorithmFast();
+			}
+			LookAt(GetMoveTargetAStar());
 			rb.AddForce(transform.TransformDirection(Vector3.forward)*acceleration);
 			rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
 		}
@@ -524,7 +555,13 @@ namespace Luke
 		{
 			if (isSleeping) return;
 			if (nearestMate == null) return;
-			LookAt(nearestMate.position);
+			if (currentTarget != CurrentTarget.mate)
+			{
+				currentTarget = CurrentTarget.mate;
+				aStar.ResetNodes(transform.position, nearestMate.position);
+				aStar.AStarAlgorithmFast();
+			}
+			LookAt(GetMoveTargetAStar());
 			rb.AddForce(transform.TransformDirection(Vector3.forward)*acceleration);
 			rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
 		}
@@ -533,6 +570,7 @@ namespace Luke
 		{
 			if (isSleeping) return;
 			if (nearestPredator == null) return;
+			currentTarget = CurrentTarget.predator;
 			Vector3 position = transform.position;
 			Vector3 heading = position - nearestPredator.position;
 			LookAt(position + heading);
@@ -547,6 +585,7 @@ namespace Luke
 			//Check which way north should be or adjust bestBiome iteration to account for direction.
 			Vector3 mainHeading = Quaternion.AngleAxis(angle, Vector3.up)*Vector3.forward;
 			mainHeading += randomAdjustment;
+			currentTarget = CurrentTarget.wander;
 			LookAt(transform.position + mainHeading);
 			rb.AddForce(transform.TransformDirection(Vector3.forward)*acceleration);
 			rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
