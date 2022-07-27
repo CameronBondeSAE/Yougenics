@@ -28,21 +28,15 @@ namespace Minh
 
         void Start()
         {
-            
             hpui.SetMaxHealth(Hp);
             //noenergy = false;
             //fullenergy = true;
             NoEnergy.Value = false;
             FullEnergy.Value = true;
-            
             Deathcheck();
             GetComponent<Energy>().NoEnergyEvent += startHealthdepeting;
             GetComponent<Energy>().FullEnergyEvent += startHealthincreasing;
         }
-
-       
-        
-
         public void Deathcheck()
         {
             /*if (Hp <= 0)
@@ -71,7 +65,7 @@ namespace Minh
 
         public void FullHp()
         {
-            //Hp = 100f;
+            Hp = 100;
             CurrentHealth.Value = 100f;
         }
 
