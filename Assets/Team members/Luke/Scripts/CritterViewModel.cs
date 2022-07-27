@@ -27,5 +27,4 @@ public class CritterViewModel : NetworkBehaviour
 	{
 		ps.material = psMats[(int)type];
 	}
-
 }

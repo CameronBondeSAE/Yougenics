@@ -13,6 +13,8 @@ namespace Luke
         
         #region MyRegion
 
+        public bool slowMode;
+        
         public AStarNode[,] Nodes;
 
         [SerializeField] private Vector2Int numberOfTiles;
@@ -26,10 +28,12 @@ namespace Luke
         private Vector3 _gridTileSize;
 
         public AStarNode CurrentNode;
+        public AStarNode StartNode;
         public AStarNode EndNode;
         public Vector3 startLocation;
         public Vector3 endLocation;
         private List<AStarNode> _openNodes = new();
+        public List<AStarNode> path = new();
 
         public Coroutine coroutineInstance = null; //For stopping and resetting algorithm.
 
@@ -37,7 +41,7 @@ namespace Luke
 
         #region Methods
 		
-		public void FillGrid()
+		private void FillGrid()
         {
             _gridTileSize = new Vector3(gridSize.x/numberOfTiles.x, gridTileHeight, gridSize.y/numberOfTiles.y);
             
@@ -83,35 +87,73 @@ namespace Luke
 
         public IEnumerator AStarAlgorithm()
         {
-            int[] startIndex = ConvertIndexAndPosition(startLocation);
-            int[] endIndex = ConvertIndexAndPosition(endLocation);
-            AStarNode endNode = Nodes[endIndex[0], endIndex[1]];
+	        CurrentNode = StartNode;
 
-            CurrentNode = Nodes[startIndex[0], startIndex[1]];
             CurrentNode.GCost = Mathf.RoundToInt(1000*Vector3.Distance(CurrentNode.worldPosition, endLocation));
             CurrentNode.HCost = 0;
             _openNodes.Add(CurrentNode);
 
             CheckNeighbours();
-            
+
             yield return new WaitForEndOfFrame();
             
             CurrentNode = _openNodes[OpenNodesComparison()];
             //move and draw line
 
-            if (CurrentNode != endNode) coroutineInstance = StartCoroutine(AStarLoop(endNode));
+            if (CurrentNode != EndNode && !slowMode) AStarLoopFast();
+            else if (CurrentNode != EndNode) coroutineInstance = StartCoroutine(AStarLoop());
+            else CreatePath();
+        }
+        
+        public void AStarAlgorithmFast()
+        {
+	        CurrentNode = StartNode;
+	        CurrentNode.GCost = Mathf.RoundToInt(1000*Vector3.Distance(CurrentNode.worldPosition, endLocation));
+	        CurrentNode.HCost = 0;
+	        _openNodes.Add(CurrentNode);
+
+	        CheckNeighbours();
+            
+	        CurrentNode = _openNodes[OpenNodesComparison()];
+	        //move and draw line
+
+	        if (CurrentNode != EndNode && !slowMode) AStarLoopFast();
+	        else if (CurrentNode != EndNode) coroutineInstance = StartCoroutine(AStarLoop());
+	        else CreatePath();
         }
 
-        private IEnumerator AStarLoop(AStarNode endNode)
+        private IEnumerator AStarLoop()
         {
             CheckNeighbours(CurrentNode);
             
             yield return new WaitForEndOfFrame();
             
             CurrentNode = _openNodes[OpenNodesComparison()];
-            //move and draw line
 
-            if (CurrentNode != endNode) coroutineInstance = StartCoroutine(AStarLoop(endNode));
+            if (CurrentNode != EndNode && !slowMode) AStarLoopFast();
+            else if (CurrentNode != EndNode) coroutineInstance = StartCoroutine(AStarLoop());
+            else CreatePath();
+        }
+        
+        private void AStarLoopFast()
+        {
+	        CheckNeighbours(CurrentNode);
+	        
+	        if (_openNodes.Count > 0) CurrentNode = _openNodes[OpenNodesComparison()];
+
+	        if (CurrentNode != EndNode && !slowMode) AStarLoopFast();
+	        else if (CurrentNode != EndNode) coroutineInstance = StartCoroutine(AStarLoop());
+	        else CreatePath();
+        }
+
+        private void CreatePath()
+        {
+	        path.Clear();
+	        while (CurrentNode != StartNode && CurrentNode.parent != null)
+	        {
+		        path.Add(CurrentNode);
+		        CurrentNode = CurrentNode.parent;
+	        }
         }
 
         //Case: First Node
@@ -140,7 +182,6 @@ namespace Luke
         
         private void CheckNeighbours(AStarNode node)
         {
-            int i = 0;
             for (int x = 0; x < 3; x++)
             {
                 for (int y = 0; y < 3; y++)
@@ -148,7 +189,6 @@ namespace Luke
                     AStarNode neighbour = (AStarNode)node.neighbours[x, y];
                     if (neighbour == null) continue;
                     if (neighbour.isBlocked || neighbour.isClosed || _openNodes.Contains(neighbour)) continue;
-                    i++;
                     _openNodes.Add(neighbour);
                     neighbour.GCost = Mathf.RoundToInt(1000*Vector3.Distance(neighbour.worldPosition, endLocation));
                     if (neighbour.parent != null && neighbour.HCost < node.parent.HCost)
@@ -232,8 +272,24 @@ namespace Luke
 		        node.isClosed = false;
 	        }
 	        int[] index = ConvertIndexAndPosition(startLocation);
-	        CurrentNode = Nodes[index[0], index[1]];
+	        StartNode = Nodes[index[0], index[1]];
+	        CurrentNode = StartNode;
 	        index = ConvertIndexAndPosition(endLocation); 
+	        EndNode = Nodes[index[0], index[1]];
+        }
+
+        public void ResetNodes(Vector3 startPosition, Vector3 targetPosition)
+        {
+	        if(coroutineInstance != null) StopCoroutine(coroutineInstance);
+	        _openNodes.Clear();
+	        foreach (AStarNode node in Nodes)
+	        {
+		        node.isClosed = false;
+	        }
+	        int[] index = ConvertIndexAndPosition(startPosition);
+	        StartNode = Nodes[index[0], index[1]];
+	        CurrentNode = StartNode;
+	        index = ConvertIndexAndPosition(targetPosition); 
 	        EndNode = Nodes[index[0], index[1]];
         }
 

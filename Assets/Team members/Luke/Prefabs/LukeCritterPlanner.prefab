@@ -5048,7 +5048,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &661342938193830428
 Transform:
   m_ObjectHideFlags: 0
@@ -5092,7 +5092,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7afd8e09d7bb65549abdd10ff6949652, type: 2}
+  - {fileID: 2100000, guid: 654f61938895e504bb9c4b79b552fa5a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5241,6 +5241,7 @@ GameObject:
   - component: {fileID: 3128564274136016781}
   - component: {fileID: -7329730064323366979}
   - component: {fileID: 697295525}
+  - component: {fileID: 5296999063363479300}
   m_Layer: 0
   m_Name: LukeCritterPlanner
   m_TagString: Untagged
@@ -5376,3 +5377,24 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &5296999063363479300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7004539971532304000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 046c4bb8c64df154b915ef1b9816c656, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slowMode: 0
+  numberOfTiles: {x: 99, y: 99}
+  gridTileHeight: 0.1
+  gridSize: {x: 99, y: 99}
+  gridOrigin: {x: -49, y: 0, z: -49}
+  gCostWeight: 2
+  hCostWeight: 1
+  startLocation: {x: 0, y: 0, z: 0}
+  endLocation: {x: 0, y: 0, z: 0}
