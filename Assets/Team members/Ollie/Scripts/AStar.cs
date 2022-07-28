@@ -26,11 +26,12 @@ namespace Ollie
 
         private void Awake()
         {
-            parent = GetComponentInParent<iPathable>();
+            
         }
 
         private void Start()
         {
+            parent = GetComponentInParent<iPathable>();
             closedPathNodes = new List<WaterNode>();
             pathfindingUnblockedNodes = new List<WaterNode>();
             //vector3Path = new List<Vector3>();

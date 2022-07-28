@@ -197,7 +197,7 @@ MonoBehaviour:
   foodLocationList: []
   mateLocationList: []
   moveSpeed: 0
-  lm: {fileID: 0}
+  lm: {fileID: 1600512450, guid: 22a7f5285e5f1fc4b88104de7cd22d81, type: 3}
   targetTransform: {x: 0, y: 0, z: 0}
   aStar: {fileID: 3705235251873564705}
   isSafe: 0
@@ -337,6 +337,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1519623156087613634}
     m_Modifications:
+    - target: {fileID: 51126391, guid: 942a5783b5a08f243b044c176ad49d39, type: 3}
+      propertyPath: lm
+      value: 
+      objectReference: {fileID: 1600512450, guid: 22a7f5285e5f1fc4b88104de7cd22d81, type: 3}
     - target: {fileID: 51126391, guid: 942a5783b5a08f243b044c176ad49d39, type: 3}
       propertyPath: critter
       value: 
