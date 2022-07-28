@@ -1,6 +1,10 @@
 using Minh;
+using NodeCanvas.Tasks.Actions;
+using Sirenix.OdinInspector;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public interface IVehicleControls
 {
@@ -84,9 +88,20 @@ public interface IItem
 	ItemInfo GetInfo();
 }
 
-public class CreatureBase : MonoBehaviour
+[Serializable]
+// Generics allow TYPE to be a variable!
+public class Stat<T>
 {
-	public float age;
+	public string name;
+	public T      Value;
+}
+
+public class CreatureBase : SerializedMonoBehaviour
+{
+	// public List<Stat<float>> stats;
+	// public List<Stat<bool>>  statsBools;
+
+	//public float age;
 	public float ageOfMatingStart;
 	public float ageOfMatingEnd;
 	public float maxAge;
@@ -94,6 +109,7 @@ public class CreatureBase : MonoBehaviour
 	public float gestationTime;
 	public int   litterSizeMax;
 	public float metabolism; // Energy efficiency and energy absorbing speed
+	public float mutationRate;
 	
 	// Optional
 	public float empathy;
@@ -114,4 +130,28 @@ public class CreatureBase : MonoBehaviour
 	{
 		// age
 	}
+	
+	// public float Mutate(Stat selfTrait, Stat partnerTrait, Stat baseMinimum, Stat baseMaximum)
+	// {
+	// 	int   determinant = Random.Range(0, 100);
+	// 	float result      = 0;
+	// 	if (determinant < 50)
+	// 	{
+	// 		result = selfTrait + selfTrait*Random.Range(-0.05f, 0.05f);
+	// 		Mathf.Clamp(result, baseMinimum, baseMaximum);
+	// 	}
+	// 	else
+	// 	{
+	// 		result = partnerTrait + partnerTrait*Random.Range(-0.05f, 0.05f);
+	// 		Mathf.Clamp(result, baseMinimum, baseMaximum);
+	// 	}
+	// 		
+	// 	// Random big mutation
+	// 	if (determinant >= 98)
+	// 	{
+	// 		result += Random.Range(baseMinimum/4f, baseMaximum/4f);
+	// 	}
+	// 	return result;
+	// }
+
 }

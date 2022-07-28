@@ -6,20 +6,14 @@ using Object = System.Object;
 
 namespace Cam
 {
-    public class Wheel
-    {
-        
-    }
-    
-    
-    public class CamsDude : MonoBehaviour, IEdible
+    public class CamsDude : CreatureBase, IEdible
     {
         public Transform target;
 
         public StateManager stateManager;
         
         void Start()
-        {
+        { 
             stateManager = GetComponent<StateManager>();
             
             // I am interested in this event, so I 'subscribe/listen/observe' to the event
