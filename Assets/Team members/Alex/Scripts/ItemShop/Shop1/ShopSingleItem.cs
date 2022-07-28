@@ -9,7 +9,6 @@ public class ShopSingleItem : MonoBehaviour
 	public  Transform  spawningPoint;
 	public  Spawner    spawner;
 	public  Button     button;
-	public bool beingBuilt;
 	public bool canSpawn = true;
 
 
@@ -21,15 +20,7 @@ public class ShopSingleItem : MonoBehaviour
 
 	public void SpawnItem()
 	{
-		Wrapper();
-	}
-
-	public void Wrapper()
-	{
-		if (beingBuilt == false)
-		{
-			StartCoroutine(StartBuild());
-		}
+		StartCoroutine(StartBuild());
 	}
 	
 
@@ -37,12 +28,15 @@ public class ShopSingleItem : MonoBehaviour
 	{
 		if (canSpawn)
 		{
+			//Can spawn set to false to prevent multiple objects being built at the same time
 			canSpawn = false;
-			beingBuilt = true;
+
+			//Waits for build time before creating object in scene
 			yield return new WaitForSeconds(itemInfo.buildTime);
 			spawner.SpawnSingle(itemToSpawn, spawningPoint.position +  new Vector3(0, itemInfo.height,0), spawningPoint.rotation);
+			
+			//After build is complete allows you to build a new object
 			canSpawn = true;
-			beingBuilt = false;
 		}
 	}
 }
