@@ -44,8 +44,23 @@ public class LobbyUIManager : NetworkBehaviour
     public void HostGame()
     {
         NetworkManager.Singleton.StartHost();
-        lobbyCanvas.SetActive(true);
-        ipAddressCanvas.SetActive(false);
+
+        if (!autoHost)
+        {
+            lobbyCanvas.SetActive(true);
+            ipAddressCanvas.SetActive(false);
+        }
+        else
+        {
+            //spawn a player
+            GameObject tempPlayer = Instantiate(player);
+
+            //set ownership
+            tempPlayer.GetComponent<NetworkObject>().SpawnWithOwnership(myLocalClientId);
+
+            //Posses that player object
+            myLocalClient.GetComponent<John.PlayerController>().playerModel = tempPlayer.GetComponent<PlayerModel>();
+        }
     }
 
     public void JoinGame()
@@ -84,8 +99,11 @@ public class LobbyUIManager : NetworkBehaviour
 
     private void Awake()
     {
-        ipAddressCanvas.SetActive(true);
-        lobbyCanvas.SetActive(false);
+        if (!autoHost)
+        {
+            ipAddressCanvas.SetActive(true);
+            lobbyCanvas.SetActive(false);
+        }
 
         instance = this;
     }
