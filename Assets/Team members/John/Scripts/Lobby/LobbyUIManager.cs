@@ -14,6 +14,7 @@ public class LobbyUIManager : NetworkBehaviour
     [Header("Testing Setup")]
     public bool autoHost;
     public bool autoLoadLevel;
+    public bool spawnPlayerOnAwake;
     public string sceneToLoad;
 
     [Header("Lobby UI Setup")]
@@ -52,6 +53,9 @@ public class LobbyUIManager : NetworkBehaviour
         }
         else
         {
+            if (!spawnPlayerOnAwake)
+                return;
+
             //spawn a player
             GameObject tempPlayer = Instantiate(player);
 

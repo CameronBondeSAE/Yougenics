@@ -4206,6 +4206,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoHost: 1
   autoLoadLevel: 0
+  spawnPlayerOnAwake: 1
   sceneToLoad: 
   lobbyCanvas: {fileID: 409620448}
   clientUI: {fileID: 309912682}
