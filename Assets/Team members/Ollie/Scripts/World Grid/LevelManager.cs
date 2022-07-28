@@ -13,6 +13,8 @@ namespace Ollie
 {
     public class LevelManager : MonoBehaviour
     {
+        public static LevelManager instance;
+        
         public Bounds bounds  = new Bounds(Vector3.zero, new Vector3(80,0,80));
         public WaterNode[,] gridNodeReferences;
         public Vector3 gridTileHalfExtents = new(0.5f, 0.5f, 0.5f);
@@ -49,6 +51,8 @@ namespace Ollie
 
         void Awake()
         {
+            LevelManager.instance = this;
+            
             sizeX = Mathf.RoundToInt(bounds.extents.x) + 1;
             sizeZ = Mathf.RoundToInt(bounds.extents.z) + 1;
             lengthX = Mathf.RoundToInt(bounds.center.x - bounds.extents.x/2);
@@ -67,11 +71,17 @@ namespace Ollie
             closedPathNodes = new List<WaterNode>();
             worldInitialised = false;
             ScanWorld();
+            StartCoroutine(UpdateWorld());
         }
 
-        private void Update()
+        
+        private IEnumerator UpdateWorld()
         {
-            if(worldInitialised) ScanWorld();
+            while (true)
+            {
+                yield return new WaitForSeconds(1f);
+                if(worldInitialised) ScanWorld();
+            }
         }
 
         public int MaxSize
