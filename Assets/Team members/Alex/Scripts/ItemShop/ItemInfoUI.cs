@@ -6,34 +6,27 @@ using TMPro;
 
 namespace Alex
 {
-
     public class ItemInfoUI : MonoBehaviour
     {
         public ShopSingleItem shopSingleItem;
-        string nameTxt;
-        string descriptionTxt;
-        float energyRequiredTxt;
-        float buildTimeTxt;
+        string name;
+        string description;
+        float energyRequired;
+        float buildTime;
         float timeRemaning;
-        float startTimeTxt;
-        
-
+        float startTime;
         TMP_Text textMeshPro;
 
         void Start()
         {
             ResetTimer();
-
             textMeshPro = GetComponent<TMP_Text>();
-
             ResetText();
-
         }
-
-        // Update is called once per frame
+        
         void Update()
         {
-            if (shopSingleItem.beingBuilt)
+            if (shopSingleItem.canSpawn == false)
             {
                 if (timeRemaning > 0)
                 {
@@ -43,7 +36,7 @@ namespace Alex
                 {
                     timeRemaning = 0f;
                 }
-                textMeshPro.text = nameTxt + " build in progress." + "\n\r" + "Time Remaining: " + timeRemaning.ToString("#");
+                textMeshPro.text = name + " build in progress." + "\n\r" + "Time Remaining: " + timeRemaning.ToString("#");
             }
             else
             {
@@ -54,16 +47,16 @@ namespace Alex
 
         void ResetTimer()
         {
-            nameTxt = shopSingleItem.itemInfo.name;
-            descriptionTxt = shopSingleItem.itemInfo.description;
-            energyRequiredTxt = shopSingleItem.itemInfo.energyRequired;
-            buildTimeTxt = shopSingleItem.itemInfo.buildTime;
-            timeRemaning = buildTimeTxt;
+            name = shopSingleItem.itemInfo.name;
+            description = shopSingleItem.itemInfo.description;
+            energyRequired = shopSingleItem.itemInfo.energyRequired;
+            buildTime = shopSingleItem.itemInfo.buildTime;
+            timeRemaning = buildTime;
         }
 
         void ResetText()
         {
-            textMeshPro.text = "Name: " + nameTxt + "\r\n" + "Description: " + descriptionTxt + "\r\n"  + "Energy Cost: " + energyRequiredTxt + "\n\r" + "Build Time: " + buildTimeTxt;
+            textMeshPro.text = "Name: " + name + "\r\n" + "Description: " + description + "\r\n"  + "Energy Cost: " + energyRequired + "\n\r" + "Build Time: " + buildTime;
         }
     }
 }
