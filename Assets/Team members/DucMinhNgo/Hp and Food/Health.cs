@@ -12,8 +12,6 @@ namespace Minh
     {
         public NetworkVariable<float> CurrentHealth = new NetworkVariable<float>();
         public NetworkVariable<bool> IsDead = new NetworkVariable<bool>();
-        public NetworkVariable<bool> FullEnergy = new NetworkVariable<bool>();
-        public NetworkVariable<bool> NoEnergy = new NetworkVariable<bool>();
 
         public int Hp = 100;
         public int curHp;
@@ -26,17 +24,26 @@ namespace Minh
         public event Action DeathEvent;
         public event Action Collectfood;
 
+        public override void OnNetworkSpawn()
+        {
+            IsDead.OnValueChanged += UpdateDeadState;
+            CurrentHealth.OnValueChanged += UpdateHealth;
+
+            if (IsServer)
+            {
+                GetComponent<Energy>().NoEnergyEvent += startHealthdepeting;
+                GetComponent<Energy>().FullEnergyEvent += startHealthincreasing;
+            }
+        }
+
         void Start()
         {
-            hpui.SetMaxHealth(Hp);
-            //noenergy = false;
-            //fullenergy = true;
-            NoEnergy.Value = false;
-            FullEnergy.Value = true;
-            Deathcheck();
-            GetComponent<Energy>().NoEnergyEvent += startHealthdepeting;
-            GetComponent<Energy>().FullEnergyEvent += startHealthincreasing;
+            if (NetworkManager.Singleton == null)
+                Debug.Log("No Network Manager Found - ADD ManagerScene For Testing To Your Scene");
+
+            if (hpui != null) hpui.SetMaxHealth(Hp);
         }
+
         public void Deathcheck()
         {
             /*if (Hp <= 0)
@@ -49,17 +56,9 @@ namespace Minh
 
             }*/
 
-            if (!IsOwner)
-                return;
-
             if (CurrentHealth.Value <= 0)
             {
-
                 IsDead.Value = true;
-                //GetComponent<Renderer>().material.color = Color.yellow;
-                Destroy(gameObject);
-                DeathEvent?.Invoke();
-
             }
         }
 
@@ -80,62 +79,107 @@ namespace Minh
             Collectfood?.Invoke();
         }
 
-        private void FixedUpdate()
-        {
-            Deathcheck();
-            curHp = Hp;
-        }
-        
         // health increase and depleting overtime code
         IEnumerator Healthdepleting()
         {
             while (noenergy)
             {
-                // loops forever...
+                /*// loops forever...
                 if (Hp <= 100)
                 {
                     // if health < 100...
                     Hp -= 1; // increase health and wait the specified time
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(1);
                 }
                 else
                 {
                     // if health >= 100, just yield 
                     yield return null;
                 }
-                hpui.SetHealth(curHp);
+                hpui.SetHealth(curHp);*/
+
+
+                //if we have health
+                if (CurrentHealth.Value > 0)
+                {
+                    CurrentHealth.Value -= 1;
+                    yield return new WaitForSeconds(1);
+                }
+                else
+                {
+                    // if health >= 100, just yield 
+                    yield return null;
+                }
             }
         }
 
-       public void startHealthdepeting()
+        public void startHealthdepeting()
         {
-
+            noenergy = true;
             StartCoroutine(Healthdepleting());
         }
         public void startHealthincreasing()
         {
-
+            fullenergy = true;
             StartCoroutine(Healthincreasing());
         }
         IEnumerator Healthincreasing()
         {
             while (fullenergy)
             {
-                // loops forever...
+                /*// loops forever...
                 if (Hp <= 100)
                 {
                     // if health < 100...
                     Hp += 1; // increase health and wait the specified time
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(1);
                 }
                 else
                 {
                     // if health >= 100, just yield 
                     yield return null;
                 }
-                hpui.SetHealth(curHp);
+                hpui.SetHealth(curHp);*/
+
+                if (CurrentHealth.Value < 100)
+                {
+                    CurrentHealth.Value += 1;
+                    yield return new WaitForSeconds(1);
+                }
+                else
+                {
+                    // if health >= 100, just yield 
+                    yield return null;
+                }
             }
         }
+
+        #region Networking Implementation
+
+        private void UpdateDeadState(bool previousValue, bool newValue)
+        {
+            Debug.Log(gameObject.name + " has died");
+            DeathEvent?.Invoke();
+        }
+
+        private void UpdateHealth(float previousValue, float newValue)
+        {
+            if (hpui != null)
+                hpui.SetHealth((int)newValue);
+
+            if (IsServer)
+                Deathcheck();
+            else
+                RequestDeathCheckServerRpc();
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        private void RequestDeathCheckServerRpc()
+        {
+            Deathcheck();
+        }
+
+        #endregion
     }
 
 }

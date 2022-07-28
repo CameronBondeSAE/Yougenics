@@ -14,8 +14,8 @@ namespace Ollie
         public WaterNode targetLocation;
         public WaterNode currentLocation;
         public List<WaterNode> pathfindingUnblockedNodes;
-        public CritterAI critter;
-        public CritterAIPlanner targetCritter;
+        //public CritterAI critter;
+        //public CritterAIPlanner targetCritter;
         public List<Vector3> vector3Path;
         public bool active;
         public float timer;
@@ -62,25 +62,25 @@ namespace Ollie
 
             WaterNode random1 = pathfindingUnblockedNodes[UnityEngine.Random.Range(0, pathfindingUnblockedNodes.Count)];
             WaterNode random2 = pathfindingUnblockedNodes[UnityEngine.Random.Range(0, pathfindingUnblockedNodes.Count)];
-            startLocation = critter.currentLocation;
-            targetLocation = targetCritter.currentLocation;
+            //startLocation = critter.currentLocation;
+            //targetLocation = targetCritter.currentLocation;
             startLocation.startLocation = true;
             targetLocation.targetLocation = true;
         }
 
         private void Update()
         {
-            timer += Time.deltaTime;
-            if (timer > 2)
-            {
-                timer = 0;
-                if (active)
-                {
-                    AStarPathfindingStart();
-                    //FindPath(startPos,targetPos);
-                }
-            }
-            
+            // timer += Time.deltaTime;
+            // if (timer > 2)
+            // {
+            //     timer = 0;
+            //     if (active)
+            //     {
+            //         AStarPathfindingStart();
+            //         //FindPath(startPos,targetPos);
+            //     }
+            // }
+            //
         }
 
         public void FindPath(Vector3 startPos, Vector3 targetPos)

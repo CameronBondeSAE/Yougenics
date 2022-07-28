@@ -226,29 +226,18 @@ public class LobbyUIManager : NetworkBehaviour
         NetworkManager.Singleton.SceneManager.LoadScene(sceneToLoad, LoadSceneMode.Additive);
 
         //TODO: use this to know when the scene IS loaded - ligting doesn't load when this is called?
-        //NetworkManager.Singleton.SceneManager.OnLoadComplete += OnLevelLoaded;
+        NetworkManager.Singleton.SceneManager.OnLoadComplete += OnLevelLoaded;
     }
 
-    /*private void OnLevelLoaded(ulong clientId, string sceneName, LoadSceneMode loadSceneMode)
+    private void OnLevelLoaded(ulong clientId, string sceneName, LoadSceneMode loadSceneMode)
     {
         NetworkManager.Singleton.SceneManager.OnLoadComplete -= OnLevelLoaded;
 
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
-    }*/
 
-    private void SceneManagerOnOnSceneEvent(SceneEvent sceneEvent)
-    {
-        NetworkManager.Singleton.SceneManager.OnSceneEvent -= SceneManagerOnOnSceneEvent;
-        Scene scene = sceneEvent.Scene;
-
-        //BUG: Scene is not yet loaded when this is called
-        //SceneManager.SetActiveScene(scene);
-
-        SubmitLobbyUIStateClientRpc(false);
-        
         //TODO: Refactor this out of this script?
         //Spawn a player for each client
-        foreach(NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
+        foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
         {
             //spawn a player
             GameObject tempPlayer = Instantiate(player);
@@ -263,6 +252,19 @@ public class LobbyUIManager : NetworkBehaviour
         //Spawn Luke AI For Testing
         GameObject lukeAI = Instantiate(lukeAITest);
         lukeAI.GetComponent<NetworkObject>().Spawn();
+    }
+
+    private void SceneManagerOnOnSceneEvent(SceneEvent sceneEvent)
+    {
+        NetworkManager.Singleton.SceneManager.OnSceneEvent -= SceneManagerOnOnSceneEvent;
+        Scene scene = sceneEvent.Scene;
+
+        //BUG: Scene is not yet loaded when this is called
+        //SceneManager.SetActiveScene(scene);
+
+        SubmitLobbyUIStateClientRpc(false);
+        
+        
     }
 
     [ClientRpc]
@@ -281,13 +283,6 @@ public class LobbyUIManager : NetworkBehaviour
     {
         //Load lobby
 
-        //unload active scene (HACK: Having issues setting the active scene on scene loaded)
-        NetworkManager.Singleton.SceneManager.UnloadScene(SceneManager.GetSceneByName(sceneToLoad));
-
-        //Update Lobby UI
-        SubmitLobbyUIStateClientRpc(true);
-        InGameLobbyUI(false);
-
         //Despawn Player Objects?
         foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
         {
@@ -300,6 +295,14 @@ public class LobbyUIManager : NetworkBehaviour
                 obj.Despawn();
             }*/
         }
+
+        //unload active scene (HACK: Having issues setting the active scene on scene loaded)
+        NetworkManager.Singleton.SceneManager.UnloadScene(SceneManager.GetSceneByName(sceneToLoad));
+
+        //Update Lobby UI
+        SubmitLobbyUIStateClientRpc(true);
+        InGameLobbyUI(false);
+        lobbyCam.SetActive(true);
     }
 
     public void InGameLobbyUI(bool inGame)

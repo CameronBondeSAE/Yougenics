@@ -25,6 +25,16 @@ public class DoorModel : NetworkBehaviour, IInteractable
 
     public void Interact()
     {
+        //Non-Network Functionality
+        if(NetworkManager.Singleton == null)
+        {            
+            Debug.Log("Non-Network Interaction");
+            isOpen = !isOpen;
+            onDoorInteractEvent?.Invoke(isOpen);
+            return;
+        }
+
+        //Networked
         if(IsServer)
         {
             if (isOpen)

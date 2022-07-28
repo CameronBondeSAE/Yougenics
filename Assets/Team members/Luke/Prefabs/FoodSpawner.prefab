@@ -47,6 +47,7 @@ MonoBehaviour:
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 100, y: 1, z: 100}
+  gridTileHalfExtents: {x: 0.5, y: 0.5, z: 0.5}
   foodPrefabs:
   - {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
   worldEnergy: 0

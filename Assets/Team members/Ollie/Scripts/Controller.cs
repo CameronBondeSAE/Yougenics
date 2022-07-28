@@ -24,7 +24,7 @@ namespace Ollie
 
         void FixedUpdate()
         {
-            MoveToTarget(targetLocation);
+            //MoveToTarget(targetLocation);
         }
 
         public void MoveToTarget(Vector3 targetLoc)

@@ -11,25 +11,18 @@ namespace Ollie
         public GameObject food;
         public GameObject predator;
         public GameObject critter;
+        public LevelManager lm;
 
         public int spawnAmount;
 
         private Vector3 spawnLocation;
-
-        private int planeWidth = 80;
-        private int planeLength = 80;
         private int planeFloor = 1;
         
         void Awake()
         {
             CreateNPCs(spawnAmount);
         }
-
         
-        void Update()
-        {
-
-        }
         public enum NpcType
         {
             Food,
@@ -42,7 +35,7 @@ namespace Ollie
             for (int i = 0; i < spawnAmount; i++)
             {
                 var rng = UnityEngine.Random.Range(1, 101);
-                spawnLocation = new Vector3((UnityEngine.Random.Range((-planeWidth/2),(planeWidth/2))),planeFloor,(UnityEngine.Random.Range((-planeLength/2),(planeLength/2))));
+                spawnLocation = new Vector3((UnityEngine.Random.Range((-lm.sizeX/2),(lm.sizeX/2))),planeFloor,(UnityEngine.Random.Range((-lm.sizeZ/2),(lm.sizeZ/2))));
                 
                 if (rng <= 40)
                 {

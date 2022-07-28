@@ -4,16 +4,20 @@ using System.Collections.Generic;
 using Tanks;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Ollie
 {
-    public class CritterAIPlanner : MonoBehaviour
+    public class CritterAIPlanner : MonoBehaviour, iPathable
     {
+        public List<Vector3> path;
         public List<Transform> foodLocationList;
         public List<Transform> mateLocationList;
-        public float moveSpeed;
+        public float moveSpeed = 0.25f;
         public WaterNode currentLocation;
         public LevelManager lm;
+        public Vector3 targetTransform;
+        public AStar aStar;
 
         #region Bools for planner World State
         public bool isSafe;
@@ -28,7 +32,7 @@ namespace Ollie
         [HideInInspector] public bool findingPredator;
         [HideInInspector] public bool mateLocated;
         public bool isHorny;
-        [HideInInspector] public bool healthLow;
+        public bool healthLow;
         [HideInInspector] public bool runningAway;
         [HideInInspector] public bool inDanger;
         [HideInInspector] public bool foodNearby;
@@ -38,17 +42,48 @@ namespace Ollie
         [HideInInspector] public bool preyDead;
         #endregion
 
+     
+
         private void Start()
         {
+            path = new List<Vector3>();
             moveSpeed = 0.25f;
             //testing purposes only
-            isHungry = true;
-            healthLow = true;
+            //isHungry = true;
+            //healthLow = true;
         }
 
         private void Update()
         {
-            currentLocation = lm.ConvertToGrid(transform.position);
+            if (!lm.ConvertToGrid(targetTransform).isBlocked)
+            {
+                aStar.FindPath(transform.position, targetTransform);
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            if (path.Count > 0)
+            {
+                if (transform.position != path[0])
+                {
+                    transform.position = Vector3.MoveTowards(transform.position,path[0],moveSpeed);
+                }
+                else if (transform.position == path[0])
+                {
+                    path.Remove(path[0]);
+                }
+            }
+        }
+
+        public void RandomTarget()
+        {
+            targetTransform = new Vector3((Random.Range(-lm.sizeX/2,lm.sizeX/2)),1,((Random.Range(-lm.sizeZ/2,lm.sizeZ/2))));
+        }
+
+        public void SetTarget(Vector3 newTarget)
+        {
+            targetTransform = newTarget;
         }
 
         public void AddFoodToList(GameObject foodLocation)
@@ -96,5 +131,19 @@ namespace Ollie
         {
             isHorny = toggle;
         }
+
+        #region iPathable Interface - must have "List<Vector3> path"
+
+        public void GeneratePath(WaterNode node)
+        {
+            path.Add(lm.ConvertToWorld(node));
+        }
+
+        public void ClearPath()
+        {
+            path.Clear();
+        }
+
+        #endregion
     }
 }
