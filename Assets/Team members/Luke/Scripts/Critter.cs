@@ -69,9 +69,21 @@ namespace Luke
 		{
 			yield return new WaitForSeconds(delay);
 			aStarUser.ResetNodes(transform.position, target);
-			aStarUser.AStarAlgorithmFast();
+			if (aStarUser.breaker == true)
+			{
+				StartCoroutine(BreakerSwitch());
+			}
+			else aStarUser.AStarAlgorithmFast();
 		}
-		
+
+		private IEnumerator BreakerSwitch()
+		{
+			yield return new WaitForSeconds(1);
+			aStarUser.breaker = false;
+			aStarUser.AStarAlgorithmFast();
+			
+		}
+
 		public IEnumerator HealthRegen()
 		{
 			yield return new WaitForSeconds(critterInfo.awakeDecayDelay);

@@ -41,6 +41,8 @@ namespace Luke
         public Coroutine coroutineInstance = null; //For stopping and resetting algorithm.
 
         public Action FinishedFillingGridEvent;
+
+        public LayerMask layerMask;
         
         #endregion
 
@@ -64,7 +66,7 @@ namespace Luke
 					};
                     
                     if (Physics.OverlapBox(Nodes[x,y].worldPosition, _gridTileSize*0.5f, 
-                            Quaternion.identity, 128).Length != 0)
+                            Quaternion.identity, layerMask).Length != 0)
                     {
                         Nodes[x, y].isBlocked = true;
                     }

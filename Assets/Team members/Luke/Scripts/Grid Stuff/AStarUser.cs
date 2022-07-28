@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Luke
 {
-	public class AStarUser : MonoBehaviour
+	public class AStarUser : SerializedMonoBehaviour
 	{
 		public LukeAStar aStar;
 		public bool[,] NodeClosedState;
@@ -15,6 +16,7 @@ namespace Luke
 		public AStarNode EndNode;
 		public List<AStarNode> _openNodes = new();
 		public List<AStarNode> path = new();
+		public bool breaker;
 
 		void Start()
 		{
@@ -29,25 +31,26 @@ namespace Luke
 
 		public void AStarAlgorithmFast()
         {
+            if (breaker) return;
 	        CurrentNode = StartNode;
 	        CurrentNode.GCost = Mathf.RoundToInt(1000*Vector3.Distance(CurrentNode.worldPosition, endLocation));
 	        CurrentNode.HCost = 0;
 	        _openNodes.Add(CurrentNode);
-
 	        CheckNeighbours();
-            
+	        if (breaker) return;
 	        CurrentNode = _openNodes[OpenNodesComparison()];
-
+	        if (breaker) return;
 	        if (CurrentNode != EndNode) AStarLoopFast();
 	        else CreatePath();
         }
 
 		private void AStarLoopFast()
-        {
+		{
+			if (breaker) return;
 	        CheckNeighbours(CurrentNode);
-	        
+	        if (breaker) return;
 	        if (_openNodes.Count > 0) CurrentNode = _openNodes[OpenNodesComparison()];
-
+	        if (breaker) return;
 	        if (CurrentNode != EndNode) AStarLoopFast();
 	        else CreatePath();
         }
@@ -144,6 +147,7 @@ namespace Luke
         
         public void ResetNodes(Vector3 startPosition, Vector3 targetPosition)
         {
+	        breaker = true;
 	        _openNodes.Clear();
 	        NodeClosedState = new bool[aStar.Nodes.GetLength(0),aStar.Nodes.GetLength(1)];
 	        for (int i = 0; i < NodeClosedState.GetLength(0); i++)
