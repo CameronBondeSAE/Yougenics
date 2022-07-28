@@ -1,13 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Luke;
-using Ollie;
-using Unity.Mathematics;
-using Unity.VisualScripting;
+using System.ComponentModel;
 using UnityEngine;
-using Random = System.Random;
 
 namespace Ollie
 {
@@ -22,6 +16,8 @@ namespace Ollie
         public int sizeZ;
         public int lengthX;
         public int lengthZ;
+        public int offsetX;
+        public int offsetZ;
         public Vector2 currentPosition;
         public LayerMask layers;
         public GameObject waterCube;
@@ -57,6 +53,8 @@ namespace Ollie
             sizeZ = Mathf.RoundToInt(bounds.extents.z) + 1;
             lengthX = Mathf.RoundToInt(bounds.center.x - bounds.extents.x/2);
             lengthZ = Mathf.RoundToInt(bounds.center.z - bounds.extents.z/2);
+            offsetX = Mathf.RoundToInt((bounds.center.x));
+            offsetZ = Mathf.RoundToInt((bounds.center.z));
             gridNodeReferences = new WaterNode[sizeX, sizeZ];
             blockedNodes = new List<WaterNode>();
             openNodeV3List = new List<WaterNode>();
@@ -113,9 +111,8 @@ namespace Ollie
                     for (int z = 0; z < sizeZ; z++)
                     {
                         gridNodeReferences[x, z] = new WaterNode();
-                        gridNodeReferences[x, z].gridPosition = new Vector2Int(x, z);
-                        gridNodeReferences[x, z].levelManager = this;
-                    
+                        gridNodeReferences[x, z].gridPosition = new Vector2Int(x-offsetX, z-offsetZ);
+
                         var vector3 = new Vector3(lengthX+x, 0, lengthZ+z);
                         
                         if (Physics.OverlapBox(vector3, gridTileHalfExtents,
@@ -430,10 +427,12 @@ namespace Ollie
         //commented out so I could push without errors popping up for others
         private void OnDrawGizmos()
         {
+            Gizmos.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+            Gizmos.DrawCube(bounds.center,bounds.extents);
+            
             if (!Application.isPlaying)
             {
-                Gizmos.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
-                Gizmos.DrawCube(bounds.center,bounds.extents);
+                
             }
 
             foreach (WaterNode node in gridNodeReferences)

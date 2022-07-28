@@ -15,7 +15,6 @@ namespace Ollie
         public List<Transform> mateLocationList;
         public float moveSpeed = 0.25f;
         public WaterNode currentLocation;
-        public LevelManager lm;
         public Vector3 targetTransform;
         public AStar aStar;
 
@@ -55,7 +54,7 @@ namespace Ollie
 
         private void Update()
         {
-            if (!lm.ConvertToGrid(targetTransform).isBlocked)
+            if (!LevelManager.instance.ConvertToGrid(targetTransform).isBlocked)
             {
                 aStar.FindPath(transform.position, targetTransform);
             }
@@ -78,7 +77,7 @@ namespace Ollie
 
         public void RandomTarget()
         {
-            targetTransform = new Vector3((Random.Range(-lm.sizeX/2,lm.sizeX/2)),1,((Random.Range(-lm.sizeZ/2,lm.sizeZ/2))));
+            targetTransform = new Vector3((Random.Range(-LevelManager.instance.sizeX/2,LevelManager.instance.sizeX/2)),1,((Random.Range(-LevelManager.instance.sizeZ/2,LevelManager.instance.sizeZ/2))));
         }
 
         public void SetTarget(Vector3 newTarget)
@@ -136,7 +135,7 @@ namespace Ollie
 
         public void GeneratePath(WaterNode node)
         {
-            path.Add(lm.ConvertToWorld(node));
+            path.Add(LevelManager.instance.ConvertToWorld(node));
         }
 
         public void ClearPath()

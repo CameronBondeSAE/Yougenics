@@ -7,7 +7,6 @@ namespace Ollie
 {
     public class AStar : MonoBehaviour
     {
-        public LevelManager lm;
         //public Heap<WaterNode> openPathNodes;
         public List<WaterNode> closedPathNodes;
         public WaterNode startLocation;
@@ -40,7 +39,7 @@ namespace Ollie
 
         public void AStarPathfindingStart()
         {
-            foreach (WaterNode node in lm.gridNodeReferences)
+            foreach (WaterNode node in LevelManager.instance.gridNodeReferences)
             {
                 node.isPath = false;
                 node.startLocation = false;
@@ -50,13 +49,13 @@ namespace Ollie
             closedPathNodes.Clear();
             
             //this is expensive and I should scale it down somehow
-            for (int x = 0; x < lm.sizeX; x++)
+            for (int x = 0; x < LevelManager.instance.sizeX; x++)
             {
-                for (int z = 0; z < lm.sizeZ; z++)
+                for (int z = 0; z < LevelManager.instance.sizeZ; z++)
                 {
-                    if (!lm.gridNodeReferences[x, z].isBlocked)
+                    if (!LevelManager.instance.gridNodeReferences[x, z].isBlocked)
                     {
-                        pathfindingUnblockedNodes.Add(lm.gridNodeReferences[x,z]);
+                        pathfindingUnblockedNodes.Add(LevelManager.instance.gridNodeReferences[x,z]);
                     }
                 }
             }
@@ -101,10 +100,10 @@ namespace Ollie
             // if (startLocation != targetLocation)
             // {
                 //startLocation.isOpen = true;
-                Heap<WaterNode> openPathNodes = new Heap<WaterNode>(lm.MaxSize);
+                Heap<WaterNode> openPathNodes = new Heap<WaterNode>(LevelManager.instance.MaxSize);
 
-                WaterNode startNode = lm.ConvertToGrid(startPos);
-                WaterNode targetNode = lm.ConvertToGrid(targetPos);
+                WaterNode startNode = LevelManager.instance.ConvertToGrid(startPos);
+                WaterNode targetNode = LevelManager.instance.ConvertToGrid(targetPos);
                 openPathNodes.Add(startNode);
 
                 while (openPathNodes.Count > 0)
@@ -187,9 +186,9 @@ namespace Ollie
             // {
                 startLocation.isOpen = true;
 
-                Heap<WaterNode> openPathNodes = new Heap<WaterNode>(lm.MaxSize);
-                WaterNode startNode = lm.ConvertToGrid(startPos);
-                WaterNode targetNode = lm.ConvertToGrid(targetPos);
+                Heap<WaterNode> openPathNodes = new Heap<WaterNode>(LevelManager.instance.MaxSize);
+                WaterNode startNode = LevelManager.instance.ConvertToGrid(startPos);
+                WaterNode targetNode = LevelManager.instance.ConvertToGrid(targetPos);
                 openPathNodes.Add(startNode);
 
                 while (openPathNodes.Count > 0)

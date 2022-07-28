@@ -14,7 +14,6 @@ namespace Ollie
         public bool isTooSteep;
         public Vector2Int gridPosition;
         public float fillAmount;
-        public LevelManager levelManager;
         public bool isWater;
         public bool startLocation;
         public bool targetLocation;
@@ -41,7 +40,7 @@ namespace Ollie
             get
             {
                 //will need to update Y pos when heights are implemented
-                return new Vector3(gridPosition.x+levelManager.lengthX,1,gridPosition.y+levelManager.lengthZ);
+                return new Vector3(gridPosition.x+LevelManager.instance.lengthX,1,gridPosition.y+LevelManager.instance.lengthZ);
             }
         }
         public WaterNode parent;
@@ -50,25 +49,25 @@ namespace Ollie
 
         public void ScanMyself()
         {
-            var vector3 = new Vector3(levelManager.lengthX+gridPosition.x, 0, levelManager.lengthZ+gridPosition.y);
-            if (Physics.OverlapBox(vector3, levelManager.gridTileHalfExtents, Quaternion.identity, levelManager.layers)
+            var vector3 = new Vector3(LevelManager.instance.lengthX+gridPosition.x, 0, LevelManager.instance.lengthZ+gridPosition.y);
+            if (Physics.OverlapBox(vector3, LevelManager.instance.gridTileHalfExtents, Quaternion.identity, LevelManager.instance.layers)
                     .Length != 0)
             {
                 isBlocked = true;
-                if(!levelManager.blockedNodes.Contains(this)) levelManager.blockedNodes.Add(this);
+                if(!LevelManager.instance.blockedNodes.Contains(this)) LevelManager.instance.blockedNodes.Add(this);
             }
 
-            if (Physics.OverlapBox(vector3, levelManager.gridTileHalfExtents, Quaternion.identity, levelManager.layers)
+            if (Physics.OverlapBox(vector3, LevelManager.instance.gridTileHalfExtents, Quaternion.identity, LevelManager.instance.layers)
                     .Length == 0)
             {
                 isBlocked = false;
-                if(levelManager.blockedNodes.Contains(this)) levelManager.blockedNodes.Remove(this);
+                if(LevelManager.instance.blockedNodes.Contains(this)) LevelManager.instance.blockedNodes.Remove(this);
             }
         }
         
         public void CheckNeighbours()
         {
-            if (!levelManager.AStar)
+            if (!LevelManager.instance.AStar)
             {
                 for (int x = 0; x < 3; x++)
                 {
@@ -78,16 +77,16 @@ namespace Ollie
                     
                         if (!(neighbour == null || neighbour.isBlocked || neighbour.isWater))
                         {
-                            if (!levelManager.openNodesToAdd.Contains(neighbour))
+                            if (!LevelManager.instance.openNodesToAdd.Contains(neighbour))
                             {
-                                levelManager.openNodesToAdd.Add(neighbour);
+                                LevelManager.instance.openNodesToAdd.Add(neighbour);
                             }
                         }
                     }
                 }
             }
 
-            if (levelManager.AStar)
+            if (LevelManager.instance.AStar)
             {
                 for (int x = 0; x < 3; x++)
                 {
@@ -97,9 +96,9 @@ namespace Ollie
                     
                         if (!(neighbour == null || neighbour.isBlocked || neighbour.isOpen))
                         {
-                            if (!levelManager.openNodesToAdd.Contains(neighbour))
+                            if (!LevelManager.instance.openNodesToAdd.Contains(neighbour))
                             {
-                                levelManager.openNodesToAdd.Add(neighbour);
+                                LevelManager.instance.openNodesToAdd.Add(neighbour);
                             }
                         }
                     }
@@ -117,17 +116,17 @@ namespace Ollie
                     
                     if (!(neighbour == null || neighbour.isBlocked || neighbour.isWater))
                     {
-                        levelManager.SpreadToNeighbours(neighbour, neighbour.gridPosition);
+                        LevelManager.instance.SpreadToNeighbours(neighbour, neighbour.gridPosition);
                         neighbours[x, z].isWater = true;
                     }
                 }
             }*/
 
-            // foreach (WaterNode neighbour in levelManager.openWaterNodes)
+            // foreach (WaterNode neighbour in LevelManager.instance.openWaterNodes)
             // {
             //     neighbour.isWater = true;
-            //     levelManager.closedWaterNodes.Add(neighbour);
-            //     levelManager.openWaterNodes.Remove(neighbour);
+            //     LevelManager.instance.closedWaterNodes.Add(neighbour);
+            //     LevelManager.instance.openWaterNodes.Remove(neighbour);
             // }
         }
         
