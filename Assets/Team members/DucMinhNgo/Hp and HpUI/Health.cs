@@ -104,6 +104,7 @@ namespace Minh
                 {
                     CurrentHealth.Value -= 1;
                     yield return new WaitForSeconds(1);
+                    hpui.SetHealth(curHp);
                 }
                 else
                 {
@@ -145,6 +146,7 @@ namespace Minh
                 {
                     CurrentHealth.Value += 1;
                     yield return new WaitForSeconds(1);
+                    hpui.SetHealth(curHp);
                 }
                 else
                 {

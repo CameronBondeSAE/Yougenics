@@ -9,8 +9,9 @@ namespace Minh
 {
     public class Interactf : MonoBehaviour, IInteractable
     {
-        public float hp = 90;
-        public float curhp = 90;
+        public HpUI hpui;
+        public int hp = 90;
+        public int curhp = 90;
         public event Action dealdamage;
         public event Action healing; 
         
@@ -19,6 +20,7 @@ namespace Minh
         {
             Dealdamage();
             Interact();
+            if (hpui != null) hpui.SetMaxHealth(hp);
         }
 
         // Update is called once per frame
@@ -33,6 +35,7 @@ namespace Minh
                 {
                     Destroy(gameObject);
                 }
+                hpui.SetMaxHealth(hp);
                 dealdamage?.Invoke();
         }
 
@@ -45,6 +48,7 @@ namespace Minh
                 curhp = 100;
                 Debug.Log("Full Hp");
             }
+            hpui.SetMaxHealth(hp);
             healing?.Invoke();
         }
     }
