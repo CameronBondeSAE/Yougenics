@@ -49,10 +49,10 @@ public class PlayerModel : NetworkBehaviour
     private void FixedUpdate()
     {
         //Using forces & mass for movement
-        //rb.AddForce(movement * speed, ForceMode2D.Force);
+        rb.AddForce(movement * movementSpeed, ForceMode.Impulse);
 
         //instant reactive movement
-        rb.MovePosition(rb.position + movement * movementSpeed * Time.fixedDeltaTime);
+        //rb.MovePosition(rb.position + movement * movementSpeed * Time.fixedDeltaTime);
     }
 
     #region Input Controlls Networked
