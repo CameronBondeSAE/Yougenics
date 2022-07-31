@@ -15,22 +15,22 @@ namespace Alex
 
         public void SetMaxHealth(float healthHp)
         {
-            slider.maxValue = minhHealth.Hp;
-            slider.value = minhHealth.Hp;
+            slider.maxValue = minhHealth.CurrentHealth.Value;
+            slider.value = minhHealth.CurrentHealth.Value;
 
             fill.color = gradient.Evaluate(1f);
         }
 
         public void SetHealth(float healthHp)
         {
-            slider.value = minhHealth.Hp;
+            slider.value = minhHealth.CurrentHealth.Value;
 
             fill.color = gradient.Evaluate(slider.normalizedValue);
         }
 
         public void Update()
         {
-            slider.value = minhHealth.Hp;
+            slider.value = minhHealth.CurrentHealth.Value;
             fill.color = gradient.Evaluate(slider.normalizedValue);
         }
     }

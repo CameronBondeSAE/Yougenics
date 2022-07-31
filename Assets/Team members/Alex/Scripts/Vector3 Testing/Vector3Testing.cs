@@ -9,6 +9,7 @@ public class Vector3Testing : MonoBehaviour
 {
     public Vector3 test;
 
+    public float RayCount = 5f;
     private void Update()
     {
         Reflect();
@@ -45,27 +46,21 @@ public class Vector3Testing : MonoBehaviour
         //Debug.Log(Vector3.Reflect(Vector3.up, test));
         //Debug.Log(Vector3.ProjectOnPlane(Vector3.up, test));
         //Debug.Log(Vector3.Project(Vector3.up, test));
+        
+        
     }
 
     private void Reflect()
     {
-        //Debug.DrawLine(new Vector3(0, 0, 0), Vector3.Reflect(Vector3.up, test));
-        float maxdistance = 255f;
-        
-        
-        
+        Ray ray = new Ray(transform.position, transform.forward);
+        RaycastHit hitInfo;
 
-        for (int i = 0; i < 5; i++)
-        {
-            Ray ray = new Ray(transform.position, transform.forward);
-            RaycastHit hitInfo;
-            Physics.Raycast(ray, out hitInfo);
+        Physics.Raycast(ray, out hitInfo);
 
-            Vector3 reflect = Vector3.Reflect(ray.direction, hitInfo.normal);
-            Debug.DrawLine(ray.origin, hitInfo.point, Color.red);
-        }
+
+        Vector3 reflect = Vector3.Reflect(ray.direction, hitInfo.normal);
+        Debug.DrawLine(ray.origin, hitInfo.point, Color.red);
         
-        /*
         Ray reflectedRayDirection = new Ray(hitInfo.point, reflect);
         RaycastHit reflectedhitInfo;
         
@@ -76,6 +71,10 @@ public class Vector3Testing : MonoBehaviour
 
         //raycast = Physics.Raycast(ray, out hitInfo, maxDistance);
         //reflectedDirection  = Vector3.Reflect(direction, hitInfo.normal);
-        */
+        
     }
+            
 }
+        
+        
+        

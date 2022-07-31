@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 246153594134181686, guid: cc02e9a49a115264eb5ef1f88085b227, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 898404568}
     - target: {fileID: 8611620220612625317, guid: cc02e9a49a115264eb5ef1f88085b227, type: 3}
       propertyPath: m_Name
       value: JohnPlayerModel
@@ -617,6 +621,7 @@ MonoBehaviour:
   energyMin: 0
   drainAmount: 1
   drainSpeed: 1
+  rb: {fileID: 0}
 --- !u!1 &349304420
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,6 +835,7 @@ MonoBehaviour:
   energyMin: 0
   drainAmount: 1
   drainSpeed: 1
+  rb: {fileID: 0}
 --- !u!1001 &453838426
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -915,6 +921,7 @@ MonoBehaviour:
   energyMin: 0
   drainAmount: 1
   drainSpeed: 1
+  rb: {fileID: 0}
 --- !u!114 &499121207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -927,20 +934,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd95a418070c3014eb6368bceeef6adf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentHealth:
-    m_InternalValue: 0
-  IsDead:
-    m_InternalValue: 0
-  FullEnergy:
-    m_InternalValue: 0
-  NoEnergy:
-    m_InternalValue: 0
-  Hp: 100
-  curHp: 0
-  dead: 0
-  fullenergy: 1
-  noenergy: 0
-  hpui: {fileID: 0}
 --- !u!114 &499121208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -995,6 +988,11 @@ MonoBehaviour:
 Transform:
   m_CorrespondingSourceObject: {fileID: 9197623580334767074, guid: 7c88200d13bb2e249989bb838dd3789d, type: 3}
   m_PrefabInstance: {fileID: 453838426}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &898404568 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 8611620220612625321, guid: cc02e9a49a115264eb5ef1f88085b227, type: 3}
+  m_PrefabInstance: {fileID: 67175163}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &937038226
 GameObject:
@@ -1158,6 +1156,7 @@ MonoBehaviour:
   energyMin: 0
   drainAmount: 1
   drainSpeed: 1
+  rb: {fileID: 0}
 --- !u!1001 &1184205532
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1391,6 +1390,7 @@ MonoBehaviour:
   energyMin: 0
   drainAmount: 1
   drainSpeed: 1
+  rb: {fileID: 0}
 --- !u!1001 &1684230066
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1601,6 +1601,7 @@ MonoBehaviour:
   energyMin: 0
   drainAmount: 1
   drainSpeed: 1
+  rb: {fileID: 0}
 --- !u!1001 &6451098723107706981
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -366,7 +366,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 255
 --- !u!114 &708620358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -703,7 +703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f153b32d2104dd4d80fabe266a39766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minhHealth: {fileID: 1763955828344914917}
+  minhHealth: {fileID: 0}
   slider: {fileID: 1179835702}
   gradient:
     serializedVersion: 2
@@ -950,11 +950,11 @@ GameObject:
   - component: {fileID: 4414792570623018432}
   - component: {fileID: 563052534330659026}
   - component: {fileID: 6360438316257684829}
-  - component: {fileID: 1763955828344914917}
   - component: {fileID: 1763955828344914922}
   - component: {fileID: 5048503751302397202}
   - component: {fileID: 5048503751302397210}
   - component: {fileID: 5048503751302397211}
+  - component: {fileID: 4920042486623888911}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1071,27 +1071,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 0}
   movementSpeed: 5
-  health: {fileID: 1763955828344914917}
-  healthBarAlex: {fileID: 1179835701}
-  energyBarAlex: {fileID: 0}
-  energy: {fileID: 0}
-  taskList: {fileID: 0}
---- !u!114 &1763955828344914917
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1894325770523995306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd95a418070c3014eb6368bceeef6adf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Hp: 100
-  dead: 0
-  fullenergy: 0
-  noenergy: 0
+  rb: {fileID: 0}
+  health: {fileID: 0}
+  energy: {fileID: 1763955828344914922}
 --- !u!114 &1763955828344914922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1104,6 +1086,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86b58142ff8a3804fa71c5004d10d94b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnergyAmount:
+    m_InternalValue: 50
   energyAmount: 20
   energyMax: 100
   energyMin: 0
@@ -1116,12 +1100,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1894325770523995306}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f153b32d2104dd4d80fabe266a39766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minhHealth: {fileID: 1763955828344914917}
+  minhHealth: {fileID: 0}
   slider: {fileID: 1179835702}
   gradient:
     serializedVersion: 2
@@ -1160,7 +1144,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1894325770523995306}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5d80f846f66bfb4bbabf640dab9c5c5, type: 3}
   m_Name: 
@@ -1204,9 +1188,32 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1894325770523995306}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6abb0e93ff3fb64c9e69c12c47d46b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  outOfEnergy: 0
+--- !u!114 &4920042486623888911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894325770523995306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac5e6230bb3415145a9b23ae4df86714, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentHealth:
+    m_InternalValue: 0
+  IsDead:
+    m_InternalValue: 0
+  Hp: 100
+  curHp: 0
+  dead: 0
+  fullenergy: 1
+  noenergy: 0
+  hpui: {fileID: 0}

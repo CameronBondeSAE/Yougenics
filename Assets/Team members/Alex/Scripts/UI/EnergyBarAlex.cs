@@ -15,22 +15,22 @@ namespace Alex
 
         public void SetMaxEnergy(float energyTest)
         {
-            slider.maxValue = energy.energyAmount;
-            slider.value = energy.energyAmount;
+            slider.maxValue = energy.EnergyAmount.Value;
+            slider.value = energy.EnergyAmount.Value;
 
             fill.color = gradient.Evaluate(1f);
         }
 
         public void SetEnergy(float energyTest)
         {
-            slider.value = energy.energyAmount;
+            slider.value = energy.EnergyAmount.Value;
 
             fill.color = gradient.Evaluate(slider.normalizedValue);
         }
 
         public void Update()
         {
-            slider.value = energy.energyAmount;
+            slider.value = energy.EnergyAmount.Value;
             fill.color = gradient.Evaluate(slider.normalizedValue);
         }
     }

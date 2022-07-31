@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using System;
+using System.Collections.Generic;
+using Alex;
 using Unity.Netcode;
 
 
@@ -16,6 +18,7 @@ public class Energy : NetworkBehaviour
     public event Action NoEnergyEvent; 
     public event Action FullEnergyEvent;
     public float drainSpeed = 1;
+    public bool energyUserMoving = false;
 
     public override void OnNetworkSpawn()
     {
@@ -25,12 +28,30 @@ public class Energy : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         if (NetworkManager.Singleton == null)
             Debug.Log("No Network Manager Found - ADD ManagerScene For Testing To Your Scene");
 
+        energyUserMoving = false;
         GetComponent<Minh.Health>();
         CheckEnergyMax();
         StartCoroutine(EnergyDrainer());
+        
+    }
+
+    private void FixedUpdate()
+    {
+        Debug.Log(GetComponent<Rigidbody>().velocity.magnitude);
+        if (GetComponent<Rigidbody>().velocity.magnitude > 5f)
+        {
+            energyUserMoving = true;
+            StartCoroutine(MovementEnergyDrain());
+            if (GetComponent<Rigidbody>().velocity.magnitude < .001f)
+            {
+                energyUserMoving = false; 
+                StopCoroutine(MovementEnergyDrain());
+            }
+        }
     }
 
     public void ChangeEnergy(float f)
@@ -52,7 +73,6 @@ public class Energy : NetworkBehaviour
             FullEnergyEvent?.Invoke();
             Debug.Log("Full Energy");
             //FindObjectOfType<AudioManager>().Play("Energy Full");
-
         }
     }
 
@@ -82,6 +102,15 @@ public class Energy : NetworkBehaviour
             }
         }
     }
+
+    public IEnumerator MovementEnergyDrain()
+    {
+        if(IsServer)
+            yield return new WaitForSeconds(Time.deltaTime);
+            EnergyAmount.Value -= drainAmount * Time.deltaTime;
+        
+    }
+        
 
     #region Networking Implementation
 

@@ -12,6 +12,7 @@ namespace Alex
         private Vector3 playerMovement;
         //public bool vehicleActive;
         //public Vehicle vehicle;
+        public Rigidbody rb;
         
 
         public Minh.Health health;
@@ -21,6 +22,7 @@ namespace Alex
         // Start is called before the first frame update
         void Start()
         {
+            rb = GetComponent<Rigidbody>();
             //GetComponent<Vehicle>().vehicleActive = false;
             controller = gameObject.AddComponent<CharacterController>();
             Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
@@ -30,7 +32,8 @@ namespace Alex
 
         }
         
-        
+
+
         void TakeDamage(int damage)
         {
             health.Hp -= damage;
@@ -62,5 +65,7 @@ namespace Alex
             }
             */
         }
+
+
     }
 }
