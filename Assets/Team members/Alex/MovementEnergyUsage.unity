@@ -513,5 +513,21 @@ PrefabInstance:
       propertyPath: camera
       value: 
       objectReference: {fileID: 785206166}
+    - target: {fileID: 6654227862459581977, guid: 89fe2e8efc8a4c947988965905136cac, type: 3}
+      propertyPath: m_Drag
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6654227862459581977, guid: 89fe2e8efc8a4c947988965905136cac, type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6654227862459581977, guid: 89fe2e8efc8a4c947988965905136cac, type: 3}
+      propertyPath: m_AngularDrag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6654227862459581977, guid: 89fe2e8efc8a4c947988965905136cac, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89fe2e8efc8a4c947988965905136cac, type: 3}

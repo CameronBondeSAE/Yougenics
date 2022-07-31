@@ -15,10 +15,13 @@ public class Energy : NetworkBehaviour
     public float energyMax = 100;
     public float energyMin = 0f;
     public float drainAmount = 1;
+    public float moveDrainAmount = 0.001f;
     public event Action NoEnergyEvent; 
     public event Action FullEnergyEvent;
     public float drainSpeed = 1;
     public bool energyUserMoving = false;
+    private Rigidbody rb;
+    public float myMagnitude;
 
     public override void OnNetworkSpawn()
     {
@@ -28,29 +31,22 @@ public class Energy : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         if (NetworkManager.Singleton == null)
             Debug.Log("No Network Manager Found - ADD ManagerScene For Testing To Your Scene");
 
         energyUserMoving = false;
         GetComponent<Minh.Health>();
         CheckEnergyMax();
-        StartCoroutine(EnergyDrainer());
-        
+        //StartCoroutine(EnergyDrainer());
+        rb = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
     {
-        Debug.Log(GetComponent<Rigidbody>().velocity.magnitude);
-        if (GetComponent<Rigidbody>().velocity.magnitude > 5f)
+        myMagnitude = rb.velocity.magnitude;
+        if (myMagnitude > 1f)
         {
-            energyUserMoving = true;
-            StartCoroutine(MovementEnergyDrain());
-            if (GetComponent<Rigidbody>().velocity.magnitude < .001f)
-            {
-                energyUserMoving = false; 
-                StopCoroutine(MovementEnergyDrain());
-            }
+            MovementEnergyDrain();
         }
     }
 
@@ -95,7 +91,7 @@ public class Energy : NetworkBehaviour
         {
             yield return new WaitForSeconds(drainSpeed);
             {
-                if(IsServer)
+                //if(IsServer)
                     EnergyAmount.Value -= drainAmount;
                 //else
                     //RequestEnergyDrainServerRpc()
@@ -103,11 +99,11 @@ public class Energy : NetworkBehaviour
         }
     }
 
-    public IEnumerator MovementEnergyDrain()
+    public void MovementEnergyDrain()
     {
-        if(IsServer)
-            yield return new WaitForSeconds(Time.deltaTime);
-            EnergyAmount.Value -= drainAmount * Time.deltaTime;
+        //if(IsServer)
+        
+        EnergyAmount.Value -= moveDrainAmount;
         
     }
         

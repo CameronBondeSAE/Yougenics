@@ -142,6 +142,7 @@ MonoBehaviour:
   energyMin: 0
   drainAmount: 1
   drainSpeed: 1
+  energyUserMoving: 0
 --- !u!114 &-6809705644763382700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,16 +152,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 727704201344060695}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd95a418070c3014eb6368bceeef6adf, type: 3}
+  m_Script: {fileID: 11500000, guid: ac5e6230bb3415145a9b23ae4df86714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentHealth:
     m_InternalValue: 0
   IsDead:
-    m_InternalValue: 0
-  FullEnergy:
-    m_InternalValue: 0
-  NoEnergy:
     m_InternalValue: 0
   Hp: 100
   curHp: 0
