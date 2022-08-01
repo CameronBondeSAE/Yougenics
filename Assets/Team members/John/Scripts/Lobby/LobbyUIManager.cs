@@ -19,10 +19,14 @@ public class LobbyUIManager : NetworkBehaviour
 
     [Header("Lobby UI Setup")]
     public GameObject lobbyCanvas;
+    //public GameObject clientField;
+    //public GameObject clientLobbyUIPrefab;
     public TMP_Text clientUI;
     public Button startButton;
     public Button lobbyButton;
     public TMP_InputField playerNameField;
+    public GameObject levelSelectUI;
+    public GameObject waitForHostBanner;
 
     [Header("IP Canvas Setup")]
     public GameObject ipAddressCanvas;
@@ -70,10 +74,8 @@ public class LobbyUIManager : NetworkBehaviour
     public void JoinGame()
     {
         NetworkManager.Singleton.StartClient();
-        //lobbyCanvas.GetComponentInChildren<Button>().gameObject.SetActive(false);
-        startButton.gameObject.SetActive(false);
-        lobbyCanvas.SetActive(true);
-        ipAddressCanvas.SetActive(false);
+
+        SetupClientUI();
     }
 
     public bool debugStatusLabels = true;
@@ -141,13 +143,29 @@ public class LobbyUIManager : NetworkBehaviour
     {
         //HACK to work around Unity Calling this event before ConnectedClientList is updated
         if (NetworkManager.Singleton.IsServer)
+        {
             Invoke("HandleClientNames", 1f);
+        }
     }
 
     public void OnClientJoin(ulong clientID)
     {
         if (NetworkManager.Singleton.IsServer || IsOwner)
         {
+            //Using the client count as the player number reference as clientID does not lower if a player leaves and rejoins (so player 2 ends up incrementing to player 3 etc)
+            NetworkClient client;
+            if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientID, out client))
+            {
+                ClientInfo clientInfo = client.PlayerObject.GetComponent<ClientInfo>();
+                clientInfo.Init((ulong)NetworkManager.Singleton.ConnectedClients.Count);
+
+                //Ignore----------------------------------------------------------------
+                //GameObject uiRef = Instantiate(clientLobbyUIPrefab, clientField.transform);
+                /*clientInfo.lobbyUIRef = uiRef;
+                uiRef.GetComponent<TMP_Text>().text = clientInfo.clientName;*/
+                //SpawnClientLobbyUIClientRpc();
+            }
+
             HandleClientNames();
             HandleLocalClient(clientID);
         }
@@ -155,6 +173,32 @@ public class LobbyUIManager : NetworkBehaviour
         if (clientID == NetworkManager.Singleton.LocalClientId)
             myLocalClientId = clientID;
     }
+
+    //-----------------------------
+    //IGNORE: Was trying to get spawning a clientLobbyUIPrefab working
+
+    /*[ServerRpc(RequireOwnership = false)]
+    private void ReqClientLobbyUIServerRpc()
+    {
+        SpawnClientLobbyUIClientRpc();
+    }
+
+    [ClientRpc]
+    public void SpawnClientLobbyUIClientRpc()
+    {
+        if (!IsServer)
+            Instantiate(clientLobbyUIPrefab, clientField.transform);
+
+        //Only do this on clients to prevent duplicate spawnings on the server
+
+        foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
+        {
+            if (!IsServer)
+                Instantiate(client.PlayerObject.GetComponent<ClientInfo>().lobbyUIRef, clientField.transform);
+            Debug.Log("Test");
+        }
+    }*/
+    //-----------------------------
 
     void HandleLocalClient(ulong clientID)
     {
@@ -181,11 +225,6 @@ public class LobbyUIManager : NetworkBehaviour
         {
             NetworkClient client = NetworkManager.Singleton.ConnectedClientsList[i];
             clientName += client.PlayerObject.GetComponent<ClientInfo>().clientName + " ";
-        }
-
-        if (NetworkManager.Singleton.IsServer)
-        {
-            UpdateLobbyClientListName(clientName);
         }
 
         UpdateLobbyClientRPC(clientName);
@@ -242,7 +281,6 @@ public class LobbyUIManager : NetworkBehaviour
 
         //Update UI
         lobbyCam.SetActive(false);
-        InGameLobbyUI(true);
         
         //Load the selected scene
         NetworkManager.Singleton.SceneManager.LoadScene(sceneToLoad, LoadSceneMode.Additive);
@@ -284,21 +322,7 @@ public class LobbyUIManager : NetworkBehaviour
         //BUG: Scene is not yet loaded when this is called
         //SceneManager.SetActiveScene(scene);
 
-        SubmitLobbyUIStateClientRpc(false);
-        
-        
-    }
-
-    [ClientRpc]
-    public void SubmitLobbyUIStateClientRpc(bool value)
-    {
-        lobbyCanvas.SetActive(value);
-    }
-
-    //Using this for when a client wants to display lobby during a game
-    public void DisplayLobby(bool display)
-    {
-        lobbyCanvas.SetActive(display);
+        SubmitLobbyUIStateClientRpc(true);
     }
 
     public void ReturnToLobby()
@@ -306,40 +330,77 @@ public class LobbyUIManager : NetworkBehaviour
         //Load lobby
 
         //Despawn Player Objects?
-        foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
+        /*foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
         {
             client.PlayerObject.GetComponent<John.PlayerController>().OnPlayerUnassigned();
 
             //client.PlayerObject.GetComponent<John.PlayerController>().playerModel.GetComponent<NetworkObject>().Despawn();
 
-            /*foreach(NetworkObject obj in client.OwnedObjects)
+            *//*foreach(NetworkObject obj in client.OwnedObjects)
             {
                 obj.Despawn();
-            }*/
-        }
+            }*//*
+        }*/
 
         //unload active scene (HACK: Having issues setting the active scene on scene loaded)
         NetworkManager.Singleton.SceneManager.UnloadScene(SceneManager.GetSceneByName(sceneToLoad));
 
         //Update Lobby UI
-        SubmitLobbyUIStateClientRpc(true);
-        InGameLobbyUI(false);
+        SubmitLobbyUIStateClientRpc(false);
         lobbyCam.SetActive(true);
     }
 
+    #region UI Hacky Code
+    [ClientRpc]
+    public void SubmitLobbyUIStateClientRpc(bool inGame)
+    {
+        lobbyCanvas.SetActive(!inGame);
+
+        InGameLobbyUI(inGame);
+    }
+
+    //Using this for when a client wants to display lobby during a game
+    public void DisplayLobby(bool display)
+    {
+        lobbyCanvas.SetActive(display);
+    }
     public void InGameLobbyUI(bool inGame)
     {
         if(inGame)
         {
-            startButton.gameObject.SetActive(false);
             playerNameField.gameObject.SetActive(false);
-            lobbyButton.gameObject.SetActive(true);
+
+            if (IsServer)
+            {
+                levelSelectUI.SetActive(false);
+                lobbyButton.gameObject.SetActive(true);
+                startButton.gameObject.SetActive(false);
+            }
+            else
+                waitForHostBanner.SetActive(false);
         }
         else
         {
-            startButton.gameObject.SetActive(true);
             playerNameField.gameObject.SetActive(true);
-            lobbyButton.gameObject.SetActive(false);
+
+            if (IsServer)
+            {
+                lobbyButton.gameObject.SetActive(false);
+                levelSelectUI.SetActive(true);
+                startButton.gameObject.SetActive(true);
+            }
+            else
+                waitForHostBanner.SetActive(true);
         }
     }
+
+    void SetupClientUI()
+    {
+        startButton.gameObject.SetActive(false);
+        lobbyCanvas.SetActive(true);
+        ipAddressCanvas.SetActive(false);
+        levelSelectUI.SetActive(false);
+        waitForHostBanner.SetActive(true);
+    }
+    #endregion
 }

@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Team members/John/ManagerScene.unity
     guid: 5934e573e22147d40a6c82a6edb4eb7e
+  - enabled: 1
+    path: Assets/Team members/John/JohnEmptyTestScene.unity
+    guid: c2ed811599d59fd4eaed37baddc4d6c9
   m_configObjects: {}

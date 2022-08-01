@@ -8,13 +8,16 @@ public class ClientInfo : NetworkBehaviour
 {
 
     public string clientName = "Player";
+    public GameObject lobbyUIRef;
 
-    public override void OnNetworkSpawn()
+    public void Init(ulong clientId)
     {
-        if (IsOwner)
-        {
-            clientName = "Player " + (OwnerClientId + 1);
-        }
+        clientName = "Player " + clientId;
     }
 
+    /*public override void OnDestroy()
+    {
+        base.OnDestroy();
+        Destroy(lobbyUIRef);
+    }*/
 }
