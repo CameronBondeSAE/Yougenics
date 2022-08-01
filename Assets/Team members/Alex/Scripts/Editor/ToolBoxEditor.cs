@@ -46,7 +46,7 @@ public class ToolBoxEditor : EditorWindow
         if (GUILayout.Button("Focus on random AI"))
         {
             
-            Alex.AnotherAI[] findObjectsOfType = FindObjectsOfType<Alex.AnotherAI>();
+            Alex.AlexAI[] findObjectsOfType = FindObjectsOfType<Alex.AlexAI>();
             Selection.activeGameObject = findObjectsOfType[Random.Range(0, findObjectsOfType.Length)].gameObject;
             SceneView.FrameLastActiveSceneView();
         }

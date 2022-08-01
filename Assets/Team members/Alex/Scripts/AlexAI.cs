@@ -6,7 +6,7 @@ using Alex;
 
 namespace Alex
 {
-    public class AnotherAI : MonoBehaviour
+    public class AlexAI : MonoBehaviour
     {
         Energy myEnergy;
         Rigidbody rb;
