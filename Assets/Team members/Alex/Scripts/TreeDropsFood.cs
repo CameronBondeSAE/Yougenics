@@ -17,19 +17,13 @@ namespace Alex
 
         private Vector3 tree;
         public GameObject treeTop;
-        
+
         void Start()
         {
-            spawner.SpawnSingle(treePrefab,new Vector3(treeTop.transform.localPosition.x - 20f, treeTop.transform.localPosition.y,
-                treeTop.transform.localPosition.z), Quaternion.identity);
+
             canSpawn = false;
             energy = GetComponent<Energy>();
-            
-        }
-
-        void Awake()
-        {
-            
+            StartCoroutine(SpawnThisTree());
         }
 
         // Update is called once per frame
@@ -38,6 +32,14 @@ namespace Alex
             if (GetComponent<Energy>().EnergyAmount.Value <= 40)
                 spawner.SpawnSingle(foodPrefab, new Vector3(Random.Range(treeTop.transform.localPosition.x -10, treeTop.transform.localPosition.x +10), treeTop.transform.position.y - 4f, Random.Range(treeTop.transform.localPosition.x -10, treeTop.transform.localPosition.x +10)), Quaternion.identity);
         }
+
+        public IEnumerator SpawnThisTree()
+        {
+            yield return new WaitForSeconds(2f);
+            spawner.SpawnSingle(treePrefab,new Vector3(treeTop.transform.localPosition.x - 20f, treeTop.transform.localPosition.y,
+                treeTop.transform.localPosition.z), Quaternion.identity);
+        }
+       
     }
     
     

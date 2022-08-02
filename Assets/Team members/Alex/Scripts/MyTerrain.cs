@@ -2,28 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MyTerrain : MonoBehaviour
+namespace Alex
 {
-    public TerrainGenerator terrainGenerator;
-    
-    public float scaler = .1f;
-    private float perlinNoise = 0f;
-    public float heightMultiplier = 10f;
-    
-
-    public void Start()
+    public class MyTerrain : MonoBehaviour
     {
-        // Set the callback to a temp randomiser function
-        terrainGenerator.calculateHeightCallback = YourHeightCalculatorFunction;
-        terrainGenerator.GenerateTerrain();
-    }
+        public TerrainGenerator terrainGenerator;
 
-    public float YourHeightCalculatorFunction(int x, int z)
-    {
-        perlinNoise = Mathf.PerlinNoise(x * scaler, z * scaler);
+        public float scaler = .1f;
+        private float perlinNoise = 0f;
+        public float heightMultiplier = 10f;
 
-        return perlinNoise * heightMultiplier;
+
+        public void Start()
+        {
+            // Set the callback to a temp randomiser function
+            terrainGenerator.calculateHeightCallback = YourHeightCalculatorFunction;
+            terrainGenerator.GenerateTerrain();
+        }
+
+        public float YourHeightCalculatorFunction(int x, int z)
+        {
+            perlinNoise = Mathf.PerlinNoise(x * scaler, z * scaler);
+
+            return perlinNoise * heightMultiplier;
+        }
     }
-        
 }
 
