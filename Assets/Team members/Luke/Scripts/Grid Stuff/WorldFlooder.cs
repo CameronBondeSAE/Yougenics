@@ -53,25 +53,6 @@ namespace Luke
 					}
 				}
 			}
-			IntroduceNeighbours();
-		}
-
-		private void IntroduceNeighbours()
-		{
-			for (int x = 0; x < worldSizeX; x++)
-			{
-				for (int z = 0; z < worldSizeZ; z++)
-				{
-					if (x > 0) gridNodeReferences[x-1, z].neighbours[2,1] = gridNodeReferences[x, z];
-					if (z > 0) gridNodeReferences[x, z-1].neighbours[1,2] = gridNodeReferences[x, z];
-					if (x < worldSizeX-1) gridNodeReferences[x+1, z].neighbours[0,1] = gridNodeReferences[x, z];
-					if (z < worldSizeZ-1) gridNodeReferences[x, z+1].neighbours[1,0] = gridNodeReferences[x, z];
-					if (x > 0 && z > 0) gridNodeReferences[x-1, z-1].neighbours[2,2] = gridNodeReferences[x, z];
-					if (x > 0 && z < worldSizeZ-1) gridNodeReferences[x-1, z+1].neighbours[2,0] = gridNodeReferences[x, z];
-					if (x < worldSizeX-1 && z > 0) gridNodeReferences[x+1, z-1].neighbours[0,2] = gridNodeReferences[x, z];
-					if (x < worldSizeX-1 && z < worldSizeZ-1) gridNodeReferences[x+1, z+1].neighbours[0,0] = gridNodeReferences[x, z];
-				}
-			}
 		}
 
 		public void FillWorld()

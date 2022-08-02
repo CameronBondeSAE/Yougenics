@@ -57,26 +57,9 @@ namespace Luke
 					};
 				}
 			}
-			IntroduceNeighbours();
 		}
 		
-		private void IntroduceNeighbours()
-		{
-			for (int x = 0; x < numberOfTiles.x; x++)
-			{
-				for (int y = 0; y < numberOfTiles.y; y++)
-				{
-					if (x > 0) BiomeNodes[x-1, y].neighbours[2,1] = BiomeNodes[x, y];
-					if (y > 0) BiomeNodes[x, y-1].neighbours[1,2] = BiomeNodes[x, y];
-					if (x < numberOfTiles.x-1) BiomeNodes[x+1, y].neighbours[0,1] = BiomeNodes[x, y];
-					if (y < numberOfTiles.y-1) BiomeNodes[x, y+1].neighbours[1,0] = BiomeNodes[x, y];
-					if (x > 0 && y > 0) BiomeNodes[x-1, y-1].neighbours[2,2] = BiomeNodes[x, y];
-					if (x > 0 && y < numberOfTiles.y-1) BiomeNodes[x-1, y+1].neighbours[2,0] = BiomeNodes[x, y];
-					if (x < numberOfTiles.x-1 && y > 0) BiomeNodes[x+1, y-1].neighbours[0,2] = BiomeNodes[x, y];
-					if (x < numberOfTiles.x-1 && y < numberOfTiles.y-1) BiomeNodes[x+1, y+1].neighbours[0,0] = BiomeNodes[x, y];
-				}
-			}
-		}
+		
 		
 		#endregion
 

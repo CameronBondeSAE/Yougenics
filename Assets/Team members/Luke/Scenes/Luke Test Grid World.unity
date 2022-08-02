@@ -6621,8 +6621,36 @@ MonoBehaviour:
   gridOrigin: {x: -49, y: 0, z: -49}
   gCostWeight: 2
   hCostWeight: 1
+  CurrentNode:
+    worldPosition: {x: 0, y: 0, z: 0}
+    indices: 0000000000000000
+    isBlocked: 0
+    isClosed: 0
+    fCost: 0
+    gCostWeight: 1
+    hCostWeight: 1
+  StartNode:
+    worldPosition: {x: 0, y: 0, z: 0}
+    indices: 0000000000000000
+    isBlocked: 0
+    isClosed: 0
+    fCost: 0
+    gCostWeight: 1
+    hCostWeight: 1
+  EndNode:
+    worldPosition: {x: 0, y: 0, z: 0}
+    indices: 0000000000000000
+    isBlocked: 0
+    isClosed: 0
+    fCost: 0
+    gCostWeight: 1
+    hCostWeight: 1
   startLocation: {x: 0, y: 0, z: 0}
   endLocation: {x: 0, y: 0, z: 0}
+  path: []
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!4 &1296276629
 Transform:
   m_ObjectHideFlags: 0
