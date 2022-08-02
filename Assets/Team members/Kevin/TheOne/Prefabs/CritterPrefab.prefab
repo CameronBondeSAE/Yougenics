@@ -244,7 +244,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fb5a59334d7cf4543a38a54c4ea26c39, type: 2}
+  - {fileID: 2100000, guid: 5e974b54f9885434fbff99ca454f29a6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -365,6 +365,9 @@ MonoBehaviour:
   health: 0
   energy: 0
   gender: 0
+  genderColors:
+  - {fileID: 2100000, guid: 3b2f4ccb2b312994c8a1efcdb5571c8e, type: 2}
+  - {fileID: 2100000, guid: 30dd25631365fa14d8e075dcf39e042c, type: 2}
   foodChain: 0
   visionRadius: 8
   actionRadius: 0.25

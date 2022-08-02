@@ -15,6 +15,8 @@ namespace Kev
         public float health;
         public float energy;
         public Interface.Gender gender;
+        public List<Material> genderColors;
+        public int genderRandom;
         public Interface.Foodchain foodChain;
         public float visionRadius = 8f;
         public float actionRadius = 0.25f;
@@ -58,6 +60,17 @@ namespace Kev
             health = 100f;
             energy = 100f;
             gender = (Interface.Gender)Random.Range(0f, 2f);
+            if (gender == Interface.Gender.Female)
+            {
+                genderRandom = 0;
+            }
+
+            if (gender == Interface.Gender.Male)
+            {
+                genderRandom = 1;
+            }
+            MeshRenderer gameObjectRendere = this.GetComponent<MeshRenderer>();
+            gameObjectRendere.material = genderColors[genderRandom];
             foodChain = (Interface.Foodchain)Random.Range(0f, 3f);
         }
 
@@ -98,8 +111,39 @@ namespace Kev
             Interface.Foodchain otherFoodChain = other.GetComponent<CritterBase>().foodChain;
             Interface.Gender otherGender = other.GetComponent<CritterBase>().gender;
             RaycastHit raycastHit;
+            CritterBase otherScript = other.GetComponentInParent<CritterBase>();
             //Interface.IEdible edible = GetComponent<Interface.IEdible>();
             
+            /*if(Physics.Raycast(transform.position, otherScript.transform.position, out raycastHit))
+            {
+                Debug.DrawRay(transform.position, otherScript.transform.position * raycastHit.distance, Color.red);
+                Debug.Log("Hit");
+                if (otherFoodChain == Interface.Foodchain.Neutral)
+                {
+                    neutralList.Add(other.transform);
+                }
+                if (otherFoodChain == Interface.Foodchain.Predator && foodChain != Interface.Foodchain.Predator)
+                {
+                    isRunning = true;
+                    predatorList.Add(other.transform);
+                }
+            
+                if (otherFoodChain == Interface.Foodchain.Prey)
+                {
+                    preyList.Add(other.transform);
+                }
+
+                if (otherFoodChain == foodChain && otherGender != gender)
+                {
+                    potentialMates.Add(other.transform);
+                }
+                else if (otherFoodChain == foodChain && otherGender == gender)
+                {
+                    neutralList.Add(other.transform);
+                    isChasing = false;
+                    isPatrolling = true;
+                }
+            }*/
             if (otherFoodChain == Interface.Foodchain.Neutral)
             {
                 //if(RaycastHit())
@@ -426,11 +470,6 @@ namespace Kev
         {
             gameObject.SetActive(false);
             isPatrolling = true;
-
-            /*predatorList.Clear();
-            neutralList.Clear();
-            preyList.Clear();
-            potentialMates.Clear();*/
         }
     }
     

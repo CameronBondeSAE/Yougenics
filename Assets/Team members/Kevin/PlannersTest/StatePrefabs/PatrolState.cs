@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using Anthill.AI;
+using Cam;
 using UnityEngine;
 
 namespace Kevin
 {
     public class PatrolState : AntAIState
     {
-        public class EatFoodState : AntAIState
-        {
+        
             public GameObject gluttonPrefab;
             public GluttonBase gluttonBase;
             
@@ -23,22 +23,19 @@ namespace Kevin
                 gluttonPrefab = aGameObject;
                 gluttonBase = gluttonPrefab.GetComponent<GluttonBase>();
             }
-
-            public override void Enter()
+            public override void Execute(float aDeltaTime, float aTimeScale)
             {
-                base.Enter();
+                //base.Execute();
                 Debug.Log("Patrolling");
                 if (!walkPointSet)
                 {
-                    //StartCoroutine(GenerateNextWalkPoint());
                     GenerateNextWalkPoint();
-                    //isPatrolling = false;
                 }
 
                 if (walkPointSet)
                 {
                     TurnTo(walkPoint);
-                    transform.position = Vector3.MoveTowards(transform.position, walkPoint, 0.05f);
+                    gluttonPrefab.transform.position = Vector3.MoveTowards(transform.position, walkPoint, 0.025f);
                 
                     //checks if the distance to the walk point is too short in which case it sets the walkPointSet to false and retries the random generation.
                     Vector3 distanceToWalkPoint = transform.position - walkPoint;
@@ -48,36 +45,12 @@ namespace Kevin
                     }
                 }
             }
-
             private void TurnTo(Vector3 target)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(target - transform.position);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation,Time.deltaTime);
+                gluttonPrefab.transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation,Time.deltaTime);
             }
-        
-            /*public void Patrol()
-            {
-                if (!walkPointSet)
-                {
-                    //StartCoroutine(GenerateNextWalkPoint());
-                    GenerateNextWalkPoint();
-                    //isPatrolling = false;
-                }
-
-                if (walkPointSet)
-                {
-                    TurnTo(walkPoint);
-                    transform.position = Vector3.MoveTowards(transform.position, walkPoint, 0.05f);
-                
-                    //checks if the distance to the walk point is too short in which case it sets the walkPointSet to false and retries the random generation.
-                    Vector3 distanceToWalkPoint = transform.position - walkPoint;
-                    if (distanceToWalkPoint.magnitude < 1f)
-                    {
-                        walkPointSet = false;
-                    }
-                }
-            }*/
-
+            
             public void GenerateNextWalkPoint()
             {
                 float randomX = Random.Range(-walkPointRange, walkPointRange);
@@ -87,10 +60,8 @@ namespace Kevin
                     transform.position.z + randomZ);
 
                 walkPointSet = true;
-                //isPatrolling = true;
             }
-        }
-        
+
     }
 }
 
