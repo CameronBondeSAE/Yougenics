@@ -74,7 +74,7 @@ namespace Luke
 		
 		public void SpreadFertility()
 		{
-			if (neighbours[iterators.x, iterators.y] == null) return;
+			/*if (neighbours[iterators.x, iterators.y] == null) return;
 			blueness = 1;
 			BiomeNode node = (BiomeNode) neighbours[iterators.x, iterators.y];
 			
@@ -87,7 +87,7 @@ namespace Luke
 				node.Fertility += fertility * 0.12f;
 			}
 
-			blueness = 0;
+			blueness = 0;*/
 		}
 	}
 

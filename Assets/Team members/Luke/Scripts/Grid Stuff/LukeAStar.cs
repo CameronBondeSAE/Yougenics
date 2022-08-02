@@ -72,29 +72,10 @@ namespace Luke
                     }
 				}
 			}
-			IntroduceNeighbours();
 			FinishedFillingGridEvent?.Invoke();
         }
-		
-		private void IntroduceNeighbours()
-		{
-			for (int x = 0; x < numberOfTiles.x; x++)
-			{
-				for (int y = 0; y < numberOfTiles.y; y++)
-				{
-					if (x > 0) Nodes[x-1, y].neighbours[2,1] = Nodes[x, y];
-					if (y > 0) Nodes[x, y-1].neighbours[1,2] = Nodes[x, y];
-					if (x < numberOfTiles.x-1) Nodes[x+1, y].neighbours[0,1] = Nodes[x, y];
-					if (y < numberOfTiles.y-1) Nodes[x, y+1].neighbours[1,0] = Nodes[x, y];
-					if (x > 0 && y > 0) Nodes[x-1, y-1].neighbours[2,2] = Nodes[x, y];
-					if (x > 0 && y < numberOfTiles.y-1) Nodes[x-1, y+1].neighbours[2,0] = Nodes[x, y];
-					if (x < numberOfTiles.x-1 && y > 0) Nodes[x+1, y-1].neighbours[0,2] = Nodes[x, y];
-					if (x < numberOfTiles.x-1 && y < numberOfTiles.y-1) Nodes[x+1, y+1].neighbours[0,0] = Nodes[x, y];
-				}
-			}
-		}
 
-        public IEnumerator AStarAlgorithm()
+		public IEnumerator AStarAlgorithm()
         {
 	        CurrentNode = StartNode;
 
@@ -131,26 +112,23 @@ namespace Luke
 
         private IEnumerator AStarLoop()
         {
-            CheckNeighbours(CurrentNode);
-            
-            yield return new WaitForEndOfFrame();
-            
-            CurrentNode = _openNodes[OpenNodesComparison()];
-
-            if (CurrentNode != EndNode && !slowMode) AStarLoopFast();
-            else if (CurrentNode != EndNode) coroutineInstance = StartCoroutine(AStarLoop());
-            else CreatePath();
+	        while (CurrentNode != EndNode)
+	        {
+	            CheckNeighbours(CurrentNode);
+	            yield return new WaitForEndOfFrame();
+	            if (_openNodes.Count > 0) CurrentNode = _openNodes[OpenNodesComparison()];
+            }
+	        if(CurrentNode == EndNode) CreatePath();
         }
         
         private void AStarLoopFast()
         {
-	        CheckNeighbours(CurrentNode);
-	        
-	        if (_openNodes.Count > 0) CurrentNode = _openNodes[OpenNodesComparison()];
-
-	        if (CurrentNode != EndNode && !slowMode) AStarLoopFast();
-	        else if (CurrentNode != EndNode) coroutineInstance = StartCoroutine(AStarLoop());
-	        else CreatePath();
+	        while (CurrentNode != EndNode)
+	        {
+		        CheckNeighbours(CurrentNode);
+		        if (_openNodes.Count > 0) CurrentNode = _openNodes[OpenNodesComparison()];
+	        }
+	        if(CurrentNode == EndNode) CreatePath();
         }
 
         private void CreatePath()
@@ -166,15 +144,16 @@ namespace Luke
         //Case: First Node
         private void CheckNeighbours()
         {
-            int i = 0;
             for (int x = 0; x < 3; x++)
             {
                 for (int y = 0; y < 3; y++)
                 {
-                    AStarNode neighbour = (AStarNode)CurrentNode.neighbours[x, y];
-                    if (neighbour == null) continue;
+	                int indexX = CurrentNode.indices[0] - 1 + x;
+	                int indexY = CurrentNode.indices[1] - 1 + y;
+	                if (indexX < 0 || indexX >= Nodes.GetLength(0)) continue;
+	                if (indexY < 0 || indexY >= Nodes.GetLength(1)) continue;
+	                AStarNode neighbour = Nodes[indexX, indexY];
                     if (neighbour.isBlocked || neighbour.isClosed || _openNodes.Contains(neighbour)) continue;
-                    i++;
                     _openNodes.Add(neighbour);
                     neighbour.GCost = Mathf.RoundToInt(1000*Vector3.Distance(neighbour.worldPosition, endLocation));
                     neighbour.parent = CurrentNode;
@@ -193,8 +172,11 @@ namespace Luke
             {
                 for (int y = 0; y < 3; y++)
                 {
-                    AStarNode neighbour = (AStarNode)node.neighbours[x, y];
-                    if (neighbour == null) continue;
+	                int indexX = node.indices[0] - 1 + x;
+	                int indexY = node.indices[1] - 1 + y;
+	                if (indexX < 0 || indexX >= Nodes.GetLength(0)) continue;
+	                if (indexY < 0 || indexY >= Nodes.GetLength(1)) continue;
+                    AStarNode neighbour = Nodes[indexX, indexY];
                     if (neighbour.isBlocked || neighbour.isClosed || _openNodes.Contains(neighbour)) continue;
                     _openNodes.Add(neighbour);
                     neighbour.GCost = Mathf.RoundToInt(1000*Vector3.Distance(neighbour.worldPosition, endLocation));
@@ -223,7 +205,7 @@ namespace Luke
 	        int lowestGCostIndex = 0;
 	        int lowestFCost = _openNodes[lowestFCostIndex].fCost;
 	        int lowestGCost = _openNodes[lowestFCostIndex].GCost;
-	        for (int i=0; i < _openNodes.Count; i++)
+	        for (int i=1; i < _openNodes.Count; i++)
 	        {
 		        if (_openNodes[i].fCost < lowestFCost)
 		        {

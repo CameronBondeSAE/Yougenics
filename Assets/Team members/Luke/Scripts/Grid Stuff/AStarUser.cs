@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
+using UnityEngine.Rendering;
 
 namespace Luke
 {
-	public class AStarUser : SerializedMonoBehaviour
+	public class AStarUser : MonoBehaviour
 	{
 		public LukeAStar aStar;
 		public bool[,] NodeClosedState;
@@ -31,28 +33,25 @@ namespace Luke
 
 		public void AStarAlgorithmFast()
         {
-            if (breaker) return;
 	        CurrentNode = StartNode;
 	        CurrentNode.GCost = Mathf.RoundToInt(1000*Vector3.Distance(CurrentNode.worldPosition, endLocation));
 	        CurrentNode.HCost = 0;
 	        _openNodes.Add(CurrentNode);
 	        CheckNeighbours();
-	        if (breaker) return;
 	        CurrentNode = _openNodes[OpenNodesComparison()];
-	        if (breaker) return;
 	        if (CurrentNode != EndNode) AStarLoopFast();
 	        else CreatePath();
         }
 
 		private void AStarLoopFast()
 		{
-			if (breaker) return;
-	        CheckNeighbours(CurrentNode);
-	        if (breaker) return;
-	        if (_openNodes.Count > 0) CurrentNode = _openNodes[OpenNodesComparison()];
-	        if (breaker) return;
-	        if (CurrentNode != EndNode) AStarLoopFast();
-	        else CreatePath();
+			while (CurrentNode != EndNode)
+			{
+				Debug.Log(CurrentNode.indices[0]+" "+CurrentNode.indices[1]);
+		        CheckNeighbours(CurrentNode);
+		        if (_openNodes.Count > 0) CurrentNode = _openNodes[OpenNodesComparison()];
+	        }
+			if(CurrentNode == EndNode) CreatePath();
         }
 
         private void CreatePath()
@@ -73,8 +72,11 @@ namespace Luke
             {
                 for (int y = 0; y < 3; y++)
                 {
-                    AStarNode neighbour = (AStarNode)CurrentNode.neighbours[x, y];
-                    if (neighbour == null) continue;
+	                int indexX = CurrentNode.indices[0] - 1 + x;
+	                int indexY = CurrentNode.indices[1] - 1 + y;
+	                if (indexX < 0 || indexX >= aStar.Nodes.GetLength(0)) continue;
+	                if (indexY < 0 || indexY >= aStar.Nodes.GetLength(1)) continue;
+	                AStarNode neighbour = aStar.Nodes[indexX, indexY];
                     if (neighbour.isBlocked || NodeClosedState[neighbour.indices[0], neighbour.indices[1]] || _openNodes.Contains(neighbour)) continue;
                     i++;
                     _openNodes.Add(neighbour);
@@ -95,8 +97,11 @@ namespace Luke
             {
                 for (int y = 0; y < 3; y++)
                 {
-                    AStarNode neighbour = (AStarNode)node.neighbours[x, y];
-                    if (neighbour == null) continue;
+	                int indexX = node.indices[0] - 1 + x;
+	                int indexY = node.indices[1] - 1 + y;
+	                if (indexX < 0 || indexX >= aStar.Nodes.GetLength(0)) continue;
+	                if (indexY < 0 || indexY >= aStar.Nodes.GetLength(1)) continue;
+	                AStarNode neighbour = aStar.Nodes[indexX, indexY];
                     if (neighbour.isBlocked || NodeClosedState[neighbour.indices[0], neighbour.indices[1]] || _openNodes.Contains(neighbour)) continue;
                     _openNodes.Add(neighbour);
                     neighbour.GCost = Mathf.RoundToInt(1000*Vector3.Distance(neighbour.worldPosition, endLocation));
@@ -150,7 +155,7 @@ namespace Luke
 	        breaker = true;
 	        _openNodes.Clear();
 	        NodeClosedState = new bool[aStar.Nodes.GetLength(0),aStar.Nodes.GetLength(1)];
-	        for (int i = 0; i < NodeClosedState.GetLength(0); i++)
+	        for (int i = 1; i < NodeClosedState.GetLength(0); i++)
 	        {
 		        for (int j = 0; j < NodeClosedState.GetLength(1); j++)
 		        {

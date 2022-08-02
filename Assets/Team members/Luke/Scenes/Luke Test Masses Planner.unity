@@ -2071,7 +2071,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: critterInfo.deadliness
-      value: 5
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: critterInfo.isCarnivore
@@ -9327,19 +9327,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 535072923990192017, guid: f5f9b2a5573faf64b894e372744d86f2, type: 3}
       propertyPath: gridSize.x
-      value: 200
+      value: 99
       objectReference: {fileID: 0}
     - target: {fileID: 535072923990192017, guid: f5f9b2a5573faf64b894e372744d86f2, type: 3}
       propertyPath: gridSize.y
-      value: 200
+      value: 99
       objectReference: {fileID: 0}
     - target: {fileID: 535072923990192017, guid: f5f9b2a5573faf64b894e372744d86f2, type: 3}
       propertyPath: numberOfTiles.x
-      value: 10
+      value: 99
       objectReference: {fileID: 0}
     - target: {fileID: 535072923990192017, guid: f5f9b2a5573faf64b894e372744d86f2, type: 3}
       propertyPath: numberOfTiles.y
-      value: 10
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 535072923990192017, guid: f5f9b2a5573faf64b894e372744d86f2, type: 3}
+      propertyPath: layerMask.m_Bits
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 4975839511339852216, guid: f5f9b2a5573faf64b894e372744d86f2, type: 3}
       propertyPath: m_Enabled

@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 127418511}
   - component: {fileID: 127418510}
   - component: {fileID: 127418509}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -287,6 +287,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8380724682041484082, guid: 1c7fea28f0da76e4494d58b3f455ef0c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5e974b54f9885434fbff99ca454f29a6, type: 2}
     - target: {fileID: 8380724682041484084, guid: 1c7fea28f0da76e4494d58b3f455ef0c,
         type: 3}
       propertyPath: m_Name
@@ -401,14 +406,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Version: 1
-  m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
-  m_LightLayerMask: 1
-  m_CustomShadowLayers: 0
-  m_ShadowLayerMask: 1
-  m_LightCookieSize: {x: 1, y: 1}
-  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1001 &917975120
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -476,6 +473,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8380724682041484082, guid: 1c7fea28f0da76e4494d58b3f455ef0c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5e974b54f9885434fbff99ca454f29a6, type: 2}
     - target: {fileID: 8380724682041484084, guid: 1c7fea28f0da76e4494d58b3f455ef0c,
         type: 3}
       propertyPath: m_Name
@@ -549,7 +551,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 5b2980e67092a8f44a08a0ad77256d99, type: 2}
+      objectReference: {fileID: 2100000, guid: 632d9d6b3343c8a4aac7258ca041f295, type: 2}
     - target: {fileID: 7613788632109753806, guid: 228ff87103bd6aa479334b80f46ed9d6,
         type: 3}
       propertyPath: m_Name
@@ -775,6 +777,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8380724682041484082, guid: 1c7fea28f0da76e4494d58b3f455ef0c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5e974b54f9885434fbff99ca454f29a6, type: 2}
     - target: {fileID: 8380724682041484084, guid: 1c7fea28f0da76e4494d58b3f455ef0c,
         type: 3}
       propertyPath: m_Name
@@ -794,7 +801,7 @@ GameObject:
   - component: {fileID: 1860712698}
   - component: {fileID: 1860712697}
   - component: {fileID: 1860712696}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1010,6 +1017,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8380724682041484082, guid: 1c7fea28f0da76e4494d58b3f455ef0c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5e974b54f9885434fbff99ca454f29a6, type: 2}
     - target: {fileID: 8380724682041484084, guid: 1c7fea28f0da76e4494d58b3f455ef0c,
         type: 3}
       propertyPath: m_Name
