@@ -20,7 +20,6 @@ namespace Luke
         public bool breaker;
         
         public AStarNode[,] Nodes;
-
         [SerializeField] private Vector2Int numberOfTiles;
         [SerializeField] private float gridTileHeight;
         [SerializeField] private Vector2 gridSize;
@@ -95,6 +94,24 @@ namespace Luke
             else CreatePath();
         }
         
+        public IEnumerator AStarAlgorithm2()
+        {
+            breaker = false;
+            CurrentNode = StartNode;
+            CurrentNode.GCost = Mathf.RoundToInt(1000*Vector3.Distance(CurrentNode.worldPosition, endLocation));
+            CurrentNode.HCost = 0;
+            _openNodes.Add(CurrentNode);
+
+            CheckNeighbours();
+
+            CurrentNode = _openNodes[OpenNodesComparison()];
+
+            if (CurrentNode != EndNode && !slowMode) AStarLoopFast();
+            else if (CurrentNode != EndNode) coroutineInstance = StartCoroutine(AStarLoop());
+            else CreatePath();
+            yield return null;
+        }
+        
         public void AStarAlgorithmFast()
         {
             breaker = false;
@@ -114,23 +131,41 @@ namespace Luke
 
         private IEnumerator AStarLoop()
         {
-	        while (CurrentNode != EndNode)
+            AStarNode _endNode = EndNode;
+	        while (CurrentNode != _endNode)
 	        {
 	            CheckNeighbours(CurrentNode);
-	            yield return 0;
-                //yield return new WaitForEndOfFrame();
-	            if (_openNodes.Count > 0) CurrentNode = _openNodes[OpenNodesComparison()];
+                yield return new WaitForEndOfFrame();
+                if (_openNodes.Count > 0) CurrentNode = _openNodes[OpenNodesComparison()];
+                if (_endNode != EndNode) break;
             }
 	        if(CurrentNode == EndNode) CreatePath();
         }
         
+        private IEnumerator AStarLoop2()
+        {
+            int i = 0;
+            AStarNode _endNode = EndNode;
+            while (CurrentNode != _endNode)
+            {
+                CheckNeighbours(CurrentNode);
+                if (i++ > 100) ;
+                if (_openNodes.Count > 0) CurrentNode = _openNodes[OpenNodesComparison()];
+                if (_endNode != EndNode) break;
+            }
+            if(CurrentNode == EndNode) CreatePath();
+            yield return null;
+        }
+        
         private void AStarLoopFast()
         {
-	        while (CurrentNode != EndNode || breaker)
+            AStarNode _endNode = EndNode;
+            while (CurrentNode != _endNode && _openNodes.Count > 0)
 	        {
-		        CheckNeighbours(CurrentNode);
-		        if (_openNodes.Count > 0) CurrentNode = _openNodes[OpenNodesComparison()];
-	        }
+                CheckNeighbours(CurrentNode);
+                if (_openNodes.Count > 0) CurrentNode = _openNodes[OpenNodesComparison()];
+                if (_endNode != EndNode) break;
+            }
 	        if(CurrentNode == EndNode) CreatePath();
         }
 
@@ -332,6 +367,15 @@ namespace Luke
                         Gizmos.color = new Color(0f, 1f, 0f, 0.5f);
                         Gizmos.DrawCube(Nodes[x, y].worldPosition, _gridTileSize);
                     }
+                }
+            }
+
+            if (path.Count > 0)
+            {
+                for (int i = 1; i < path.Count; i++)
+                {
+                    Gizmos.color = Color.white;
+                    Gizmos.DrawLine(path[i - 1].worldPosition, path[i].worldPosition);
                 }
             }
         }

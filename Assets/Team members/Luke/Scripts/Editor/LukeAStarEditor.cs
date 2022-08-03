@@ -34,7 +34,7 @@ public class LukeAStarEditor : Editor
             }
             else
             {
-                aStar.StopCoroutine(aStar.coroutineInstance);
+                if(aStar.coroutineInstance != null) aStar.StopCoroutine(aStar.coroutineInstance);
                 aStar.coroutineInstance = aStar.StartCoroutine(((LukeAStar) target).AStarAlgorithm());
             }
         }
