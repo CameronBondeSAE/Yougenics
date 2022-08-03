@@ -2907,7 +2907,7 @@ MonoBehaviour:
   spawnPlayerOnAwake: 0
   sceneToLoad: 
   levels:
-  - level: {fileID: 102900000, guid: c1559cd68f8664d42bd7a2abcf8317b7, type: 3}
+  - level: {fileID: 102900000, guid: 2af64fa95e910c94fb8835992da0c488, type: 3}
     levelNameOnUI: Main Scene
   - level: {fileID: 102900000, guid: 2be4a0ddf9120e94abeccc4a529b76e6, type: 3}
     levelNameOnUI: John's Level
@@ -2924,7 +2924,7 @@ MonoBehaviour:
   waitForHostBanner: {fileID: 2470996678364992109}
   ipAddressCanvas: {fileID: 2470996678444881677}
   serverIPInputField: {fileID: 2470996678151896655}
-  player: {fileID: 8611620220612625317, guid: cc02e9a49a115264eb5ef1f88085b227, type: 3}
+  playerPrefab: {fileID: 8611620220612625317, guid: cc02e9a49a115264eb5ef1f88085b227, type: 3}
   lobbyCam: {fileID: 0}
   lukeAITest: {fileID: 7265986140717145438, guid: 23b1db56bb65d2d4abffe12b850cadef, type: 3}
   debugStatusLabels: 1

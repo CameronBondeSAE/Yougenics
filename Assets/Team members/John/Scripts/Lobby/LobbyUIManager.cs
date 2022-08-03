@@ -45,7 +45,7 @@ public class LobbyUIManager : NetworkBehaviour
     public TMP_InputField serverIPInputField;
 
     [Header("Hack for now/Ignore")]
-    public GameObject player;
+    public GameObject playerPrefab;
     public GameObject lobbyCam;
     bool inGame = false;
     public GameObject lukeAITest;
@@ -81,7 +81,7 @@ public class LobbyUIManager : NetworkBehaviour
                 return;
 
             //spawn a player
-            GameObject tempPlayer = Instantiate(player);
+            GameObject tempPlayer = Instantiate(playerPrefab);
 
             //set ownership
             tempPlayer.GetComponent<NetworkObject>().SpawnWithOwnership(myLocalClientId);
@@ -321,12 +321,25 @@ public class LobbyUIManager : NetworkBehaviour
 
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
 
+        SpawnPoint[] spawnPoints = FindObjectsOfType<SpawnPoint>();
+
         //TODO: Refactor this out of this script?
         //Spawn a player for each client
         foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
         {
+            GameObject tempPlayer;
+
             //spawn a player
-            GameObject tempPlayer = Instantiate(player);
+            if(spawnPoints.Length > 0)
+            {
+                SpawnPoint randomSpawn = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
+                tempPlayer = Instantiate(playerPrefab, randomSpawn.transform.position, Quaternion.identity);
+            }
+            else
+            {
+                tempPlayer = Instantiate(playerPrefab);
+                Debug.Log("No Spawn Points Found");
+            }
 
             //set ownership
             tempPlayer.GetComponent<NetworkObject>().SpawnWithOwnership(client.ClientId);

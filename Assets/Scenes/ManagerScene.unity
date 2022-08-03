@@ -541,18 +541,6 @@ PrefabInstance:
       propertyPath: lobbyCam
       value: 
       objectReference: {fileID: 1640972067}
-    - target: {fileID: 2470996679314236398, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
-      propertyPath: levels.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2470996679314236398, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
-      propertyPath: levels.Array.data[3].level
-      value: 
-      objectReference: {fileID: 102900000, guid: 2af64fa95e910c94fb8835992da0c488, type: 3}
-    - target: {fileID: 2470996679314236398, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
-      propertyPath: levels.Array.data[3].levelNameOnUI
-      value: Main Test all active game mechanics
-      objectReference: {fileID: 0}
     - target: {fileID: 2470996679314236399, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
       propertyPath: m_RootOrder
       value: 1
