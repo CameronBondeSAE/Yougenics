@@ -39,7 +39,7 @@ public class ToolBoxEditor : EditorWindow
             Undo.PerformUndo();
         }
     
-        if (GUILayout.Button("Focus on base care"))
+        if (GUILayout.Button("Focus on base car"))
         {
             Minh.Controllercar[] findObjectsOfType = FindObjectsOfType<Controllercar>();
             Selection.activeGameObject = findObjectsOfType[Random.Range(0, findObjectsOfType.Length)].gameObject;
@@ -60,7 +60,9 @@ public class ToolBoxEditor : EditorWindow
                 }
                 else
                 {
-                    Debug.Log("look at full hp object");
+                    Selection.activeGameObject = null;
+                    Debug.Log("Look at Full Hp object !");
+                    
                 }
             }
         }

@@ -13,7 +13,7 @@ public class Tweeningminimal : MonoBehaviour
     public float adjust1;
         void Start()
         {
-            DOTween.To(JustASetter, 0, 1, duration);
+            DOTween.To(JustASetter, 1, newvalue, duration);
         }
         private void JustASetter(float newvalue)
         {
