@@ -5,11 +5,6 @@ using UnityEngine.UI;
 public class HpUI : MonoBehaviour
 {
     public Slider slider;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
     public void SetMaxHealth(int health)
     {
         slider.maxValue = health;
@@ -19,10 +14,5 @@ public class HpUI : MonoBehaviour
     public void SetHealth(int health)
     {
         slider.value = health;
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

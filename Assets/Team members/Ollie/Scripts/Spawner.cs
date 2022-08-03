@@ -33,9 +33,16 @@ namespace Ollie
         {
             for (int i = 0; i < spawnAmount; i++)
             {
-                var rng = UnityEngine.Random.Range(1, 101);
-                spawnLocation = new Vector3((UnityEngine.Random.Range((-LevelManager.instance.sizeX/2),(LevelManager.instance.sizeX/2))),planeFloor,(UnityEngine.Random.Range((-LevelManager.instance.sizeZ/2),(LevelManager.instance.sizeZ/2))));
+                //should update this to take in a spot from the gridnodereferences
+                //otherwise, currently it can spawn on a blocked node (eg inside walls!)
                 
+                int posX = UnityEngine.Random.Range((-LevelManager.instance.sizeX/2)+LevelManager.instance.offsetX,(LevelManager.instance.sizeX/2)+LevelManager.instance.offsetZ);
+                int posY = planeFloor;
+                int posZ = UnityEngine.Random.Range((-LevelManager.instance.sizeZ/2)+LevelManager.instance.offsetX,(LevelManager.instance.sizeZ/2)+LevelManager.instance.offsetZ);
+                
+                spawnLocation = new Vector3(posX, posY, posZ);
+                
+                var rng = UnityEngine.Random.Range(1, 101);
                 if (rng <= 40)
                 {
                     GameObject go = Instantiate(food);

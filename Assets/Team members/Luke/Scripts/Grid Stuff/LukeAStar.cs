@@ -14,9 +14,10 @@ namespace Luke
         
 	    
         
-        #region MyRegion
+        #region Field Variables
 
         public bool slowMode;
+        public bool breaker;
         
         public AStarNode[,] Nodes;
 
@@ -77,8 +78,8 @@ namespace Luke
 
 		public IEnumerator AStarAlgorithm()
         {
+            breaker = false;
 	        CurrentNode = StartNode;
-
             CurrentNode.GCost = Mathf.RoundToInt(1000*Vector3.Distance(CurrentNode.worldPosition, endLocation));
             CurrentNode.HCost = 0;
             _openNodes.Add(CurrentNode);
@@ -96,6 +97,7 @@ namespace Luke
         
         public void AStarAlgorithmFast()
         {
+            breaker = false;
 	        CurrentNode = StartNode;
 	        CurrentNode.GCost = Mathf.RoundToInt(1000*Vector3.Distance(CurrentNode.worldPosition, endLocation));
 	        CurrentNode.HCost = 0;
@@ -115,7 +117,8 @@ namespace Luke
 	        while (CurrentNode != EndNode)
 	        {
 	            CheckNeighbours(CurrentNode);
-	            yield return new WaitForEndOfFrame();
+	            yield return 0;
+                //yield return new WaitForEndOfFrame();
 	            if (_openNodes.Count > 0) CurrentNode = _openNodes[OpenNodesComparison()];
             }
 	        if(CurrentNode == EndNode) CreatePath();
@@ -123,7 +126,7 @@ namespace Luke
         
         private void AStarLoopFast()
         {
-	        while (CurrentNode != EndNode)
+	        while (CurrentNode != EndNode || breaker)
 	        {
 		        CheckNeighbours(CurrentNode);
 		        if (_openNodes.Count > 0) CurrentNode = _openNodes[OpenNodesComparison()];
@@ -234,8 +237,8 @@ namespace Luke
         
         public int[] ConvertIndexAndPosition(Vector3 position)
         {
-            return new [] {Mathf.RoundToInt((position.x-gridOrigin.x)/_gridTileSize.x), 
-                Mathf.RoundToInt((position.z-gridOrigin.z)/_gridTileSize.z)};
+            return new [] {(int)((position.x-gridOrigin.x)/_gridTileSize.x), 
+                (int)((position.z-gridOrigin.z)/_gridTileSize.z)};
         }
         
         public Vector3 RandomLocation()
@@ -255,6 +258,7 @@ namespace Luke
         public void ResetNodes()
         {
 	        if(coroutineInstance != null) StopCoroutine(coroutineInstance);
+            breaker = true;
 	        _openNodes.Clear();
 	        foreach (AStarNode node in Nodes)
 	        {
@@ -263,13 +267,14 @@ namespace Luke
 	        int[] index = ConvertIndexAndPosition(startLocation);
 	        StartNode = Nodes[index[0], index[1]];
 	        CurrentNode = StartNode;
-	        index = ConvertIndexAndPosition(endLocation); 
+	        index = ConvertIndexAndPosition(endLocation);
 	        EndNode = Nodes[index[0], index[1]];
         }
 
         public void ResetNodes(Vector3 startPosition, Vector3 targetPosition)
         {
 	        if(coroutineInstance != null) StopCoroutine(coroutineInstance);
+            breaker = true;
 	        _openNodes.Clear();
 	        foreach (AStarNode node in Nodes)
 	        {

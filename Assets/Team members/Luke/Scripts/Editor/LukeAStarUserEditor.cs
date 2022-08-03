@@ -19,9 +19,9 @@ public class LukeAStarUserEditor : Editor
 			aStarUser.ResetNodes(startPos, endPos);
 			int[] indexStart = aStar.ConvertIndexAndPosition(startPos);
 			int[] indexEnd = aStar.ConvertIndexAndPosition(endPos);
-			aStarUser.StartNode = aStar.Nodes[indexStart[0], indexStart[1]];
-			aStarUser.CurrentNode = aStarUser.StartNode;
-			aStarUser.EndNode = aStar.Nodes[indexEnd[0], indexEnd[1]];
+			aStarUser.startNode = aStar.Nodes[indexStart[0], indexStart[1]];
+			aStarUser.currentNode = aStarUser.startNode;
+			aStarUser.endNode = aStar.Nodes[indexEnd[0], indexEnd[1]];
 		}
         
         if (GUILayout.Button("Begin AStar Algorithm"))

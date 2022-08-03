@@ -40,7 +40,7 @@ namespace Ollie
             get
             {
                 //will need to update Y pos when heights are implemented
-                return new Vector3(gridPosition.x+LevelManager.instance.lengthX,1,gridPosition.y+LevelManager.instance.lengthZ);
+                return new Vector3(gridPosition.x,1,gridPosition.y);
             }
         }
         public WaterNode parent;
@@ -49,7 +49,7 @@ namespace Ollie
 
         public void ScanMyself()
         {
-            var vector3 = new Vector3(LevelManager.instance.lengthX+gridPosition.x, 0, LevelManager.instance.lengthZ+gridPosition.y);
+            var vector3 = new Vector3(gridPosition.x, 0, gridPosition.y);
             if (Physics.OverlapBox(vector3, LevelManager.instance.gridTileHalfExtents, Quaternion.identity, LevelManager.instance.layers)
                     .Length != 0)
             {
