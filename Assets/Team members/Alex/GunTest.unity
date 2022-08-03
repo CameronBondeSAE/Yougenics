@@ -474,6 +474,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b92d2a4f577b104419d177cae8f1f554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemInfo:
+    name: Gun
+    description: 'Shoot critters to death with destructive force! '
+    energyRequired: 50
+    height: 2
+    buildTime: 5
 --- !u!65 &684759739
 BoxCollider:
   m_ObjectHideFlags: 0
