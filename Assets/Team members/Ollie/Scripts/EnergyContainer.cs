@@ -3,77 +3,76 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnergyContainer : MonoBehaviour, IItem
+namespace Ollie
 {
-    private Energy energy;
-    
-    public float drainRate;
-    private bool currentlyDraining;
-    
-    public List<GameObject> drainTargets;
-
-    private void Awake()
+    public class EnergyContainer : MonoBehaviour, IItem
     {
-        energy = GetComponent<Energy>();
-        drainTargets = new List<GameObject>();
-        currentlyDraining = false;
-        StartCoroutine(DrainCoroutine());
-    }
+        private Energy energy;
 
-    private void Update()
-    {
-        
-    }
+        public float drainRate;
+        private bool currentlyDraining;
 
-    public void SpawnedAsNormal()
-    {
-        
-    }
+        public List<GameObject> drainTargets;
 
-    public ItemInfo GetInfo()
-    {
-        throw new NotImplementedException();
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.GetComponent<Energy>() != null && !drainTargets.Contains(other.gameObject))
+        private void Awake()
         {
-            drainTargets.Add(other.gameObject);
+            energy = GetComponent<Energy>();
+            drainTargets = new List<GameObject>();
+            currentlyDraining = false;
+            StartCoroutine(DrainCoroutine());
         }
-    }
 
-    // private void OnTriggerStay(Collider other)
-    // {
-    //     if (!currentlyDraining && drainTargets.Count > 0)
-    //     {
-    //         StartCoroutine(DrainCoroutine(other));
-    //     }
-    //     
-    // }
-
-    IEnumerator DrainCoroutine()
-    {
-        currentlyDraining = true;
-        if (drainTargets.Count > 0)
+        private void Update()
         {
-            foreach (GameObject target in drainTargets)
+
+        }
+
+        IEnumerator DrainCoroutine()
+        {
+            currentlyDraining = true;
+            if (drainTargets.Count > 0) // also need to turn this off when container's energy is full
             {
-                energy.ChangeEnergy(target.GetComponent<Energy>().ChangeEnergy(-drainRate));
-                print("yoink");
+                foreach (GameObject target in drainTargets)
+                {
+                    energy.ChangeEnergy(target.GetComponent<Energy>().ChangeEnergy(-drainRate));
+                    print("yoink");
+                }
+            }
+
+            yield return new WaitForSeconds(1f);
+            StartCoroutine(DrainCoroutine());
+            currentlyDraining = false;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            //need to check for player too!! maybe?
+            if (other.GetComponent<Energy>() != null && !drainTargets.Contains(other.gameObject))
+            {
+                drainTargets.Add(other.gameObject);
             }
         }
 
-        yield return new WaitForSeconds(1f);
-        StartCoroutine(DrainCoroutine());
-        currentlyDraining = false;
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (drainTargets.Contains(other.gameObject))
+        private void OnTriggerExit(Collider other)
         {
-            drainTargets.Remove(other.gameObject);
+            if (drainTargets.Contains(other.gameObject))
+            {
+                drainTargets.Remove(other.gameObject);
+            }
         }
+
+        #region IItem Interface
+
+        public void SpawnedAsNormal()
+        {
+
+        }
+
+        public ItemInfo GetInfo()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

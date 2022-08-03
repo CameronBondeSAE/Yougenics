@@ -94,7 +94,7 @@ namespace Ollie
         {
             //outside bounds errors because position sent in can be negative
             //but gridNodeReferences[,] cannot be negative!
-            WaterNode node = gridNodeReferences[(int)position.x+offsetX,(int)position.z+offsetZ];
+            WaterNode node = gridNodeReferences[(int)position.x-lengthX,(int)position.z-lengthZ];
             return node;
         }
 
@@ -114,6 +114,7 @@ namespace Ollie
                     {
                         gridNodeReferences[x, z] = new WaterNode();
                         gridNodeReferences[x, z].gridPosition = new Vector2Int(x+lengthX, z+lengthZ); 
+                        //print("node " + x + " " + z +" is at " + gridNodeReferences[x,z].gridPosition);
 
                         var vector3 = new Vector3(lengthX+x, 0, lengthZ+z); 
                         
@@ -126,6 +127,7 @@ namespace Ollie
                     }
                 }
                 worldInitialised = true;
+                
             }
 
             if (worldInitialised)

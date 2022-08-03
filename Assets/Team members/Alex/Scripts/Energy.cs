@@ -79,6 +79,7 @@ public class Energy : NetworkBehaviour
             }
         }
 
+        //if client
         return 0;
 
         //energyAmount = energyAmount + f;

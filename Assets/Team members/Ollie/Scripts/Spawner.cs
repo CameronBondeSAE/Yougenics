@@ -36,9 +36,9 @@ namespace Ollie
                 //should update this to take in a spot from the gridnodereferences
                 //otherwise, currently it can spawn on a blocked node (eg inside walls!)
                 
-                int posX = UnityEngine.Random.Range((-LevelManager.instance.sizeX/2)+LevelManager.instance.offsetX,(LevelManager.instance.sizeX/2)+LevelManager.instance.offsetZ);
+                int posX = Random.Range((-LevelManager.instance.sizeX/2)+LevelManager.instance.offsetX,(LevelManager.instance.sizeX/2)+LevelManager.instance.offsetX);
                 int posY = planeFloor;
-                int posZ = UnityEngine.Random.Range((-LevelManager.instance.sizeZ/2)+LevelManager.instance.offsetX,(LevelManager.instance.sizeZ/2)+LevelManager.instance.offsetZ);
+                int posZ = Random.Range((-LevelManager.instance.sizeZ/2)+LevelManager.instance.offsetZ,(LevelManager.instance.sizeZ/2)+LevelManager.instance.offsetZ);
                 
                 spawnLocation = new Vector3(posX, posY, posZ);
                 
