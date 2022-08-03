@@ -24,7 +24,7 @@ public class DropOffPoint : MonoBehaviour
         if (otherEnergy != null)
         {
             //updates the current energy amount in the base by adding the other player's energy container amount.
-            gameManager.currentEnergyAmount += otherEnergy.energy;
+            //gameManager.currentEnergyAmount += otherEnergy.energy;
             
             //fires the event in game manager
             UpEnergy?.Invoke();
