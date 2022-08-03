@@ -77,7 +77,7 @@ namespace Ollie
         {
             while (true)
             {
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(5f);
                 if(worldInitialised) ScanWorld();
             }
         }
@@ -92,7 +92,9 @@ namespace Ollie
 
         public WaterNode ConvertToGrid(Vector3 position)
         {
-            WaterNode node = gridNodeReferences[(int)position.x-lengthX,(int)position.z-lengthZ];
+            //outside bounds errors because position sent in can be negative
+            //but gridNodeReferences[,] cannot be negative!
+            WaterNode node = gridNodeReferences[(int)position.x+offsetX,(int)position.z+offsetZ];
             return node;
         }
 
