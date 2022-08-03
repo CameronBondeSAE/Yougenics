@@ -9,6 +9,13 @@ using System;
 using UnityEngine.SceneManagement;
 using Unity.Netcode.Transports.UNET;
 
+[Serializable]
+public class Level
+{
+    public UnityEngine.Object level;
+    public string levelNameOnUI;
+}
+
 public class LobbyUIManager : NetworkBehaviour
 {
     [Header("Testing Setup")]
@@ -17,16 +24,21 @@ public class LobbyUIManager : NetworkBehaviour
     public bool spawnPlayerOnAwake;
     public string sceneToLoad;
 
+    [Header("Level Setup")]
+    public List<Level> levels;
+    public GameObject levelHolder;
+    public GameObject levelButtonPrefab;
+
     [Header("Lobby UI Setup")]
     public GameObject lobbyCanvas;
-    //public GameObject clientField;
-    //public GameObject clientLobbyUIPrefab;
     public TMP_Text clientUI;
     public Button startButton;
     public Button lobbyButton;
     public TMP_InputField playerNameField;
     public GameObject levelSelectUI;
     public GameObject waitForHostBanner;
+    //public GameObject clientField;
+    //public GameObject clientLobbyUIPrefab;
 
     [Header("IP Canvas Setup")]
     public GameObject ipAddressCanvas;
@@ -54,6 +66,14 @@ public class LobbyUIManager : NetworkBehaviour
         {
             lobbyCanvas.SetActive(true);
             ipAddressCanvas.SetActive(false);
+
+            //Dynamically Set Up Level Selector
+            foreach (Level level in levels)
+            {
+                GameObject levelButton = Instantiate(levelButtonPrefab, levelHolder.transform);
+                levelButton.GetComponentInChildren<TMP_Text>().text = level.levelNameOnUI;
+                levelButton.GetComponent<LevelButton>().myLevel = level.level.name;
+            }
         }
         else
         {
@@ -279,14 +299,20 @@ public class LobbyUIManager : NetworkBehaviour
 
         NetworkManager.Singleton.SceneManager.OnSceneEvent += SceneManagerOnOnSceneEvent;
 
-        //Update UI
-        lobbyCam.SetActive(false);
-        
-        //Load the selected scene
-        NetworkManager.Singleton.SceneManager.LoadScene(sceneToLoad, LoadSceneMode.Additive);
-
-        //TODO: use this to know when the scene IS loaded - ligting doesn't load when this is called?
+        //BUG: use this to know when the scene IS loaded - ligting doesn't load when this is called?
         NetworkManager.Singleton.SceneManager.OnLoadComplete += OnLevelLoaded;
+
+        //Load the selected scene
+        //BUG: If this fails it will duplicate the spawns of the player
+        try
+        {
+            NetworkManager.Singleton.SceneManager.LoadScene(sceneToLoad, LoadSceneMode.Additive);
+        }
+        catch(Exception e)
+        {
+            Debug.LogException(e, this);
+        }
+
     }
 
     private void OnLevelLoaded(ulong clientId, string sceneName, LoadSceneMode loadSceneMode)
@@ -322,6 +348,8 @@ public class LobbyUIManager : NetworkBehaviour
         //BUG: Scene is not yet loaded when this is called
         //SceneManager.SetActiveScene(scene);
 
+        //Update UI
+        lobbyCam.SetActive(false);
         SubmitLobbyUIStateClientRpc(true);
     }
 
