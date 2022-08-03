@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class CritterAIK : CreatureBase
+public class CritterAIPrefab : CreatureBase
 {
-        
+    
 }
+
+
+
 

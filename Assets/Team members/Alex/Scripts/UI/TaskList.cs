@@ -18,7 +18,7 @@ public class TaskList : MonoBehaviour
 
     public void OutOfEnergy()
     {
-        if (player.energy.energyAmount <= 0)
+        if (player.energy.EnergyAmount.Value <= 0)
         {
             outOfEnergy = true;
         }

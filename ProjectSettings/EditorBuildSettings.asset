@@ -12,9 +12,12 @@ EditorBuildSettings:
     path: Assets/Team members/John/JohnTestScene.unity
     guid: 2be4a0ddf9120e94abeccc4a529b76e6
   - enabled: 1
-    path: Assets/Team members/John/ManagerScene.unity
+    path: Assets/Scenes/ManagerScene.unity
     guid: 5934e573e22147d40a6c82a6edb4eb7e
   - enabled: 1
     path: Assets/Team members/John/JohnEmptyTestScene.unity
     guid: c2ed811599d59fd4eaed37baddc4d6c9
+  - enabled: 1
+    path: Assets/Scenes/Main Test all active game mechanics.unity
+    guid: 2af64fa95e910c94fb8835992da0c488
   m_configObjects: {}

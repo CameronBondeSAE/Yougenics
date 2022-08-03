@@ -23,6 +23,6 @@ public class EnergyUICamTest : MonoBehaviour
 
     void UpdateText()
     {
-        textMeshProUGUI.text = energy.energyAmount.ToString();
+        textMeshProUGUI.text = energy.EnergyAmount.Value.ToString();
     }
 }

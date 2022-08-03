@@ -10,14 +10,15 @@ public class Energy : NetworkBehaviour
 {
     //[SerializeField]
     public NetworkVariable<float> EnergyAmount = new NetworkVariable<float>();
-
-    public float energyAmount = 50;
-    public float energyMax = 100;
-    public float energyMin = 0f;
-    public float drainAmount = 1;
-    public float moveDrainAmount = 0.001f;
+    public float        energyMax       = 100;
+    public float        energyMin       = 0f;
+    public float        drainAmount     = 1;
+    public float        moveDrainAmount = 1f;
     public event Action NoEnergyEvent; 
     public event Action FullEnergyEvent;
+    public event Action<float> EnergyChangedEvent;
+    
+    
     public float drainSpeed = 1;
     public bool energyUserMoving = false;
     private Rigidbody rb;
@@ -37,7 +38,8 @@ public class Energy : NetworkBehaviour
         energyUserMoving = false;
         GetComponent<Minh.Health>();
         CheckEnergyMax();
-        //StartCoroutine(EnergyDrainer());
+        CheckEnergyMin();
+        StartCoroutine(EnergyDrainer());
         rb = GetComponent<Rigidbody>();
     }
 
@@ -50,10 +52,36 @@ public class Energy : NetworkBehaviour
         }
     }
 
-    public void ChangeEnergy(float f)
+    public float ChangeEnergy(float f)
     {
         if (IsServer)
-            EnergyAmount.Value += f;
+        {
+            if (f < 0)
+            {
+                if (EnergyAmount.Value < f)
+                {
+                    return EnergyAmount.Value;
+                }
+                else
+                {
+                    return EnergyAmount.Value += f;
+                }
+            }
+
+            if (f >= 0)
+            {
+                if (f > energyMax)
+                {
+                    return EnergyAmount.Value = energyMax;
+                }
+                else
+                {
+                    return EnergyAmount.Value += f;
+                }
+            }
+        }
+
+        return 0;
 
         //energyAmount = energyAmount + f;
         //CheckEnergyMax();
@@ -65,24 +93,19 @@ public class Energy : NetworkBehaviour
         if (EnergyAmount.Value >= energyMax)
         {
 
-            //EnergyAmount.Value = energyMax;
+            EnergyAmount.Value = energyMax;
             FullEnergyEvent?.Invoke();
-            Debug.Log("Full Energy");
-            //FindObjectOfType<AudioManager>().Play("Energy Full");
         }
     }
 
     public void CheckEnergyMin()
     {
-        if (EnergyAmount.Value <= energyMin)
+        if (EnergyAmount.Value <= 0)
         {
-            //EnergyAmount.Value = energyMin;
+            EnergyAmount.Value = 0;
 
             NoEnergyEvent?.Invoke();
-            Debug.Log("No Energy");
-
         }
-        //Debug.Log("Editor test");
     }
     
     public IEnumerator EnergyDrainer()
@@ -116,6 +139,8 @@ public class Energy : NetworkBehaviour
             CheckEnergyMax();
         else
             CheckEnergyMin();
+        
+        EnergyChangedEvent?.Invoke(EnergyAmount.Value);
     }
 
     [ServerRpc]

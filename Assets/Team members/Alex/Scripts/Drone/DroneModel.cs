@@ -79,7 +79,7 @@ public class DroneModel : MonoBehaviour, IFlyable, IInteractable
     private void CanFly()
     {
         //If drone has energy they will ignore gravity and fly, when they run out they will fall to the ground
-        if (energy.energyAmount > 0)
+        if (energy.EnergyAmount.Value > 0)
         {
             isFlying = true;
             rb.useGravity = false;

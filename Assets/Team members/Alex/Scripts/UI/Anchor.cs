@@ -10,7 +10,7 @@ namespace Alex
         
         void LateUpdate()
         {
-            transform.LookAt(transform.position + camera.forward);
+            if (camera != null) transform.LookAt(transform.position + camera.forward);
         }
     }
 }

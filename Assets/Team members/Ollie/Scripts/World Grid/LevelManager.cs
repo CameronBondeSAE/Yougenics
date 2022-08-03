@@ -77,8 +77,8 @@ namespace Ollie
         {
             while (true)
             {
-                yield return new WaitForSeconds(1f);
-                if(worldInitialised) ScanWorld();
+                yield return new WaitForSeconds(5f);
+                //if(worldInitialised) ScanWorld();
             }
         }
 
@@ -92,6 +92,8 @@ namespace Ollie
 
         public WaterNode ConvertToGrid(Vector3 position)
         {
+            //outside bounds errors because position sent in can be negative
+            //but gridNodeReferences[,] cannot be negative!
             WaterNode node = gridNodeReferences[(int)position.x-lengthX,(int)position.z-lengthZ];
             return node;
         }
@@ -111,20 +113,21 @@ namespace Ollie
                     for (int z = 0; z < sizeZ; z++)
                     {
                         gridNodeReferences[x, z] = new WaterNode();
-                        gridNodeReferences[x, z].gridPosition = new Vector2Int(x-offsetX, z-offsetZ);
+                        gridNodeReferences[x, z].gridPosition = new Vector2Int(x+lengthX, z+lengthZ); 
+                        //print("node " + x + " " + z +" is at " + gridNodeReferences[x,z].gridPosition);
 
-                        var vector3 = new Vector3(lengthX+x, 0, lengthZ+z);
+                        var vector3 = new Vector3(lengthX+x, 0, lengthZ+z); 
                         
                         if (Physics.OverlapBox(vector3, gridTileHalfExtents,
                             Quaternion.identity,layers).Length != 0)
                         {
-                            
                             gridNodeReferences[x, z].isBlocked = true;
                             blockedNodes.Add(gridNodeReferences[x,z]);
                         }
                     }
                 }
                 worldInitialised = true;
+                AssignNeighbours();
             }
 
             if (worldInitialised)
@@ -134,7 +137,6 @@ namespace Ollie
                     node.ScanMyself();
                 }
             }
-            AssignNeighbours();
         }
 
         public void AssignNeighbours()
@@ -435,18 +437,19 @@ namespace Ollie
                 
             }
 
-            foreach (WaterNode node in gridNodeReferences)
+            if(gridNodeReferences != null) foreach (WaterNode node in gridNodeReferences)
             {
+                
                 if (node.isBlocked)
                 {
                     Gizmos.color = Color.red;
-                    Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
+                    Gizmos.DrawCube(new Vector3(node.gridPosition.x,0,node.gridPosition.y),Vector3.one);
                 }
 
                 if (!node.isBlocked && !node.isWater)
                 {
                     Gizmos.color = Color.green;
-                    Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
+                    Gizmos.DrawCube(new Vector3(node.gridPosition.x,0,node.gridPosition.y),Vector3.one);
                 }
 
                 // if (node.isWater)
@@ -478,25 +481,25 @@ namespace Ollie
                 //     Gizmos.color = Color.yellow;
                 //     Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
                 // }
-            }
+                
 
-            //double for loop, too expensive
-            /*for (int x = 0; x < sizeX; x++)
-            {
-                for (int z = 0; z < sizeZ; z++)
+                //double for loop, too expensive
+                /*for (int x = 0; x < sizeX; x++)
                 {
-                    if (gridNodeReferences[x, z] != null)
+                    for (int z = 0; z < sizeZ; z++)
                     {
-                        if (gridNodeReferences[x, z].isBlocked)
+                        if (gridNodeReferences[x, z] != null)
                         {
-                            Gizmos.color = Color.red;
-                            Gizmos.DrawCube(new Vector3(lengthX+x,0,lengthZ+z),Vector3.one);
-                        }
-                    
-                        if (!gridNodeReferences[x, z].isBlocked && !gridNodeReferences[x,z].isWater)
-                        {
-                            Gizmos.color = Color.green;
-                            Gizmos.DrawCube(new Vector3(lengthX+x,0,lengthZ+z),Vector3.one);
+                            if (gridNodeReferences[x, z].isBlocked)
+                            {
+                                Gizmos.color = Color.red;
+                                Gizmos.DrawCube(new Vector3(lengthX+x,0,lengthZ+z),Vector3.one);
+                            }
+                        
+                            if (!gridNodeReferences[x, z].isBlocked && !gridNodeReferences[x,z].isWater)
+                            {
+                                Gizmos.color = Color.green;
+                                Gizmos.DrawCube(new Vector3(lengthX+x,0,lengthZ+z),Vector3.one);
                         }
 
                         if (gridNodeReferences[x, z].isWater)
@@ -562,6 +565,7 @@ namespace Ollie
                     }
                 }
             }*/
+            }
         }
     }
 }

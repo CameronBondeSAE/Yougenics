@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class LevelButton : MonoBehaviour
 {
+    public string myLevel;
     public void SetSceneToLoad()
     {
-        LobbyUIManager.instance.sceneToLoad = GetComponentInChildren<TMPro.TMP_Text>().text;
+        LobbyUIManager.instance.sceneToLoad = myLevel;
     }
 }

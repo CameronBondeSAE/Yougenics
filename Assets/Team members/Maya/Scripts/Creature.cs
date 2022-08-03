@@ -34,7 +34,7 @@ namespace Maya
 
         public void CheckEnergy()
         {
-            if (energyScript.energyAmount <= energyScript.energyMax * 0.5f)
+            if (energyScript.EnergyAmount.Value <= energyScript.energyMax * 0.5f)
             {
                 isHungry = true;
             }
@@ -101,7 +101,7 @@ namespace Maya
         {
             if (atFood)
             {
-                energyScript.energyAmount += foodObj.energyValue;
+                energyScript.EnergyAmount.Value += foodObj.energyValue;
             }
         }
 

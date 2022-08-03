@@ -137,6 +137,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 93100212}
+  - component: {fileID: 93100214}
+  - component: {fileID: 93100213}
   m_Layer: 0
   m_Name: Tree
   m_TagString: Untagged
@@ -152,7 +154,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 93100209}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 106.03178, y: -155.27, z: 148.45364}
+  m_LocalPosition: {x: 116, y: -151.6, z: 155.5}
   m_LocalScale: {x: 2.1314, y: 6.182978, z: 2.1314}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -161,6 +163,46 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &93100213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93100209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86b58142ff8a3804fa71c5004d10d94b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnergyAmount:
+    m_InternalValue: 42
+  energyAmount: 50
+  energyMax: 100
+  energyMin: 0
+  drainAmount: 1
+  moveDrainAmount: 0.001
+  drainSpeed: 1
+  energyUserMoving: 0
+  myMagnitude: 0
+--- !u!114 &93100214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93100209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 689358669dc6d6d4b831b5c2312b2ec6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foodPrefab: {fileID: 199623030}
+  treePrefab: {fileID: 93100209}
+  spawner: {fileID: 1303899314}
+  canSpawn: 0
+  map: {fileID: 1674098540}
+  treeTop: {fileID: 518533120}
 --- !u!1 &199623030 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4035055015533239334, guid: 459ac7672d82aec479eab4152d9609eb, type: 3}
@@ -371,7 +413,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 518533120}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 689358669dc6d6d4b831b5c2312b2ec6, type: 3}
   m_Name: 
@@ -389,7 +431,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 518533120}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86b58142ff8a3804fa71c5004d10d94b, type: 3}
   m_Name: 
@@ -830,7 +872,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1674098540}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -2.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

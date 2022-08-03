@@ -26,14 +26,14 @@ namespace Alex
         private void Update()
         {
             //If energy is greater than or equal to 100 AI will change to wondering state 
-            if (GetComponent<Energy>().energyAmount >= 100)
+            if (GetComponent<Energy>().EnergyAmount.Value >= 100)
             {
                 GetComponent<StateManager>().ChangeState(wandering);
             }
 
             //AI will look for food if they're energy value is between 20 and 80 and they are not in their sleeping state
-            else if (myEnergy.energyAmount < 80 && 
-                     myEnergy.energyAmount > 20 && 
+            else if (myEnergy.EnergyAmount.Value < 80 && 
+                     myEnergy.EnergyAmount.Value > 20 && 
                      GetComponent<StateManager>().currentState != sleeping)
             {
                 // Look for food
@@ -41,7 +41,7 @@ namespace Alex
             }
             
             //If energy is at 20 or less the AI goes to sleep
-            else if (myEnergy.energyAmount <= 20)
+            else if (myEnergy.EnergyAmount.Value <= 20)
             {
                 // Sleep
                 GetComponent<StateManager>().ChangeState(sleeping);

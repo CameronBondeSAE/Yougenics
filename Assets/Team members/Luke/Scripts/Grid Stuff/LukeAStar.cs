@@ -14,12 +14,12 @@ namespace Luke
         
 	    
         
-        #region MyRegion
+        #region Field Variables
 
         public bool slowMode;
+        public bool breaker;
         
         public AStarNode[,] Nodes;
-
         [SerializeField] private Vector2Int numberOfTiles;
         [SerializeField] private float gridTileHeight;
         [SerializeField] private Vector2 gridSize;
@@ -77,8 +77,8 @@ namespace Luke
 
 		public IEnumerator AStarAlgorithm()
         {
+            breaker = false;
 	        CurrentNode = StartNode;
-
             CurrentNode.GCost = Mathf.RoundToInt(1000*Vector3.Distance(CurrentNode.worldPosition, endLocation));
             CurrentNode.HCost = 0;
             _openNodes.Add(CurrentNode);
@@ -93,9 +93,10 @@ namespace Luke
             else if (CurrentNode != EndNode) coroutineInstance = StartCoroutine(AStarLoop());
             else CreatePath();
         }
-        
+
         public void AStarAlgorithmFast()
         {
+            breaker = false;
 	        CurrentNode = StartNode;
 	        CurrentNode.GCost = Mathf.RoundToInt(1000*Vector3.Distance(CurrentNode.worldPosition, endLocation));
 	        CurrentNode.HCost = 0;
@@ -112,29 +113,33 @@ namespace Luke
 
         private IEnumerator AStarLoop()
         {
-	        while (CurrentNode != EndNode)
+            AStarNode _endNode = EndNode;
+	        while (CurrentNode != _endNode)
 	        {
 	            CheckNeighbours(CurrentNode);
-	            yield return new WaitForEndOfFrame();
-	            if (_openNodes.Count > 0) CurrentNode = _openNodes[OpenNodesComparison()];
+                yield return new WaitForEndOfFrame();
+                if (_openNodes.Count > 0) CurrentNode = _openNodes[OpenNodesComparison()];
+                if (_endNode != EndNode) break;
             }
 	        if(CurrentNode == EndNode) CreatePath();
         }
         
         private void AStarLoopFast()
         {
-	        while (CurrentNode != EndNode)
+            AStarNode _endNode = EndNode;
+            while (CurrentNode != _endNode && _openNodes.Count > 0)
 	        {
-		        CheckNeighbours(CurrentNode);
-		        if (_openNodes.Count > 0) CurrentNode = _openNodes[OpenNodesComparison()];
-	        }
+                CheckNeighbours(CurrentNode);
+                if (_openNodes.Count > 0) CurrentNode = _openNodes[OpenNodesComparison()];
+                if (_endNode != EndNode) break;
+            }
 	        if(CurrentNode == EndNode) CreatePath();
         }
 
         private void CreatePath()
         {
 	        path.Clear();
-	        while (CurrentNode != StartNode && CurrentNode.parent != null)
+	        while (CurrentNode != StartNode | CurrentNode.parent != null)
 	        {
 		        path.Add(CurrentNode);
 		        CurrentNode = CurrentNode.parent;
@@ -234,8 +239,8 @@ namespace Luke
         
         public int[] ConvertIndexAndPosition(Vector3 position)
         {
-            return new [] {Mathf.RoundToInt((position.x-gridOrigin.x)/_gridTileSize.x), 
-                Mathf.RoundToInt((position.z-gridOrigin.z)/_gridTileSize.z)};
+            return new [] {(int)((position.x-gridOrigin.x)/_gridTileSize.x), 
+                (int)((position.z-gridOrigin.z)/_gridTileSize.z)};
         }
         
         public Vector3 RandomLocation()
@@ -255,21 +260,24 @@ namespace Luke
         public void ResetNodes()
         {
 	        if(coroutineInstance != null) StopCoroutine(coroutineInstance);
+            breaker = true;
 	        _openNodes.Clear();
 	        foreach (AStarNode node in Nodes)
 	        {
 		        node.isClosed = false;
-	        }
+                node.parent = null;
+            }
 	        int[] index = ConvertIndexAndPosition(startLocation);
 	        StartNode = Nodes[index[0], index[1]];
 	        CurrentNode = StartNode;
-	        index = ConvertIndexAndPosition(endLocation); 
+	        index = ConvertIndexAndPosition(endLocation);
 	        EndNode = Nodes[index[0], index[1]];
         }
 
         public void ResetNodes(Vector3 startPosition, Vector3 targetPosition)
         {
 	        if(coroutineInstance != null) StopCoroutine(coroutineInstance);
+            breaker = true;
 	        _openNodes.Clear();
 	        foreach (AStarNode node in Nodes)
 	        {
@@ -327,6 +335,15 @@ namespace Luke
                         Gizmos.color = new Color(0f, 1f, 0f, 0.5f);
                         Gizmos.DrawCube(Nodes[x, y].worldPosition, _gridTileSize);
                     }
+                }
+            }
+
+            if (path.Count > 0)
+            {
+                for (int i = 1; i < path.Count; i++)
+                {
+                    Gizmos.color = Color.white;
+                    Gizmos.DrawLine(path[i - 1].worldPosition, path[i].worldPosition);
                 }
             }
         }

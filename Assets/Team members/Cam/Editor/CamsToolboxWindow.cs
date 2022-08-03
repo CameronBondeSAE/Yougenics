@@ -88,7 +88,7 @@ public class CamsToolboxWindow : EditorWindow
 			
 			foreach (Energy energy in thingsWithEnergy)
 			{
-				if (energy.energyAmount < 20)
+				if (energy.EnergyAmount.Value < 20)
 				{
 					thingsWithLowEnergy.Add(energy);
 				}

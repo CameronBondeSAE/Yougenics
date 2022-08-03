@@ -17,6 +17,7 @@ namespace Ollie
         public WaterNode currentLocation;
         public Vector3 targetTransform;
         public AStar aStar;
+        public float timer;
 
         #region Bools for planner World State
         public bool isSafe;
@@ -54,9 +55,14 @@ namespace Ollie
 
         private void Update()
         {
-            if (!LevelManager.instance.ConvertToGrid(targetTransform).isBlocked)
+            timer += Time.deltaTime;
+            if (timer >= 2f)
             {
-                aStar.FindPath(transform.position, targetTransform);
+                timer = 0;
+                if (!LevelManager.instance.ConvertToGrid(targetTransform).isBlocked)
+                {
+                    aStar.FindPath(transform.position, targetTransform);
+                }
             }
         }
 
@@ -77,7 +83,12 @@ namespace Ollie
 
         public void RandomTarget()
         {
-            targetTransform = new Vector3((Random.Range(-LevelManager.instance.sizeX/2,LevelManager.instance.sizeX/2)),1,((Random.Range(-LevelManager.instance.sizeZ/2,LevelManager.instance.sizeZ/2))));
+            
+            float posX = (Random.Range((-LevelManager.instance.sizeX/2)+LevelManager.instance.offsetX,(LevelManager.instance.sizeX/2))+LevelManager.instance.offsetX);
+            float posY = 1; //update this with heights eventually
+            float posZ = (Random.Range((-LevelManager.instance.sizeZ/2)+LevelManager.instance.offsetZ,(LevelManager.instance.sizeZ/2))+LevelManager.instance.offsetZ);
+            
+            targetTransform = new Vector3(posX,posY,posZ);
         }
 
         public void SetTarget(Vector3 newTarget)

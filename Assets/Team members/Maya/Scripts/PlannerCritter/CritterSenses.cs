@@ -25,8 +25,8 @@ namespace Maya
         {
             aWorldState.Set(CritterAI.isHealthy, myHealth.Hp > 40);
             aWorldState.Set(CritterAI.isHorny, myHorny.currentHorny > 75);
-            aWorldState.Set(CritterAI.isHungry, myEnergy.energyAmount < 65);
-            aWorldState.Set(CritterAI.isTired, myEnergy.energyAmount < 25);
+            aWorldState.Set(CritterAI.isHungry, myEnergy.EnergyAmount.Value < 65);
+            aWorldState.Set(CritterAI.isTired, myEnergy.EnergyAmount.Value < 25);
             aWorldState.Set(CritterAI.canSeeEnemy, vision.potentialVictimsIveSeen.Count > 0);
             aWorldState.Set(CritterAI.canSeeFood, vision.whereFoodIs.Count >= 0);
             aWorldState.Set(CritterAI.canSeeMate, vision.potentialMatesIveSeen.Count > 0);

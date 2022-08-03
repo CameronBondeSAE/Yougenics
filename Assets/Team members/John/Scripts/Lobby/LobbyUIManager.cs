@@ -8,6 +8,14 @@ using Unity.Collections;
 using System;
 using UnityEngine.SceneManagement;
 using Unity.Netcode.Transports.UNET;
+using DG.Tweening;
+
+[Serializable]
+public class Level
+{
+    public UnityEngine.Object level;
+    public string levelNameOnUI;
+}
 
 public class LobbyUIManager : NetworkBehaviour
 {
@@ -17,23 +25,28 @@ public class LobbyUIManager : NetworkBehaviour
     public bool spawnPlayerOnAwake;
     public string sceneToLoad;
 
+    [Header("Level Setup")]
+    public List<Level> levels;
+    public GameObject levelHolder;
+    public GameObject levelButtonPrefab;
+
     [Header("Lobby UI Setup")]
     public GameObject lobbyCanvas;
-    //public GameObject clientField;
-    //public GameObject clientLobbyUIPrefab;
     public TMP_Text clientUI;
     public Button startButton;
     public Button lobbyButton;
     public TMP_InputField playerNameField;
     public GameObject levelSelectUI;
     public GameObject waitForHostBanner;
+    //public GameObject clientField;
+    //public GameObject clientLobbyUIPrefab;
 
     [Header("IP Canvas Setup")]
     public GameObject ipAddressCanvas;
     public TMP_InputField serverIPInputField;
 
     [Header("Hack for now/Ignore")]
-    public GameObject player;
+    public GameObject playerPrefab;
     public GameObject lobbyCam;
     bool inGame = false;
     public GameObject lukeAITest;
@@ -54,14 +67,25 @@ public class LobbyUIManager : NetworkBehaviour
         {
             lobbyCanvas.SetActive(true);
             ipAddressCanvas.SetActive(false);
+
+            //Dynamically Set Up Level Selector
+            foreach (Level level in levels)
+            {
+                GameObject levelButton = Instantiate(levelButtonPrefab, levelHolder.transform);
+                levelButton.GetComponentInChildren<TMP_Text>().text = level.levelNameOnUI;
+                levelButton.GetComponent<LevelButton>().myLevel = level.level.name;
+            }
         }
         else
         {
+            //Turn Off Lobby - don't need it for quick testing
+            lobbyCanvas.SetActive(false);
+
             if (!spawnPlayerOnAwake)
                 return;
 
             //spawn a player
-            GameObject tempPlayer = Instantiate(player);
+            GameObject tempPlayer = Instantiate(playerPrefab);
 
             //set ownership
             tempPlayer.GetComponent<NetworkObject>().SpawnWithOwnership(myLocalClientId);
@@ -105,6 +129,7 @@ public class LobbyUIManager : NetworkBehaviour
 
     private void Awake()
     {
+        //Setup IP Address Canvas
         if (!autoHost)
         {
             ipAddressCanvas.SetActive(true);
@@ -274,19 +299,26 @@ public class LobbyUIManager : NetworkBehaviour
         if(sceneToLoad == "")
         {
             Debug.Log("Select a level to load!");
+            levelSelectUI.transform.DOPunchScale(new Vector3(0.25f, 0.25f, 1f), 0.25f, 2, 0.1f);
             return;
         }
 
         NetworkManager.Singleton.SceneManager.OnSceneEvent += SceneManagerOnOnSceneEvent;
 
-        //Update UI
-        lobbyCam.SetActive(false);
-        
-        //Load the selected scene
-        NetworkManager.Singleton.SceneManager.LoadScene(sceneToLoad, LoadSceneMode.Additive);
-
-        //TODO: use this to know when the scene IS loaded - ligting doesn't load when this is called?
+        //BUG: use this to know when the scene IS loaded - ligting doesn't load when this is called?
         NetworkManager.Singleton.SceneManager.OnLoadComplete += OnLevelLoaded;
+
+        //Load the selected scene
+        //BUG: If this fails it will duplicate the spawns of the player
+        try
+        {
+            NetworkManager.Singleton.SceneManager.LoadScene(sceneToLoad, LoadSceneMode.Additive);
+        }
+        catch(Exception e)
+        {
+            Debug.LogException(e, this);
+        }
+
     }
 
     private void OnLevelLoaded(ulong clientId, string sceneName, LoadSceneMode loadSceneMode)
@@ -295,12 +327,25 @@ public class LobbyUIManager : NetworkBehaviour
 
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
 
+        SpawnPoint[] spawnPoints = FindObjectsOfType<SpawnPoint>();
+
         //TODO: Refactor this out of this script?
         //Spawn a player for each client
         foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
         {
+            GameObject tempPlayer;
+
             //spawn a player
-            GameObject tempPlayer = Instantiate(player);
+            if(spawnPoints.Length > 0)
+            {
+                SpawnPoint randomSpawn = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
+                tempPlayer = Instantiate(playerPrefab, randomSpawn.transform.position, Quaternion.identity);
+            }
+            else
+            {
+                tempPlayer = Instantiate(playerPrefab);
+                Debug.Log("No Spawn Points Found");
+            }
 
             //set ownership
             tempPlayer.GetComponent<NetworkObject>().SpawnWithOwnership(client.ClientId);
@@ -322,6 +367,8 @@ public class LobbyUIManager : NetworkBehaviour
         //BUG: Scene is not yet loaded when this is called
         //SceneManager.SetActiveScene(scene);
 
+        //Update UI
+        lobbyCam.SetActive(false);
         SubmitLobbyUIStateClientRpc(true);
     }
 

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8956417045298381834}
   - component: {fileID: 8956417045298381837}
   - component: {fileID: 8956417045298381836}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Predator
   m_TagString: Untagged
   m_Icon: {fileID: 0}

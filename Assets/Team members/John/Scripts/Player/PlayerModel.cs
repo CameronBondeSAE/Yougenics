@@ -24,6 +24,8 @@ public class PlayerModel : NetworkBehaviour
     public John.PlayerController controller;
     public PlayerInput playerInput;
 
+    public Transform playerHead;
+
     public override void OnNetworkSpawn()
     {
         if (!IsOwner)
@@ -44,7 +46,7 @@ public class PlayerModel : NetworkBehaviour
 
     private void Update()
     {
-        transform.Rotate(Vector3.up * mouseX);
+        transform.Rotate(new Vector3(0, mouseX * Time.deltaTime * lookSensitivity,0), Space.Self);
     }
     private void FixedUpdate()
     {
@@ -82,6 +84,7 @@ public class PlayerModel : NetworkBehaviour
 
         if (hit.collider != null)
         {
+            // Get in parent, because the collider might be a child and IInteractable should be on the root GO
             IInteractable interactable = hit.collider.gameObject.GetComponentInParent<IInteractable>();
             if (interactable != null)
             {
@@ -156,9 +159,9 @@ public class PlayerModel : NetworkBehaviour
         RaycastHit hit;
         // Ray        ray = new Ray(transform.position + transform.TransformPoint(interactRayOffset), transform.forward);
         // NOTE: TransformPoint I THINK includes the main position, so you don't have to add world position to the final
-        Vector3 transformPoint = transform.TransformPoint(interactRayOffset);
+        Vector3 transformPoint = playerHead.TransformPoint(interactRayOffset);
         // Debug.Log(transformPoint);
-        Ray ray = new Ray(transformPoint, transform.forward);
+        Ray ray = new Ray(transformPoint, playerHead.forward);
 
         Debug.DrawRay(ray.origin, ray.direction * interactDistance, Color.green, 2f);
 

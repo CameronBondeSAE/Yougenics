@@ -36,12 +36,12 @@ namespace Cam
         private void Update()
         {
             
-            if (GetComponent<Energy>().energyAmount < 10)
+            if (GetComponent<Energy>().EnergyAmount.Value < 10)
             {
                 // Sleep
                 stateManager.ChangeState(GetComponent<SleepingState>());
             }
-            else if (GetComponent<Energy>().energyAmount > 50)
+            else if (GetComponent<Energy>().EnergyAmount.Value > 50)
             {
                 // Disco
                 stateManager.ChangeState(GetComponent<DiscoState>());
@@ -85,7 +85,7 @@ namespace Cam
 
         public float GetEnergyAmount()
         {
-            return GetComponent<Energy>().energyAmount;
+            return GetComponent<Energy>().EnergyAmount.Value;
         }
 
         public float EatMe(float energyRemoved)
