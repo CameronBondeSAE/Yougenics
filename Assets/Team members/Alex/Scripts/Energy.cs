@@ -10,14 +10,15 @@ public class Energy : NetworkBehaviour
 {
     //[SerializeField]
     public NetworkVariable<float> EnergyAmount = new NetworkVariable<float>();
-
-    public float energyAmount = 50;
-    public float energyMax = 100;
-    public float energyMin = 0f;
-    public float drainAmount = 1;
-    public float moveDrainAmount = 1f;
+    public float        energyMax       = 100;
+    public float        energyMin       = 0f;
+    public float        drainAmount     = 1;
+    public float        moveDrainAmount = 1f;
     public event Action NoEnergyEvent; 
     public event Action FullEnergyEvent;
+    public event Action<float> EnergyChangedEvent;
+    
+    
     public float drainSpeed = 1;
     public bool energyUserMoving = false;
     private Rigidbody rb;
@@ -92,10 +93,8 @@ public class Energy : NetworkBehaviour
         if (EnergyAmount.Value >= energyMax)
         {
 
-            //EnergyAmount.Value = energyMax;
+            EnergyAmount.Value = energyMax;
             FullEnergyEvent?.Invoke();
-            Debug.Log("Full Energy");
-            //FindObjectOfType<AudioManager>().Play("Energy Full");
         }
     }
 
@@ -106,10 +105,7 @@ public class Energy : NetworkBehaviour
             EnergyAmount.Value = 0;
 
             NoEnergyEvent?.Invoke();
-            Debug.Log("No Energy");
-
         }
-        //Debug.Log("Editor test");
     }
     
     public IEnumerator EnergyDrainer()
@@ -143,6 +139,8 @@ public class Energy : NetworkBehaviour
             CheckEnergyMax();
         else
             CheckEnergyMin();
+        
+        EnergyChangedEvent?.Invoke(EnergyAmount.Value);
     }
 
     [ServerRpc]

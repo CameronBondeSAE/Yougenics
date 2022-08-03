@@ -17,7 +17,7 @@ namespace Maya
         // Update is called once per frame
         void Update()
         {
-            shader.SetFloat("_GlowByEnergy", critterMe.myEnergy.energyAmount);
+            shader.SetFloat("_GlowByEnergy", critterMe.myEnergy.EnergyAmount.Value);
         }
     }
 }

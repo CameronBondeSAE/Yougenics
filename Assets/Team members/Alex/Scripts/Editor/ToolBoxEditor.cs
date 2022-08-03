@@ -60,7 +60,7 @@ public class ToolBoxEditor : EditorWindow
             foreach (Energy energy in thingsWithEnergy)
             {
                 //Checking if energy is less than 20
-                if (energy.energyAmount < 20)
+                if (energy.EnergyAmount.Value < 20)
                 {
                     //Adding to the low energy list
                     thingsWithLowEnergy.Add(energy);

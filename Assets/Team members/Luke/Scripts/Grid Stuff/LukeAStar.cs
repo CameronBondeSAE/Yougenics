@@ -93,25 +93,7 @@ namespace Luke
             else if (CurrentNode != EndNode) coroutineInstance = StartCoroutine(AStarLoop());
             else CreatePath();
         }
-        
-        public IEnumerator AStarAlgorithm2()
-        {
-            breaker = false;
-            CurrentNode = StartNode;
-            CurrentNode.GCost = Mathf.RoundToInt(1000*Vector3.Distance(CurrentNode.worldPosition, endLocation));
-            CurrentNode.HCost = 0;
-            _openNodes.Add(CurrentNode);
 
-            CheckNeighbours();
-
-            CurrentNode = _openNodes[OpenNodesComparison()];
-
-            if (CurrentNode != EndNode && !slowMode) AStarLoopFast();
-            else if (CurrentNode != EndNode) coroutineInstance = StartCoroutine(AStarLoop());
-            else CreatePath();
-            yield return null;
-        }
-        
         public void AStarAlgorithmFast()
         {
             breaker = false;
@@ -142,21 +124,6 @@ namespace Luke
 	        if(CurrentNode == EndNode) CreatePath();
         }
         
-        private IEnumerator AStarLoop2()
-        {
-            int i = 0;
-            AStarNode _endNode = EndNode;
-            while (CurrentNode != _endNode)
-            {
-                CheckNeighbours(CurrentNode);
-                if (i++ > 100) ;
-                if (_openNodes.Count > 0) CurrentNode = _openNodes[OpenNodesComparison()];
-                if (_endNode != EndNode) break;
-            }
-            if(CurrentNode == EndNode) CreatePath();
-            yield return null;
-        }
-        
         private void AStarLoopFast()
         {
             AStarNode _endNode = EndNode;
@@ -172,7 +139,7 @@ namespace Luke
         private void CreatePath()
         {
 	        path.Clear();
-	        while (CurrentNode != StartNode && CurrentNode.parent != null)
+	        while (CurrentNode != StartNode | CurrentNode.parent != null)
 	        {
 		        path.Add(CurrentNode);
 		        CurrentNode = CurrentNode.parent;
@@ -298,7 +265,8 @@ namespace Luke
 	        foreach (AStarNode node in Nodes)
 	        {
 		        node.isClosed = false;
-	        }
+                node.parent = null;
+            }
 	        int[] index = ConvertIndexAndPosition(startLocation);
 	        StartNode = Nodes[index[0], index[1]];
 	        CurrentNode = StartNode;

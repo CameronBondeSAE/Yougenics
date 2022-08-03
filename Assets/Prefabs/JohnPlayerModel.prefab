@@ -197,6 +197,7 @@ MonoBehaviour:
   mouseY: 0
   controller: {fileID: 4893272656999116077}
   playerInput: {fileID: 3352273563504024227}
+  playerHead: {fileID: 8638494978573017855}
 --- !u!136 &8611620220612625324
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -289,7 +290,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnergyAmount:
     m_InternalValue: 25
-  energyAmount: 50
   energyMax: 100
   energyMin: 0
   drainAmount: 1
@@ -359,7 +359,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8611620220984584834
 Transform:
   m_ObjectHideFlags: 0

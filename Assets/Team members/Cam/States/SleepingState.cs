@@ -26,7 +26,7 @@ namespace Cam
         // Update is called once per frame
         void Update()
         {
-            GetComponent<Energy>().energyAmount += regenEnergySpeed * Time.deltaTime;
+            GetComponent<Energy>().EnergyAmount.Value += regenEnergySpeed * Time.deltaTime;
         }
     }
 

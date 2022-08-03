@@ -46,7 +46,7 @@ namespace Maya
             {
                 yield return new WaitForSeconds(1);
                 {
-                    float energyPerBite = myEnergy.energyAmount += foodImEating.GetEnergyAmount() / eatTimer;
+                    float energyPerBite = myEnergy.EnergyAmount.Value += foodImEating.GetEnergyAmount() / eatTimer;
                     foodImEating.EatMe(energyPerBite);
                 }
             }
