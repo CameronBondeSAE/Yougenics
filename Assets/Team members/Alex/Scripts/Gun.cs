@@ -7,7 +7,7 @@ using UnityEngine;
 public class Gun : MonoBehaviour, IItem, IInteractable
 {
     Health health;
-    
+    public ItemInfo    itemInfo;
 
     public void SpawnedAsNormal()
     {
@@ -16,7 +16,7 @@ public class Gun : MonoBehaviour, IItem, IInteractable
 
     public ItemInfo GetInfo()
     {
-        throw new System.NotImplementedException();
+        return itemInfo;
     }
 
     public void Interact()
