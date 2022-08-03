@@ -2556,11 +2556,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1600512450, guid: 22a7f5285e5f1fc4b88104de7cd22d81, type: 3}
       propertyPath: bounds.m_Extent.x
-      value: 80
+      value: 155.83
       objectReference: {fileID: 0}
     - target: {fileID: 1600512450, guid: 22a7f5285e5f1fc4b88104de7cd22d81, type: 3}
       propertyPath: bounds.m_Extent.z
-      value: 80
+      value: 134.9
       objectReference: {fileID: 0}
     - target: {fileID: 889450817007774795, guid: 22a7f5285e5f1fc4b88104de7cd22d81, type: 3}
       propertyPath: m_Name

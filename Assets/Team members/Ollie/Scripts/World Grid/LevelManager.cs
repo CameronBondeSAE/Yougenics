@@ -111,14 +111,13 @@ namespace Ollie
                     for (int z = 0; z < sizeZ; z++)
                     {
                         gridNodeReferences[x, z] = new WaterNode();
-                        gridNodeReferences[x, z].gridPosition = new Vector2Int(x-offsetX, z-offsetZ);
+                        gridNodeReferences[x, z].gridPosition = new Vector2Int(x+lengthX, z+lengthZ); 
 
-                        var vector3 = new Vector3(lengthX+x, 0, lengthZ+z);
+                        var vector3 = new Vector3(lengthX+x, 0, lengthZ+z); 
                         
                         if (Physics.OverlapBox(vector3, gridTileHalfExtents,
                             Quaternion.identity,layers).Length != 0)
                         {
-                            
                             gridNodeReferences[x, z].isBlocked = true;
                             blockedNodes.Add(gridNodeReferences[x,z]);
                         }
@@ -441,13 +440,13 @@ namespace Ollie
                 if (node.isBlocked)
                 {
                     Gizmos.color = Color.red;
-                    Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
+                    Gizmos.DrawCube(new Vector3(node.gridPosition.x,0,node.gridPosition.y),Vector3.one);
                 }
 
                 if (!node.isBlocked && !node.isWater)
                 {
                     Gizmos.color = Color.green;
-                    Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
+                    Gizmos.DrawCube(new Vector3(node.gridPosition.x,0,node.gridPosition.y),Vector3.one);
                 }
 
                 // if (node.isWater)
