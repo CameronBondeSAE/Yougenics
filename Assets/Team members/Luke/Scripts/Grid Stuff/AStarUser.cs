@@ -5,18 +5,19 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 
 namespace Luke
 {
 	public class AStarUser : MonoBehaviour
 	{
 		public LukeAStar aStar;
-		public bool[,] NodeClosedState;
+		public bool[,] nodeClosedState;
 		public Vector3 endLocation;
-		public AStarNode CurrentNode;
-		public AStarNode StartNode;
-		public AStarNode EndNode;
-		public List<AStarNode> _openNodes = new();
+		public AStarNode currentNode;
+		public AStarNode startNode;
+        public AStarNode endNode;
+		public List<AStarNode> openNodes = new();
 		public List<AStarNode> path = new();
 		public bool breaker;
 
@@ -28,67 +29,65 @@ namespace Luke
 
 		public void CopyGrid()
 		{
-			NodeClosedState = new bool[aStar.Nodes.GetLength(0),aStar.Nodes.GetLength(1)];
+			nodeClosedState = new bool[aStar.Nodes.GetLength(0),aStar.Nodes.GetLength(1)];
 		}
 
 		public void AStarAlgorithmFast()
         {
-	        CurrentNode = StartNode;
-	        CurrentNode.GCost = Mathf.RoundToInt(1000*Vector3.Distance(CurrentNode.worldPosition, endLocation));
-	        CurrentNode.HCost = 0;
-	        _openNodes.Add(CurrentNode);
+	        currentNode = startNode;
+	        currentNode.GCost = Mathf.RoundToInt(1000*Vector3.Distance(currentNode.worldPosition, endLocation));
+	        currentNode.HCost = 0;
+	        openNodes.Add(currentNode);
 	        CheckNeighbours();
-	        CurrentNode = _openNodes[OpenNodesComparison()];
-	        if (CurrentNode != EndNode) AStarLoopFast();
+	        currentNode = openNodes[OpenNodesComparison()];
+	        if (currentNode != endNode) AStarLoopFast();
 	        else CreatePath();
         }
 
 		private void AStarLoopFast()
 		{
-			while (CurrentNode != EndNode)
+			while (currentNode != endNode)
 			{
-				Debug.Log(CurrentNode.indices[0]+" "+CurrentNode.indices[1]);
-		        CheckNeighbours(CurrentNode);
-		        if (_openNodes.Count > 0) CurrentNode = _openNodes[OpenNodesComparison()];
+				Debug.Log(currentNode.indices[0]+" "+currentNode.indices[1]);
+		        CheckNeighbours(currentNode);
+		        if (openNodes.Count > 0) currentNode = openNodes[OpenNodesComparison()];
 	        }
-			if(CurrentNode == EndNode) CreatePath();
+			if(currentNode == endNode) CreatePath();
         }
 
         private void CreatePath()
         {
 	        path.Clear();
-	        while (CurrentNode != StartNode && CurrentNode.parent != null)
+	        while (currentNode != startNode && currentNode.parent != null)
 	        {
-		        path.Add(CurrentNode);
-		        CurrentNode = CurrentNode.parent;
+		        path.Add(currentNode);
+		        currentNode = currentNode.parent;
 	        }
         }
 
         //Case: First Node
         private void CheckNeighbours()
         {
-            int i = 0;
             for (int x = 0; x < 3; x++)
             {
                 for (int y = 0; y < 3; y++)
                 {
-	                int indexX = CurrentNode.indices[0] - 1 + x;
-	                int indexY = CurrentNode.indices[1] - 1 + y;
+	                int indexX = currentNode.indices[0] - 1 + x;
+	                int indexY = currentNode.indices[1] - 1 + y;
 	                if (indexX < 0 || indexX >= aStar.Nodes.GetLength(0)) continue;
 	                if (indexY < 0 || indexY >= aStar.Nodes.GetLength(1)) continue;
 	                AStarNode neighbour = aStar.Nodes[indexX, indexY];
-                    if (neighbour.isBlocked || NodeClosedState[neighbour.indices[0], neighbour.indices[1]] || _openNodes.Contains(neighbour)) continue;
-                    i++;
-                    _openNodes.Add(neighbour);
+                    if (neighbour.isBlocked || nodeClosedState[neighbour.indices[0], neighbour.indices[1]] || openNodes.Contains(neighbour)) continue;
+                    openNodes.Add(neighbour);
                     neighbour.GCost = Mathf.RoundToInt(1000*Vector3.Distance(neighbour.worldPosition, endLocation));
-                    neighbour.parent = CurrentNode;
+                    neighbour.parent = currentNode;
                     neighbour.HCost =
-                            Mathf.RoundToInt(1000*Vector3.Distance(neighbour.worldPosition, CurrentNode.worldPosition) +
-                                             CurrentNode.HCost);
+                            Mathf.RoundToInt(1000*Vector3.Distance(neighbour.worldPosition, currentNode.worldPosition) +
+                                             currentNode.HCost);
                 }
             }
-            NodeClosedState[CurrentNode.indices[0], CurrentNode.indices[1]] = true;
-            _openNodes.Remove(CurrentNode);
+            nodeClosedState[currentNode.indices[0], currentNode.indices[1]] = true;
+            openNodes.Remove(currentNode);
         }
         
         private void CheckNeighbours(AStarNode node)
@@ -102,8 +101,8 @@ namespace Luke
 	                if (indexX < 0 || indexX >= aStar.Nodes.GetLength(0)) continue;
 	                if (indexY < 0 || indexY >= aStar.Nodes.GetLength(1)) continue;
 	                AStarNode neighbour = aStar.Nodes[indexX, indexY];
-                    if (neighbour.isBlocked || NodeClosedState[neighbour.indices[0], neighbour.indices[1]] || _openNodes.Contains(neighbour)) continue;
-                    _openNodes.Add(neighbour);
+                    if (neighbour.isBlocked || nodeClosedState[neighbour.indices[0], neighbour.indices[1]] || openNodes.Contains(neighbour)) continue;
+                    openNodes.Add(neighbour);
                     neighbour.GCost = Mathf.RoundToInt(1000*Vector3.Distance(neighbour.worldPosition, endLocation));
                     if (neighbour.parent != null && neighbour.HCost < node.parent.HCost)
                     {
@@ -120,28 +119,28 @@ namespace Luke
                     }
                 }
             }
-            NodeClosedState[node.indices[0], node.indices[1]] = true;
-            _openNodes.Remove(node);
+            nodeClosedState[node.indices[0], node.indices[1]] = true;
+            openNodes.Remove(node);
         }
 
         private int OpenNodesComparison()
         {
 	        int lowestFCostIndex = 0;
 	        int lowestGCostIndex = 0;
-	        int lowestFCost = _openNodes[lowestFCostIndex].fCost;
-	        int lowestGCost = _openNodes[lowestFCostIndex].GCost;
-	        for (int i=0; i < _openNodes.Count; i++)
+	        int lowestFCost = openNodes[lowestFCostIndex].fCost;
+	        int lowestGCost = openNodes[lowestFCostIndex].GCost;
+	        for (int i=0; i < openNodes.Count; i++)
 	        {
-		        if (_openNodes[i].fCost < lowestFCost)
+		        if (openNodes[i].fCost < lowestFCost)
 		        {
-			        lowestFCost = _openNodes[i].fCost;
+			        lowestFCost = openNodes[i].fCost;
 			        lowestFCostIndex = i;
-			        lowestGCost = _openNodes[i].GCost;
+			        lowestGCost = openNodes[i].GCost;
 			        lowestGCostIndex = i;
 		        }
-		        else if (_openNodes[i].fCost == lowestFCost && _openNodes[i].GCost < lowestGCost)
+		        else if (openNodes[i].fCost == lowestFCost && openNodes[i].GCost < lowestGCost)
 		        {
-			        lowestGCost = _openNodes[i].GCost;
+			        lowestGCost = openNodes[i].GCost;
 			        lowestGCostIndex = i;
 		        }
 	        }
@@ -153,20 +152,20 @@ namespace Luke
         public void ResetNodes(Vector3 startPosition, Vector3 targetPosition)
         {
 	        breaker = true;
-	        _openNodes.Clear();
-	        NodeClosedState = new bool[aStar.Nodes.GetLength(0),aStar.Nodes.GetLength(1)];
-	        for (int i = 1; i < NodeClosedState.GetLength(0); i++)
+	        openNodes.Clear();
+	        nodeClosedState = new bool[aStar.Nodes.GetLength(0),aStar.Nodes.GetLength(1)];
+	        for (int i = 1; i < nodeClosedState.GetLength(0); i++)
 	        {
-		        for (int j = 0; j < NodeClosedState.GetLength(1); j++)
+		        for (int j = 0; j < nodeClosedState.GetLength(1); j++)
 		        {
-			        NodeClosedState[i, j] = false;
+			        nodeClosedState[i, j] = false;
 		        }
 	        }
 	        int[] index = aStar.ConvertIndexAndPosition(startPosition);
-	        StartNode = aStar.Nodes[index[0], index[1]];
-	        CurrentNode = StartNode;
+	        startNode = aStar.Nodes[index[0], index[1]];
+	        currentNode = startNode;
 	        index = aStar.ConvertIndexAndPosition(targetPosition); 
-	        EndNode = aStar.Nodes[index[0], index[1]];
+	        endNode = aStar.Nodes[index[0], index[1]];
         }
 	}
 }
