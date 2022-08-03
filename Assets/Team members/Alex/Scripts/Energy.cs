@@ -15,7 +15,7 @@ public class Energy : NetworkBehaviour
     public float energyMax = 100;
     public float energyMin = 0f;
     public float drainAmount = 1;
-    public float moveDrainAmount = 0.001f;
+    public float moveDrainAmount = 1f;
     public event Action NoEnergyEvent; 
     public event Action FullEnergyEvent;
     public float drainSpeed = 1;
@@ -37,6 +37,7 @@ public class Energy : NetworkBehaviour
         energyUserMoving = false;
         GetComponent<Minh.Health>();
         CheckEnergyMax();
+        CheckEnergyMin();
         StartCoroutine(EnergyDrainer());
         rb = GetComponent<Rigidbody>();
     }
@@ -74,9 +75,9 @@ public class Energy : NetworkBehaviour
 
     public void CheckEnergyMin()
     {
-        if (EnergyAmount.Value <= energyMin)
+        if (EnergyAmount.Value <= 0)
         {
-            //EnergyAmount.Value = energyMin;
+            EnergyAmount.Value = 0;
 
             NoEnergyEvent?.Invoke();
             Debug.Log("No Energy");
