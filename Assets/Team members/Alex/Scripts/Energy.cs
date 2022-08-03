@@ -37,7 +37,7 @@ public class Energy : NetworkBehaviour
         energyUserMoving = false;
         GetComponent<Minh.Health>();
         CheckEnergyMax();
-        //StartCoroutine(EnergyDrainer());
+        StartCoroutine(EnergyDrainer());
         rb = GetComponent<Rigidbody>();
     }
 
