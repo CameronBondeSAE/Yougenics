@@ -87,23 +87,9 @@ public class Spawner : MonoBehaviour
 		// Object must have NetworkObject component to work on clients
 		spawnedPrefab.GetComponent<NetworkObject>()?.Spawn();
 
-		// Start much higher
-		Vector3 startRay = spawnedPrefab.transform.position + Vector3.up * 500f;
-		Ray     ray      = new Ray(startRay, Vector3.down);
-		if (Physics.Raycast(ray, out RaycastHit hit, 1000f, 255, QueryTriggerInteraction.Ignore))
-		{
-			// Add offset from detected ground point
-			Vector3 newSpawnPos = hit.point + Vector3.up * groundOffset;;
-			// Debug.DrawRay(startRay, Vector3.down * hit.distance, Color.blue);
-			// Debug.Log(hit.distance);
-
-			
-			// newSpawnPos = new Vector3(newSpawnPos.x,
-			// newSpawnPos.y - (hit.distance - groundOffset),
-			// newSpawnPos.z);
-			spawnedPrefab.transform.position = newSpawnPos;
-		}
-
+		
+		spawnedPrefab.transform.position = Utilities.FindGroundHeight(spawnedPrefab.transform.position, groundOffset);
+		
 		return spawnedPrefab;
 	}
 

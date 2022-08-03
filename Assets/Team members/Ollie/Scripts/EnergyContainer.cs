@@ -17,6 +17,7 @@ public class EnergyContainer : MonoBehaviour, IItem
         energy = GetComponent<Energy>();
         drainTargets = new List<GameObject>();
         currentlyDraining = false;
+        StartCoroutine(DrainCoroutine());
     }
 
     private void Update()
@@ -42,34 +43,29 @@ public class EnergyContainer : MonoBehaviour, IItem
         }
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (!currentlyDraining)
-        {
-            StartCoroutine(DrainCoroutine(other));
-        }
-        
-    }
+    // private void OnTriggerStay(Collider other)
+    // {
+    //     if (!currentlyDraining && drainTargets.Count > 0)
+    //     {
+    //         StartCoroutine(DrainCoroutine(other));
+    //     }
+    //     
+    // }
 
-    IEnumerator DrainCoroutine(Collider other)
+    IEnumerator DrainCoroutine()
     {
         currentlyDraining = true;
         if (drainTargets.Count > 0)
         {
             foreach (GameObject target in drainTargets)
             {
-                target.GetComponent<Energy>().ChangeEnergy(-drainRate);
-                energy.ChangeEnergy(drainRate);
+                energy.ChangeEnergy(target.GetComponent<Energy>().ChangeEnergy(-drainRate));
                 print("yoink");
             }
         }
-        
-        if (other.GetComponent<Energy>().energyAmount <= 0)
-        {
-            drainTargets.Remove(other.gameObject);
-        }
-        
+
         yield return new WaitForSeconds(1f);
+        StartCoroutine(DrainCoroutine());
         currentlyDraining = false;
     }
 

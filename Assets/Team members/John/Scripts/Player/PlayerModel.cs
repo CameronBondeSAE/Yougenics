@@ -44,7 +44,7 @@ public class PlayerModel : NetworkBehaviour
 
     private void Update()
     {
-        transform.Rotate(Vector3.up * mouseX);
+        transform.Rotate(new Vector3(0, mouseX * Time.deltaTime * lookSensitivity,0), Space.Self);
     }
     private void FixedUpdate()
     {
@@ -82,6 +82,7 @@ public class PlayerModel : NetworkBehaviour
 
         if (hit.collider != null)
         {
+            // Get in parent, because the collider might be a child and IInteractable should be on the root GO
             IInteractable interactable = hit.collider.gameObject.GetComponentInParent<IInteractable>();
             if (interactable != null)
             {

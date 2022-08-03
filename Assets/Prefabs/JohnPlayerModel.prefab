@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 7.5
-  lookSensitivity: 0.5
+  lookSensitivity: 5
   jumpHeight: 10
   interactDistance: 3
   interactRayOffset: {x: 0, y: 0.5, z: 0}
@@ -269,10 +269,6 @@ MonoBehaviour:
     m_InternalValue: 25
   IsDead:
     m_InternalValue: 0
-  FullEnergy:
-    m_InternalValue: 0
-  NoEnergy:
-    m_InternalValue: 0
   Hp: 100
   curHp: 0
   dead: 0
@@ -297,7 +293,10 @@ MonoBehaviour:
   energyMax: 100
   energyMin: 0
   drainAmount: 1
+  moveDrainAmount: 0.001
   drainSpeed: 1
+  energyUserMoving: 0
+  myMagnitude: 0
 --- !u!114 &4893272656999116077
 MonoBehaviour:
   m_ObjectHideFlags: 0
