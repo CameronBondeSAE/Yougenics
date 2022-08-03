@@ -13,7 +13,7 @@ using Random = UnityEngine.Random;
 
 namespace Luke
 {
-	public class Critter : MonoBehaviour, IEdible, ISense
+	public class Critter : CreatureBase, IEdible, ISense
 	{
 		public event IEdible.RemoveFromListAction RemoveFromListEvent;
 
