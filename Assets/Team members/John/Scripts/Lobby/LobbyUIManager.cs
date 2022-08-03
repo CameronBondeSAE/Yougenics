@@ -8,6 +8,7 @@ using Unity.Collections;
 using System;
 using UnityEngine.SceneManagement;
 using Unity.Netcode.Transports.UNET;
+using DG.Tweening;
 
 [Serializable]
 public class Level
@@ -298,6 +299,7 @@ public class LobbyUIManager : NetworkBehaviour
         if(sceneToLoad == "")
         {
             Debug.Log("Select a level to load!");
+            levelSelectUI.transform.DOPunchScale(new Vector3(0.25f, 0.25f, 1f), 0.25f, 2, 0.1f);
             return;
         }
 
