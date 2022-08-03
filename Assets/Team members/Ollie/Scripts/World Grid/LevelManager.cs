@@ -435,8 +435,9 @@ namespace Ollie
                 
             }
 
-            foreach (WaterNode node in gridNodeReferences)
+            if(gridNodeReferences != null) foreach (WaterNode node in gridNodeReferences)
             {
+                
                 if (node.isBlocked)
                 {
                     Gizmos.color = Color.red;
@@ -478,25 +479,25 @@ namespace Ollie
                 //     Gizmos.color = Color.yellow;
                 //     Gizmos.DrawCube(new Vector3(lengthX+node.gridPosition.x,0,lengthZ+node.gridPosition.y),Vector3.one);
                 // }
-            }
+                
 
-            //double for loop, too expensive
-            /*for (int x = 0; x < sizeX; x++)
-            {
-                for (int z = 0; z < sizeZ; z++)
+                //double for loop, too expensive
+                /*for (int x = 0; x < sizeX; x++)
                 {
-                    if (gridNodeReferences[x, z] != null)
+                    for (int z = 0; z < sizeZ; z++)
                     {
-                        if (gridNodeReferences[x, z].isBlocked)
+                        if (gridNodeReferences[x, z] != null)
                         {
-                            Gizmos.color = Color.red;
-                            Gizmos.DrawCube(new Vector3(lengthX+x,0,lengthZ+z),Vector3.one);
-                        }
-                    
-                        if (!gridNodeReferences[x, z].isBlocked && !gridNodeReferences[x,z].isWater)
-                        {
-                            Gizmos.color = Color.green;
-                            Gizmos.DrawCube(new Vector3(lengthX+x,0,lengthZ+z),Vector3.one);
+                            if (gridNodeReferences[x, z].isBlocked)
+                            {
+                                Gizmos.color = Color.red;
+                                Gizmos.DrawCube(new Vector3(lengthX+x,0,lengthZ+z),Vector3.one);
+                            }
+                        
+                            if (!gridNodeReferences[x, z].isBlocked && !gridNodeReferences[x,z].isWater)
+                            {
+                                Gizmos.color = Color.green;
+                                Gizmos.DrawCube(new Vector3(lengthX+x,0,lengthZ+z),Vector3.one);
                         }
 
                         if (gridNodeReferences[x, z].isWater)
@@ -562,6 +563,7 @@ namespace Ollie
                     }
                 }
             }*/
+            }
         }
     }
 }
