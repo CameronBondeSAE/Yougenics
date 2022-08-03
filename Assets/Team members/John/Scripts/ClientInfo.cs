@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class ClientInfo : NetworkBehaviour
 {
-
     public string clientName = "Player";
     public GameObject lobbyUIRef;
 
@@ -15,9 +14,11 @@ public class ClientInfo : NetworkBehaviour
         clientName = "Player " + clientId;
     }
 
-    /*public override void OnDestroy()
+    public override void OnDestroy()
     {
         base.OnDestroy();
-        Destroy(lobbyUIRef);
-    }*/
+
+        if(lobbyUIRef != null)
+            Destroy(lobbyUIRef);
+    }
 }

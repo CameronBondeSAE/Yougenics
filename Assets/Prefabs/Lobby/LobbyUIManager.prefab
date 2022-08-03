@@ -924,7 +924,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2470996678349563679
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1573,7 +1573,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000030517578, y: -0.0011444092}
+  m_AnchoredPosition: {x: -0.000030517578, y: -0.001159668}
   m_SizeDelta: {x: 0, y: -0.00030517578}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2470996678861433799
@@ -1703,7 +1703,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.0011444092}
+  m_AnchoredPosition: {x: 0, y: -0.001159668}
   m_SizeDelta: {x: 0, y: -0.00030517578}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2470996678925045788
@@ -2907,8 +2907,6 @@ MonoBehaviour:
   spawnPlayerOnAwake: 0
   sceneToLoad: 
   levels:
-  - level: {fileID: 102900000, guid: 2af64fa95e910c94fb8835992da0c488, type: 3}
-    levelNameOnUI: Main Scene
   - level: {fileID: 102900000, guid: 2be4a0ddf9120e94abeccc4a529b76e6, type: 3}
     levelNameOnUI: John's Level
   - level: {fileID: 102900000, guid: c2ed811599d59fd4eaed37baddc4d6c9, type: 3}
@@ -2924,6 +2922,8 @@ MonoBehaviour:
   playerNameField: {fileID: 2470996678989475699}
   levelSelectUI: {fileID: 2470996678417566629}
   waitForHostBanner: {fileID: 2470996678364992109}
+  clientField: {fileID: 2470996679276304965}
+  clientLobbyUIPrefab: {fileID: 6491264037684435171, guid: 4c3d732b901c04a478677d89ac383efb, type: 3}
   ipAddressCanvas: {fileID: 2470996678444881677}
   serverIPInputField: {fileID: 2470996678151896655}
   playerPrefab: {fileID: 8611620220612625317, guid: cc02e9a49a115264eb5ef1f88085b227, type: 3}

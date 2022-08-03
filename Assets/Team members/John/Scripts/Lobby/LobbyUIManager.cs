@@ -38,8 +38,8 @@ public class LobbyUIManager : NetworkBehaviour
     public TMP_InputField playerNameField;
     public GameObject levelSelectUI;
     public GameObject waitForHostBanner;
-    //public GameObject clientField;
-    //public GameObject clientLobbyUIPrefab;
+    public GameObject clientField;
+    public GameObject clientLobbyUIPrefab;
 
     [Header("IP Canvas Setup")]
     public GameObject ipAddressCanvas;
@@ -184,46 +184,30 @@ public class LobbyUIManager : NetworkBehaviour
                 ClientInfo clientInfo = client.PlayerObject.GetComponent<ClientInfo>();
                 clientInfo.Init((ulong)NetworkManager.Singleton.ConnectedClients.Count);
 
-                //Ignore----------------------------------------------------------------
-                //GameObject uiRef = Instantiate(clientLobbyUIPrefab, clientField.transform);
-                /*clientInfo.lobbyUIRef = uiRef;
-                uiRef.GetComponent<TMP_Text>().text = clientInfo.clientName;*/
-                //SpawnClientLobbyUIClientRpc();
+                GameObject uiRef = Instantiate(clientLobbyUIPrefab, clientField.transform);
+                clientInfo.lobbyUIRef = uiRef;
+                uiRef.GetComponent<TMP_Text>().text = clientInfo.clientName;
             }
 
-            HandleClientNames();
+            //HandleClientNames();
             HandleLocalClient(clientID);
         }
+        else
+            RequestClientNamesServerRpc();
 
         if (clientID == NetworkManager.Singleton.LocalClientId)
             myLocalClientId = clientID;
     }
 
-    //-----------------------------
-    //IGNORE: Was trying to get spawning a clientLobbyUIPrefab working
-
-    /*[ServerRpc(RequireOwnership = false)]
-    private void ReqClientLobbyUIServerRpc()
+    [ServerRpc(RequireOwnership = false)]
+    public void RequestClientNamesServerRpc()
     {
-        SpawnClientLobbyUIClientRpc();
-    }
-
-    [ClientRpc]
-    public void SpawnClientLobbyUIClientRpc()
-    {
-        if (!IsServer)
-            Instantiate(clientLobbyUIPrefab, clientField.transform);
-
-        //Only do this on clients to prevent duplicate spawnings on the server
-
+        //Spawning ClientLobbyUI
         foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
         {
-            if (!IsServer)
-                Instantiate(client.PlayerObject.GetComponent<ClientInfo>().lobbyUIRef, clientField.transform);
-            Debug.Log("Test");
+            HandleClientNamesClientRpc(client.PlayerObject.GetComponent<ClientInfo>().clientName, true);
         }
-    }*/
-    //-----------------------------
+    }
 
     void HandleLocalClient(ulong clientID)
     {
@@ -256,6 +240,38 @@ public class LobbyUIManager : NetworkBehaviour
     }
 
     [ClientRpc]
+    public void HandleClientNamesClientRpc(string clientName, bool ignoreServer)
+    {
+        if (IsServer && ignoreServer)
+            return;
+
+        GameObject uiRef = Instantiate(clientLobbyUIPrefab, clientField.transform);
+        uiRef.GetComponent<TMP_Text>().text = clientName;
+
+    }
+
+    void HandleClientNameChange()
+    {
+        //Removing all clientUI's to replace them with updated names
+        //TODO: Find better way of doing this
+        ClearLobbyNamesClientRpc();
+
+        foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
+        {
+            HandleClientNamesClientRpc(client.PlayerObject.GetComponent<ClientInfo>().clientName, false);
+        }
+    }
+
+    [ClientRpc]
+    public void ClearLobbyNamesClientRpc()
+    {
+        foreach (Transform child in clientField.transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+    [ClientRpc]
     public void UpdateLobbyClientRPC(string name)
     {
         UpdateLobbyClientListName(name);
@@ -273,7 +289,8 @@ public class LobbyUIManager : NetworkBehaviour
             if (myLocalClient != null)
             {
                 myLocalClient.GetComponent<ClientInfo>().clientName = playerNameField.text;
-                HandleClientNames();
+                HandleClientNameChange();
+                //HandleClientNames();
             }
             else
             {
@@ -290,7 +307,8 @@ public class LobbyUIManager : NetworkBehaviour
     void RequestClientNameChangeServerRpc(ulong clientId, string name)
     {
         NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject.GetComponent<ClientInfo>().clientName = name;
-        HandleClientNames();
+        HandleClientNameChange();
+        //HandleClientNames();
     }
     #endregion
 
