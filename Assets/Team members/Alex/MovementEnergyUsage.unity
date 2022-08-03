@@ -531,6 +531,10 @@ PrefabInstance:
       propertyPath: moveDrainAmount
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 6595747842303871998, guid: 89fe2e8efc8a4c947988965905136cac, type: 3}
+      propertyPath: minhHealth
+      value: 
+      objectReference: {fileID: 1622901085}
     - target: {fileID: 6595747842894688307, guid: 89fe2e8efc8a4c947988965905136cac, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

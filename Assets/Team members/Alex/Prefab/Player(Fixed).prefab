@@ -158,7 +158,10 @@ MonoBehaviour:
   energyMax: 100
   energyMin: 0
   drainAmount: 1
+  moveDrainAmount: 0.01
   drainSpeed: 1
+  energyUserMoving: 0
+  myMagnitude: 0
 --- !u!114 &2127720880533122009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -429,7 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f153b32d2104dd4d80fabe266a39766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minhHealth: {fileID: 0}
+  minhHealth: {fileID: 2292135557499416772}
   slider: {fileID: 6595747842303871997}
   gradient:
     serializedVersion: 2
