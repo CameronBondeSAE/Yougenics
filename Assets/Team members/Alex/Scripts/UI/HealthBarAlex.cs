@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Minh;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,7 @@ namespace Alex
     
     public class HealthBarAlex : MonoBehaviour
     {
-        public Minh.Health minhHealth;
+        public Health minhHealth;
         public Slider slider;
         public Gradient gradient;
         public Image fill;

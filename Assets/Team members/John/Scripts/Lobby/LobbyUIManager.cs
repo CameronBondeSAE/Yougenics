@@ -8,6 +8,7 @@ using Unity.Collections;
 using System;
 using UnityEngine.SceneManagement;
 using Unity.Netcode.Transports.UNET;
+using DG.Tweening;
 
 [Serializable]
 public class Level
@@ -45,7 +46,7 @@ public class LobbyUIManager : NetworkBehaviour
     public TMP_InputField serverIPInputField;
 
     [Header("Hack for now/Ignore")]
-    public GameObject player;
+    public GameObject playerPrefab;
     public GameObject lobbyCam;
     bool inGame = false;
     public GameObject lukeAITest;
@@ -77,11 +78,14 @@ public class LobbyUIManager : NetworkBehaviour
         }
         else
         {
+            //Turn Off Lobby - don't need it for quick testing
+            lobbyCanvas.SetActive(false);
+
             if (!spawnPlayerOnAwake)
                 return;
 
             //spawn a player
-            GameObject tempPlayer = Instantiate(player);
+            GameObject tempPlayer = Instantiate(playerPrefab);
 
             //set ownership
             tempPlayer.GetComponent<NetworkObject>().SpawnWithOwnership(myLocalClientId);
@@ -125,6 +129,7 @@ public class LobbyUIManager : NetworkBehaviour
 
     private void Awake()
     {
+        //Setup IP Address Canvas
         if (!autoHost)
         {
             ipAddressCanvas.SetActive(true);
@@ -294,6 +299,7 @@ public class LobbyUIManager : NetworkBehaviour
         if(sceneToLoad == "")
         {
             Debug.Log("Select a level to load!");
+            levelSelectUI.transform.DOPunchScale(new Vector3(0.25f, 0.25f, 1f), 0.25f, 2, 0.1f);
             return;
         }
 
@@ -321,12 +327,25 @@ public class LobbyUIManager : NetworkBehaviour
 
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
 
+        SpawnPoint[] spawnPoints = FindObjectsOfType<SpawnPoint>();
+
         //TODO: Refactor this out of this script?
         //Spawn a player for each client
         foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
         {
+            GameObject tempPlayer;
+
             //spawn a player
-            GameObject tempPlayer = Instantiate(player);
+            if(spawnPoints.Length > 0)
+            {
+                SpawnPoint randomSpawn = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
+                tempPlayer = Instantiate(playerPrefab, randomSpawn.transform.position, Quaternion.identity);
+            }
+            else
+            {
+                tempPlayer = Instantiate(playerPrefab);
+                Debug.Log("No Spawn Points Found");
+            }
 
             //set ownership
             tempPlayer.GetComponent<NetworkObject>().SpawnWithOwnership(client.ClientId);
