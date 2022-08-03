@@ -24,7 +24,7 @@ namespace Alex
             if (other.GetComponent<Energy>() != null)// ‘Fire’ the event
             {
                 //GetComponent<Minh.Health>().Hp += 35;
-                other.GetComponent<Energy>().energyAmount += biteValue;
+                other.GetComponent<Energy>().EnergyAmount.Value += biteValue;
                 FindObjectOfType<AudioManager>().Play("Energy Gain");
                 //Destroy(gameObject);
                 //print("Cheer");

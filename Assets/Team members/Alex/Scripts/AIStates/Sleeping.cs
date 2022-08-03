@@ -30,7 +30,7 @@ namespace Alex
         private void Update()
         {
             //While asleep they gain energy
-            GetComponent<Energy>().energyAmount += regenEnergySpeed * Time.deltaTime;
+            GetComponent<Energy>().EnergyAmount.Value += regenEnergySpeed * Time.deltaTime;
         }
 
     }

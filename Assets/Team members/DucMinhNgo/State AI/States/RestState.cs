@@ -25,7 +25,7 @@ public class RestState : Basestate
     void FixedUpdate()
     {
         GetComponent<Renderer>().material.color = Color.red;
-        GetComponent<Energy>().energyAmount += regenEnergy * Time.deltaTime;
+        GetComponent<Energy>().EnergyAmount.Value += regenEnergy * Time.deltaTime;
     }
 }
 }

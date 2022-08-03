@@ -104,7 +104,7 @@ namespace Alex
         public void MoveToFood()
         {
             
-            if (myEnergy.energyAmount <= 20 && Target != null)
+            if (myEnergy.EnergyAmount.Value <= 20 && Target != null)
             {
                 //print("Low energy find food");
                 rb.AddRelativeForce(0, 0, movementSpeed);
@@ -118,7 +118,7 @@ namespace Alex
 
         public void NoEnergy()
         {
-            if (myEnergy.energyAmount <= 0)
+            if (myEnergy.EnergyAmount.Value <= 0)
             {
                 print("Hp loss he");
                 //FindObjectOfType<Health>().Hp += -1;
@@ -131,7 +131,7 @@ namespace Alex
         {
 
 
-            if (AIHasNoEnergy.energyAmount == 0)
+            if (AIHasNoEnergy.EnergyAmount.Value == 0)
             {
                 FindObjectOfType<hp>() -= 1;
                 print("HP loss here");
