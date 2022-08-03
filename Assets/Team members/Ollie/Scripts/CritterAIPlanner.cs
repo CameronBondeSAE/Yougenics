@@ -17,6 +17,7 @@ namespace Ollie
         public WaterNode currentLocation;
         public Vector3 targetTransform;
         public AStar aStar;
+        public float timer;
 
         #region Bools for planner World State
         public bool isSafe;
@@ -54,9 +55,14 @@ namespace Ollie
 
         private void Update()
         {
-            if (!LevelManager.instance.ConvertToGrid(targetTransform).isBlocked)
+            timer += Time.deltaTime;
+            if (timer >= 2f)
             {
-                aStar.FindPath(transform.position, targetTransform);
+                timer = 0;
+                if (!LevelManager.instance.ConvertToGrid(targetTransform).isBlocked)
+                {
+                    aStar.FindPath(transform.position, targetTransform);
+                }
             }
         }
 

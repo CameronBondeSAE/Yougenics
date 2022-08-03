@@ -78,7 +78,7 @@ namespace Ollie
             while (true)
             {
                 yield return new WaitForSeconds(5f);
-                if(worldInitialised) ScanWorld();
+                //if(worldInitialised) ScanWorld();
             }
         }
 
@@ -127,7 +127,7 @@ namespace Ollie
                     }
                 }
                 worldInitialised = true;
-                
+                AssignNeighbours();
             }
 
             if (worldInitialised)
@@ -137,7 +137,6 @@ namespace Ollie
                     node.ScanMyself();
                 }
             }
-            AssignNeighbours();
         }
 
         public void AssignNeighbours()
