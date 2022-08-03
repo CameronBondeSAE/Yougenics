@@ -19,7 +19,7 @@ public class EnergyContainer : MonoBehaviour, IItem
         currentlyDraining = false;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         
     }
@@ -54,23 +54,21 @@ public class EnergyContainer : MonoBehaviour, IItem
     IEnumerator DrainCoroutine(Collider other)
     {
         currentlyDraining = true;
-        if (other.GetComponent<Energy>() != null)
+        if (drainTargets.Count > 0)
         {
-            if (drainTargets.Count > 0)
+            foreach (GameObject target in drainTargets)
             {
-                foreach (GameObject target in drainTargets)
-                {
-                    target.GetComponent<Energy>().ChangeEnergy(-drainRate);
-                    energy.ChangeEnergy(drainRate);
-                    print("yoink");
-                }
-            }
-            
-            if (other.GetComponent<Energy>().energyAmount <= 0)
-            {
-                drainTargets.Remove(other.gameObject);
+                target.GetComponent<Energy>().ChangeEnergy(-drainRate);
+                energy.ChangeEnergy(drainRate);
+                print("yoink");
             }
         }
+        
+        if (other.GetComponent<Energy>().energyAmount <= 0)
+        {
+            drainTargets.Remove(other.gameObject);
+        }
+        
         yield return new WaitForSeconds(1f);
         currentlyDraining = false;
     }
