@@ -50,10 +50,36 @@ public class Energy : NetworkBehaviour
         }
     }
 
-    public void ChangeEnergy(float f)
+    public float ChangeEnergy(float f)
     {
         if (IsServer)
-            EnergyAmount.Value += f;
+        {
+            if (f < 0)
+            {
+                if (EnergyAmount.Value < f)
+                {
+                    return EnergyAmount.Value;
+                }
+                else
+                {
+                    return EnergyAmount.Value += f;
+                }
+            }
+
+            if (f >= 0)
+            {
+                if (f > energyMax)
+                {
+                    return EnergyAmount.Value = energyMax;
+                }
+                else
+                {
+                    return EnergyAmount.Value += f;
+                }
+            }
+        }
+
+        return 0;
 
         //energyAmount = energyAmount + f;
         //CheckEnergyMax();
