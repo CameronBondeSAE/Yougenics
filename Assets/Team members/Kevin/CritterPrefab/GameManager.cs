@@ -18,6 +18,10 @@ namespace Kevin
         //reference to the UI/Text mesh gameobject
         public TMP_Text currentEnergyUI;
 
+        public delegate void EnergyGoal();
+        public event EnergyGoal OnGoal;
+        
+        
         public void OnEnable()
         {
             dropOffPoint.UpEnergy += UpdateEnergy; 

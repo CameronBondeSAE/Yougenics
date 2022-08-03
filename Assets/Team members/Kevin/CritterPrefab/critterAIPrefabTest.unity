@@ -285,10 +285,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 638407190}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f15b0f1b1d98cb409be57a9de7af0db, type: 3}
+  m_Script: {fileID: 11500000, guid: 059aac044d2c7284e8c92d72bd6bd97e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energy: 10
+  drainRate: 0
+  drainTargets: []
 --- !u!1 &712288857
 GameObject:
   m_ObjectHideFlags: 0
@@ -1222,6 +1223,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7691366153675965264, guid: 05d1a0ffc92e31b41b7d9d64c27d3ca5, type: 3}
+      propertyPath: gameManagerObject
+      value: 
+      objectReference: {fileID: 934846428}
     - target: {fileID: 7691366153675965264, guid: 05d1a0ffc92e31b41b7d9d64c27d3ca5, type: 3}
       propertyPath: gameManangerObject
       value: 
