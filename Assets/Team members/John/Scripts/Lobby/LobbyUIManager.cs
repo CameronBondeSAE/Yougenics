@@ -77,6 +77,9 @@ public class LobbyUIManager : NetworkBehaviour
         }
         else
         {
+            //Turn Off Lobby - don't need it for quick testing
+            lobbyCanvas.SetActive(false);
+
             if (!spawnPlayerOnAwake)
                 return;
 
@@ -125,6 +128,7 @@ public class LobbyUIManager : NetworkBehaviour
 
     private void Awake()
     {
+        //Setup IP Address Canvas
         if (!autoHost)
         {
             ipAddressCanvas.SetActive(true);
