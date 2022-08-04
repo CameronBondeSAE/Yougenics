@@ -86,6 +86,8 @@ public interface IItem
 	/// </summary>
 	/// <returns></returns>
 	ItemInfo GetInfo();
+
+	
 }
 
 [Serializable]

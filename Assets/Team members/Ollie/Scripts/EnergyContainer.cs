@@ -73,6 +73,8 @@ namespace Ollie
             throw new NotImplementedException();
         }
 
+        public object transform { get; set; }
+
         #endregion
     }
 }

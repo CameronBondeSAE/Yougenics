@@ -163,7 +163,7 @@ public class PlayerModel : NetworkBehaviour
         // Debug.Log(transformPoint);
         Ray ray = new Ray(transformPoint, playerHead.forward);
 
-        Debug.DrawRay(ray.origin, ray.direction * interactDistance, Color.green, 2f);
+        Debug.DrawRay(ray.origin, ray.direction * interactDistance, Color.green, 100f);
 
         // if (Physics.Raycast(ray, out hit, interactDistance))
         Physics.SphereCast(ray, 0.5f, out hit, interactDistance);

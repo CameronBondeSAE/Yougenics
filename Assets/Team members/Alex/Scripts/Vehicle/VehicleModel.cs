@@ -47,4 +47,6 @@ public class VehicleModel : MonoBehaviour, IVehicleControls, IItem
 	{
 		return itemInfo;
 	}
+
+	public object transform { get; set; }
 }
