@@ -683,6 +683,14 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 964215376
       objectReference: {fileID: 0}
+    - target: {fileID: 2049367469, guid: d4ec5a789319b624482cdabda213b3f5, type: 3}
+      propertyPath: energyMax
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2049367469, guid: d4ec5a789319b624482cdabda213b3f5, type: 3}
+      propertyPath: EnergyAmount.m_InternalValue
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1545128701414257113, guid: d4ec5a789319b624482cdabda213b3f5, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.05
