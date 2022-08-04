@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,168 +7,203 @@ using UnityEngine.InputSystem;
 
 public class PlayerModel : NetworkBehaviour
 {
-    [Header("Player Setup")]
-    public float movementSpeed = 10f;
-    public float lookSensitivity = 50f;
-    public float jumpHeight = 5f;
-    public float interactDistance = 1f;
-    public Vector3 interactRayOffset = new Vector3(0, 0.5f, 0);
-    public Rigidbody rb;
-    public GameObject myCam;
+	[Header("Player Setup")]
+	public float movementSpeed = 10f;
 
-    //Input control variables
-    Vector3 movement;
-    [HideInInspector]
-    public float mouseX, mouseY;
+	public float   lookSensitivity   = 50f;
+	public float   jumpHeight        = 5f;
+	public float   interactDistance  = 1f;
+	public Vector3 interactRayOffset = new Vector3(0, 0.5f, 0);
 
-    [Header("For Non Networking Setup")]
-    public John.PlayerController controller;
-    public PlayerInput playerInput;
+	public float      onGroundDrag = 4f;
+	public float      inAirDrag    = 0.1f;
+	public Rigidbody  rb;
+	public GameObject myCam;
 
-    public Transform playerHead;
+	//Input control variables
+	Vector3 movement;
 
-    public override void OnNetworkSpawn()
-    {
-        if (!IsOwner)
-            myCam.SetActive(false);
-    }
+	[HideInInspector]
+	public float mouseX, mouseY;
 
-    //Setting up controller if non-networked
-    private void Start()
-    {
-        if(NetworkManager.Singleton == null)
-        {
-            Debug.Log("No Network Manager found - Using local controller");
-            controller.enabled = true;
-            playerInput.enabled = true;
-            controller.OnPlayerAssignedNonNetworked(this);
-        }
-    }
+	[Header("For Non Networking Setup")]
+	public John.PlayerController controller;
 
-    private void Update()
-    {
-        transform.Rotate(new Vector3(0, mouseX * Time.deltaTime * lookSensitivity,0), Space.Self);
-    }
-    private void FixedUpdate()
-    {
-        //Using forces & mass for movement
-        rb.AddForce(movement * movementSpeed, ForceMode.Impulse);
+	public PlayerInput playerInput;
 
-        //instant reactive movement
-        //rb.MovePosition(rb.position + movement * movementSpeed * Time.fixedDeltaTime);
-    }
+	public Transform playerHead;
 
-    #region Input Controlls Networked
+	public override void OnNetworkSpawn()
+	{
+		if (!IsOwner)
+			myCam.SetActive(false);
+	}
 
-    [ClientRpc]
-    public void MovementClientRpc(Vector2 movementInput)
-    {
-        movement = transform.right * movementInput.x + transform.forward * movementInput.y;
-    }
+	//Setting up controller if non-networked
+	private void Start()
+	{
+		if (NetworkManager.Singleton == null)
+		{
+			Debug.Log("No Network Manager found - Using local controller");
+			controller.enabled  = true;
+			playerInput.enabled = true;
+			controller.OnPlayerAssignedNonNetworked(this);
+		}
 
-    [ClientRpc]
-    public void MouseXClientRpc(float value)
-    {
-        mouseX = value;
-    }
+		// NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<John.PlayerController>().playerModel.transform
+	}
 
-    [ClientRpc]
-    public void MouseYClientRpc(float value)
-    {
-        mouseY = value;
-    }
+	private void Update()
+	{
+		transform.Rotate(new Vector3(0, mouseX * Time.deltaTime * lookSensitivity, 0), Space.Self);
+	}
 
-    [ClientRpc]
-    public void InteractClientRpc()
-    {
-        RaycastHit hit = CheckWhatsInFrontOfMe();
+	private void FixedUpdate()
+	{
+		if (onGround)
+		{
+			//Using forces & mass for movement
+			rb.AddRelativeForce(movement * movementSpeed, ForceMode.Impulse);
+		}
 
-        if (hit.collider != null)
-        {
-            // Get in parent, because the collider might be a child and IInteractable should be on the root GO
-            IInteractable interactable = hit.collider.gameObject.GetComponentInParent<IInteractable>();
-            if (interactable != null)
-            {
-                interactable.Interact();
-            }
-            else
-                Debug.Log("Collider Not Interactable");
-        }
-        else
-        {
-            Debug.Log("Nothing found");
-        }
-    }
+		//instant reactive movement
+		//rb.MovePosition(rb.position + movement * movementSpeed * Time.fixedDeltaTime);
 
-    [ClientRpc]
-    public void JumpClientRpc()
-    {
-        //TODO: Add jump restriction when already in the air
+		// Ground check for jumping
+		// Hack: Ray length
+		if (Physics.Raycast(new Ray(transform.position, Vector3.down), 1.1f))
+		{
+			onGround = true;
+			rb.drag  = onGroundDrag;
+		}
+		else
+		{
+			onGround = false;
+			rb.drag  = inAirDrag;
+		}
+	}
 
-        rb.AddForce(0, jumpHeight, 0, ForceMode.VelocityChange);
-    }
+	#region Input Controlls Networked
 
-    #endregion
+	[ClientRpc]
+	public void MovementClientRpc(Vector2 movementInput)
+	{
+		// movement = transform.right * movementInput.x + transform.forward * movementInput.y;
+		movement.x = movementInput.x;
+		movement.z = movementInput.y;
+	}
 
-    #region Input Controlls Non-Networked
-    public void Movement(Vector2 movementInput)
-    {
-        movement = transform.right * movementInput.x + transform.forward * movementInput.y;
-    }
+	[ClientRpc]
+	public void MouseXClientRpc(float value)
+	{
+		mouseX = value;
+	}
 
-    public void MouseX(float value)
-    {
-        mouseX = value;
-    }
+	[ClientRpc]
+	public void MouseYClientRpc(float value)
+	{
+		mouseY = value;
+	}
 
-    public void MouseY(float value)
-    {
-        mouseY = value;
-    }
+	[ClientRpc]
+	public void InteractClientRpc()
+	{
+		RaycastHit hit = CheckWhatsInFrontOfMe();
 
-    public void Interact()
-    {
-        RaycastHit hit = CheckWhatsInFrontOfMe();
+		if (hit.collider != null)
+		{
+			// Get in parent, because the collider might be a child and IInteractable should be on the root GO
+			IInteractable interactable = hit.collider.gameObject.GetComponentInParent<IInteractable>();
+			if (interactable != null)
+			{
+				interactable.Interact();
+			}
+			else
+				Debug.Log("Collider Not Interactable");
+		}
+		else
+		{
+			Debug.Log("Nothing found");
+		}
+	}
 
-        if (hit.collider != null)
-        {
-            IInteractable interactable = hit.collider.gameObject.GetComponentInParent<IInteractable>();
-            if (interactable != null)
-            {
-                interactable.Interact();
-            }
-            else
-                Debug.Log("Collider Not Interactable");
-        }
-        else
-        {
-            Debug.Log("Nothing found");
-        }
-    }
+	bool onGround = false;
 
-    public void Jump()
-    {
-        //TODO: Add jump restriction when already in the air
 
-        rb.AddForce(0, jumpHeight, 0, ForceMode.VelocityChange);
-    }
-    #endregion
+	[ClientRpc]
+	public void JumpClientRpc()
+	{
+		if (onGround)
+		{
+			rb.AddForce(0, jumpHeight, 0, ForceMode.VelocityChange);
+		}
+	}
 
-    RaycastHit CheckWhatsInFrontOfMe()
-    {
-        // Check what's in front of me. TODO: Make it scan the area or something less precise
-        RaycastHit hit;
-        // Ray        ray = new Ray(transform.position + transform.TransformPoint(interactRayOffset), transform.forward);
-        // NOTE: TransformPoint I THINK includes the main position, so you don't have to add world position to the final
-        Vector3 transformPoint = playerHead.TransformPoint(interactRayOffset);
-        // Debug.Log(transformPoint);
-        Ray ray = new Ray(transformPoint, playerHead.forward);
+	#endregion
 
-        Debug.DrawRay(ray.origin, ray.direction * interactDistance, Color.green, 100f);
+	#region Input Controlls Non-Networked
 
-        // if (Physics.Raycast(ray, out hit, interactDistance))
-        Physics.SphereCast(ray, 0.5f, out hit, interactDistance);
+	public void Movement(Vector2 movementInput)
+	{
+		// movement = transform.right * movementInput.x + transform.forward * movementInput.y;
+		movement.x = movementInput.x;
+		movement.z = movementInput.y;
+	}
 
-        return hit;
-    }
+	public void MouseX(float value)
+	{
+		mouseX = value;
+	}
+
+	public void MouseY(float value)
+	{
+		mouseY = value;
+	}
+
+	public void Interact()
+	{
+		RaycastHit hit = CheckWhatsInFrontOfMe();
+
+		if (hit.collider != null)
+		{
+			IInteractable interactable = hit.collider.gameObject.GetComponentInParent<IInteractable>();
+			if (interactable != null)
+			{
+				interactable.Interact();
+			}
+			else
+				Debug.Log("Collider Not Interactable");
+		}
+		else
+		{
+			Debug.Log("Nothing found");
+		}
+	}
+
+	public void Jump()
+	{
+		//TODO: Add jump restriction when already in the air
+
+		rb.AddForce(0, jumpHeight, 0, ForceMode.VelocityChange);
+	}
+
+	#endregion
+
+	RaycastHit CheckWhatsInFrontOfMe()
+	{
+		// Check what's in front of me. TODO: Make it scan the area or something less precise
+		RaycastHit hit;
+		// Ray        ray = new Ray(transform.position + transform.TransformPoint(interactRayOffset), transform.forward);
+		// NOTE: TransformPoint I THINK includes the main position, so you don't have to add world position to the final
+		Vector3 transformPoint = playerHead.TransformPoint(interactRayOffset);
+		// Debug.Log(transformPoint);
+		Ray ray = new Ray(transformPoint, playerHead.forward);
+
+		Debug.DrawRay(ray.origin, ray.direction * interactDistance, Color.green, 2f);
+
+		// if (Physics.Raycast(ray, out hit, interactDistance))
+		Physics.SphereCast(ray, 0.5f, out hit, interactDistance);
+
+		return hit;
+	}
 }

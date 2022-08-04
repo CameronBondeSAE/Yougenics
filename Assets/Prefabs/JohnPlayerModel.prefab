@@ -172,7 +172,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &8611620220612625320
 MonoBehaviour:
@@ -188,9 +188,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 7.5
   lookSensitivity: 5
-  jumpHeight: 10
+  jumpHeight: 6
   interactDistance: 3
   interactRayOffset: {x: 0, y: 0.5, z: 0}
+  onGroundDrag: 10
+  inAirDrag: 0.1
   rb: {fileID: 8611620220612625321}
   myCam: {fileID: 8638494978573017827}
   mouseX: 0
@@ -205,7 +207,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8611620220612625317}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: f81d4f0414c86284aa5e84693826e1c9, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
@@ -297,6 +299,7 @@ MonoBehaviour:
   drainSpeed: 1
   energyUserMoving: 0
   myMagnitude: 0
+  useEnergyOnMovement: 0
 --- !u!114 &4893272656999116077
 MonoBehaviour:
   m_ObjectHideFlags: 0
