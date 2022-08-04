@@ -8,146 +8,149 @@ using Unity.Netcode;
 
 public class Energy : NetworkBehaviour
 {
-    //[SerializeField]
-    public NetworkVariable<float> EnergyAmount = new NetworkVariable<float>();
-    public float        energyMax       = 100;
-    public float        energyMin       = 0f;
-    public float        drainAmount     = 1;
-    public float        moveDrainAmount = 1f;
-    public event Action NoEnergyEvent; 
-    public event Action FullEnergyEvent;
-    public event Action<float> EnergyChangedEvent;
-    
-    
-    public float drainSpeed = 1;
-    public bool energyUserMoving = false;
-    private Rigidbody rb;
-    public float myMagnitude;
+	//[SerializeField]
+	public NetworkVariable<float> EnergyAmount    = new NetworkVariable<float>();
+	public float                  energyMax       = 100;
+	public float                  energyMin       = 0f;
+	public float                  drainAmount     = 1;
+	public float                  moveDrainAmount = 1f;
+	public event Action           NoEnergyEvent;
+	public event Action           FullEnergyEvent;
+	public event Action<float>    EnergyChangedEvent;
 
-    public override void OnNetworkSpawn()
-    {
-        EnergyAmount.OnValueChanged += CheckEnergy;
-    }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        if (NetworkManager.Singleton == null)
-            Debug.Log("No Network Manager Found - ADD ManagerScene For Testing To Your Scene");
+	public  float     drainSpeed       = 1;
+	public  bool      energyUserMoving = false;
+	private Rigidbody rb;
+	public  float     myMagnitude;
+	public  bool      useEnergyOnMovement = false;
 
-        energyUserMoving = false;
-        GetComponent<Minh.Health>();
-        CheckEnergyMax();
-        CheckEnergyMin();
-        StartCoroutine(EnergyDrainer());
-        rb = GetComponent<Rigidbody>();
-    }
+	public override void OnNetworkSpawn()
+	{
+		EnergyAmount.OnValueChanged += CheckEnergy;
+	}
 
-    private void FixedUpdate()
-    {
-        myMagnitude = rb.velocity.magnitude;
-        if (myMagnitude > 1f)
-        {
-            MovementEnergyDrain();
-        }
-    }
+	// Start is called before the first frame update
+	void Start()
+	{
+		if (NetworkManager.Singleton == null)
+			Debug.Log("No Network Manager Found - ADD ManagerScene For Testing To Your Scene");
 
-    public float ChangeEnergy(float f)
-    {
-        if (IsServer)
-        {
-            if (f < 0)
-            {
-                if (EnergyAmount.Value < f)
-                {
-                    return EnergyAmount.Value;
-                }
-                else
-                {
-                    return EnergyAmount.Value += f;
-                }
-            }
+		energyUserMoving = false;
+		GetComponent<Minh.Health>();
+		CheckEnergyMax();
+		CheckEnergyMin();
+		StartCoroutine(EnergyDrainer());
+		rb = GetComponent<Rigidbody>();
+	}
 
-            if (f >= 0)
-            {
-                if (f > energyMax)
-                {
-                    return EnergyAmount.Value = energyMax;
-                }
-                else
-                {
-                    return EnergyAmount.Value += f;
-                }
-            }
-        }
+	private void FixedUpdate()
+	{
+		if (useEnergyOnMovement)
+		{
+			if (rb != null) myMagnitude = rb.velocity.magnitude;
+			if (myMagnitude > 1f)
+			{
+				MovementEnergyDrain();
+			}
+		}
+	}
 
-        return 0;
+	public float ChangeEnergy(float amount)
+	{
+		if (IsServer)
+		{
+			if (amount < 0)
+			{
+				if (EnergyAmount.Value < amount)
+				{
+					float energyAmountValue = EnergyAmount.Value;
+					EnergyAmount.Value = 0;
+					return energyAmountValue;
+				}
+				else
+				{
+					return EnergyAmount.Value += amount;
+				}
+			}
 
-        //energyAmount = energyAmount + f;
-        //CheckEnergyMax();
-        //CheckEnergyMin();
-    }
+			if (amount > 0)
+			{
+				if (EnergyAmount.Value + amount > energyMax)
+				{
+					float amountActuallyGiven = energyMax - EnergyAmount.Value;
+					EnergyAmount.Value = energyMax;
+					return amountActuallyGiven;
+				}
+				else
+				{
+					return EnergyAmount.Value += amount;
+				}
+			}
+		}
 
-    public void CheckEnergyMax()
-    {
-        if (EnergyAmount.Value >= energyMax)
-        {
+		return 0;
 
-            EnergyAmount.Value = energyMax;
-            FullEnergyEvent?.Invoke();
-        }
-    }
+		//energyAmount = energyAmount + f;
+		//CheckEnergyMax();
+		//CheckEnergyMin();
+	}
 
-    public void CheckEnergyMin()
-    {
-        if (EnergyAmount.Value <= 0)
-        {
-            EnergyAmount.Value = 0;
+	public void CheckEnergyMax()
+	{
+		if (EnergyAmount.Value >= energyMax)
+		{
+			EnergyAmount.Value = energyMax;
+			FullEnergyEvent?.Invoke();
+		}
+	}
 
-            NoEnergyEvent?.Invoke();
-        }
-    }
-    
-    public IEnumerator EnergyDrainer()
-    {
-        while (EnergyAmount.Value > energyMin)
-        {
-            yield return new WaitForSeconds(drainSpeed);
-            {
-                //if(IsServer)
-                    EnergyAmount.Value -= drainAmount;
-                //else
-                    //RequestEnergyDrainServerRpc()
-            }
-        }
-    }
+	public void CheckEnergyMin()
+	{
+		if (EnergyAmount.Value <= 0)
+		{
+			EnergyAmount.Value = 0;
 
-    public void MovementEnergyDrain()
-    {
-        //if(IsServer)
-        
-        EnergyAmount.Value -= moveDrainAmount;
-        
-    }
-        
+			NoEnergyEvent?.Invoke();
+		}
+	}
 
-    #region Networking Implementation
+	public IEnumerator EnergyDrainer()
+	{
+		// while (EnergyAmount.Value > energyMin)
+		while (true)
+		{
+			yield return new WaitForSeconds(drainSpeed);
+			if (IsServer)
+				ChangeEnergy(-drainAmount);
+		}
+	}
 
-    private void CheckEnergy(float previousValue, float newValue)
-    {
-        if (previousValue < newValue)
-            CheckEnergyMax();
-        else
-            CheckEnergyMin();
-        
-        EnergyChangedEvent?.Invoke(EnergyAmount.Value);
-    }
+	public void MovementEnergyDrain()
+	{
+		//if(IsServer)
 
-    [ServerRpc]
-    private void RequestEnergyDrainServerRpc()
-    {
-        EnergyAmount.Value -= drainAmount;
-    }
+		EnergyAmount.Value -= moveDrainAmount;
+	}
 
-    #endregion
+
+	#region Networking Implementation
+
+	private void CheckEnergy(float previousValue, float newValue)
+	{
+		if (previousValue < newValue)
+			CheckEnergyMax();
+		else
+			CheckEnergyMin();
+
+		EnergyChangedEvent?.Invoke(EnergyAmount.Value);
+	}
+
+	[ServerRpc]
+	private void RequestEnergyDrainServerRpc()
+	{
+		EnergyAmount.Value -= drainAmount;
+	}
+
+	#endregion
 }
