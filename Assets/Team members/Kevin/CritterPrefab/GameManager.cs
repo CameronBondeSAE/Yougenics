@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Ollie;
 using TMPro;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ namespace Kevin
         public float energyGoal;
         public Energy energy;
         
+        
         //reference to Drop off point script 
         public DropOffPoint dropOffPoint;
         
@@ -21,7 +23,9 @@ namespace Kevin
 
         public void Start()
         {
+            
             energyGoal = energy.energyMax;
+            
         }
 
         public void OnEnable()
@@ -37,7 +41,8 @@ namespace Kevin
         public void UpdateEnergy()
         {
             // HACK TODO actually take off energy from container
-            energy.ChangeEnergy(50);
+            Debug.Log("Drain this");
+            energy.EnergyAmount.Value += GetComponent<EnergyContainer>().energy.EnergyAmount.Value;
         }
     }
 }
