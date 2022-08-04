@@ -1,4 +1,5 @@
 using Alex;
+using Kevin;
 using UnityEngine;
 using TMPro;
 
@@ -6,6 +7,8 @@ public class TotalEnergyGathered : MonoBehaviour
 {
     TMP_Text textMeshPro;
     public GameObject energyBase;
+    public GameManager gameManager;
+    Energy energy;
 
     float totalEnergy;
     
@@ -13,6 +16,7 @@ public class TotalEnergyGathered : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GetComponent<GameManager>();
         textMeshPro = GetComponent<TMP_Text>();
     }
 
@@ -25,6 +29,6 @@ public class TotalEnergyGathered : MonoBehaviour
 
     public void EnergyLevel()
     {
-        totalEnergy = energyBase.GetComponent<Energy>().EnergyAmount.Value;
+        //totalEnergy = gameManager.GetComponent<Energy>().ChangeEnergy();
     }
 }
