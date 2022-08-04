@@ -13,7 +13,7 @@ namespace Alex
         public void Interact()
         {
             if (IsServer)
-                Press();
+                PressButtonClientRpc();
             else
                 SubmitInteractRequestServerRpc();
         }
@@ -21,12 +21,21 @@ namespace Alex
         [ServerRpc(RequireOwnership = false)]
         private void SubmitInteractRequestServerRpc()
         {
-            Interact();
+            PressButtonClientRpc();
         }
 
         public void Press()
         {
             
+            if (canInteract)
+            {
+                buttonPressedEvent?.Invoke();
+            }
+        }
+
+        [ClientRpc]
+        public void PressButtonClientRpc()
+        {
             if (canInteract)
             {
                 buttonPressedEvent?.Invoke();

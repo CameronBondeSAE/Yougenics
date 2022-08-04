@@ -1,8 +1,9 @@
 using System.Collections;
 using Alex;
 using UnityEngine;
+using Unity.Netcode;
 
-public class ShopSingleItem : MonoBehaviour
+public class ShopSingleItem : NetworkBehaviour
 {
 	public  ItemInfo   itemInfo; // Unity doesn't show interfaces in inspector
 	public  GameObject itemToSpawn;   // So we'll use normal GameObject (the trouble is you can drag ANYTHING now, we need to check for the interface)
@@ -12,12 +13,15 @@ public class ShopSingleItem : MonoBehaviour
 	public bool canSpawn = true;
 
 
-	void Start()
-	{
+    public override void OnNetworkSpawn()
+    {
+		if (!IsServer)
+			return;
+
 		itemInfo = itemToSpawn.GetComponent<IItem>().GetInfo();
 		button.buttonPressedEvent += SpawnItem;
 	}
-
+	
 	public void SpawnItem()
 	{
 		StartCoroutine(StartBuild());
