@@ -12,23 +12,25 @@ public class EnergyEditor : Editor
         base.OnInspectorGUI();
         
         GUILayout.BeginHorizontal();
+        Energy energy = (target as Energy);
+        
         if (GUILayout.Button("Give Energy"))
         {
-            (target as Energy)?.ChangeEnergy(10f);
+            energy?.ChangeEnergy(10f);
         }
         
         if (GUILayout.Button("Take Energy"))
         {
-            (target as Energy)?.ChangeEnergy(-10f);
+            energy?.ChangeEnergy(-10f);
         }
         
         if (GUILayout.Button("Full Energy"))
         {
-            (target as Energy)?.CheckEnergyMax();
-        }
-        if (GUILayout.Button("Energy Draining"))
+            energy?.ChangeEnergy(100000000);
+        }        
+        if (GUILayout.Button("Suck Energy"))
         {
-            (target as Energy)?.CheckEnergyMin();
+            energy?.ChangeEnergy(-100000000);
         }
         GUILayout.EndHorizontal();
     }
