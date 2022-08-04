@@ -8,16 +8,12 @@ using UnityEngine;
 
 public class DropOffPoint : MonoBehaviour
 {
-    public GameObject gameManagerObject;
-    public GameManager gameManager;
-
     //update energy event to occur after triggering the box
     public delegate void UpdateEnergy();
     public event UpdateEnergy UpEnergy; 
     
     public void Start()
     {
-        gameManager = gameManagerObject.GetComponent<GameManager>();
     }
     public void OnTriggerEnter(Collider other)
     {

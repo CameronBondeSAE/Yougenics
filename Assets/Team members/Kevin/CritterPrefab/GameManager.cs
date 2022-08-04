@@ -10,13 +10,11 @@ namespace Kevin
     {
         //Energy variables 
         public float energyGoal;
-        public float currentEnergyAmount;
+        public Energy energy;
         
         //reference to Drop off point script 
         public DropOffPoint dropOffPoint;
         
-        //reference to the UI/Text mesh gameobject
-        public TMP_Text currentEnergyUI;
 
         public delegate void EnergyGoal();
         public event EnergyGoal OnGoal;
@@ -34,9 +32,8 @@ namespace Kevin
         
         public void UpdateEnergy()
         {
-            Debug.Log("event occurred");
-            //Update the UI text here
-            currentEnergyUI.SetText(currentEnergyAmount.ToString());
+            // HACK TODO actually take off energy from container
+            energy.ChangeEnergy(50);
         }
     }
 }
