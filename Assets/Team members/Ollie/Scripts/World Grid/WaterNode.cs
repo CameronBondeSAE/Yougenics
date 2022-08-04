@@ -13,6 +13,10 @@ namespace Ollie
         public bool isBlocked;
         public bool isTooSteep;
         public Vector2Int gridPosition;
+        
+        public int xPosInArray;
+        public int zPosInArray;
+        
         public float fillAmount;
         public bool isWater;
         public bool startLocation;

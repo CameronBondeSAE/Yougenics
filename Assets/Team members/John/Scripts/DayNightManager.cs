@@ -17,7 +17,7 @@ public class DayNightManager : NetworkBehaviour
         Evening = 17,
         Night = 21
     }
-
+        
     [Tooltip("Set this to the starting state, it will overwrite the time and call the phase's event")]
     //public DayPhase currentPhase = DayPhase.Morning;
     public NetworkVariable<DayPhase> CurrentPhase = new NetworkVariable<DayPhase>();
@@ -35,10 +35,20 @@ public class DayNightManager : NetworkBehaviour
     /// </summary>
     public event Action<DayPhase> PhaseChangeEvent;
 
-    private void Start()
+    public static DayNightManager instance;
+
+    private void Awake()
     {
-        if(IsServer)
+        instance = this;
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        if (IsServer)
+        {
             ChangePhase(CurrentPhase.Value);
+            CurrentTime.Value = (float)CurrentPhase.Value;
+        }
     }
 
     private void Update()

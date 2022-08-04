@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -44,6 +45,16 @@ namespace Ollie
         public bool AStar;
         private bool worldInitialised;
         public float pathDelay;
+
+        private void OnEnable()
+        {
+            Utilities.WorldObstacleUpdatedEvent += ScanChunk;
+        }
+
+        private void OnDisable()
+        {
+            Utilities.WorldObstacleUpdatedEvent -= ScanChunk;
+        }
 
         void Awake()
         {
@@ -104,6 +115,23 @@ namespace Ollie
             return position;
         }
 
+        public void ScanChunk(GameObject go, Bounds objectBounds)
+        {
+            print("scanning chunk");
+            int minX = ConvertToGrid(objectBounds.min).xPosInArray;
+            int maxX = ConvertToGrid(objectBounds.max).xPosInArray;
+            int minZ = ConvertToGrid(objectBounds.min).zPosInArray;
+            int maxZ = ConvertToGrid(objectBounds.max).zPosInArray;
+
+            for (int x = minX; x < maxX; x++)
+            {
+                for (int z = minZ; z < maxZ; z++)
+                {
+                    gridNodeReferences[x,z].ScanMyself();
+                }
+            }
+        }
+
         public void ScanWorld()
         {
             if (worldInitialised == false)
@@ -113,6 +141,8 @@ namespace Ollie
                     for (int z = 0; z < sizeZ; z++)
                     {
                         gridNodeReferences[x, z] = new WaterNode();
+                        gridNodeReferences[x, z].xPosInArray = x;
+                        gridNodeReferences[x, z].zPosInArray = z;
                         gridNodeReferences[x, z].gridPosition = new Vector2Int(x+lengthX, z+lengthZ); 
                         //print("node " + x + " " + z +" is at " + gridNodeReferences[x,z].gridPosition);
 

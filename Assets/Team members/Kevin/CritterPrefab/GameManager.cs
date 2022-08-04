@@ -23,25 +23,13 @@ namespace Kevin
 
         public void Start()
         {
-            
             energyGoal = energy.energyMax;
-            
         }
 
-        public void OnEnable()
-        {
-            dropOffPoint.UpEnergy += UpdateEnergy; 
-        }
 
-        public void OnDisable()
-        {
-            dropOffPoint.UpEnergy -= UpdateEnergy; 
-        }
         
         public void UpdateEnergy()
         {
-            // HACK TODO actually take off energy from container
-            Debug.Log("Drain this");
             energy.EnergyAmount.Value += GetComponent<EnergyContainer>().energy.EnergyAmount.Value;
         }
     }

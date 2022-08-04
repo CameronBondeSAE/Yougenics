@@ -6615,6 +6615,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slowMode: 0
+  breaker: 0
   numberOfTiles: {x: 99, y: 99}
   gridTileHeight: 0.1
   gridSize: {x: 99, y: 99}
@@ -10941,58 +10942,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
---- !u!1 &2116517885
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2116517887}
-  - component: {fileID: 2116517886}
-  m_Layer: 0
-  m_Name: BiomeManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2116517886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2116517885}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0430fca892a684c4a968a1e2889ba9d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gridTileSize: {x: 1, y: 0.1, z: 1}
-  gridSize: {x: 99, y: 99}
-  gridOrigin: {x: -49, y: 0, z: -49}
-  numberOfTiles: {x: 0, y: 0}
-  iterators: {x: 0, y: 0}
-  perlinOffsets: {x: 6.89, y: 2.91}
-  perlinWavelengths: {x: 5, y: 5}
-  terrainCollider: {fileID: 0}
---- !u!4 &2116517887
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2116517885}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 60.9404, y: 34.079025, z: -1.0271242}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2124425561 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5336129456975902503, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
@@ -11205,3 +11154,64 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+--- !u!1001 &6964757599269991667
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6964757599436131084, guid: 5e4f842a44625f545a7904f0227ab0a5, type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6964757599436131084, guid: 5e4f842a44625f545a7904f0227ab0a5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 60.9404
+      objectReference: {fileID: 0}
+    - target: {fileID: 6964757599436131084, guid: 5e4f842a44625f545a7904f0227ab0a5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 34.079025
+      objectReference: {fileID: 0}
+    - target: {fileID: 6964757599436131084, guid: 5e4f842a44625f545a7904f0227ab0a5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.0271242
+      objectReference: {fileID: 0}
+    - target: {fileID: 6964757599436131084, guid: 5e4f842a44625f545a7904f0227ab0a5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6964757599436131084, guid: 5e4f842a44625f545a7904f0227ab0a5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6964757599436131084, guid: 5e4f842a44625f545a7904f0227ab0a5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6964757599436131084, guid: 5e4f842a44625f545a7904f0227ab0a5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6964757599436131084, guid: 5e4f842a44625f545a7904f0227ab0a5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6964757599436131084, guid: 5e4f842a44625f545a7904f0227ab0a5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6964757599436131084, guid: 5e4f842a44625f545a7904f0227ab0a5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6964757599436131085, guid: 5e4f842a44625f545a7904f0227ab0a5, type: 3}
+      propertyPath: numberOfTiles1D
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6964757599436131086, guid: 5e4f842a44625f545a7904f0227ab0a5, type: 3}
+      propertyPath: m_Name
+      value: BiomeManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5e4f842a44625f545a7904f0227ab0a5, type: 3}
