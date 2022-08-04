@@ -18,8 +18,12 @@ namespace Kevin
 
         public delegate void EnergyGoal();
         public event EnergyGoal OnGoal;
-        
-        
+
+        public void Start()
+        {
+            energyGoal = energy.energyMax;
+        }
+
         public void OnEnable()
         {
             dropOffPoint.UpEnergy += UpdateEnergy; 
