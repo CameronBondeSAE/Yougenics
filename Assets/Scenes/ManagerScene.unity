@@ -785,6 +785,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2470996679276305017, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2470996679314236393, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
       propertyPath: m_Name
       value: LobbyUIManager
