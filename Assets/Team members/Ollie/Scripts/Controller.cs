@@ -22,9 +22,29 @@ namespace Ollie
             collider.enabled = !collider.enabled;
         }
 
+        private void OnEnable()
+        {
+            //CheckFoodLocationEvent += EnableCollider();
+        }
+
+        private void OnDisable()
+        {
+            //CheckFoodLocationEvent -= EnableCollider();
+        }
+
         void FixedUpdate()
         {
             //MoveToTarget(targetLocation);
+        }
+
+        void EnableCollider()
+        {
+            collider.enabled = enabled;
+        }
+
+        public void DisableCollider()
+        {
+            collider.enabled = !enabled;
         }
 
         public void MoveToTarget(Vector3 targetLoc)
@@ -52,9 +72,15 @@ namespace Ollie
                 if (type == NPCBehaviour.NpcType.Food)
                 {
                     print("food was where I thought it was!");
-                    parent.SetFoodFound(true);
+                    parent.foodLocationList.Remove(other.transform);
                     StopMovement();
                     target = other.gameObject;
+                    parent.SetFoodFound(true);
+                }
+
+                if (type != NPCBehaviour.NpcType.Food)
+                {
+                    //FoodMissingEvent?.Invoke(); maybe????
                 }
 
                 if (type == NPCBehaviour.NpcType.Critter)

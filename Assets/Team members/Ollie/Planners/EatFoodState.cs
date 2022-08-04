@@ -11,17 +11,22 @@ namespace Ollie
         private Controller controller;
         private GameObject target;
         private bool doneEating;
+        private CritterAIPlanner brain;
         public override void Create(GameObject aGameObject)
         {
             base.Create(aGameObject);
             doneEating = false;
             parent = aGameObject;
+            brain = aGameObject.GetComponent<CritterAIPlanner>();
             controller = aGameObject.GetComponentInChildren<Controller>();
         }
 
         public override void Enter()
         {
             base.Enter();
+            target = controller.target;
+            controller.target = null;
+            controller.DisableCollider();
             StartCoroutine(EatFoodCoroutine());
             //Finish();
         }
@@ -32,12 +37,15 @@ namespace Ollie
             if (doneEating)
             {
                 print("done eating");
+                doneEating = false;
             }
         }
 
         public override void Exit()
         {
             base.Exit();
+            brain.SetFoodLocated(false);
+            brain.SetFoodFound(false);
             print("exiting eating");
         }
 
@@ -49,10 +57,10 @@ namespace Ollie
         public IEnumerator EatFoodCoroutine()
         {
             yield return new WaitForSeconds(5);
-            Destroy(controller.target);
+            Destroy(target);
             //testing to move into Mating phase
             parent.GetComponent<CritterAIPlanner>().SetIsHungry(false);
-            parent.GetComponent<CritterAIPlanner>().SetIsHorny(true);
+            //parent.GetComponent<CritterAIPlanner>().SetIsHorny(true);
             print("in coroutine");
             doneEating = true;
         }
