@@ -12,14 +12,12 @@ namespace John
         public PlayerInput playerInput;
         public PlayerModel playerModel;
 
-        bool inMenu = false;
+        public bool inMenu = false;
 
         public override void OnNetworkSpawn()
         {
-            if(IsLocalPlayer)
-            {
+            if (IsLocalPlayer)
                 OnPlayerAssigned();
-            }
         }
 
         #region Non-Network Setup
@@ -76,6 +74,8 @@ namespace John
         #region Networked Setup
         public void OnPlayerAssigned()
         {
+            playerInput.actions.Enable();
+
             playerInput.actions.FindAction("Interact").performed += aContext => RequestInteractServerRpc();
             playerInput.actions.FindAction("Jump").performed += aContext => RequestJumpServerRpc();
 
@@ -87,7 +87,8 @@ namespace John
             playerInput.actions.FindAction("MouseX").performed += aContext => RequestPlayerMouseXServerRpc(aContext.ReadValue<float>());
             playerInput.actions.FindAction("MouseY").performed += aContext => RequestPlayerMouseYServerRpc(aContext.ReadValue<float>());
 
-            playerInput.actions.FindAction("Menu").performed += aContext => RequestLobbyDisplay();
+            playerInput.actions.FindAction("OpenMenu").performed += aContext => RequestLobbyDisplay();
+            playerInput.actions.FindAction("CloseMenu").performed += aContext => RequestLobbyDisplay();
         }
 
         public void OnPlayerUnassigned()
@@ -103,7 +104,10 @@ namespace John
             playerInput.actions.FindAction("MouseX").performed -= aContext => RequestPlayerMouseXServerRpc(aContext.ReadValue<float>());
             playerInput.actions.FindAction("MouseY").performed -= aContext => RequestPlayerMouseYServerRpc(aContext.ReadValue<float>());
 
-            playerInput.actions.FindAction("Menu").performed -= aContext => RequestLobbyDisplay();
+            playerInput.actions.FindAction("OpenMenu").performed -= aContext => RequestLobbyDisplay();
+            playerInput.actions.FindAction("CloseMenu").performed -= aContext => RequestLobbyDisplay();
+
+            playerInput.actions.Disable();
         }
 
         private void RequestLobbyDisplay()
@@ -111,10 +115,12 @@ namespace John
             if(inMenu)
             {
                 inMenu = false;
+                playerInput.SwitchCurrentActionMap("InGame");
             }
             else
             {
                 inMenu = true;
+                playerInput.SwitchCurrentActionMap("InMenu");
             }
 
             LobbyUIManager.instance.DisplayLobby(inMenu);

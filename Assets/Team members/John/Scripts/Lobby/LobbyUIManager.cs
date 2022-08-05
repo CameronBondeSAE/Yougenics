@@ -352,6 +352,7 @@ public class LobbyUIManager : NetworkBehaviour
         foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
         {
             GameObject tempPlayer;
+            John.PlayerController controller;
 
             //spawn a player
             if(spawnPoints.Length > 0)
@@ -369,13 +370,39 @@ public class LobbyUIManager : NetworkBehaviour
             tempPlayer.GetComponent<NetworkObject>().SpawnWithOwnership(client.ClientId);
 
             //Posses that player object
-            client.PlayerObject.GetComponent<John.PlayerController>().playerModel = tempPlayer.GetComponent<PlayerModel>();
+            controller = client.PlayerObject.GetComponent<John.PlayerController>();
+            controller.playerModel = tempPlayer.GetComponent<PlayerModel>();
+            controller.playerInput.SwitchCurrentActionMap("InGame");
+            controller.inMenu = false;
         }
+
+        //InitControllerClientRpc();
 
         //Spawn Luke AI For Testing
         GameObject lukeAI = Instantiate(lukeAITest);
         lukeAI.GetComponent<NetworkObject>().Spawn();
     }
+
+    /*[ClientRpc]
+    public void InitControllerClientRpc()
+    {
+        NetworkObject myClient;
+
+        if (!IsServer)
+        {
+            myClient = RequestClientPlayerObjectServerRpc();
+        }
+        else
+            myClient = myLocalClient;
+
+        myClient.GetComponent<John.PlayerController>().OnPlayerAssigned();
+    }
+
+    [ServerRpc]
+    public NetworkObject RequestClientPlayerObjectServerRpc()
+    {
+        return NetworkManager.Singleton.LocalClient.PlayerObject;
+    }*/
 
     private void SceneManagerOnOnSceneEvent(SceneEvent sceneEvent)
     {
@@ -394,20 +421,6 @@ public class LobbyUIManager : NetworkBehaviour
     {
         //Load lobby
 
-        //Despawn Player Objects?
-        /*foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
-        {
-            client.PlayerObject.GetComponent<John.PlayerController>().OnPlayerUnassigned();
-
-            //client.PlayerObject.GetComponent<John.PlayerController>().playerModel.GetComponent<NetworkObject>().Despawn();
-
-            *//*foreach(NetworkObject obj in client.OwnedObjects)
-            {
-                obj.Despawn();
-            }*//*
-        }*/
-
-        //unload active scene (HACK: Having issues setting the active scene on scene loaded)
         NetworkManager.Singleton.SceneManager.UnloadScene(SceneManager.GetSceneByName(sceneToLoad));
 
         //Update Lobby UI
