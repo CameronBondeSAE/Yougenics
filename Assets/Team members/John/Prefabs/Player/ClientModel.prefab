@@ -64,6 +64,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clientName: Player
+  lobbyUIRef: {fileID: 0}
 --- !u!114 &6666355473822886525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,7 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInput: {fileID: 4253349097887346598}
   playerModel: {fileID: 0}
-  playerCameraModel: {fileID: 0}
+  inMenu: 0
 --- !u!114 &4253349097887346598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,6 +107,6 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: InGame
+  m_DefaultActionMap: a1eba830-e41a-4dd3-b9bf-ed8909f86e1e
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}

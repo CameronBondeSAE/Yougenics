@@ -372,37 +372,34 @@ public class LobbyUIManager : NetworkBehaviour
             //Posses that player object
             controller = client.PlayerObject.GetComponent<John.PlayerController>();
             controller.playerModel = tempPlayer.GetComponent<PlayerModel>();
-            controller.playerInput.SwitchCurrentActionMap("InGame");
-            controller.inMenu = false;
         }
 
-        //InitControllerClientRpc();
+        //Activate controller on all clients
+        InitControllerClientRpc();
 
         //Spawn Luke AI For Testing
         GameObject lukeAI = Instantiate(lukeAITest);
         lukeAI.GetComponent<NetworkObject>().Spawn();
     }
 
-    /*[ClientRpc]
+    [ClientRpc]
     public void InitControllerClientRpc()
     {
         NetworkObject myClient;
+        John.PlayerController controller;
 
         if (!IsServer)
         {
-            myClient = RequestClientPlayerObjectServerRpc();
+            myClient = NetworkManager.Singleton.LocalClient.PlayerObject;
         }
         else
             myClient = myLocalClient;
 
-        myClient.GetComponent<John.PlayerController>().OnPlayerAssigned();
+        controller = myClient.GetComponent<John.PlayerController>();
+        controller.playerInput.ActivateInput();
+        controller.playerInput.SwitchCurrentActionMap("InGame");
+        controller.OnPlayerAssigned();
     }
-
-    [ServerRpc]
-    public NetworkObject RequestClientPlayerObjectServerRpc()
-    {
-        return NetworkManager.Singleton.LocalClient.PlayerObject;
-    }*/
 
     private void SceneManagerOnOnSceneEvent(SceneEvent sceneEvent)
     {
@@ -423,9 +420,30 @@ public class LobbyUIManager : NetworkBehaviour
 
         NetworkManager.Singleton.SceneManager.UnloadScene(SceneManager.GetSceneByName(sceneToLoad));
 
+        //Turn Off Controller on all clients
+        ResetControllerClientRpc();
+
         //Update Lobby UI
         SubmitLobbyUIStateClientRpc(false);
         lobbyCam.SetActive(true);
+    }
+
+    [ClientRpc]
+    public void ResetControllerClientRpc()
+    {
+        NetworkObject myClient;
+        John.PlayerController controller;
+
+        if (!IsServer)
+        {
+            myClient = NetworkManager.Singleton.LocalClient.PlayerObject;
+        }
+        else
+            myClient = myLocalClient;
+
+        controller = myClient.GetComponent<John.PlayerController>();
+        controller.OnPlayerUnassigned();
+        controller.playerInput.DeactivateInput();
     }
 
     #region UI Hacky Code

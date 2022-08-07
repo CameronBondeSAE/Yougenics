@@ -12,13 +12,7 @@ namespace John
         public PlayerInput playerInput;
         public PlayerModel playerModel;
 
-        public bool inMenu = false;
-
-        public override void OnNetworkSpawn()
-        {
-            if (IsLocalPlayer)
-                OnPlayerAssigned();
-        }
+        //public bool inMenu = false;
 
         #region Non-Network Setup
         public void OnPlayerAssignedNonNetworked(PlayerModel player)
@@ -87,8 +81,8 @@ namespace John
             playerInput.actions.FindAction("MouseX").performed += aContext => RequestPlayerMouseXServerRpc(aContext.ReadValue<float>());
             playerInput.actions.FindAction("MouseY").performed += aContext => RequestPlayerMouseYServerRpc(aContext.ReadValue<float>());
 
-            playerInput.actions.FindAction("OpenMenu").performed += aContext => RequestLobbyDisplay();
-            playerInput.actions.FindAction("CloseMenu").performed += aContext => RequestLobbyDisplay();
+            playerInput.actions.FindAction("OpenMenu").performed += aContext => ShowLobby();
+            playerInput.actions.FindAction("CloseMenu").performed += aContext => HideLobby();
         }
 
         public void OnPlayerUnassigned()
@@ -104,26 +98,25 @@ namespace John
             playerInput.actions.FindAction("MouseX").performed -= aContext => RequestPlayerMouseXServerRpc(aContext.ReadValue<float>());
             playerInput.actions.FindAction("MouseY").performed -= aContext => RequestPlayerMouseYServerRpc(aContext.ReadValue<float>());
 
-            playerInput.actions.FindAction("OpenMenu").performed -= aContext => RequestLobbyDisplay();
-            playerInput.actions.FindAction("CloseMenu").performed -= aContext => RequestLobbyDisplay();
+            playerInput.actions.FindAction("OpenMenu").performed -= aContext => ShowLobby();
+            playerInput.actions.FindAction("CloseMenu").performed -= aContext => HideLobby();
 
             playerInput.actions.Disable();
         }
 
-        private void RequestLobbyDisplay()
+        //BUG: Both ShowLobby & HideLobby get called when esc is first pressed
+        public void ShowLobby()
         {
-            if(inMenu)
-            {
-                inMenu = false;
-                playerInput.SwitchCurrentActionMap("InGame");
-            }
-            else
-            {
-                inMenu = true;
-                playerInput.SwitchCurrentActionMap("InMenu");
-            }
+            playerInput.SwitchCurrentActionMap("InMenu");
 
-            LobbyUIManager.instance.DisplayLobby(inMenu);
+            LobbyUIManager.instance.DisplayLobby(true);
+        }
+
+        public void HideLobby()
+        {
+            playerInput.SwitchCurrentActionMap("InGame");
+
+            LobbyUIManager.instance.DisplayLobby(false);
         }
 
         [ServerRpc]
