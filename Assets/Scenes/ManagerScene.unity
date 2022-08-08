@@ -346,6 +346,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1093299629232218347, guid: 750f470c605ac2145bc3aff043dd2a5f, type: 3}
+      propertyPath: NetworkConfig.NetworkPrefabs.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1093299629232218347, guid: 750f470c605ac2145bc3aff043dd2a5f, type: 3}
+      propertyPath: NetworkConfig.NetworkPrefabs.Array.data[7].Prefab
+      value: 
+      objectReference: {fileID: 6491264037684435171, guid: 4c3d732b901c04a478677d89ac383efb, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 750f470c605ac2145bc3aff043dd2a5f, type: 3}
 --- !u!1 &1640972067
@@ -748,6 +756,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2470996678444881665, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2470996678861433793, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.001159668
@@ -755,6 +767,18 @@ PrefabInstance:
     - target: {fileID: 2470996678925045790, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.001159668
+      objectReference: {fileID: 0}
+    - target: {fileID: 2470996678993943614, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2470996679103400528, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2470996679103400541, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2470996679243095473, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
       propertyPath: m_AnchorMax.y

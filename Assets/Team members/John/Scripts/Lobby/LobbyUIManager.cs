@@ -177,35 +177,36 @@ public class LobbyUIManager : NetworkBehaviour
     {
         if (NetworkManager.Singleton.IsServer || IsOwner)
         {
-            //Using the client count as the player number reference as clientID does not lower if a player leaves and rejoins (so player 2 ends up incrementing to player 3 etc)
             NetworkClient client;
             if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientID, out client))
             {
                 ClientInfo clientInfo = client.PlayerObject.GetComponent<ClientInfo>();
+
+                //Using the client count as the player number reference as clientID does not lower if a player leaves and rejoins (so player 2 ends up incrementing to player 3 etc)
                 clientInfo.Init((ulong)NetworkManager.Singleton.ConnectedClients.Count);
 
                 GameObject uiRef = Instantiate(clientLobbyUIPrefab, clientField.transform);
                 clientInfo.lobbyUIRef = uiRef;
-                uiRef.GetComponent<TMP_Text>().text = clientInfo.clientName;
+                uiRef.GetComponent<TMP_Text>().text = clientInfo.ClientName.Value.ToString();
             }
 
             //HandleClientNames();
             HandleLocalClient(clientID);
         }
         else
-            RequestClientNamesServerRpc();
+           RequestClientNamesLobbyUIServerRpc(clientID);
 
         if (clientID == NetworkManager.Singleton.LocalClientId)
             myLocalClientId = clientID;
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void RequestClientNamesServerRpc()
+    public void RequestClientNamesLobbyUIServerRpc(ulong clientId)
     {
         //Spawning ClientLobbyUI
         foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
         {
-            HandleClientNamesClientRpc(client.PlayerObject.GetComponent<ClientInfo>().clientName, true);
+            HandleNewClientsJoiningClientRpc(client.PlayerObject.GetComponent<ClientInfo>().ClientName.Value.ToString(), client.ClientId, clientId);
         }
     }
 
@@ -240,16 +241,31 @@ public class LobbyUIManager : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void HandleClientNamesClientRpc(string clientName, bool ignoreServer)
+    public void HandleNewClientsJoiningClientRpc(string clientName, ulong incommingClientId, ulong callerClientId)
     {
-        if (IsServer && ignoreServer)
+        //HACK: Stop duplicates on the server
+        if (IsServer)
             return;
 
-        GameObject uiRef = Instantiate(clientLobbyUIPrefab, clientField.transform);
-        uiRef.GetComponent<TMP_Text>().text = clientName;
+        //HACK: Doing this to still update lobby UI for clients when NEW clients join
+        if (NetworkManager.Singleton.LocalClientId != callerClientId)
+        {
+            //SO we only care about spawning new lobby UI's if the incomming cient Id's are greater then the clients (as these should be clients that this client don't know about)
+            if(incommingClientId > NetworkManager.Singleton.LocalClientId)
+            {
+                SpawnClientLobbyUI(clientName); ;
+            }
+            return;
+        }
 
+        //Otherwise for the client that just joined - spawn a lobby UI for all the clients currently in the lobby including their own
+        SpawnClientLobbyUI(clientName);
     }
-
+    [ServerRpc(RequireOwnership = false)]
+    public void RequestClientUIUpdateServerRpc()
+    {
+        HandleClientNameChange();
+    }
     void HandleClientNameChange()
     {
         //Removing all clientUI's to replace them with updated names
@@ -258,8 +274,20 @@ public class LobbyUIManager : NetworkBehaviour
 
         foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
         {
-            HandleClientNamesClientRpc(client.PlayerObject.GetComponent<ClientInfo>().clientName, false);
+            SpawnClientLobbyUIClientRpc(client.PlayerObject.GetComponent<ClientInfo>().ClientName.Value.ToString());
         }
+    }
+
+    [ClientRpc]
+    public void SpawnClientLobbyUIClientRpc(string newName)
+    {
+        SpawnClientLobbyUI(newName);
+    }
+    void SpawnClientLobbyUI(string clientName)
+    {
+        GameObject uiRef = Instantiate(clientLobbyUIPrefab, clientField.transform);
+        uiRef.GetComponent<TMP_Text>().text = clientName;
+        NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<ClientInfo>().lobbyUIRef = uiRef;
     }
 
     [ClientRpc]
@@ -282,15 +310,16 @@ public class LobbyUIManager : NetworkBehaviour
         clientUI.text = _name;
     }
 
+    //Currently syncs client to server but not server to client 
+
     public void UpdateClientName()
     {
         if(IsServer)
         {
             if (myLocalClient != null)
             {
-                myLocalClient.GetComponent<ClientInfo>().clientName = playerNameField.text;
+                myLocalClient.GetComponent<ClientInfo>().ClientName.Value = playerNameField.text;
                 HandleClientNameChange();
-                //HandleClientNames();
             }
             else
             {
@@ -306,9 +335,8 @@ public class LobbyUIManager : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     void RequestClientNameChangeServerRpc(ulong clientId, string name)
     {
-        NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject.GetComponent<ClientInfo>().clientName = name;
+        NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject.GetComponent<ClientInfo>().ClientName.Value = name;
         HandleClientNameChange();
-        //HandleClientNames();
     }
     #endregion
 
@@ -372,6 +400,8 @@ public class LobbyUIManager : NetworkBehaviour
             //Posses that player object
             controller = client.PlayerObject.GetComponent<John.PlayerController>();
             controller.playerModel = tempPlayer.GetComponent<PlayerModel>();
+
+            tempPlayer.GetComponent<PlayerModel>().myClientInfo = client.PlayerObject.GetComponent<ClientInfo>();
         }
 
         //Activate controller on all clients
@@ -399,6 +429,8 @@ public class LobbyUIManager : NetworkBehaviour
         controller.playerInput.ActivateInput();
         controller.playerInput.SwitchCurrentActionMap("InGame");
         controller.OnPlayerAssigned();
+
+        //controller.playerModel.OnClientAssigned(myClient.GetComponent<ClientInfo>());
     }
 
     private void SceneManagerOnOnSceneEvent(SceneEvent sceneEvent)
