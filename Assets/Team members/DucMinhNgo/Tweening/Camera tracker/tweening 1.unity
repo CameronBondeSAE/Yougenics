@@ -551,8 +551,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 421045490}
-  offset: {x: 2, y: 2, z: 2}
-  speed: 10
+  offset: {x: -12.01, y: -12.01, z: -12.01}
+  speed: 10.45
 --- !u!114 &1377083471
 MonoBehaviour:
   m_ObjectHideFlags: 0

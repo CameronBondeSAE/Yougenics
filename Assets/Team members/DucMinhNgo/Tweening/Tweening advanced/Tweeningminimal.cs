@@ -9,14 +9,14 @@ public class Tweeningminimal : MonoBehaviour
     public float duration;
     public GameObject minhobject;
     private Vector3 localChange;
-    public float newvalue;
-    public float adjust1;
+    public float length;
+    public float width;
         void Start()
         {
-            DOTween.To(JustASetter, 1, newvalue, duration);
+            DOTween.To(JustASetter, width, length, duration);
         }
         private void JustASetter(float newvalue)
         {
-            minhobject.transform.localScale = new Vector3(newvalue, adjust1, 1);
+            minhobject.transform.localScale = new Vector3(length, width, 1);
         }
 }
