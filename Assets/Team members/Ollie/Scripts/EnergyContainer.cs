@@ -14,8 +14,19 @@ namespace Ollie
 
         public List<GameObject> drainTargets;
         
+
+        #region Kevin Testing GameManager
+        
+        public delegate void EnergyDropOff();
+        public event EnergyDropOff OnEnergyUpdate;
+
+        public void EnergyUpdate()
+        {
+            OnEnergyUpdate?.Invoke();
+        }
         
 
+        #endregion
         private void Awake()
         {
             energy = GetComponent<Energy>();

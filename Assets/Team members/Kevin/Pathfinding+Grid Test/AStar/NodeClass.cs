@@ -1,18 +1,36 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Kevin
     {
+        [Serializable]
         public class NodeClass
         {
             public Vector3 worldPosition; 
-            public bool walkable;
+            public bool isBlocked;
+            public Vector2Int gridPosition;
 
-            public NodeClass(Vector3 _worldPosition, bool _walkable)
+            public int gCost;
+            public int hCost;
+            
+            public NodeClass(Vector3 _worldPosition, bool _isBlocked)
             {
                 worldPosition = _worldPosition;
-                walkable = _walkable;
+                isBlocked = _isBlocked;
+            }
+
+            /*public NodeClass()
+            {
+                
+            }*/
+            public int fCost
+            {
+                get
+                {
+                    return gCost + hCost;
+                }
             }
         }
     
