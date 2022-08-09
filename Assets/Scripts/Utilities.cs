@@ -1,9 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Utilities
 {
+	public delegate void WorldObstacleUpdatedDelegate(GameObject go, Bounds bounds);
+
+	public static event WorldObstacleUpdatedDelegate WorldObstacleUpdatedEvent;
+
+	public static void OnWorldObstacleUpdatedEvent(GameObject go, Bounds bounds)
+	{
+		WorldObstacleUpdatedEvent?.Invoke(go, bounds);
+	}
+
+
 	public static Vector3 FindGroundHeight(Vector3 startPosition, float _groundOffset)
 	{
 		// Start much higher
@@ -29,4 +40,5 @@ public class Utilities
 			return Vector3.zero;
 		}
 	}
+
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem.XInput;
 using Random = UnityEngine.Random;
 
 namespace Luke
@@ -12,14 +13,32 @@ namespace Luke
 
 		#region Variables
 
+		[SerializeField] private bool breaker;
+		[SerializeField] private float updateSpeedSeconds = 1f;
+
 		private BiomeNode[,] BiomeNodes;
 
-		[SerializeField] private Vector3 gridTileSize;
-		[SerializeField] private Vector2 gridSize;
+		[SerializeField] private int numberOfTiles1D;
+		[SerializeField] private Vector3 tileSize;
+
+		//x
+		[SerializeField] private float _levelLength;
+		//z
+		[SerializeField] private float _levelWidth;
+		[SerializeField] private float tileHeight;
 		[SerializeField] private Vector3 gridOrigin;
 
-		public Vector2Int numberOfTiles;
-		public Vector2Int iterators = new (0,0);
+		private int[][] _neighbours =
+		{
+			new [] {-1, -1},
+			new [] {0, -1},
+			new [] {1, -1},
+			new [] {-1, 0},
+			new [] {1, 0},
+			new [] {-1, 1},
+			new [] {0, 1},
+			new [] {1, 1}
+		};
 
 		[SerializeField] private Vector2 perlinOffsets;
 		[SerializeField] private Vector2 perlinWavelengths;
@@ -32,15 +51,16 @@ namespace Luke
 		
 		public void FillGrid()
 		{
-			numberOfTiles = new Vector2Int(Mathf.RoundToInt(gridSize.x / gridTileSize.x),
-				Mathf.RoundToInt(gridSize.y / gridTileSize.z));
-			BiomeNodes = new BiomeNode[numberOfTiles.x, numberOfTiles.y];
-			for (int x = 0; x < numberOfTiles.x; x++)
+			float tileLength = _levelLength/numberOfTiles1D;
+			float tileWidth = _levelWidth/numberOfTiles1D;
+			tileSize = new Vector3(tileLength, tileHeight, tileWidth);
+			BiomeNodes = new BiomeNode[numberOfTiles1D, numberOfTiles1D];
+			for (int x = 0; x < numberOfTiles1D; x++)
 			{
-				for (int y = 0; y < numberOfTiles.y; y++)
+				for (int y = 0; y < numberOfTiles1D; y++)
 				{
-					float xCoord = (float) x / numberOfTiles.x;
-					float yCoord = (float) y / numberOfTiles.y;
+					float xCoord = (float) x / numberOfTiles1D;
+					float yCoord = (float) y / numberOfTiles1D;
 					
 					//or should I just get the terrain height directly?
 
@@ -50,8 +70,9 @@ namespace Luke
 					float altitude = hitInfo.collider.transform.position.y;*/
 					BiomeNodes[x, y] = new BiomeNode
 					{
-						worldPosition = new Vector3(gridOrigin.x + x * gridTileSize.x, /*altitude*/gridTileSize.y,
-							gridOrigin.z + y * gridTileSize.z),
+						worldPosition = new Vector3(gridOrigin.x + x * tileSize.x, /*altitude*/tileSize.y,
+							gridOrigin.z + y * tileSize.z),
+						indices = new [] {x,y},
 						Fertility = Mathf.PerlinNoise(xCoord*perlinWavelengths.x+perlinOffsets.x,yCoord*perlinWavelengths.y+perlinOffsets.y),
 						Bm = this
 					};
@@ -67,44 +88,45 @@ namespace Luke
 
 		private IEnumerator SpreadFertilityWorld()
 		{
-			StartCoroutine(SpreadFertilityNode(BiomeNodes[iterators.x, iterators.y]));
-			
-			yield return new WaitForEndOfFrame();
-
-			if (!(++iterators.x < BiomeNodes.GetLength(0)))
+			int i=0;
+			int j=0;
+			while (!breaker)
 			{
-				iterators.x = 0;
-				if (!(++iterators.y < BiomeNodes.GetLength(1)))
+				yield return new WaitForSeconds(updateSpeedSeconds);
+				SpreadFertilityNode(BiomeNodes[i,j]);
+				if (++i >= numberOfTiles1D)
 				{
-					iterators.y = 0;
+					i=0;
+					if (++j >= numberOfTiles1D)
+					{
+						j=0;
+					}
 				}
 			}
-
-			StartCoroutine(SpreadFertilityWorld());
 		}
 		
-		private IEnumerator SpreadFertilityNode(BiomeNode node)
+		private void SpreadFertilityNode(BiomeNode node)
 		{
-			if (node.iterators.magnitude == 1)
+			foreach (int[] i in _neighbours)
 			{
-				yield return null;
+				int xIndex = node.indices[0] + i[0];
+				int yIndex = node.indices[1] + i[1];
+
+				if (xIndex < 0 || xIndex >= numberOfTiles1D || yIndex < 0 || yIndex >= numberOfTiles1D) continue;
+				FertilityCalculation(node, BiomeNodes[xIndex, yIndex]);
+			}
+		}
+
+		private void FertilityCalculation(BiomeNode nodeFrom, BiomeNode nodeTo)
+		{
+			if (nodeFrom.Fertility <= nodeTo.Fertility)
+			{
+				nodeTo.Fertility -= (1-nodeFrom.Fertility) * 0.1f;
 			}
 			else
 			{
-				node.SpreadFertility();
-				yield return new WaitForEndOfFrame();
+				nodeTo.Fertility += nodeFrom.Fertility * 0.12f;
 			}
-
-			if (!(++node.iterators.x < 3))
-			{
-				node.iterators.x = 0;
-				if (!(++node.iterators.y < 3))
-				{
-					node.iterators.y = 0;
-				}
-			}
-			
-			if (node.iterators.magnitude != 0) StartCoroutine(SpreadFertilityNode(node));
 		}
 		
 		#endregion
@@ -119,12 +141,13 @@ namespace Luke
 
 		private void OnDrawGizmosSelected()
 		{
-			for (int x = 0; x < numberOfTiles.x; x++)
+			for (int x = 0; x < numberOfTiles1D; x++)
 			{
-				for (int y = 0; y < numberOfTiles.y; y++)
+				for (int y = 0; y < numberOfTiles1D; y++)
 				{
+					if (BiomeNodes == null) continue;
 					Gizmos.color = new Color(1-BiomeNodes[x,y].Fertility,0.5f+BiomeNodes[x,y].Fertility/2f,0,0.5f);
-					Gizmos.DrawCube(BiomeNodes[x,y].worldPosition, gridTileSize);
+					Gizmos.DrawCube(BiomeNodes[x,y].worldPosition, tileSize);
 				}
 			}
 		}

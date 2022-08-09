@@ -7,12 +7,14 @@ namespace Ollie
 {
     public class EnergyContainer : MonoBehaviour, IItem
     {
-        private Energy energy;
+        public Energy energy;
 
         public float drainRate;
         private bool currentlyDraining;
 
         public List<GameObject> drainTargets;
+        
+        
 
         private void Awake()
         {
@@ -24,7 +26,6 @@ namespace Ollie
 
         private void Update()
         {
-
         }
 
         IEnumerator DrainCoroutine()

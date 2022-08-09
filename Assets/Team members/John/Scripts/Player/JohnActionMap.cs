@@ -73,7 +73,7 @@ public partial class @JohnActionMap : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Menu"",
+                    ""name"": ""OpenMenu"",
                     ""type"": ""Button"",
                     ""id"": ""319b2e1a-2278-4f0b-8ef3-29452ce2d0e6"",
                     ""expectedControlType"": ""Button"",
@@ -244,7 +244,7 @@ public partial class @JohnActionMap : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Menu"",
+                    ""action"": ""OpenMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -255,9 +255,9 @@ public partial class @JohnActionMap : IInputActionCollection2, IDisposable
             ""id"": ""a1eba830-e41a-4dd3-b9bf-ed8909f86e1e"",
             ""actions"": [
                 {
-                    ""name"": ""New action"",
+                    ""name"": ""CloseMenu"",
                     ""type"": ""Button"",
-                    ""id"": ""81377259-eefd-4989-a9b5-b3a4583e37bb"",
+                    ""id"": ""426f925c-248b-45d5-9d5d-264907ac7577"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -267,12 +267,12 @@ public partial class @JohnActionMap : IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""ee73ca4c-816f-4a31-8441-85c08a3d96f2"",
-                    ""path"": """",
+                    ""id"": ""c01936be-a688-49f3-b565-14839b68b60f"",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""CloseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -288,10 +288,10 @@ public partial class @JohnActionMap : IInputActionCollection2, IDisposable
         m_InGame_MouseY = m_InGame.FindAction("MouseY", throwIfNotFound: true);
         m_InGame_Jump = m_InGame.FindAction("Jump", throwIfNotFound: true);
         m_InGame_Interact = m_InGame.FindAction("Interact", throwIfNotFound: true);
-        m_InGame_Menu = m_InGame.FindAction("Menu", throwIfNotFound: true);
+        m_InGame_OpenMenu = m_InGame.FindAction("OpenMenu", throwIfNotFound: true);
         // InMenu
         m_InMenu = asset.FindActionMap("InMenu", throwIfNotFound: true);
-        m_InMenu_Newaction = m_InMenu.FindAction("New action", throwIfNotFound: true);
+        m_InMenu_CloseMenu = m_InMenu.FindAction("CloseMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -356,7 +356,7 @@ public partial class @JohnActionMap : IInputActionCollection2, IDisposable
     private readonly InputAction m_InGame_MouseY;
     private readonly InputAction m_InGame_Jump;
     private readonly InputAction m_InGame_Interact;
-    private readonly InputAction m_InGame_Menu;
+    private readonly InputAction m_InGame_OpenMenu;
     public struct InGameActions
     {
         private @JohnActionMap m_Wrapper;
@@ -366,7 +366,7 @@ public partial class @JohnActionMap : IInputActionCollection2, IDisposable
         public InputAction @MouseY => m_Wrapper.m_InGame_MouseY;
         public InputAction @Jump => m_Wrapper.m_InGame_Jump;
         public InputAction @Interact => m_Wrapper.m_InGame_Interact;
-        public InputAction @Menu => m_Wrapper.m_InGame_Menu;
+        public InputAction @OpenMenu => m_Wrapper.m_InGame_OpenMenu;
         public InputActionMap Get() { return m_Wrapper.m_InGame; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -391,9 +391,9 @@ public partial class @JohnActionMap : IInputActionCollection2, IDisposable
                 @Interact.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnInteract;
-                @Menu.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnMenu;
-                @Menu.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnMenu;
-                @Menu.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnMenu;
+                @OpenMenu.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnOpenMenu;
+                @OpenMenu.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnOpenMenu;
+                @OpenMenu.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnOpenMenu;
             }
             m_Wrapper.m_InGameActionsCallbackInterface = instance;
             if (instance != null)
@@ -413,9 +413,9 @@ public partial class @JohnActionMap : IInputActionCollection2, IDisposable
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
-                @Menu.started += instance.OnMenu;
-                @Menu.performed += instance.OnMenu;
-                @Menu.canceled += instance.OnMenu;
+                @OpenMenu.started += instance.OnOpenMenu;
+                @OpenMenu.performed += instance.OnOpenMenu;
+                @OpenMenu.canceled += instance.OnOpenMenu;
             }
         }
     }
@@ -424,12 +424,12 @@ public partial class @JohnActionMap : IInputActionCollection2, IDisposable
     // InMenu
     private readonly InputActionMap m_InMenu;
     private IInMenuActions m_InMenuActionsCallbackInterface;
-    private readonly InputAction m_InMenu_Newaction;
+    private readonly InputAction m_InMenu_CloseMenu;
     public struct InMenuActions
     {
         private @JohnActionMap m_Wrapper;
         public InMenuActions(@JohnActionMap wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_InMenu_Newaction;
+        public InputAction @CloseMenu => m_Wrapper.m_InMenu_CloseMenu;
         public InputActionMap Get() { return m_Wrapper.m_InMenu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -439,16 +439,16 @@ public partial class @JohnActionMap : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_InMenuActionsCallbackInterface != null)
             {
-                @Newaction.started -= m_Wrapper.m_InMenuActionsCallbackInterface.OnNewaction;
-                @Newaction.performed -= m_Wrapper.m_InMenuActionsCallbackInterface.OnNewaction;
-                @Newaction.canceled -= m_Wrapper.m_InMenuActionsCallbackInterface.OnNewaction;
+                @CloseMenu.started -= m_Wrapper.m_InMenuActionsCallbackInterface.OnCloseMenu;
+                @CloseMenu.performed -= m_Wrapper.m_InMenuActionsCallbackInterface.OnCloseMenu;
+                @CloseMenu.canceled -= m_Wrapper.m_InMenuActionsCallbackInterface.OnCloseMenu;
             }
             m_Wrapper.m_InMenuActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Newaction.started += instance.OnNewaction;
-                @Newaction.performed += instance.OnNewaction;
-                @Newaction.canceled += instance.OnNewaction;
+                @CloseMenu.started += instance.OnCloseMenu;
+                @CloseMenu.performed += instance.OnCloseMenu;
+                @CloseMenu.canceled += instance.OnCloseMenu;
             }
         }
     }
@@ -460,10 +460,10 @@ public partial class @JohnActionMap : IInputActionCollection2, IDisposable
         void OnMouseY(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
-        void OnMenu(InputAction.CallbackContext context);
+        void OnOpenMenu(InputAction.CallbackContext context);
     }
     public interface IInMenuActions
     {
-        void OnNewaction(InputAction.CallbackContext context);
+        void OnCloseMenu(InputAction.CallbackContext context);
     }
 }

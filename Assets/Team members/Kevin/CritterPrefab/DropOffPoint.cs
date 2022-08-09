@@ -8,23 +8,25 @@ using UnityEngine;
 
 public class DropOffPoint : MonoBehaviour
 {
-    //update energy event to occur after triggering the box
-    public delegate void UpdateEnergy();
-    public event UpdateEnergy UpEnergy; 
+    public Energy energy;
+    public Energy gameManagerEnergy;
     
-    public void Start()
-    {
-    }
-    public void OnTriggerEnter(Collider other)
+    // HACK change from stay to a corouting or something
+    public void OnTriggerStay(Collider other)
     {
         EnergyContainer otherEnergy = other.GetComponent<EnergyContainer>();
         if (otherEnergy != null)
         {
-            //updates the current energy amount in the base by adding the other player's energy container amount.
-            //gameManager.currentEnergyAmount += otherEnergy.energy;
+            // TODO remove energy from container gradually
             
-            //fires the event in game manager
-            UpEnergy?.Invoke();
+            // TODO put "energy container" energy into our energy component
+            
         }
+    }
+
+    void FixedUpdate()
+    {
+        // TODO Update gameManagers' energy over time here
+        
     }
 }
