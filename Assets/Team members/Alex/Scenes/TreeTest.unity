@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 93100212}
   - component: {fileID: 93100214}
   - component: {fileID: 93100213}
+  - component: {fileID: 93100215}
   m_Layer: 0
   m_Name: Tree
   m_TagString: Untagged
@@ -177,7 +178,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnergyAmount:
     m_InternalValue: 42
-  energyAmount: 50
   energyMax: 100
   energyMin: 0
   drainAmount: 1
@@ -185,6 +185,7 @@ MonoBehaviour:
   drainSpeed: 1
   energyUserMoving: 0
   myMagnitude: 0
+  useEnergyOnMovement: 0
 --- !u!114 &93100214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,6 +204,22 @@ MonoBehaviour:
   canSpawn: 0
   map: {fileID: 1674098540}
   treeTop: {fileID: 518533120}
+--- !u!114 &93100215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93100209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 961478078
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &199623030 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4035055015533239334, guid: 459ac7672d82aec479eab4152d9609eb, type: 3}
@@ -438,7 +455,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnergyAmount:
     m_InternalValue: 42
-  energyAmount: 50
   energyMax: 100
   energyMin: 0
   drainAmount: 1
@@ -446,6 +462,7 @@ MonoBehaviour:
   drainSpeed: 1
   energyUserMoving: 0
   myMagnitude: 0
+  useEnergyOnMovement: 0
 --- !u!54 &518533127
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -667,6 +684,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoStart: 0
+  autoNetworkStart: 0
   radius: 5
   groupInfos: []
   groundOffset: 0
