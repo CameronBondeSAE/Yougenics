@@ -23,7 +23,7 @@ public class CritterA : CreatureBase, IEdible
             empathy = 0f;
             aggression = 0f;
             dangerLevel = 0f;
-            size = 0f;
+            sizeScale = 0f;
             colour = new Color(Random.Range(0f, 10f),Random.Range(0f, 10f),Random.Range(0f, 10f)); 
         }
 

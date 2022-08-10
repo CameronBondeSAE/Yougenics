@@ -111,7 +111,7 @@ public class CreatureBase : SerializedMonoBehaviour
 	// public List<Stat<float>> stats;
 	// public List<Stat<bool>>  statsBools;
 
-	//public float age;
+	public float age;
 	public float ageOfMatingStart;
 	public float ageOfMatingEnd;
 	public float maxAge;
@@ -125,9 +125,18 @@ public class CreatureBase : SerializedMonoBehaviour
 	public float empathy;
 	public float aggression;
 	public float dangerLevel;
-	public float size;
+	
+	/// <summary>
+	/// This is a percentage of the maxSize. Useful for breeding a kid that eg has half your maxsize
+	/// Also mutating the maxsize in the kids is useful
+	/// </summary>
+	public float sizeScale;
+	public float maxSize;
+	
 	public Color colour;
 
+	Health component;
+	
 	public enum Sex
 	{
 		Male,
@@ -136,9 +145,20 @@ public class CreatureBase : SerializedMonoBehaviour
 
 	public Sex sex;
 
-	public void FixedUpdate()
+	public virtual void Awake()
+	{
+		component = GetComponent<Health>();
+	}
+
+	public virtual void FixedUpdate()
 	{
 		// age
+		age += Time.fixedDeltaTime;
+
+		if (age > maxAge)
+		{
+			component.ChangeHealth(Time.fixedDeltaTime);
+		}
 	}
 	
 	// public float Mutate(Stat selfTrait, Stat partnerTrait, Stat baseMinimum, Stat baseMaximum)
