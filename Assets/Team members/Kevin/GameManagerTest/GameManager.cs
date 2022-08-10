@@ -4,7 +4,7 @@ using Ollie;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+/*
 namespace K
 {
     public class GameManager : MonoBehaviour
@@ -38,3 +38,4 @@ namespace K
     }
 
 }
+*/
