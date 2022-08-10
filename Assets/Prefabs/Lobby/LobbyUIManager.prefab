@@ -2601,7 +2601,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2470996679276304965}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
   m_Name: 
@@ -2812,8 +2812,11 @@ MonoBehaviour:
     levelNameOnUI: John's Empty Level
   - level: {fileID: 102900000, guid: 2af64fa95e910c94fb8835992da0c488, type: 3}
     levelNameOnUI: Test all mechanics
+  - level: {fileID: 102900000, guid: ecb4e1236a6628c48b12bbab26f64972, type: 3}
+    levelNameOnUI: Alex's level
   levelHolder: {fileID: 2470996678052708765}
   levelButtonPrefab: {fileID: 8248577337387485405, guid: 98aed31625b87c1448bb00bdda875d43, type: 3}
+  critterSpawner: {fileID: 0}
   lobbyCanvas: {fileID: 2470996678993943610}
   clientUI: {fileID: 2470996678349563676}
   startButton: {fileID: 2470996678361948316}

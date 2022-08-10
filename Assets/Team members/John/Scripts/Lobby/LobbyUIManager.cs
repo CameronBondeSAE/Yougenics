@@ -29,6 +29,7 @@ public class LobbyUIManager : NetworkBehaviour
     public List<Level> levels;
     public GameObject levelHolder;
     public GameObject levelButtonPrefab;
+    public Spawner critterSpawner;
 
     [Header("Lobby UI Setup")]
     public GameObject lobbyCanvas;
@@ -408,8 +409,15 @@ public class LobbyUIManager : NetworkBehaviour
         InitControllerClientRpc();
 
         //Spawn Luke AI For Testing
-        GameObject lukeAI = Instantiate(lukeAITest);
-        lukeAI.GetComponent<NetworkObject>().Spawn();
+        /*GameObject lukeAI = Instantiate(lukeAITest);
+        lukeAI.GetComponent<NetworkObject>().Spawn();*/
+
+        critterSpawner.SpawnMultiple();
+
+        foreach (GameObject spawnedSpawnerGO in critterSpawner.spawned)
+        {
+            spawnedSpawnerGO.GetComponent<Spawner>().SpawnMultiple();
+        }
     }
 
     [ClientRpc]
