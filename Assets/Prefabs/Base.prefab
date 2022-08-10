@@ -487,6 +487,30 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 951099334
       objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemToSpawn
+      value: 
+      objectReference: {fileID: 4035055015533239334, guid: 459ac7672d82aec479eab4152d9609eb, type: 3}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.name
+      value: Food
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.height
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.buildTime
+      value: 9001
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.description
+      value: The cost of living
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.energyRequired
+      value: 1000000
+      objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607510, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -533,7 +557,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607511, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_Name
-      value: Shop (4)
+      value: ShopFood
       objectReference: {fileID: 0}
     - target: {fileID: 7334385388066088445, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: GlobalObjectIdHash
@@ -556,6 +580,30 @@ PrefabInstance:
     - target: {fileID: 6015404047416633847, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemToSpawn
+      value: 
+      objectReference: {fileID: 7691366154368066806, guid: 05d1a0ffc92e31b41b7d9d64c27d3ca5, type: 3}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.name
+      value: Drop Off Point
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.height
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.buildTime
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.description
+      value: Drop energy containers here to transfer them to the main base
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.energyRequired
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607510, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_RootOrder
@@ -603,7 +651,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607511, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_Name
-      value: Shop (3)
+      value: ShopDropOffPoint
       objectReference: {fileID: 0}
     - target: {fileID: 7334385388066088445, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: GlobalObjectIdHash
@@ -626,6 +674,30 @@ PrefabInstance:
     - target: {fileID: 6015404047416633847, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemToSpawn
+      value: 
+      objectReference: {fileID: 2771155819252852944, guid: b4d1714588920c340a985a1842caada3, type: 3}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.name
+      value: Energy Container
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.height
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.buildTime
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.description
+      value: Drain the energy from everything around you
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.energyRequired
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607510, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_RootOrder
@@ -673,7 +745,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607511, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_Name
-      value: Shop (1)
+      value: ShopEnergyContainer
       objectReference: {fileID: 0}
     - target: {fileID: 7334385388066088445, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: GlobalObjectIdHash
@@ -763,6 +835,30 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 951099334
       objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemToSpawn
+      value: 
+      objectReference: {fileID: 6628694674896416980, guid: a113eb118bcdb2f40bebeecf9a1810a0, type: 3}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.name
+      value: Drone
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.height
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.buildTime
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.description
+      value: Fly the drone around to scount the surrounding area
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.energyRequired
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607510, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -809,7 +905,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607511, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_Name
-      value: Shop (2)
+      value: ShopDrone
       objectReference: {fileID: 0}
     - target: {fileID: 7334385388066088445, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: GlobalObjectIdHash
@@ -1275,6 +1371,26 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 951099334
       objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.name
+      value: Vehicle
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.height
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.buildTime
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.description
+      value: Drive around in this awesome vehicle
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.energyRequired
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607510, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -1321,7 +1437,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607511, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_Name
-      value: Shop
+      value: ShopVehicle
       objectReference: {fileID: 0}
     - target: {fileID: 7334385388066088445, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: GlobalObjectIdHash

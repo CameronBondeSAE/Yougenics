@@ -38,7 +38,9 @@ public class ShopSingleItem : NetworkBehaviour
 			//Waits for build time before creating object in scene
 			yield return new WaitForSeconds(itemInfo.buildTime);
 			spawner.SpawnSingle(itemToSpawn, spawningPoint.position +  new Vector3(0, itemInfo.height,0), spawningPoint.rotation);
-			
+
+			//Doubles the cost of the item to build
+			itemInfo.energyRequired += itemInfo.energyRequired * 2;
 			//After build is complete allows you to build a new object
 			canSpawn = true;
 		}
