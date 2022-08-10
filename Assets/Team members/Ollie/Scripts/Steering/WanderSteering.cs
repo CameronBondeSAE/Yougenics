@@ -21,7 +21,7 @@ namespace Ollie
             if (timer > 2f)
             {
                 timer = 0;
-                //rng = Random.Range(-15, 15);
+                rng = Random.Range(-15, 15);
                 WanderTurn();
             }
             timer += Time.deltaTime;

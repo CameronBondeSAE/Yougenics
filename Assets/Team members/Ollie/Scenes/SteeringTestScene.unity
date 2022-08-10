@@ -227,6 +227,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 658807155, guid: b6dc75c0a7ff1f9479f536c8c01c1145, type: 3}
+      propertyPath: m_AngularDrag
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 352872689655474911, guid: b6dc75c0a7ff1f9479f536c8c01c1145, type: 3}
       propertyPath: m_Name
       value: Ollie Critter Steering Behaviour
@@ -245,7 +249,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7825147067109377029, guid: b6dc75c0a7ff1f9479f536c8c01c1145, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 31.5
+      value: 50.54
       objectReference: {fileID: 0}
     - target: {fileID: 7825147067109377029, guid: b6dc75c0a7ff1f9479f536c8c01c1145, type: 3}
       propertyPath: m_LocalRotation.w
