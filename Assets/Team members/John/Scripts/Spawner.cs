@@ -8,7 +8,7 @@ using UnityEditor;
 
 using Random = UnityEngine.Random;
 
-public class Spawner : MonoBehaviour
+public class Spawner : NetworkBehaviour
 {
 	[System.Serializable]
 	public class GroupInfo
@@ -19,30 +19,32 @@ public class Spawner : MonoBehaviour
 		public Transform[] spawnPoints;
 
 		public int countPerGroup;
-		// public DayNightManager.DayPhase phaseTime;
 	}
 
+    [Header("SETUP: ")]
 	public bool autoStart = false;
-
+	public bool autoNetworkStart = false;
 	public float radius = 5f;
 
 	public  GroupInfo[] groupInfos;
 	public  float       groundOffset;
 	private GroupInfo   _currentGroupInfo;
 
-	// add as many as you need for the animals needed to spawn
-
-
 	public List<GameObject> spawned;
 
-	private void Start()
+    public override void OnNetworkSpawn()
+    {
+        if(autoNetworkStart)
+        {
+			SpawnMultiple();
+        }
+    }
+
+    private void Start()
 	{
 		if (autoStart) SpawnMultiple();
-
-		// FindObjectOfType<DayNightManager>().PhaseChangeEvent += ChangePhase;
 	}
 
-	// public void ChangePhase(DayNightManager.DayPhase timeOfDay)
 	public List<GameObject> SpawnMultiple()
 	{
 		for (int i = 0; i < groupInfos.Length; i++) //searches through all of wildLife aray
@@ -85,7 +87,9 @@ public class Spawner : MonoBehaviour
 											   rotation);
 
 		// Object must have NetworkObject component to work on clients
-		spawnedPrefab.GetComponent<NetworkObject>()?.Spawn();
+		if(NetworkManager.Singleton.IsServer)
+			spawnedPrefab.GetComponent<NetworkObject>()?.Spawn();
+        
 
 		
 		spawnedPrefab.transform.position = Utilities.FindGroundHeight(spawnedPrefab.transform.position, groundOffset);

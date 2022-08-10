@@ -31,6 +31,4 @@ public class DroneWing : MonoBehaviour
         rb.AddForceAtPosition(transform.up * f, transform.position, ForceMode.Force);
         
     }
-    
-
 }

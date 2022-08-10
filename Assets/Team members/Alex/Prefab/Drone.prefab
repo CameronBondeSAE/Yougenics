@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 6628694674896416983}
-  isFlying: 0
 --- !u!1 &6628694674685192184
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,7 +90,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 6628694674896416983}
-  isFlying: 0
 --- !u!1 &6628694674896416980
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,6 +105,7 @@ GameObject:
   - component: {fileID: 6628694674896416982}
   - component: {fileID: 6628694674896416983}
   - component: {fileID: 6628694674896417005}
+  - component: {fileID: -1417083765329675119}
   m_Layer: 0
   m_Name: Drone
   m_TagString: Untagged
@@ -255,11 +254,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnergyAmount:
     m_InternalValue: 0
-  energyAmount: 50
   energyMax: 100
   energyMin: 0
   drainAmount: 1
+  moveDrainAmount: 1
   drainSpeed: 1
+  energyUserMoving: 0
+  myMagnitude: 0
+  useEnergyOnMovement: 0
+--- !u!114 &-1417083765329675119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6628694674896416980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &6628694675511589625
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,7 +323,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 6628694674896416983}
-  isFlying: 0
 --- !u!1 &6628694675651097917
 GameObject:
   m_ObjectHideFlags: 0
@@ -351,7 +368,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 6628694674896416983}
-  isFlying: 0
 --- !u!1 &6628694675968632028
 GameObject:
   m_ObjectHideFlags: 0

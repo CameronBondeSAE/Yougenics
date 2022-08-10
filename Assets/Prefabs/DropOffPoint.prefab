@@ -330,6 +330,8 @@ GameObject:
   - component: {fileID: 7691366153675965262}
   - component: {fileID: 7691366153675965265}
   - component: {fileID: 7691366153675965264}
+  - component: {fileID: -9094710341096795886}
+  - component: {fileID: -459420937806863997}
   m_Layer: 0
   m_Name: DropOffPoint
   m_TagString: Untagged
@@ -379,3 +381,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4938ee86cc01d804bb612e20fd883b24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  energy: {fileID: -9094710341096795886}
+  gameManagerEnergy: {fileID: 2049367469, guid: d4ec5a789319b624482cdabda213b3f5, type: 3}
+  energyContainers: []
+  drainRate: 5
+  gameManager: {fileID: 5942840491211313436, guid: d4ec5a789319b624482cdabda213b3f5, type: 3}
+--- !u!114 &-9094710341096795886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691366154368066806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86b58142ff8a3804fa71c5004d10d94b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnergyAmount:
+    m_InternalValue: 0
+  energyMax: 100
+  energyMin: 0
+  drainAmount: 1
+  moveDrainAmount: 1
+  drainSpeed: 1
+  energyUserMoving: 0
+  myMagnitude: 0
+  useEnergyOnMovement: 0
+--- !u!114 &-459420937806863997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691366154368066806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1

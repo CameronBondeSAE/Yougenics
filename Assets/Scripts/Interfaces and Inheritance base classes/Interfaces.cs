@@ -2,6 +2,7 @@ using Minh;
 using NodeCanvas.Tasks.Actions;
 using Sirenix.OdinInspector;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -58,6 +59,12 @@ public interface IInteractable
 {
 	public void Interact();
 	
+}
+
+public interface IEnergyDrainer
+{
+	public IEnumerator DrainCoroutine();
+
 }
 
 
