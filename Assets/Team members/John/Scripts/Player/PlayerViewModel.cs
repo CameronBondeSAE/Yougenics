@@ -12,9 +12,13 @@ public class PlayerViewModel : MonoBehaviour
     private void Start()
     {
         //playerModel.onClientAssignedEvent += InitClientInfo;
-
-        playerModel.myClientInfo.onNameChangeEvent += UpdateNameTag;
-        nameTagText.text = playerModel.myClientInfo.ClientName.Value.ToString();
+        if (playerModel.myClientInfo != null)
+        {
+            playerModel.myClientInfo.onNameChangeEvent += UpdateNameTag;
+            nameTagText.text = playerModel.myClientInfo.ClientName.Value.ToString();
+        }
+        else
+            Debug.Log("No Client Reference Found");
     }
     /*private void InitClientInfo(ClientInfo client)
     {
