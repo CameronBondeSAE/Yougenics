@@ -3,30 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 namespace Ollie
 {
-    public class EnergyContainer : MonoBehaviour, IItem
+    public class EnergyContainer : MonoBehaviour, IItem, IEnergyDrainer
     {
-        public Energy energy;
-
+        Energy energy;
         public float drainRate;
         private bool currentlyDraining;
-
         public List<GameObject> drainTargets;
         
-
-        #region Kevin Testing GameManager
-        
-        public delegate void EnergyDropOff();
-        public event EnergyDropOff OnEnergyUpdate;
-
-        public void EnergyUpdate()
-        {
-            OnEnergyUpdate?.Invoke();
-        }
-        
-
-        #endregion
         private void Awake()
         {
             energy = GetComponent<Energy>();
@@ -35,37 +21,43 @@ namespace Ollie
             StartCoroutine(DrainCoroutine());
         }
 
-        private void Update()
-        {
-        }
-
-        IEnumerator DrainCoroutine()
+        public IEnumerator DrainCoroutine()
         {
             currentlyDraining = true;
             if (drainTargets.Count > 0) // also need to turn this off when container's energy is full
             {
                 foreach (GameObject target in drainTargets)
                 {
-                    energy.ChangeEnergy(target.GetComponent<Energy>().ChangeEnergy(-drainRate));
-                    print("yoink");
+                    if (target.GetComponent<Energy>().EnergyAmount.Value > 0)
+                    {
+                        //energy.ChangeEnergy(target.GetComponent<Energy>().ChangeEnergy(-drainRate));
+                        target.GetComponent<Energy>().ChangeEnergy(-drainRate);
+                        energy.ChangeEnergy(drainRate);
+                        print("yoink");
+                    }
+                    else if  (target.GetComponent<Energy>().EnergyAmount.Value <= 0)
+                    {
+                        currentlyDraining = false;
+                    }
                 }
             }
-
             yield return new WaitForSeconds(1f);
             StartCoroutine(DrainCoroutine());
             currentlyDraining = false;
         }
 
-        private void OnTriggerEnter(Collider other)
+        public void OnTriggerEnter(Collider other)
         {
             //need to check for player too!! maybe?
             if (other.GetComponent<Energy>() != null && !drainTargets.Contains(other.gameObject))
             {
                 drainTargets.Add(other.gameObject);
+                if(other.GetComponent<DropOffPoint>() != null)
+                drainTargets.Remove(other.GetComponent<DropOffPoint>().gameObject);
             }
         }
 
-        private void OnTriggerExit(Collider other)
+        public void OnTriggerExit(Collider other)
         {
             if (drainTargets.Contains(other.gameObject))
             {
