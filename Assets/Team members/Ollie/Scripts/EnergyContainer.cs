@@ -13,18 +13,12 @@ namespace Ollie
         private bool currentlyDraining;
         public List<GameObject> drainTargets;
         
-        
-
         private void Awake()
         {
             energy = GetComponent<Energy>();
             drainTargets = new List<GameObject>();
             currentlyDraining = false;
             StartCoroutine(DrainCoroutine());
-        }
-
-        private void Update()
-        {
         }
 
         public IEnumerator DrainCoroutine()

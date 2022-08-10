@@ -36,7 +36,6 @@ namespace Kevin
             energy = GetComponent<Energy>();
             energyGoal = energy.energyMax;
             
-            
             dropOffPoints = new List<GameObject>();
             StartCoroutine(DrainCoroutine());
         }
