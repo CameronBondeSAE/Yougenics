@@ -5244,7 +5244,7 @@ GameObject:
   m_Layer: 0
   m_Name: LukeCritterPlanner
   m_TagString: Untagged
-  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -5279,6 +5279,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f1a28d512f42524a93bb2cd99dfc547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  ageOfMatingStart: 0
+  ageOfMatingEnd: 0
+  maxAge: 0
+  isPregnant: 0
+  gestationTime: 0
+  litterSizeMax: 0
+  metabolism: 0
+  mutationRate: 0
+  empathy: 0
+  aggression: 0
+  dangerLevel: 0
+  size: 0
+  colour: {r: 0, g: 0, b: 0, a: 0}
+  sex: 0
   critterInfo:
     maxHealth: 100
     maxSleepLevel: 100
@@ -5297,7 +5320,7 @@ MonoBehaviour:
   acceleration: 1
   maxSpeed: 5
   regularMatingDelay: 0
-  isChild: 1
+  cannotMate: 1
   readyToMate: 0
   isSleeping: 0
   justAte: 0
