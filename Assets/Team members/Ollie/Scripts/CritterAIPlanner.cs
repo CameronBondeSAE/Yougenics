@@ -18,6 +18,8 @@ namespace Ollie
         public Vector3 targetTransform;
         public AStar aStar;
         public float timer;
+        public Vector3 facingDirection;
+        private Rigidbody rigidbody;
 
         #region Bools for planner World State
         public bool isSafe;
@@ -48,6 +50,7 @@ namespace Ollie
         {
             path = new List<Vector3>();
             moveSpeed = 0.25f;
+            rigidbody = GetComponent<Rigidbody>();
             //testing purposes only
             //isHungry = true;
             //healthLow = true;
@@ -64,14 +67,18 @@ namespace Ollie
                     aStar.FindPath(transform.position, targetTransform);
                 }
             }
+            Debug.DrawLine(transform.position,transform.position + transform.forward * 5, Color.red);
+            
         }
 
         private void FixedUpdate()
         {
             if (path.Count > 0)
             {
+                transform.rotation = Quaternion.LookRotation(targetTransform);
                 if (transform.position != path[0])
                 {
+                    facingDirection = path[0];
                     transform.position = Vector3.MoveTowards(transform.position,path[0],moveSpeed);
                 }
                 else if (transform.position == path[0])
@@ -83,7 +90,6 @@ namespace Ollie
 
         public void RandomTarget()
         {
-            
             float posX = (Random.Range((-LevelManager.instance.sizeX/2)+LevelManager.instance.offsetX,(LevelManager.instance.sizeX/2))+LevelManager.instance.offsetX);
             float posY = 1; //update this with heights eventually
             float posZ = (Random.Range((-LevelManager.instance.sizeZ/2)+LevelManager.instance.offsetZ,(LevelManager.instance.sizeZ/2))+LevelManager.instance.offsetZ);

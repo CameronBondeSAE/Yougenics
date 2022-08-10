@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Ollie
@@ -22,7 +23,8 @@ namespace Ollie
         public Vector2 currentPosition;
         public LayerMask layers;
         public GameObject waterCube;
-        public AStar aStar;
+        
+        //public AStar aStar;
         
         public List<WaterNode> blockedNodes;
         //public List<WaterNode> allNodes;
@@ -42,9 +44,7 @@ namespace Ollie
         public WaterNode startLocation;
         public WaterNode targetLocation;
         public WaterNode currentLocation;
-        public bool AStar;
         private bool worldInitialised;
-        public float pathDelay;
 
         private void OnEnable()
         {
@@ -79,8 +79,8 @@ namespace Ollie
             openPathNodes = new List<WaterNode>();
             closedPathNodes = new List<WaterNode>();
             worldInitialised = false;
-            ScanWorld();
-            StartCoroutine(UpdateWorld());
+            StartCoroutine(ScanWorld());
+            //StartCoroutine(UpdateWorld());
         }
 
         
@@ -117,11 +117,10 @@ namespace Ollie
 
         public void ScanChunk(GameObject go, Bounds objectBounds)
         {
-            print("scanning chunk");
-            int minX = ConvertToGrid(objectBounds.min).xPosInArray;
-            int maxX = ConvertToGrid(objectBounds.max).xPosInArray;
-            int minZ = ConvertToGrid(objectBounds.min).zPosInArray;
-            int maxZ = ConvertToGrid(objectBounds.max).zPosInArray;
+            int minX = ConvertToGrid(objectBounds.min).xPosInArray - 2;
+            int maxX = ConvertToGrid(objectBounds.max).xPosInArray + 2;
+            int minZ = ConvertToGrid(objectBounds.min).zPosInArray - 2;
+            int maxZ = ConvertToGrid(objectBounds.max).zPosInArray + 2;
 
             for (int x = minX; x < maxX; x++)
             {
@@ -132,10 +131,11 @@ namespace Ollie
             }
         }
 
-        public void ScanWorld()
+        private IEnumerator ScanWorld()
         {
             if (worldInitialised == false)
             {
+                int nodeCount = 0;
                 for (int x = 0; x < sizeX; x++)
                 {
                     for (int z = 0; z < sizeZ; z++)
@@ -143,8 +143,7 @@ namespace Ollie
                         gridNodeReferences[x, z] = new WaterNode();
                         gridNodeReferences[x, z].xPosInArray = x;
                         gridNodeReferences[x, z].zPosInArray = z;
-                        gridNodeReferences[x, z].gridPosition = new Vector2Int(x+lengthX, z+lengthZ); 
-                        //print("node " + x + " " + z +" is at " + gridNodeReferences[x,z].gridPosition);
+                        gridNodeReferences[x, z].gridPosition = new Vector2Int(x+lengthX, z+lengthZ);
 
                         var vector3 = new Vector3(lengthX+x, 0, lengthZ+z); 
                         
@@ -153,6 +152,13 @@ namespace Ollie
                         {
                             gridNodeReferences[x, z].isBlocked = true;
                             blockedNodes.Add(gridNodeReferences[x,z]);
+                        }
+                        
+                        nodeCount += 1;
+                        if (nodeCount > 500)
+                        {
+                            nodeCount = 0;
+                            yield return new WaitForNextFrameUnit();
                         }
                     }
                 }
@@ -216,16 +222,16 @@ namespace Ollie
             // waterPosList.Add(go.transform.position);
             }
 
-        public void CheckNeighbours()
-        {
-            temporaryOpen = openWaterNodes;
-            foreach (WaterNode waterNode in temporaryOpen)
-            {
-                waterNode.CheckNeighbours();
-            }
-            temporaryOpen.Clear();
-            openWaterNodes.Clear();
-        }
+        // public void CheckNeighbours()
+        // {
+        //     temporaryOpen = openWaterNodes;
+        //     foreach (WaterNode waterNode in temporaryOpen)
+        //     {
+        //         waterNode.CheckNeighbours();
+        //     }
+        //     temporaryOpen.Clear();
+        //     openWaterNodes.Clear();
+        // }
 
         public void AddNodes()
         {
@@ -467,19 +473,19 @@ namespace Ollie
                 
             }
 
-            if(gridNodeReferences != null) foreach (WaterNode node in gridNodeReferences)
+            if(gridNodeReferences != null && worldInitialised) foreach (WaterNode node in gridNodeReferences)
             {
                 
                 if (node.isBlocked)
                 {
                     Gizmos.color = Color.red;
-                    Gizmos.DrawCube(new Vector3(node.gridPosition.x,0,node.gridPosition.y),Vector3.one);
+                    //Gizmos.DrawCube(new Vector3(node.gridPosition.x,0,node.gridPosition.y),Vector3.one);
                 }
 
                 if (!node.isBlocked && !node.isWater)
                 {
                     Gizmos.color = Color.green;
-                    Gizmos.DrawCube(new Vector3(node.gridPosition.x,0,node.gridPosition.y),Vector3.one);
+                    //Gizmos.DrawCube(new Vector3(node.gridPosition.x,0,node.gridPosition.y),Vector3.one);
                 }
 
                 // if (node.isWater)

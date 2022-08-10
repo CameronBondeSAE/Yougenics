@@ -69,7 +69,7 @@ namespace Ollie
             }
         }
         
-        public void CheckNeighbours()
+        /*public void CheckNeighbours()
         {
             if (!LevelManager.instance.AStar)
             {
@@ -108,7 +108,7 @@ namespace Ollie
                     }
                 }
             }
-        }
+        }*/
         
         public void FillNeighbours()
         {

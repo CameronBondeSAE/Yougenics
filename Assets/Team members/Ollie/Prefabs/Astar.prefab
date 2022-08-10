@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37ac27fba7d85ca488b129992b00554c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lm: {fileID: 1600512450, guid: 22a7f5285e5f1fc4b88104de7cd22d81, type: 3}
   vector3Path: []
   active: 0
   timer: 0

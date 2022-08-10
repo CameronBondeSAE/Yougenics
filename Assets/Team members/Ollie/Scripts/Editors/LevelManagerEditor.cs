@@ -12,10 +12,10 @@ namespace Ollie
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
-            if (GUILayout.Button("Scan World"))
-            {
-                ((LevelManager) target).ScanWorld();
-            }
+            // if (GUILayout.Button("Scan World"))
+            // {
+            //     ((LevelManager) target).ScanWorld();
+            // }
 
             if (GUILayout.Button("Assign Neighbours"))
             {
@@ -37,10 +37,10 @@ namespace Ollie
                 ((LevelManager) target).SpawnWater();
             }
 
-            if (GUILayout.Button("Check Neighbours (Step 1)"))
-            {
-                ((LevelManager) target).CheckNeighbours();
-            }
+            // if (GUILayout.Button("Check Neighbours (Step 1)"))
+            // {
+            //     ((LevelManager) target).CheckNeighbours();
+            // }
             
             if (GUILayout.Button("Add Nodes (Step 2)"))
             {
