@@ -37,6 +37,7 @@ public class Utilities
 		}
 		else
 		{
+			Debug.LogWarning("Find ground hit nothing, setting it to zero");
 			return Vector3.zero;
 		}
 	}
