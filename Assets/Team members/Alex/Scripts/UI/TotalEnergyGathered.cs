@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Alex;
 using Kevin;
 using UnityEngine;
@@ -16,17 +17,19 @@ public class TotalEnergyGathered : MonoBehaviour
     void Start()
     {
         textMeshPro = GetComponent<TMP_Text>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        EnergyLevel();
-        textMeshPro.text = "Total Energy Gathered:" + "\n\r" + totalEnergy.ToString("#"); 
+        //EnergyLevel();
+        textMeshPro.text = "Total Energy Gathered:" + "\n\r" + gameManager.currentEnergy.ToString("#"); 
     }
 
     public void EnergyLevel()
     {
-        totalEnergy = gameManager.GetComponent<Energy>().EnergyAmount.Value;
+        totalEnergy = gameManager.currentEnergy;
     }
+    
 }
