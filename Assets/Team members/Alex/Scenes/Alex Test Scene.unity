@@ -616,12 +616,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnergyAmount:
     m_InternalValue: 0
-  energyAmount: 50
   energyMax: 100
   energyMin: 0
   drainAmount: 1
+  moveDrainAmount: 1
   drainSpeed: 1
   energyUserMoving: 0
+  myMagnitude: 0
+  useEnergyOnMovement: 0
 --- !u!1 &349304420
 GameObject:
   m_ObjectHideFlags: 0
@@ -691,85 +693,6 @@ MonoBehaviour:
     pitch: 1.31
     loop: 0
     source: {fileID: 0}
---- !u!1 &445793209
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 445793212}
-  - component: {fileID: 445793211}
-  - component: {fileID: 445793210}
-  m_Layer: 0
-  m_Name: Terrain
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
---- !u!154 &445793210
-TerrainCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 445793209}
-  m_Material: {fileID: 0}
-  m_Enabled: 1
-  m_TerrainData: {fileID: 15600000, guid: b963ae34b907e8a448aabc73c1d11284, type: 2}
-  m_EnableTreeColliders: 1
---- !u!218 &445793211
-Terrain:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 445793209}
-  m_Enabled: 1
-  serializedVersion: 6
-  m_TerrainData: {fileID: 15600000, guid: b963ae34b907e8a448aabc73c1d11284, type: 2}
-  m_TreeDistance: 5000
-  m_TreeBillboardDistance: 50
-  m_TreeCrossFadeLength: 5
-  m_TreeMaximumFullLODCount: 50
-  m_DetailObjectDistance: 80
-  m_DetailObjectDensity: 1
-  m_HeightmapPixelError: 5
-  m_SplatMapDistance: 1000
-  m_HeightmapMaximumLOD: 0
-  m_ShadowCastingMode: 2
-  m_DrawHeightmap: 1
-  m_DrawInstanced: 0
-  m_DrawTreesAndFoliage: 1
-  m_StaticShadowCaster: 0
-  m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 2100000, guid: 594ea882c5a793440b60ff72d896021e, type: 2}
-  m_BakeLightProbesForTrees: 1
-  m_PreserveTreePrototypeLayers: 0
-  m_DeringLightProbesForTrees: 1
-  m_ScaleInLightmap: 0.1
-  m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
-  m_GroupingID: 0
-  m_RenderingLayerMask: 1
-  m_AllowAutoConnect: 1
---- !u!4 &445793212
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 445793209}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 719069545}
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &447258416
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,73 +753,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnergyAmount:
     m_InternalValue: 0
-  energyAmount: 50
   energyMax: 100
   energyMin: 0
   drainAmount: 1
+  moveDrainAmount: 1
   drainSpeed: 1
   energyUserMoving: 0
---- !u!1001 &453838426
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 445793212}
-    m_Modifications:
-    - target: {fileID: 9197623580334767068, guid: 7c88200d13bb2e249989bb838dd3789d, type: 3}
-      propertyPath: m_Name
-      value: HeightsGenerator
-      objectReference: {fileID: 0}
-    - target: {fileID: 9197623580334767073, guid: 7c88200d13bb2e249989bb838dd3789d, type: 3}
-      propertyPath: scaler
-      value: 0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 9197623580334767074, guid: 7c88200d13bb2e249989bb838dd3789d, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9197623580334767074, guid: 7c88200d13bb2e249989bb838dd3789d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 166.2796
-      objectReference: {fileID: 0}
-    - target: {fileID: 9197623580334767074, guid: 7c88200d13bb2e249989bb838dd3789d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 166.99957
-      objectReference: {fileID: 0}
-    - target: {fileID: 9197623580334767074, guid: 7c88200d13bb2e249989bb838dd3789d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 116.75729
-      objectReference: {fileID: 0}
-    - target: {fileID: 9197623580334767074, guid: 7c88200d13bb2e249989bb838dd3789d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9197623580334767074, guid: 7c88200d13bb2e249989bb838dd3789d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9197623580334767074, guid: 7c88200d13bb2e249989bb838dd3789d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9197623580334767074, guid: 7c88200d13bb2e249989bb838dd3789d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9197623580334767074, guid: 7c88200d13bb2e249989bb838dd3789d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9197623580334767074, guid: 7c88200d13bb2e249989bb838dd3789d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9197623580334767074, guid: 7c88200d13bb2e249989bb838dd3789d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 7c88200d13bb2e249989bb838dd3789d, type: 3}
+  myMagnitude: 0
+  useEnergyOnMovement: 0
 --- !u!1 &499121205 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3921162343512762614, guid: 0159cb1cf628f964da4955b53f31529b, type: 3}
@@ -916,12 +780,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnergyAmount:
     m_InternalValue: 0
-  energyAmount: 50
   energyMax: 100
   energyMin: 0
   drainAmount: 1
+  moveDrainAmount: 1
   drainSpeed: 1
   energyUserMoving: 0
+  myMagnitude: 0
+  useEnergyOnMovement: 0
 --- !u!114 &499121207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -984,11 +850,6 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!4 &719069545 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9197623580334767074, guid: 7c88200d13bb2e249989bb838dd3789d, type: 3}
-  m_PrefabInstance: {fileID: 453838426}
-  m_PrefabAsset: {fileID: 0}
 --- !u!54 &898404568 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 8611620220612625321, guid: cc02e9a49a115264eb5ef1f88085b227, type: 3}
@@ -1151,12 +1012,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnergyAmount:
     m_InternalValue: 0
-  energyAmount: 50
   energyMax: 100
   energyMin: 0
   drainAmount: 1
+  moveDrainAmount: 1
   drainSpeed: 1
   energyUserMoving: 0
+  myMagnitude: 0
+  useEnergyOnMovement: 0
 --- !u!1001 &1184205532
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1389,12 +1252,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnergyAmount:
     m_InternalValue: 0
-  energyAmount: 50
   energyMax: 100
   energyMin: 0
   drainAmount: 1
+  moveDrainAmount: 1
   drainSpeed: 1
   energyUserMoving: 0
+  myMagnitude: 0
+  useEnergyOnMovement: 0
 --- !u!1001 &1684230066
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1600,12 +1465,71 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnergyAmount:
     m_InternalValue: 0
-  energyAmount: 50
   energyMax: 100
   energyMin: 0
   drainAmount: 1
+  moveDrainAmount: 1
   drainSpeed: 1
   energyUserMoving: 0
+  myMagnitude: 0
+  useEnergyOnMovement: 0
+--- !u!1001 &1940483078800174110
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1940483078423588770, guid: e6edc6b61680eda498df85e8467f33dc, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940483078423588770, guid: e6edc6b61680eda498df85e8467f33dc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940483078423588770, guid: e6edc6b61680eda498df85e8467f33dc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940483078423588770, guid: e6edc6b61680eda498df85e8467f33dc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940483078423588770, guid: e6edc6b61680eda498df85e8467f33dc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940483078423588770, guid: e6edc6b61680eda498df85e8467f33dc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940483078423588770, guid: e6edc6b61680eda498df85e8467f33dc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940483078423588770, guid: e6edc6b61680eda498df85e8467f33dc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940483078423588770, guid: e6edc6b61680eda498df85e8467f33dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940483078423588770, guid: e6edc6b61680eda498df85e8467f33dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940483078423588770, guid: e6edc6b61680eda498df85e8467f33dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940483078423588775, guid: e6edc6b61680eda498df85e8467f33dc, type: 3}
+      propertyPath: m_Name
+      value: Terrain
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e6edc6b61680eda498df85e8467f33dc, type: 3}
 --- !u!1001 &6451098723107706981
 PrefabInstance:
   m_ObjectHideFlags: 0
