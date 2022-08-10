@@ -56,7 +56,8 @@ public interface IEdible
 
 public interface IInteractable
 {
-	void Interact();
+	public void Interact();
+	
 }
 
 

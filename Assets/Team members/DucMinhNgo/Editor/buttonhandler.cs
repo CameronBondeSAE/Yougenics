@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Minh;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEditor;
 
@@ -18,16 +14,17 @@ public class buttonhandler : Editor
         heal = (Interactf)target;
         base.OnInspectorGUI();
 
-        if (GUILayout.Button("heal"))
+        if (GUILayout.Button("interact"))
         {
             Interactf healing = target as Interactf;
-            healing.Interact();
+            healing.Healing();
         }
-        if (GUILayout.Button("damaged"))
+        if (GUILayout.Button("dealdmg"))
         {
-            Interactf dying = target as Interactf;
-            dying.Dealdamage();
+            Interactf dealdamage = target as Interactf;
+            dealdamage.Interact();
         }
+        
     }
     
 }

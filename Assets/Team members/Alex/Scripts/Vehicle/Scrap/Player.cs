@@ -36,7 +36,7 @@ namespace Alex
 
         void TakeDamage(int damage)
         {
-            health.Hp -= damage;
+            //health.Hp -= damage;
             
         }
         

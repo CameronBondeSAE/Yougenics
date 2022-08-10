@@ -13,16 +13,17 @@ namespace Minh
         public NetworkVariable<float> CurrentHealth = new NetworkVariable<float>();
         public NetworkVariable<bool> IsDead = new NetworkVariable<bool>();
 
-        public int Hp = 100;
-        public int curHp;
-        public bool dead;
+        //public int Hp = 100;
+        //public int curHp;
+        //public bool dead;
         public bool fullenergy = true;
         public bool noenergy;
-        Food food;
-        public HpUI hpui;
+        
+        
 
         public event Action DeathEvent;
-        public event Action Collectfood;
+        public delegate void ChangedDelegate(float changedAmount);
+        public event ChangedDelegate ChangedEvent;
 
         public override void OnNetworkSpawn()
         {
@@ -31,17 +32,23 @@ namespace Minh
 
             if (IsServer)
             {
+                GetComponent<Interactf>().healing += startHealthincreasing;
+                GetComponent<Interactf>().dealdamage += startHealthdepeting;
                 GetComponent<Energy>().NoEnergyEvent += startHealthdepeting;
                 GetComponent<Energy>().FullEnergyEvent += startHealthincreasing;
             }
         }
-
+        public void Awake()
+        {
+            startHealthincreasing();
+            
+        }
+        
         void Start()
         {
             if (NetworkManager.Singleton == null)
                 Debug.Log("No Network Manager Found - ADD ManagerScene For Testing To Your Scene");
-
-            if (hpui != null) hpui.SetMaxHealth(Hp);
+            
         }
 
         public void Deathcheck()
@@ -75,8 +82,7 @@ namespace Minh
 
         void OnCollisionEnter(Collision collision)
         {
-            curHp = Hp -= 80;
-            Collectfood?.Invoke();
+            //curHp = Hp -= 80;
         }
 
         // health increase and depleting overtime code
@@ -104,7 +110,6 @@ namespace Minh
                 {
                     CurrentHealth.Value -= 1;
                     yield return new WaitForSeconds(1);
-                    hpui.SetHealth(curHp);
                 }
                 else
                 {
@@ -146,7 +151,6 @@ namespace Minh
                 {
                     CurrentHealth.Value += 1;
                     yield return new WaitForSeconds(1);
-                    hpui.SetHealth(curHp);
                 }
                 else
                 {
@@ -166,8 +170,6 @@ namespace Minh
 
         private void UpdateHealth(float previousValue, float newValue)
         {
-            if (hpui != null)
-                hpui.SetHealth((int)newValue);
 
             if (IsServer)
                 Deathcheck();

@@ -214,6 +214,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2016414139, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
+      propertyPath: hpui
+      value: 
+      objectReference: {fileID: 1287320736}
+    - target: {fileID: 2016414139, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
+      propertyPath: health
+      value: 
+      objectReference: {fileID: 1694841411}
     - target: {fileID: 388605357402476535, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -375,12 +383,8 @@ MonoBehaviour:
     m_InternalValue: 0
   IsDead:
     m_InternalValue: 0
-  Hp: 100
-  curHp: 0
-  dead: 0
   fullenergy: 1
   noenergy: 0
-  hpui: {fileID: 1287320736}
 --- !u!1 &1774965647
 GameObject:
   m_ObjectHideFlags: 0

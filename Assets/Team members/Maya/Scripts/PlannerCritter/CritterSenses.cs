@@ -23,7 +23,7 @@ namespace Maya
         }
         public void CollectConditions(AntAIAgent aAgent, AntAICondition aWorldState)
         {
-            aWorldState.Set(CritterAI.isHealthy, myHealth.Hp > 40);
+            //aWorldState.Set(CritterAI.isHealthy, myHealth.Hp > 40);
             aWorldState.Set(CritterAI.isHorny, myHorny.currentHorny > 75);
             aWorldState.Set(CritterAI.isHungry, myEnergy.EnergyAmount.Value < 65);
             aWorldState.Set(CritterAI.isTired, myEnergy.EnergyAmount.Value < 25);

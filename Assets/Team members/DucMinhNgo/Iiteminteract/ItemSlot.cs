@@ -11,7 +11,7 @@ public class ItemSlot : MonoBehaviour
     public IItem slot1;
     public IItem slot2;
     public float interactDistance = 1f;
-
+    public int adjust1 = 0;
     public Vector3 interactRayOffset = new Vector3(0, 0.5f, 0);
 
     public Transform Player;
@@ -47,6 +47,11 @@ public class ItemSlot : MonoBehaviour
         {
             IInteractable items1 = slot1 as IInteractable;
             items1.Interact();
+            IItem item1 = slot1;
+            slot1 = item1;
+            item1 == Player.parent.transform.position + new Vector3(0,Player.localPosition * adjust1 , 0);
+
+
         }
         if (InputSystem.GetDevice<Mouse>().rightButton.wasPressedThisFrame)
         {
