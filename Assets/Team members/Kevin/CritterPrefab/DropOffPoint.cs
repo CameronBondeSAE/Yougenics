@@ -7,7 +7,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [SelectionBase]
-public class DropOffPoint : MonoBehaviour, IEnergyDrainer
+public class DropOffPoint : MonoBehaviour, IEnergyDrainer, IItem
 {
     
     public Energy energy;
@@ -16,6 +16,7 @@ public class DropOffPoint : MonoBehaviour, IEnergyDrainer
     public List<GameObject> energyContainers;
     public float drainRate;
     public GameManager gameManager;
+    public ItemInfo itemInfo;
 
     void Awake()
     {
@@ -96,5 +97,15 @@ public class DropOffPoint : MonoBehaviour, IEnergyDrainer
         //GetComponent<GameManager>().energy.EnergyAmount.Value += energy.EnergyAmount.Value;
 
         //gameManagerEnergy.EnergyAmount.Value += energy.EnergyAmount.Value;
+    }
+
+    public void SpawnedAsNormal()
+    {
+        throw new NotImplementedException();
+    }
+
+    public ItemInfo GetInfo()
+    {
+        return itemInfo;
     }
 }

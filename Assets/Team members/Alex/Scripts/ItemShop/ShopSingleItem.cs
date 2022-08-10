@@ -40,7 +40,7 @@ public class ShopSingleItem : NetworkBehaviour
 			spawner.SpawnSingle(itemToSpawn, spawningPoint.position +  new Vector3(0, itemInfo.height,0), spawningPoint.rotation);
 
 			//Doubles the cost of the item to build
-			itemInfo.energyRequired += itemInfo.energyRequired * 2;
+			itemInfo.energyRequired += (itemInfo.energyRequired * 2);
 			//After build is complete allows you to build a new object
 			canSpawn = true;
 		}

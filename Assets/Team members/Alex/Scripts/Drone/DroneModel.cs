@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 [SelectionBase]
-public class DroneModel : MonoBehaviour, IFlyable, IInteractable
+public class DroneModel : MonoBehaviour, IFlyable, IInteractable, IItem
 {
     public Rigidbody rb;
     public List<DroneWing> wings;
@@ -18,6 +18,7 @@ public class DroneModel : MonoBehaviour, IFlyable, IInteractable
     Energy energy;
     private float lockPos = 0;
     public Camera camera;
+    public ItemInfo itemInfo;
 
     void Awake()
     {
@@ -114,5 +115,15 @@ public class DroneModel : MonoBehaviour, IFlyable, IInteractable
     public bool isItem()
     {
         return true;
+    }
+
+    public void SpawnedAsNormal()
+    {
+        throw new NotImplementedException();
+    }
+
+    public ItemInfo GetInfo()
+    {
+        return itemInfo;
     }
 }

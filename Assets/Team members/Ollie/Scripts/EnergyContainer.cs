@@ -12,6 +12,7 @@ namespace Ollie
         public float drainRate;
         private bool currentlyDraining;
         public List<GameObject> drainTargets;
+        public ItemInfo iteminfo;
         
         private void Awake()
         {
@@ -75,7 +76,7 @@ namespace Ollie
 
         public ItemInfo GetInfo()
         {
-            throw new NotImplementedException();
+            return iteminfo;
         }
 
         public object transform { get; set; }

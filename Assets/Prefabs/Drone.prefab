@@ -224,6 +224,12 @@ MonoBehaviour:
   movementSpeed: 150
   isFlying: 0
   camera: {fileID: 0}
+  itemInfo:
+    name: Drone
+    description: Fly around and scout the surrounding area
+    energyRequired: 50
+    height: 2
+    buildTime: 20
 --- !u!54 &6628694674896416983
 Rigidbody:
   m_ObjectHideFlags: 0

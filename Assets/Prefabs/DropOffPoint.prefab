@@ -386,6 +386,13 @@ MonoBehaviour:
   energyContainers: []
   drainRate: 5
   gameManager: {fileID: 5942840491211313436, guid: d4ec5a789319b624482cdabda213b3f5, type: 3}
+  itemInfo:
+    name: Drop off point
+    description: Drop energy containers here to transfer their energy to the main
+      base
+    energyRequired: 50
+    height: 2
+    buildTime: 100
 --- !u!114 &-9094710341096795886
 MonoBehaviour:
   m_ObjectHideFlags: 0

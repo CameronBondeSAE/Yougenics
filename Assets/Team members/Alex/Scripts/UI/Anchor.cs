@@ -12,9 +12,11 @@ namespace Alex
         {
             if (GetComponent<Anchor>() != null)
             {
-                transform.LookAt(NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<John.PlayerController>().playerModel.transform);
-                //Hack
-                transform.Rotate(0,180,0,Space.Self);
+                PlayerModel playerModel = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<John.PlayerController>().playerModel;
+
+                if(playerModel != null)
+                    transform.LookAt(playerModel.transform);
+                //transform.Rotate(0,180,0,Space.Self);
             }
         }
     }

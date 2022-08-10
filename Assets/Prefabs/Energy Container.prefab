@@ -159,9 +159,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 059aac044d2c7284e8c92d72bd6bd97e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myEnergy: 0
   drainRate: 5
   drainTargets: []
+  iteminfo:
+    name: Energy Container
+    description: Drain energy from everything around you
+    energyRequired: 100
+    height: 2
+    buildTime: 100
 --- !u!54 &7389904
 Rigidbody:
   m_ObjectHideFlags: 0
