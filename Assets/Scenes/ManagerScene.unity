@@ -459,14 +459,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1093299629232218347, guid: 750f470c605ac2145bc3aff043dd2a5f, type: 3}
-      propertyPath: NetworkConfig.NetworkPrefabs.Array.size
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1093299629232218347, guid: 750f470c605ac2145bc3aff043dd2a5f, type: 3}
-      propertyPath: NetworkConfig.NetworkPrefabs.Array.data[9].Prefab
-      value: 
-      objectReference: {fileID: 7518922475590686048, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 750f470c605ac2145bc3aff043dd2a5f, type: 3}
 --- !u!1 &1640972067
@@ -759,38 +751,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2470996678417566554, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2470996678417566554, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2470996678417566554, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2470996678417566554, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2470996679243095473, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2470996679243095473, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2470996679243095473, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2470996679243095473, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2470996679314236393, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
       propertyPath: m_Name
       value: LobbyUIManager
@@ -807,10 +767,6 @@ PrefabInstance:
       propertyPath: critterSpawner
       value: 
       objectReference: {fileID: 1023956929}
-    - target: {fileID: 2470996679314236398, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
-      propertyPath: levels.Array.data[3].levelNameOnUI
-      value: Alex's level 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2470996679314236399, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
       propertyPath: m_RootOrder
       value: 1

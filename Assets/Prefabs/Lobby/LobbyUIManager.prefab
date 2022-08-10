@@ -2813,7 +2813,7 @@ MonoBehaviour:
   - level: {fileID: 102900000, guid: 2af64fa95e910c94fb8835992da0c488, type: 3}
     levelNameOnUI: Test all mechanics
   - level: {fileID: 102900000, guid: ecb4e1236a6628c48b12bbab26f64972, type: 3}
-    levelNameOnUI: Alex's level
+    levelNameOnUI: Alex's level 1
   levelHolder: {fileID: 2470996678052708765}
   levelButtonPrefab: {fileID: 8248577337387485405, guid: 98aed31625b87c1448bb00bdda875d43, type: 3}
   critterSpawner: {fileID: 0}

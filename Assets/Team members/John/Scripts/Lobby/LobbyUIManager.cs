@@ -143,7 +143,7 @@ public class LobbyUIManager : NetworkBehaviour
     private void Start()
     {
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientJoin;
-        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientLeave;
+        //NetworkManager.Singleton.OnClientDisconnectCallback += OnClientLeave;
 
         serverIPInputField.text = NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectAddress;
 
@@ -165,14 +165,14 @@ public class LobbyUIManager : NetworkBehaviour
 
     #region Handle Clients Joining/Leaving
 
-    private void OnClientLeave(ulong obj)
+    /*private void OnClientLeave(ulong obj)
     {
         //HACK to work around Unity Calling this event before ConnectedClientList is updated
         if (NetworkManager.Singleton.IsServer)
         {
             Invoke("HandleClientNames", 1f);
         }
-    }
+    }*/
 
     public void OnClientJoin(ulong clientID)
     {
@@ -311,8 +311,6 @@ public class LobbyUIManager : NetworkBehaviour
         clientUI.text = _name;
     }
 
-    //Currently syncs client to server but not server to client 
-
     public void UpdateClientName()
     {
         if (IsServer)
@@ -420,12 +418,6 @@ public class LobbyUIManager : NetworkBehaviour
         }
     }
 
-    /*[ClientRpc]
-    public void SetClientReferenceClientRpc(ForceNetworkSerializeByMemcpy<GameObject> tempPlayer)
-    {
-
-    }*/
-
     [ClientRpc]
     public void InitControllerClientRpc()
     {
@@ -444,9 +436,9 @@ public class LobbyUIManager : NetworkBehaviour
         controller.playerInput.SwitchCurrentActionMap("InGame");
         controller.OnPlayerAssigned();
 
+        //controller.playerModel.myClientInfo = myClient.GetComponent<ClientInfo>();
         //controller.playerModel.OnClientAssigned(myClient.GetComponent<ClientInfo>());
     }
-
     private void SceneManagerOnOnSceneEvent(SceneEvent sceneEvent)
     {
         NetworkManager.Singleton.SceneManager.OnSceneEvent -= SceneManagerOnOnSceneEvent;

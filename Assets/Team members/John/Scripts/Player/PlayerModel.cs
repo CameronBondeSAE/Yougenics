@@ -27,12 +27,12 @@ public class PlayerModel : NetworkBehaviour
 	public float mouseX, mouseY;
 	[HideInInspector]
 	public ClientInfo myClientInfo;
-	public event Action<ClientInfo> onClientAssignedEvent;
+	/*public event Action onClientAssignedEvent;
 
-	/*public void OnClientAssigned(ClientInfo client)
+	public void OnClientAssigned(ClientInfo client)
     {
 		myClientInfo = client;
-		onClientAssignedEvent?.Invoke(myClientInfo);
+		onClientAssignedEvent?.Invoke();
     }*/
 
 	[Header("For Non Networking Setup")]
