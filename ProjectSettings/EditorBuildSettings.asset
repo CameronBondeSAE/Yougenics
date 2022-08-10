@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main Test all active game mechanics.unity
     guid: 2af64fa95e910c94fb8835992da0c488
+  - enabled: 1
+    path: Assets/Team members/Alex/Scenes/Alex's Level 1.unity
+    guid: ecb4e1236a6628c48b12bbab26f64972
+  - enabled: 1
+    path: Assets/Team members/Alex/Scenes/Alex's Level 2.unity
+    guid: 9ca71fbd84a619e4ead41f08a7d60679
   m_configObjects: {}

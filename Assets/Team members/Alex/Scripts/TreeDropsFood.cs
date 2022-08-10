@@ -37,7 +37,7 @@ namespace Alex
         public IEnumerator SpawnThisTree()
         {
             yield return new WaitForSeconds(2f);
-            spawner.SpawnSingle(treePrefab,new Vector3(treeTop.transform.localPosition.x , treeTop.transform.localPosition.y - 3f,
+            spawner.SpawnSingle(foodPrefab,new Vector3(treeTop.transform.localPosition.x , treeTop.transform.localPosition.y - 3f,
                 treeTop.transform.localPosition.z), Quaternion.identity);
             StopCoroutine(SpawnThisTree());
         }

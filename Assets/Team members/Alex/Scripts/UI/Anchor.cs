@@ -10,10 +10,12 @@ namespace Alex
         
         void LateUpdate()
         {
-            if (GetComponent<Anchor>() != null) 
-            transform.LookAt(NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<John.PlayerController>().playerModel.transform);
-            //Hack
-            transform.Rotate(0,180,0,Space.Self);
+            if (GetComponent<Anchor>() != null)
+            {
+                transform.LookAt(NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<John.PlayerController>().playerModel.transform);
+                //Hack
+                transform.Rotate(0,180,0,Space.Self);
+            }
         }
     }
 }

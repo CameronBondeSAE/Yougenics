@@ -54,6 +54,7 @@ namespace Ollie
                 drainTargets.Add(other.gameObject);
                 if(other.GetComponent<DropOffPoint>() != null)
                 drainTargets.Remove(other.GetComponent<DropOffPoint>().gameObject);
+                drainTargets.Remove(other.GetComponent<PlayerModel>().gameObject);
             }
         }
 
