@@ -14,13 +14,6 @@ namespace Luke
 		public void CallRemoveEvent(Transform transform);
 	}
 
-	public enum Gender
-	{
-		Female,
-		Male,
-		NonBinary
-	}
-	
 	public enum DefaultBehaviours
 	{
 		Lovelorn,
@@ -45,12 +38,11 @@ namespace Luke
 		public float maxHealth;
 		public float maxSleepLevel;
 		public float maxEnergyLevel;
-		public float awakeDecayDelay;
-		public float asleepDecayDelay;
+		public float metabolism;
 		public float firstMatingDelay;
 		public bool isCarnivore;
-		public Gender gender;
-		public int deadliness;
+		public CreatureBase.Sex gender;
+		public float deadliness;
 		public float visionRadius;
 	}
 }
