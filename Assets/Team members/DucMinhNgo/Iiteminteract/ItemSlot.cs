@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEngine.InputSystem;
 public class ItemSlot : MonoBehaviour
 {
+    
     public IItem slot1;
     public IItem slot2;
     public float interactDistance = 1f;
@@ -15,6 +16,8 @@ public class ItemSlot : MonoBehaviour
     public Vector3 interactRayOffset = new Vector3(0, 0.5f, 0);
 
     public Transform Player;
+
+    public Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +27,7 @@ public class ItemSlot : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        rb.AddRelativeForce(0,100,0);
         RaycastHit hit = CheckWhatsInFrontOfMe();
         //if (hit.transform != null) Debug.Log(hit.transform.gameObject.name);
         if (hit.collider != null)
@@ -32,6 +36,7 @@ public class ItemSlot : MonoBehaviour
             if (item1 != null)
             {
                 slot1 = item1;
+                //.transform.parent = object2.transform 
             }
             IItem item2 = hit.collider.gameObject.GetComponentInParent<IItem>();
             if (item2 != null)
@@ -49,7 +54,7 @@ public class ItemSlot : MonoBehaviour
             items1.Interact();
             IItem item1 = slot1;
             slot1 = item1;
-            item1 == Player.parent.transform.position + new Vector3(0,Player.localPosition * adjust1 , 0);
+            //item1.pa == Player.parent.transform.position + new Vector3(0,Player.localPosition * adjust1 , 0);
 
 
         }
