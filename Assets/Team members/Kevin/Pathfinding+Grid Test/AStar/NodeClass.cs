@@ -10,6 +10,7 @@ namespace Kevin
         {
             public Vector3 worldPosition; 
             public bool isBlocked;
+            public bool isClosed;
             public Vector2Int gridPosition;
 
             public int gCost;
