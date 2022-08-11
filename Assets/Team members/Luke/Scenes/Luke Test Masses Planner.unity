@@ -279,6 +279,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
 --- !u!4 &41897898 stripped
@@ -427,6 +431,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
 --- !u!4 &88903373 stripped
@@ -489,6 +497,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -580,6 +592,10 @@ PrefabInstance:
       propertyPath: critterInfo.isCarnivore
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -657,6 +673,10 @@ PrefabInstance:
       propertyPath: critterInfo.deadliness
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -816,6 +836,10 @@ PrefabInstance:
       propertyPath: critterInfo.deadliness
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -902,6 +926,10 @@ PrefabInstance:
       propertyPath: critterInfo.isCarnivore
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -1052,6 +1080,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
 --- !u!4 &215210524 stripped
@@ -1191,6 +1223,10 @@ PrefabInstance:
       propertyPath: critterInfo.isCarnivore
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -1271,6 +1307,10 @@ PrefabInstance:
     - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
       propertyPath: m_Name
       value: Food (20)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
@@ -1709,6 +1749,10 @@ PrefabInstance:
       propertyPath: critterInfo.isCarnivore
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -1868,6 +1912,10 @@ PrefabInstance:
     - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
       propertyPath: m_Name
       value: Food (17)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
@@ -2077,6 +2125,10 @@ PrefabInstance:
       propertyPath: critterInfo.isCarnivore
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -2150,6 +2202,10 @@ PrefabInstance:
       propertyPath: critterInfo.isCarnivore
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -2477,6 +2533,10 @@ PrefabInstance:
       propertyPath: critterInfo.isCarnivore
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -2629,6 +2689,10 @@ PrefabInstance:
       propertyPath: critterInfo.deadliness
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -2706,6 +2770,10 @@ PrefabInstance:
       propertyPath: critterInfo.isCarnivore
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -3508,6 +3576,10 @@ PrefabInstance:
       propertyPath: critterInfo.deadliness
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -3654,6 +3726,10 @@ PrefabInstance:
       propertyPath: critterInfo.deadliness
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -4063,6 +4139,10 @@ PrefabInstance:
       propertyPath: critterInfo.isCarnivore
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -4358,6 +4438,10 @@ PrefabInstance:
       propertyPath: critterInfo.gender
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -4438,6 +4522,10 @@ PrefabInstance:
     - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
       propertyPath: m_Name
       value: Food (29)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
@@ -4663,6 +4751,10 @@ PrefabInstance:
       propertyPath: critterInfo.deadliness
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -4818,6 +4910,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
 --- !u!1001 &844295126
@@ -4879,6 +4975,10 @@ PrefabInstance:
       propertyPath: critterInfo.gender
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -4952,6 +5052,10 @@ PrefabInstance:
       propertyPath: critterInfo.deadliness
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -5389,6 +5493,10 @@ PrefabInstance:
       propertyPath: critterInfo.deadliness
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -5469,6 +5577,10 @@ PrefabInstance:
     - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
       propertyPath: m_Name
       value: Food (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
@@ -5688,6 +5800,10 @@ PrefabInstance:
       propertyPath: critterInfo.isCarnivore
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -6030,6 +6146,10 @@ PrefabInstance:
       propertyPath: critterInfo.deadliness
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -6111,6 +6231,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food (23)
       objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
 --- !u!4 &985427933 stripped
@@ -6190,6 +6314,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
 --- !u!1001 &1006954553
@@ -6258,6 +6386,10 @@ PrefabInstance:
     - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
       propertyPath: m_Name
       value: Food (28)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
@@ -6560,6 +6692,10 @@ PrefabInstance:
       propertyPath: critterInfo.deadliness
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -6641,6 +6777,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food (30)
       objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
 --- !u!1001 &1085678151
@@ -6709,6 +6849,10 @@ PrefabInstance:
     - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
       propertyPath: m_Name
       value: Food (24)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
@@ -6848,6 +6992,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
 --- !u!1001 &1122115869
@@ -6913,6 +7061,10 @@ PrefabInstance:
       propertyPath: critterInfo.isCarnivore
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -7143,6 +7295,10 @@ PrefabInstance:
       propertyPath: critterInfo.isCarnivore
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -7289,6 +7445,10 @@ PrefabInstance:
       propertyPath: critterInfo.isCarnivore
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -7370,6 +7530,10 @@ PrefabInstance:
     - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
       propertyPath: m_Name
       value: Food (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
@@ -7508,6 +7672,10 @@ PrefabInstance:
     - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
       propertyPath: m_Name
       value: Food (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
@@ -7718,6 +7886,10 @@ PrefabInstance:
       propertyPath: critterInfo.deadliness
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -8156,6 +8328,10 @@ PrefabInstance:
       propertyPath: critterInfo.deadliness
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -8238,6 +8414,10 @@ PrefabInstance:
       propertyPath: critterInfo.deadliness
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -8454,6 +8634,10 @@ PrefabInstance:
       propertyPath: critterInfo.deadliness
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -8757,6 +8941,10 @@ PrefabInstance:
       propertyPath: critterInfo.deadliness
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -8834,6 +9022,10 @@ PrefabInstance:
       propertyPath: critterInfo.deadliness
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -9101,6 +9293,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food (22)
       objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
 --- !u!1001 &1390082095
@@ -9304,6 +9500,10 @@ PrefabInstance:
       propertyPath: critterInfo.isCarnivore
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -9612,6 +9812,10 @@ PrefabInstance:
       propertyPath: critterInfo.deadliness
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -9755,6 +9959,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -10143,6 +10351,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -10281,6 +10493,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -10575,6 +10791,10 @@ PrefabInstance:
       propertyPath: critterInfo.deadliness
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -10662,6 +10882,10 @@ PrefabInstance:
       propertyPath: critterInfo.isCarnivore
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -10816,6 +11040,10 @@ PrefabInstance:
     - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
       propertyPath: m_Name
       value: Food (21)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
@@ -11108,6 +11336,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
 --- !u!1001 &1635265314
@@ -11176,6 +11408,10 @@ PrefabInstance:
     - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
       propertyPath: m_Name
       value: Food (16)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
@@ -11530,6 +11766,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -11611,6 +11851,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food (26)
       objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
 --- !u!4 &1695297966 stripped
@@ -11691,6 +11935,10 @@ PrefabInstance:
       propertyPath: critterInfo.deadliness
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -11782,6 +12030,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
 --- !u!1001 &1724833346
@@ -11847,6 +12099,10 @@ PrefabInstance:
       propertyPath: critterInfo.isCarnivore
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -12033,6 +12289,10 @@ PrefabInstance:
       propertyPath: critterInfo.isCarnivore
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -12124,6 +12384,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
 --- !u!1001 &1818108080
@@ -12185,6 +12449,10 @@ PrefabInstance:
       propertyPath: critterInfo.deadliness
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -12266,6 +12534,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food (18)
       objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
 --- !u!4 &1836962978 stripped
@@ -12346,6 +12618,10 @@ PrefabInstance:
       propertyPath: critterInfo.isCarnivore
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -12570,6 +12846,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food (25)
       objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
 --- !u!4 &1866004152 stripped
@@ -12640,6 +12920,10 @@ PrefabInstance:
       propertyPath: critterInfo.deadliness
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -12714,6 +12998,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -12939,6 +13227,10 @@ PrefabInstance:
       propertyPath: critterInfo.deadliness
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -13318,6 +13610,10 @@ PrefabInstance:
       propertyPath: critterInfo.deadliness
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -13468,6 +13764,10 @@ PrefabInstance:
       propertyPath: critterInfo.isCarnivore
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 6418466655115192506, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -13942,6 +14242,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food (27)
       objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
 --- !u!1001 &2142342343
@@ -14079,6 +14383,10 @@ PrefabInstance:
     - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
       propertyPath: m_Name
       value: Food
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711454839183000843, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d41344b4eecfa4e95b647c9b4efaff, type: 3}
