@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &78695683 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2764626321808243858, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
-  m_PrefabInstance: {fileID: 1070184526}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &139996948 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7512419922752043516, guid: 252850b7f97b1964fa6adebf548858d3, type: 3}
@@ -181,11 +176,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46eb57fc3ab7b274b8f74ed8f48af58e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minh: {fileID: 78695683}
   interactDistance: 12
-  adjust1: 0
   interactRayOffset: {x: 0, y: 0.5, z: 0}
+  adjust1: 90
+  adjust2: 0
+  adjust3: 0
   Player: {fileID: 584940611}
+  pickedup: 0
   rb: {fileID: 584940612}
 --- !u!4 &431292235
 Transform:
@@ -351,7 +348,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 584940606}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 496.13, y: 1.74, z: 496.47104}
+  m_LocalPosition: {x: 499.855, y: 1.958, z: 496.47104}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -498,8 +495,20 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2764626321808243861, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.327
+      objectReference: {fileID: 0}
+    - target: {fileID: 2764626321808243861, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.327
+      objectReference: {fileID: 0}
+    - target: {fileID: 2764626321808243861, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.327
+      objectReference: {fileID: 0}
+    - target: {fileID: 2764626321808243861, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 495.94
+      value: 499.46
       objectReference: {fileID: 0}
     - target: {fileID: 2764626321808243861, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -507,7 +516,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2764626321808243861, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 500.05
+      value: 502.71
       objectReference: {fileID: 0}
     - target: {fileID: 2764626321808243861, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -648,6 +657,7 @@ GameObject:
   - component: {fileID: 1826841985}
   - component: {fileID: 1826841984}
   - component: {fileID: 1826841987}
+  - component: {fileID: 1826841988}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -733,6 +743,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1826841988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1826841983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a5de71ece5875a43ba9fafb74351df1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 584940611}
+  offset: {x: 4.04, y: 4.04, z: 4.04}
+  speed: 10
 --- !u!1001 &7785382626653955333
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -6,82 +6,120 @@ using UnityEngine;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine.InputSystem;
-public class ItemSlot : MonoBehaviour
+
+namespace Minh
 {
-    public IItem slot1;
-    public IItem slot2;
-    public float interactDistance = 1f;
-    public Vector3 interactRayOffset = new Vector3(0, 0.5f, 0);
-
-    public Transform Player;
-
-    public Rigidbody rb;
-    // Start is called before the first frame update
-    void Start()
+    public class ItemSlot : MonoBehaviour
     {
-        CheckWhatsInFrontOfMe();
-    }
+        public IItem slot1;
+        public IItem slot2;
+        public float interactDistance = 1f;
+        public Vector3 interactRayOffset = new Vector3(0, 0.5f, 0);
+        public float adjust1;
+        public float adjust2;
+        public float adjust3;
+        public Transform Player;
+        public Transform Trash;
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        
-        RaycastHit hit = CheckWhatsInFrontOfMe();
-        //if (hit.transform != null) Debug.Log(hit.transform.gameObject.name);
-        if (hit.collider != null)
+        public Rigidbody rb;
+
+        // Start is called before the first frame update
+        public void Start()
         {
-            IItem item1 = hit.collider.gameObject.GetComponentInParent<IItem>();
-            if (item1 != null)
-            {
-                MonoBehaviour monoBehaviour = item1 as MonoBehaviour;
-                monoBehaviour.transform.parent = Player.transform;
-                slot1 = item1;
-                //Player.transform.localPosition = new Vector3(Player.localPosition * , 0, 0);
+            CheckWhatsInFrontOfMe();
+        }
 
-                //.transform.parent = object2.transform 
-            }
-            IItem item2 = hit.collider.gameObject.GetComponentInParent<IItem>();
-            if (item2 != null)
+        // Update is called once per frame
+        public void FixedUpdate()
+        {
+            RaycastHit hit = CheckWhatsInFrontOfMe();
+            //if (hit.transform != null) Debug.Log(hit.transform.gameObject.name);
+            if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                MonoBehaviour monoBehaviour = item1 as MonoBehaviour;
-                monoBehaviour.transform.parent = Player.transform;
-                slot2 = item2;
-                
+                if (hit.collider != null)
+                {
+                    IItem item1 = hit.collider.gameObject.GetComponentInParent<IItem>();
+                    if (item1 != null)
+                    {
+                        if (slot1 == null)
+                        {
+                            slot1 = item1;
+                            MonoBehaviour monoBehaviour = item1 as MonoBehaviour;
+                            monoBehaviour.transform.parent = Player.transform;
+                            monoBehaviour.transform.position = Player.transform.position + new Vector3(0f,
+                                adjust2 * adjust3 * Time.deltaTime, 1 * adjust1 * Time.deltaTime);
+                            Debug.Log("picked up");
+                        }
+                    }
+                    else 
+                    {
+                        MonoBehaviour monoBehaviour = slot1 as MonoBehaviour;
+                        slot1 = null;
+                        monoBehaviour.transform.parent = null;
+                        Debug.Log("dropped");
+                    }
+                }
+            }
+            
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                    if (slot2 != null)
+                    {
+                        MonoBehaviour monoBehaviour = slot2 as MonoBehaviour;
+                        slot2 = null;
+                        monoBehaviour.transform.parent = null;
+                        Debug.Log("dropped");
+                    }
+
+                    IItem item2 = hit.collider.gameObject.GetComponentInParent<IItem>();
+                    if (item2 != null)
+                    {
+                        if (slot2 == null)
+                        {
+                            MonoBehaviour monoBehaviour = item2 as MonoBehaviour;
+                            monoBehaviour.transform.parent = Player.transform;
+                            slot2 = item2;
+                            monoBehaviour.transform.position = Player.transform.position + new Vector3(0f,
+                                adjust2 * adjust3 * Time.deltaTime, 1 * adjust1 * Time.deltaTime);
+                            Debug.Log("picked up");
+                        }
+                    }
+            }
+        }
+
+        public void Update()
+        {
+            if (InputSystem.GetDevice<Mouse>().leftButton.wasPressedThisFrame)
+            {
+                IInteractable items1 = slot1 as IInteractable;
+                items1.Interact();
+            }
+
+            if (InputSystem.GetDevice<Mouse>().rightButton.wasPressedThisFrame)
+            {
+                IInteractable items2 = slot2 as IInteractable;
+                items2.Interact();
+            }
+        }
+
+        RaycastHit CheckWhatsInFrontOfMe()
+            {
+                // Check what's in front of me. TODO: Make it scan the area or something less precise
+                RaycastHit hit;
+                // Ray        ray = new Ray(transform.position + transform.TransformPoint(interactRayOffset), transform.forward);
+                // NOTE: TransformPoint I THINK includes the main position, so you don't have to add world position to the final
+                Vector3 transformPoint = Player.TransformPoint(interactRayOffset);
+                // Debug.Log(transformPoint);
+                Ray ray = new Ray(transformPoint, Player.forward);
+
+                Debug.DrawRay(ray.origin, ray.direction * interactDistance, Color.green, 2f);
+
+                // if (Physics.Raycast(ray, out hit, interactDistance))
+                Physics.SphereCast(ray, 0.5f, out hit, interactDistance);
+                return hit;
             }
         }
     }
 
-    public void Update()
-    {
-        
-        if (InputSystem.GetDevice<Mouse>().leftButton.wasPressedThisFrame)
-        {
-            IInteractable items1 = slot1 as IInteractable;
-            items1.Interact();
-        }
-        if (InputSystem.GetDevice<Mouse>().rightButton.wasPressedThisFrame)
-        {
-            IInteractable items2 = slot2 as IInteractable;
-            items2.Interact();
-        } 
-    }
 
-    RaycastHit CheckWhatsInFrontOfMe()
-    {
-        // Check what's in front of me. TODO: Make it scan the area or something less precise
-        RaycastHit hit;
-        // Ray        ray = new Ray(transform.position + transform.TransformPoint(interactRayOffset), transform.forward);
-        // NOTE: TransformPoint I THINK includes the main position, so you don't have to add world position to the final
-        Vector3 transformPoint = Player.TransformPoint(interactRayOffset);
-        // Debug.Log(transformPoint);
-        Ray ray = new Ray(transformPoint, Player.forward);
 
-        Debug.DrawRay(ray.origin, ray.direction * interactDistance, Color.green, 2f);
-
-        // if (Physics.Raycast(ray, out hit, interactDistance))
-        Physics.SphereCast(ray, 0.5f, out hit, interactDistance);
-        return hit;
-    }
-
-    
-}
