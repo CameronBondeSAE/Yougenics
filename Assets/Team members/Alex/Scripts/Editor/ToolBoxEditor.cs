@@ -22,6 +22,11 @@ public class ToolBoxEditor : EditorWindow
         window.Show();
     }
 
+    void Camera()
+    {
+        Camera sceneCamera = SceneView.GetAllSceneCameras()[0];
+    }
+
     void OnGUI()
     {
         if (GUILayout.Button("Make big"))
@@ -124,29 +129,29 @@ public class ToolBoxEditor : EditorWindow
         drone = (GameObject)EditorGUILayout.ObjectField("Drone", drone, typeof(GameObject), false);
         if (GUILayout.Button("Create drone"))
         {
-            Instantiate(drone);
-            SceneView.FrameLastActiveSceneView();
+            Camera sceneCamera = SceneView.GetAllSceneCameras()[0];
+            Instantiate(drone, sceneCamera.transform.position + sceneCamera.transform.forward * 5f, sceneCamera.transform.rotation);
         }
         
         vehicle = (GameObject)EditorGUILayout.ObjectField("Vehicle", vehicle, typeof(GameObject), false);
         if (GUILayout.Button("Create vehicle"))
         {
-            Instantiate(vehicle);
-            SceneView.FrameLastActiveSceneView();
+            Camera sceneCamera = SceneView.GetAllSceneCameras()[0];
+            Instantiate(vehicle, sceneCamera.transform.position + sceneCamera.transform.forward * 5f, sceneCamera.transform.rotation);
         }
         
         dropOffPoint = (GameObject)EditorGUILayout.ObjectField("Drop Off Point", dropOffPoint, typeof(GameObject), false);
         if (GUILayout.Button("Create drop off point"))
         {
-            Instantiate(dropOffPoint);
-            SceneView.FrameLastActiveSceneView();
+            Camera sceneCamera = SceneView.GetAllSceneCameras()[0];
+            Instantiate(dropOffPoint, sceneCamera.transform.position + sceneCamera.transform.forward * 5f, sceneCamera.transform.rotation);
         }
         
         energyContainer = (GameObject)EditorGUILayout.ObjectField("Energy Container", energyContainer, typeof(GameObject), false);
         if (GUILayout.Button("Create energy container"))
         {
-            
-            Instantiate(energyContainer);
+            Camera sceneCamera = SceneView.GetAllSceneCameras()[0];
+            Instantiate(energyContainer, sceneCamera.transform.position + sceneCamera.transform.forward * 5f, sceneCamera.transform.rotation);
             SceneView.FrameLastActiveSceneView();
         }
     }
