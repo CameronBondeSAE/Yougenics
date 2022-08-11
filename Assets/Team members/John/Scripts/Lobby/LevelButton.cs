@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelButton : MonoBehaviour
+namespace John
 {
-    public string myLevel;
-    public void SetSceneToLoad()
+    public class LevelButton : MonoBehaviour
     {
-        LobbyUIManager.instance.sceneToLoad = myLevel;
+        public string myLevel;
+
+        public void SetSceneToLoad()
+        {
+            LobbyUIManager.instance.sceneToLoad = myLevel;
+        }
     }
 }

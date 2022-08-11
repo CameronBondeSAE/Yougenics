@@ -106,6 +106,8 @@ public class CreatureBase : SerializedMonoBehaviour
 {
 	// public List<Stat<float>> stats;
 	// public List<Stat<bool>>  statsBools;
+	
+	// public List<Memories> memories;
 
 	public float age;
 	public float ageOfMatingStart;
@@ -120,7 +122,6 @@ public class CreatureBase : SerializedMonoBehaviour
 	// Optional
 	public float empathy;
 	public float aggression;
-	public float dangerLevel;
 
 	/// <summary>
 	/// This is a percentage of the maxSize. Useful for breeding a kid that eg has half your maxsize

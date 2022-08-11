@@ -6,38 +6,41 @@ using UnityEngine.UI;
 using Unity.Netcode;
 using System;
 
-public class Lobby_ViewModel : MonoBehaviour
+namespace John
 {
-    public LobbyUIManager lobbyManager;
-    NetworkObject player;
-
-    public TMP_InputField inputField;
-
-    // Start is called before the first frame update
-    void Start()
+    public class Lobby_ViewModel : MonoBehaviour
     {
-        //lobbyManager.onLocalClientJoinEvent += HandleLocalClient;
-    }
+        public LobbyUIManager lobbyManager;
+        NetworkObject         player;
 
-    private void HandleLocalClient(NetworkObject obj)
-    {
-        player = obj;
-    }
+        public TMP_InputField inputField;
 
-    public void UpdateClientName()
-    {
-        if (player != null)
+        // Start is called before the first frame update
+        void Start()
         {
-            player.GetComponent<ClientInfo>().clientName = inputField.text;
-            HandleClientNamesReqServerRpc();
+            //lobbyManager.onLocalClientJoinEvent += HandleLocalClient;
         }
 
-        Debug.Log(inputField.text);
-    }
+        private void HandleLocalClient(NetworkObject obj)
+        {
+            player = obj;
+        }
 
-    [ServerRpc]
-    void HandleClientNamesReqServerRpc()
-    {
-        lobbyManager.HandleClientNames();
+        public void UpdateClientName()
+        {
+            if (player != null)
+            {
+                player.GetComponent<ClientInfo>().clientName = inputField.text;
+                HandleClientNamesReqServerRpc();
+            }
+
+            Debug.Log(inputField.text);
+        }
+
+        [ServerRpc]
+        void HandleClientNamesReqServerRpc()
+        {
+            lobbyManager.HandleClientNames();
+        }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEditor;
 
 [CustomEditor(typeof(Health))]
-public class Buttoninspector : Editor
+public class HealthInspector : Editor
 {
     private Health fullHp;
     private Health dead;

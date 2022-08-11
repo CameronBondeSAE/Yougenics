@@ -105,7 +105,21 @@ namespace Ollie
         {
             //outside bounds errors because position sent in can be negative
             //but gridNodeReferences[,] cannot be negative!
-            WaterNode node = gridNodeReferences[(int)position.x-lengthX,(int)position.z-lengthZ];
+            int       positionX = (int)position.x-lengthX;
+            int       positionZ = (int)position.z-lengthZ;
+
+            WaterNode node = null;
+            
+            // HACK CAM: to just return the edge of the map if you try to access past it
+            if (positionX > gridNodeReferences.GetLength(0))
+            {
+                positionX = gridNodeReferences.GetLength(0);
+            }
+            if (positionZ > gridNodeReferences.GetLength(1))
+            {
+                positionZ = gridNodeReferences.GetLength(1);
+            }
+            node = gridNodeReferences[positionX,positionZ];
             return node;
         }
 
