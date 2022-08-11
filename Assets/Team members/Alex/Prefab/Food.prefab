@@ -112,15 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2ccad4ccdb65c44cb0200bb94eafe58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalFoodAmount: 50
-  biteValue: 10
-  currentFoodAmount: 0
-  itemInfo:
-    name: 
-    description: 
-    energyRequired: 0
-    height: 0
-    buildTime: 0
+  myFoodAmount: 10
 --- !u!54 &4436733085626983533
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -144,7 +136,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4035055015533239334}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 2d7360b040ab4b1499d038594bd94c1b, type: 3}

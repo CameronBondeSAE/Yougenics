@@ -12,7 +12,6 @@ public class ToolBoxEditor : EditorWindow
     public GameObject drone;
     public GameObject energyContainer;
     public GameObject dropOffPoint;
-    public GameObject energyBall;
     
     // Add menu named "My Window" to the Window menu
     [MenuItem("Tools/Alex's toolbox")]
@@ -21,6 +20,11 @@ public class ToolBoxEditor : EditorWindow
         // Get existing open window or if none, make a new one:
         ToolBoxEditor window = (ToolBoxEditor)EditorWindow.GetWindow(typeof(ToolBoxEditor));
         window.Show();
+    }
+
+    void Camera()
+    {
+        Camera sceneCamera = SceneView.GetAllSceneCameras()[0];
     }
 
     void OnGUI()
@@ -94,13 +98,6 @@ public class ToolBoxEditor : EditorWindow
             SceneView.FrameLastActiveSceneView();
         }
         
-        if (GUILayout.Button("Focus on random Energy Ball"))
-        {
-            EnergyBall[] findObjectsOfType = FindObjectsOfType<EnergyBall>();
-            Selection.activeGameObject = findObjectsOfType[Random.Range(0, findObjectsOfType.Length)].gameObject;
-            SceneView.FrameLastActiveSceneView();
-        }
-        
         if (GUILayout.Button("Focus on random AI"))
         {
             
@@ -155,15 +152,7 @@ public class ToolBoxEditor : EditorWindow
         {
             Camera sceneCamera = SceneView.GetAllSceneCameras()[0];
             Instantiate(energyContainer, sceneCamera.transform.position + sceneCamera.transform.forward * 5f, sceneCamera.transform.rotation);
-            
-        }
-        
-        energyBall = (GameObject)EditorGUILayout.ObjectField("Energy Ball", energyBall, typeof(GameObject), false);
-        if (GUILayout.Button("Create energy ball"))
-        {
-            Camera sceneCamera = SceneView.GetAllSceneCameras()[0];
-            Instantiate(energyBall, sceneCamera.transform.position + sceneCamera.transform.forward * 5f, sceneCamera.transform.rotation);
-            
+            SceneView.FrameLastActiveSceneView();
         }
     }
 }
