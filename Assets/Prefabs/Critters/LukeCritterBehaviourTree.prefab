@@ -5315,6 +5315,9 @@ GameObject:
   - component: {fileID: 3128564274136016781}
   - component: {fileID: -3289536063586725846}
   - component: {fileID: 2450489025258200086}
+  - component: {fileID: 88437224887789900}
+  - component: {fileID: 5684984655429772065}
+  - component: {fileID: 6418234058956923653}
   m_Layer: 0
   m_Name: LukeCritterBehaviourTree
   m_TagString: Untagged
@@ -5372,11 +5375,11 @@ MonoBehaviour:
   mutationRate: 0
   empathy: 0
   aggression: 0
-  dangerLevel: 10
   sizeScale: 0
   maxSize: 3
   colour: {r: 0, g: 0, b: 0, a: 0}
   sex: 0
+  slowlyDieWhenOldRate: 0
   critterInfo:
     maxHealth: 100
     maxSleepLevel: 100
@@ -5385,11 +5388,9 @@ MonoBehaviour:
     firstMatingDelay: 50
     isCarnivore: 0
     gender: 0
-    deadliness: 10
+    dangerLevel: 0
     visionRadius: 15
   defaultBehaviour: 0
-  health: 0
-  energy: 0
   sleepLevel: 0
   acceleration: 1
   maxSpeed: 5
@@ -5413,6 +5414,9 @@ MonoBehaviour:
   randomAdjustment: {x: 0, y: 0, z: 0}
   childPrefab: {fileID: 7004539971532304000}
   birthingTransform: {fileID: 8913879435587195949}
+  healthComp: {fileID: 88437224887789900}
+  energyComp: {fileID: 5684984655429772065}
+  _commonAttributes: {fileID: 6418234058956923653}
   view: {fileID: 7895041571512506896}
   aStarUser: {fileID: 0}
   currentEmotion: 0
@@ -5477,6 +5481,63 @@ MonoBehaviour:
   _serializedBlackboard: '{"_variables":{}}'
   _objectReferences: []
   _serializedVariables: []
+--- !u!114 &88437224887789900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7004539971532304000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac5e6230bb3415145a9b23ae4df86714, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentHealth:
+    m_InternalValue: 0
+  IsDead:
+    m_InternalValue: 0
+  maxHealth: 100
+  fullenergy: 1
+  noenergy: 0
+--- !u!114 &5684984655429772065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7004539971532304000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86b58142ff8a3804fa71c5004d10d94b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnergyAmount:
+    m_InternalValue: 0
+  energyMax: 100
+  energyMin: 0
+  drainAmount: 1
+  moveDrainAmount: 1
+  drainSpeed: 1
+  energyUserMoving: 0
+  myMagnitude: 0
+  useEnergyOnMovement: 0
+--- !u!114 &6418234058956923653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7004539971532304000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2fa0cdd9a3541d2863b2ab871f3c22f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dangerLevel: 10
+  allegiances:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &7436475450511527292
 GameObject:
   m_ObjectHideFlags: 0

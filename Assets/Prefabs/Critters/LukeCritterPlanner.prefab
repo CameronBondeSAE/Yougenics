@@ -5335,6 +5335,7 @@ GameObject:
   - component: {fileID: 697295525}
   - component: {fileID: -9183102854044376029}
   - component: {fileID: 5019550923753139735}
+  - component: {fileID: 4780785408960720621}
   m_Layer: 0
   m_Name: LukeCritterPlanner
   m_TagString: Untagged
@@ -5393,11 +5394,11 @@ MonoBehaviour:
   mutationRate: 0
   empathy: 0
   aggression: 0
-  dangerLevel: 10
   sizeScale: 0
   maxSize: 3
   colour: {r: 0, g: 0, b: 0, a: 0}
   sex: 0
+  slowlyDieWhenOldRate: 0
   critterInfo:
     maxHealth: 100
     maxSleepLevel: 100
@@ -5406,11 +5407,9 @@ MonoBehaviour:
     firstMatingDelay: 50
     isCarnivore: 0
     gender: 0
-    deadliness: 10
+    dangerLevel: 0
     visionRadius: 15
   defaultBehaviour: 0
-  health: 0
-  energy: 0
   sleepLevel: 0
   acceleration: 1
   maxSpeed: 5
@@ -5434,6 +5433,9 @@ MonoBehaviour:
   randomAdjustment: {x: 0, y: 0, z: 0}
   childPrefab: {fileID: 7004539971532304000}
   birthingTransform: {fileID: 8913879435587195949}
+  healthComp: {fileID: -9183102854044376029}
+  energyComp: {fileID: 5019550923753139735}
+  _commonAttributes: {fileID: 4780785408960720621}
   view: {fileID: 5740045485675583768}
   aStarUser: {fileID: 6418466655115192506}
   currentEmotion: 0
@@ -5497,7 +5499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentHealth:
-    m_InternalValue: 0
+    m_InternalValue: 5
   IsDead:
     m_InternalValue: 0
   maxHealth: 100
@@ -5525,6 +5527,22 @@ MonoBehaviour:
   energyUserMoving: 0
   myMagnitude: 0
   useEnergyOnMovement: 0
+--- !u!114 &4780785408960720621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7004539971532304000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2fa0cdd9a3541d2863b2ab871f3c22f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dangerLevel: 10
+  allegiances:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &8228989278158713691
 GameObject:
   m_ObjectHideFlags: 0
