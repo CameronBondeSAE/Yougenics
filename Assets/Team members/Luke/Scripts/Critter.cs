@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Anthill.AI;
+using Cam;
 using DG.Tweening;
 using NodeCanvas.BehaviourTrees;
 using NodeCanvas.Framework;
@@ -14,15 +15,11 @@ using Random = UnityEngine.Random;
 
 namespace Luke
 {
-	public class Critter : CreatureBase, IEdible, ISense
+	public class Critter : CreatureBase, IEdible, ISense, ILukeEdible
 	{
-		public event IEdible.RemoveFromListAction RemoveFromListEvent;
-
 		public CritterInfo critterInfo;
 		
 		public DefaultBehaviours defaultBehaviour;
-		public float health;
-		public float energy;
 		public float sleepLevel;
 		public float acceleration;
 		public float maxSpeed;
@@ -54,8 +51,11 @@ namespace Luke
 		private Transform birthingTransform;
 		private Rigidbody _rb;
 		private Transform _transform;
+        [SerializeField] private Minh.Health healthComp;
+        [SerializeField] private Energy energyComp;
+        [SerializeField] private CommonAttributes _commonAttributes;
 
-		[SerializeField]
+        [SerializeField]
 		private Transform view;
 		[SerializeField] private AStarUser aStarUser;
 
@@ -90,57 +90,12 @@ namespace Luke
 			
 		}
 
-		private IEnumerator HealthRegen()
+        private IEnumerator EnergyDecayCooldown()
 		{
-			yield return new WaitForSeconds(awakeDecayDelay);
-
-			if (isSleeping)
-			{
-				health += 1;
-				if (health > critterInfo.maxHealth)
-				{
-					health = critterInfo.maxHealth;
-				}
-			}
-			
-			StartCoroutine(HealthRegen());
-		}
-
-		private IEnumerator EnergyDecay()
-		{
-			if (isSleeping)
-			{
-				yield return new WaitForSeconds(awakeDecayDelay*2);
-			}
-			else
-			{
-				yield return new WaitForSeconds(awakeDecayDelay);
-			}
-
-			if (!justAte)
-			{
-				if (energy > 0)
-				{
-					energy -= 1;
-				}
-				else
-				{
-					health -= 1;
-					if (health <= 0)
-					{
-						Destroy(gameObject);
-					}
-				}
-				StartCoroutine(EnergyDecay());
-			}
-		}
-
-		private IEnumerator EnergyDecayCooldown()
-		{
+            // change energy drain amount, then return it after yield
 			yield return new WaitForSeconds(10f);
 			justAte = false;
-			
-			StartCoroutine(EnergyDecay());
+            
 		}
 		
 		private IEnumerator SleepLevelDecay()
@@ -191,7 +146,7 @@ namespace Luke
 		{
 			int lovelornWeight = readyToMate ? 3 : 0;
 			int tiredWeight = Mathf.RoundToInt(5 * (sleepLevel / critterInfo.maxSleepLevel));
-			int hungryWeight = Mathf.RoundToInt(5 * (energy / critterInfo.maxEnergyLevel));
+			int hungryWeight = Mathf.RoundToInt(5 * (energyComp.EnergyAmount.Value / energyComp.energyMax));
 			int restlessWeight = 5;
 
 			int result = Random.Range(0, lovelornWeight + tiredWeight + hungryWeight + restlessWeight);
@@ -275,10 +230,8 @@ namespace Luke
 			_rb = GetComponent<Rigidbody>();
 			_transform = GetComponent<Transform>();
 			SetInitialCritterStats();
-			health = critterInfo.maxHealth;
-			energy = critterInfo.maxEnergyLevel;
 			sleepLevel = critterInfo.maxSleepLevel;
-			acceleration = 15+5f/awakeDecayDelay;
+			acceleration = Mathf.Max(1,15+5f/metabolism);
 			regularMatingDelay = critterInfo.firstMatingDelay * 0.5f;
 
 			foreach (Transform t in predatorsList)
@@ -291,15 +244,14 @@ namespace Luke
 			}
 			foreach (Transform t in foodList)
 			{
-				t.GetComponent<IEdible>().RemoveFromListEvent += RemoveTransformFromList;
+				t.GetComponent<Critter>().RemoveFromListEvent += RemoveTransformFromList;
+				t.GetComponent<Food>().RemoveFromListEvent += RemoveTransformFromList;
 			}
 			
 			StartCoroutine(ComingOfAge(ageOfMatingStart));
 			StartCoroutine(EndOfMatingAge(ageOfMatingEnd));
 			StartCoroutine(RandomiseDefaultBehaviour());
 			StartCoroutine(IterateBestBiome());
-			StartCoroutine(HealthRegen());
-			StartCoroutine(EnergyDecay());
 			StartCoroutine(SleepLevelDecay());
 		}
 
@@ -321,22 +273,25 @@ namespace Luke
 
 		public void VisionTriggerEnter(Collider other)
 		{
+            //Change once allegiances are implemented
 			if (other.transform == _transform) return;
-			Critter go = other.GetComponent<Critter>();
-			Food go2 = other.GetComponent<Food>();
+			CreatureBase go1 = other.GetComponent<CreatureBase>();
+			IEdible go2 = other.GetComponent<IEdible>();
+			CommonAttributes go3 = other.GetComponent<CommonAttributes>();
+			ILukeEdible go4 = other.GetComponent<ILukeEdible>();
 			
-			if (go != null)
+			if (go1 != null)
 			{
-				float otherDeadliness = go.critterInfo.deadliness;
-				if (otherDeadliness >= critterInfo.deadliness + 3)
+				float otherDangerLevel = go3.dangerLevel;
+				if (otherDangerLevel >= critterInfo.dangerLevel + 3)
 				{
 					if (!predatorsList.Contains(other.transform))
 					{
 						predatorsList.Add(other.transform);
-						go.RemoveFromListEvent += RemoveTransformFromList;
+						if (go4 != null) go4.RemoveFromListEvent += RemoveTransformFromList;
 					}
 				}
-				else if (otherDeadliness < critterInfo.deadliness+3 && otherDeadliness > critterInfo.deadliness-3)
+				else if (otherDangerLevel < critterInfo.dangerLevel+3 && otherDangerLevel > critterInfo.dangerLevel-3)
 				{
 					if (!matesList.Contains(other.transform))
 					{
@@ -344,7 +299,7 @@ namespace Luke
 						if (critterInfo.gender != otherCritter.critterInfo.gender && !otherCritter.cannotMate)
 						{
 							matesList.Add(other.transform);
-							go.RemoveFromListEvent += RemoveTransformFromList;
+                            if (go4 != null) go4.RemoveFromListEvent += RemoveTransformFromList;
 						}
 					}
 				}
@@ -353,7 +308,7 @@ namespace Luke
 					if (!foodList.Contains(other.transform))
 					{
 						foodList.Add(other.transform);
-						go.RemoveFromListEvent += RemoveTransformFromList;
+                        if (go4 != null) go4.RemoveFromListEvent += RemoveTransformFromList;
 					}
 				}
 			}
@@ -362,7 +317,7 @@ namespace Luke
 				if (!foodList.Contains(other.transform))
 				{
 					foodList.Add(other.transform);
-					go2.RemoveFromListEvent += RemoveTransformFromList;
+                    if (go4 != null) go4.RemoveFromListEvent += RemoveTransformFromList;
 				}
 			}
 		}
@@ -390,8 +345,9 @@ namespace Luke
 
 		private void SetScale()
 		{
-			//include eating ni equation
-			view.localScale = Vector3.one*(maxSize*age/maxAge);
+			//include eating in equation
+            float scale = Mathf.Min(maxSize * age / maxAge,maxSize);
+			view.localScale = Vector3.one*scale;
 		}
 		
 		public void CollectConditions(AntAIAgent aAgent, AntAICondition aWorldState)
@@ -489,10 +445,15 @@ namespace Luke
 		
 		private void SetInitialCritterStats()
 		{
-			// critterInfo.deadliness = dangerLevel;
-			awakeDecayDelay = 11-metabolism;
+			critterInfo.dangerLevel = _commonAttributes.dangerLevel;
+            energyComp.drainSpeed = 11-metabolism;
 			critterInfo.gender = sex;
-		}
+            ageOfMatingStart = critterInfo.firstMatingDelay;
+            energyComp.energyMax = critterInfo.maxEnergyLevel;
+            healthComp.maxHealth = critterInfo.maxHealth;
+            healthComp.ChangeHealth(healthComp.maxHealth);
+            energyComp.ChangeEnergy(energyComp.energyMax);
+        }
 		
 		private void TurnTowardsTarget(Vector3 target)
 		{
@@ -539,20 +500,12 @@ namespace Luke
 			if (isSleeping) return;
 			if (currentFood == null) return;
 			IEdible go = currentFood.GetComponent<IEdible>();
-			go.TakeDamage(critterInfo.deadliness);
-			energy += critterInfo.deadliness;
-			if (energy > critterInfo.maxEnergyLevel)
-			{
-				energy = critterInfo.maxEnergyLevel;
-			}
-			justAte = true;
+			// go.TakeDamage(critterInfo.dangerLevel);
+            energyComp.ChangeEnergy(critterInfo.dangerLevel);
+            justAte = true;
 			StopCoroutine(EnergyDecayCooldown());
 			StartCoroutine(EnergyDecayCooldown());
-			if (energy > critterInfo.maxEnergyLevel)
-			{
-				energy = critterInfo.maxEnergyLevel;
-			}
-		}
+        }
 
 		public bool CheckHasMate()
 		{
@@ -596,12 +549,12 @@ namespace Luke
 						maxEnergyLevel = RandomiseInfoValue(critterInfo.maxEnergyLevel, currentMateInfo.maxEnergyLevel,
 							50f, 300f),
 						metabolism = RandomiseInfoValue(critterInfo.metabolism,
-							currentMateInfo.metabolism, 0.5f, 5f),
+							currentMateInfo.metabolism, 0.5f, 10f),
 						firstMatingDelay = RandomiseInfoValue(critterInfo.firstMatingDelay,
 							currentMateInfo.firstMatingDelay, 25f, 200f),
 						isCarnivore = RandomiseInfoValue(critterInfo.isCarnivore, currentMateInfo.isCarnivore),
 						gender = RandomiseInfoValue(critterInfo.gender, currentMateInfo.gender),
-						deadliness = RandomiseInfoValue(critterInfo.deadliness, currentMateInfo.deadliness, 1, 20),
+						dangerLevel = RandomiseInfoValue(critterInfo.dangerLevel, currentMateInfo.dangerLevel, 1, 20),
 						visionRadius = RandomiseInfoValue(critterInfo.visionRadius, currentMateInfo.visionRadius, 7f,
 							15f)
 					};
@@ -612,14 +565,20 @@ namespace Luke
 			}
 		}
 		
+        //Does this need to be in an interface?
 		public void TakeDamage(float damage)
 		{
-			health -= damage;
-			if (health > 0) return;
-			Destroy(gameObject);
+            healthComp.ChangeHealth(-damage);
 		}
-		
-		public void CallRemoveEvent(Transform trans)
+
+        public void Death()
+        {
+            //code me
+        }
+        
+        public event ILukeEdible.RemoveFromListAction RemoveFromListEvent;
+
+        public void CallRemoveEvent(Transform trans)
 		{
 			RemoveFromListEvent?.Invoke(trans);
 		}
@@ -783,12 +742,12 @@ namespace Luke
 
 		public bool IsVeryHungry()
 		{
-			return energy <= 0.25f * critterInfo.maxEnergyLevel;
+			return energyComp.EnergyAmount.Value <= 0.25f * energyComp.energyMax;
 		}
 		
 		public bool IsQuiteHungry()
 		{
-			return energy <= 0.5f * critterInfo.maxEnergyLevel;
+			return energyComp.EnergyAmount.Value <= 0.5f * energyComp.energyMax;
 		}
 		
 		public bool IsFoodListEmpty()
@@ -871,7 +830,17 @@ namespace Luke
 		}
 
 		#endregion
-	}
+
+        public float GetEnergyAmount()
+        {
+            return 0;
+        }
+
+        public float EatMe(float energyRemoved)
+        {
+            return 0;
+        }
+    }
 	
 	public enum LukeCritterScenario
 	{

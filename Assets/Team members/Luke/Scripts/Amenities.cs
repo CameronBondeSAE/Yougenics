@@ -1,17 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Luke
 {
-	public interface IEdible
+    public interface ILukeEdible
 	{
 		public delegate void RemoveFromListAction(Transform transform);
 		public event RemoveFromListAction RemoveFromListEvent;
 
-		public void TakeDamage(float damage);
-
-		public void CallRemoveEvent(Transform transform);
+        public void CallRemoveEvent(Transform transform);
 	}
 
 	public enum DefaultBehaviours
@@ -42,7 +41,7 @@ namespace Luke
 		public float firstMatingDelay;
 		public bool isCarnivore;
 		public CreatureBase.Sex gender;
-		public float deadliness;
+		public float dangerLevel;
 		public float visionRadius;
 	}
 }
