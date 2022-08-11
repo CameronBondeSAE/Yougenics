@@ -40,7 +40,7 @@ namespace Minh
                 GetComponent<Energy>().FullEnergyEvent += startHealthincreasing;
             }
         }
-        public void FixedUpdated()
+        public void Awake()
         {
             startHealthincreasing();
             

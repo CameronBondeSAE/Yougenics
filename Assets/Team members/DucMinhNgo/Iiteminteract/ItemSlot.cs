@@ -36,7 +36,8 @@ public class ItemSlot : MonoBehaviour
                 MonoBehaviour monoBehaviour = item1 as MonoBehaviour;
                 monoBehaviour.transform.parent = Player.transform;
                 slot1 = item1;
-                
+                //Player.transform.localPosition = new Vector3(Player.localPosition * , 0, 0);
+
                 //.transform.parent = object2.transform 
             }
             IItem item2 = hit.collider.gameObject.GetComponentInParent<IItem>();
