@@ -463,7 +463,7 @@ namespace Ollie
         }
 
         //commented out so I could push without errors popping up for others
-        private void OnDrawGizmos()
+        private void OnDrawGizmosSelected()
         {
             Gizmos.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
             Gizmos.DrawCube(bounds.center,bounds.extents);
