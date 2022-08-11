@@ -162,7 +162,7 @@ namespace Minh
                 }
                 hpui.SetHealth(curHp);*/
 
-                if (CurrentHealth.Value < 100)
+                if (CurrentHealth.Value < maxHealth)
                 {
                     CurrentHealth.Value += 1;
                     yield return new WaitForSeconds(1);
