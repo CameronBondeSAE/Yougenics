@@ -19,7 +19,7 @@ namespace Minh
         //public int curHp;
         //public bool dead;
         public bool fullenergy = true;
-        public bool noenergy;
+        public bool noenergy = false;
         
         
 
@@ -40,9 +40,10 @@ namespace Minh
                 GetComponent<Energy>().FullEnergyEvent += startHealthincreasing;
             }
         }
-        public void Awake()
+        public void FixedUpdated()
         {
             startHealthincreasing();
+            
             
         }
         
@@ -98,11 +99,6 @@ namespace Minh
             //Destroy(gameObject);
         }
 
-        void OnCollisionEnter(Collision collision)
-        {
-            //curHp = Hp -= 80;
-        }
-
         // health increase and depleting overtime code
         IEnumerator Healthdepleting()
         {
@@ -151,6 +147,7 @@ namespace Minh
         {
             while (fullenergy)
             {
+                noenergy = false;
                 /*// loops forever...
                 if (Hp <= 100)
                 {

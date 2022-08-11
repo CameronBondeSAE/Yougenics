@@ -14,15 +14,17 @@ public class buttonhandler : Editor
         heal = (Interactf)target;
         base.OnInspectorGUI();
 
-        if (GUILayout.Button("interact"))
+        if (GUILayout.Button("Reparing"))
         {
             Interactf healing = target as Interactf;
             healing.Healing();
+            Debug.Log("Repairing");
         }
         if (GUILayout.Button("dealdmg"))
         {
             Interactf dealdamage = target as Interactf;
             dealdamage.Interact();
+            Debug.Log("destroying");
         }
         
     }

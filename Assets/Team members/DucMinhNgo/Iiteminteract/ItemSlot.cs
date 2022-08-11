@@ -8,11 +8,9 @@ using Unity.VisualScripting;
 using UnityEngine.InputSystem;
 public class ItemSlot : MonoBehaviour
 {
-    public GameObject minh;
     public IItem slot1;
     public IItem slot2;
     public float interactDistance = 1f;
-    public int adjust1 = 0;
     public Vector3 interactRayOffset = new Vector3(0, 0.5f, 0);
 
     public Transform Player;
@@ -35,29 +33,30 @@ public class ItemSlot : MonoBehaviour
             IItem item1 = hit.collider.gameObject.GetComponentInParent<IItem>();
             if (item1 != null)
             {
+                MonoBehaviour monoBehaviour = item1 as MonoBehaviour;
+                monoBehaviour.transform.parent = Player.transform;
                 slot1 = item1;
+                
                 //.transform.parent = object2.transform 
             }
             IItem item2 = hit.collider.gameObject.GetComponentInParent<IItem>();
             if (item2 != null)
             {
+                MonoBehaviour monoBehaviour = item1 as MonoBehaviour;
+                monoBehaviour.transform.parent = Player.transform;
                 slot2 = item2;
+                
             }
         }
     }
 
     public void Update()
     {
+        
         if (InputSystem.GetDevice<Mouse>().leftButton.wasPressedThisFrame)
         {
             IInteractable items1 = slot1 as IInteractable;
             items1.Interact();
-            IItem item1 = slot1;
-            slot1 = item1;
-            //item1 == Player.parent.transform + new Vector3(0,Player.localPosition * float, 0) ;
-            minh.transform.parent = Player.transform;
-
-
         }
         if (InputSystem.GetDevice<Mouse>().rightButton.wasPressedThisFrame)
         {

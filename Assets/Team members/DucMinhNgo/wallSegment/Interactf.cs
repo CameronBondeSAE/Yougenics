@@ -15,24 +15,24 @@ namespace Minh
         public event Action healing;
         
         // Start is called before the first frame update
-        void FixedUpdate()
+        void Awake()
         {
-            Interact();
+            health.ChangedEvent += Updatewallstatus;
+            
         }
 
         // Update is called once per frame
-
-        public void Awake()
-        {
-            
-            health.ChangedEvent += Updatewallstatus;
-        }
         public void Updatewallstatus(float health)
         {
-            Interact();
-            Healing();
+            if (health <= 10)
+            {
+                Healing(); 
+            }
+            if (health >= 100)
+            {
+                Interact();    
+            }
         }
-
         public void Healing()
         {
             Debug.Log("repairing");

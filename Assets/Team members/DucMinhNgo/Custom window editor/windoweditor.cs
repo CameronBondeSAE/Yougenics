@@ -49,22 +49,17 @@ public class ToolBoxEditor : EditorWindow
         if (GUILayout.Button("Focus on object with low hp"))
         {
             FakeHp[] lowhealthcreature = FindObjectsOfType<FakeHp>();
-            List<FakeHp> lowhealthscreature = new List<FakeHp>();
+            List<FakeHp> lowhealthscreaturess = new List<FakeHp>();
             
             foreach (FakeHp health in lowhealthcreature)
             {
                 if (health.HP <= 10)
                 {
-                    Selection.activeGameObject = lowhealthcreature[Random.Range(0, lowhealthcreature.Length)].gameObject;
-                    SceneView.FrameLastActiveSceneView();
-                }
-                else
-                {
-                    Selection.activeGameObject = null;
-                    Debug.Log("Look at Full Hp object !");
-                    
+                    lowhealthscreaturess.Add(health);
                 }
             }
+             Selection.activeGameObject = lowhealthcreature[Random.Range(0, lowhealthcreature.Length)].gameObject;
+            SceneView.FrameLastActiveSceneView();
         }
     }
 }
