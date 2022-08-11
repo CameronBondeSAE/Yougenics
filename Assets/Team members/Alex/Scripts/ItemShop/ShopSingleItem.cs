@@ -3,6 +3,7 @@ using Alex;
 using UnityEngine;
 using Unity.Netcode;
 
+[SelectionBase]
 public class ShopSingleItem : NetworkBehaviour
 {
 	public  ItemInfo   itemInfo; // Unity doesn't show interfaces in inspector

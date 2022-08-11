@@ -4,11 +4,12 @@ using UnityEngine;
 
 namespace Alex
 {
-    public class Food : MonoBehaviour, IEdible
+    public class Food : MonoBehaviour, IEdible, IItem
     {
         public float totalFoodAmount = 50f;
         public float biteValue = 10f;
         public float currentFoodAmount;
+        public ItemInfo itemInfo;
 
         
         void Start()
@@ -52,7 +53,16 @@ namespace Alex
 
             return energyRemoved;
         }
-        
+
+        public void SpawnedAsNormal()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ItemInfo GetInfo()
+        {
+            return itemInfo;
+        }
     }
 
 }

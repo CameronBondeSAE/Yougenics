@@ -379,7 +379,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7298504302331122085, guid: e6edc6b61680eda498df85e8467f33dc, type: 3}
       propertyPath: scaler
-      value: 0.013
+      value: 0.012
       objectReference: {fileID: 0}
     - target: {fileID: 7298504302331122085, guid: e6edc6b61680eda498df85e8467f33dc, type: 3}
       propertyPath: heightMultiplier

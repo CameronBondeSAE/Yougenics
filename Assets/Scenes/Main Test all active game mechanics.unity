@@ -3426,6 +3426,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -9038337192627612983, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 658569296
+      objectReference: {fileID: 0}
     - target: {fileID: 7859651946545734, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: energyGoal
       value: 0
@@ -3541,6 +3545,10 @@ PrefabInstance:
     - target: {fileID: 2349694431984710004, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: camera
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413486585807475198, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3757684113
       objectReference: {fileID: 0}
     - target: {fileID: 5054104617479113509, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: GlobalObjectIdHash

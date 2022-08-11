@@ -1,11 +1,18 @@
 using System.Collections.Generic;
+using Alex;
 using NodeCanvas.Tasks.Actions;
+using Ollie;
 using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class ToolBoxEditor : EditorWindow
 {
+    public GameObject vehicle;
+    public GameObject drone;
+    public GameObject energyContainer;
+    public GameObject dropOffPoint;
+    
     // Add menu named "My Window" to the Window menu
     [MenuItem("Tools/Alex's toolbox")]
     static void Init()
@@ -31,14 +38,57 @@ public class ToolBoxEditor : EditorWindow
             }
         }
 
+        if (GUILayout.Button("Make small"))
+        {
+            if (Selection.transforms != null)
+            {
+                // Log any changes to things outside of Play mode, so the user can undo
+                Undo.RecordObjects(Selection.transforms, "Make small");
+
+                foreach (Transform t in Selection.transforms)
+                {
+                    t.localScale = t.localScale * 0.5f;
+                }
+            }
+        }
         if (GUILayout.Button("Undo"))
         {
             Undo.PerformUndo();
         }
-    
+
+        
+
         if (GUILayout.Button("Focus on random drone"))
         {
             DroneModel[] findObjectsOfType = FindObjectsOfType<DroneModel>();
+            Selection.activeGameObject = findObjectsOfType[Random.Range(0, findObjectsOfType.Length)].gameObject;
+            SceneView.FrameLastActiveSceneView();
+        }
+        
+        if (GUILayout.Button("Focus on random vehicle"))
+        {
+            VehicleModel[] findObjectsOfType = FindObjectsOfType<VehicleModel>();
+            Selection.activeGameObject = findObjectsOfType[Random.Range(0, findObjectsOfType.Length)].gameObject;
+            SceneView.FrameLastActiveSceneView();
+        }
+        
+        if (GUILayout.Button("Focus on random Item Shop"))
+        {
+            ShopSingleItem[] findObjectsOfType = FindObjectsOfType<ShopSingleItem>();
+            Selection.activeGameObject = findObjectsOfType[Random.Range(0, findObjectsOfType.Length)].gameObject;
+            SceneView.FrameLastActiveSceneView();
+        }
+        
+        if (GUILayout.Button("Focus on random Drop Off Point"))
+        {
+            DropOffPoint[] findObjectsOfType = FindObjectsOfType<DropOffPoint>();
+            Selection.activeGameObject = findObjectsOfType[Random.Range(0, findObjectsOfType.Length)].gameObject;
+            SceneView.FrameLastActiveSceneView();
+        }
+        
+        if (GUILayout.Button("Focus on random Energy Container"))
+        {
+            EnergyContainer[] findObjectsOfType = FindObjectsOfType<EnergyContainer>();
             Selection.activeGameObject = findObjectsOfType[Random.Range(0, findObjectsOfType.Length)].gameObject;
             SceneView.FrameLastActiveSceneView();
         }
@@ -71,13 +121,33 @@ public class ToolBoxEditor : EditorWindow
             SceneView.FrameLastActiveSceneView();
         }
         
+        drone = (GameObject)EditorGUILayout.ObjectField("Drone", drone, typeof(GameObject), false);
         if (GUILayout.Button("Create drone"))
         {
-            DroneModel drone = FindObjectOfType<DroneModel>();
             Instantiate(drone);
+            SceneView.FrameLastActiveSceneView();
+        }
+        
+        vehicle = (GameObject)EditorGUILayout.ObjectField("Vehicle", vehicle, typeof(GameObject), false);
+        if (GUILayout.Button("Create vehicle"))
+        {
+            Instantiate(vehicle);
+            SceneView.FrameLastActiveSceneView();
+        }
+        
+        dropOffPoint = (GameObject)EditorGUILayout.ObjectField("Drop Off Point", dropOffPoint, typeof(GameObject), false);
+        if (GUILayout.Button("Create drop off point"))
+        {
+            Instantiate(dropOffPoint);
+            SceneView.FrameLastActiveSceneView();
+        }
+        
+        energyContainer = (GameObject)EditorGUILayout.ObjectField("Energy Container", energyContainer, typeof(GameObject), false);
+        if (GUILayout.Button("Create energy container"))
+        {
             
-            //Selection.activeGameObject = findObjectsOfType[Random.Range(0, findObjectsOfType.Length)].gameObject;
-            //SceneView.FrameLastActiveSceneView();
+            Instantiate(energyContainer);
+            SceneView.FrameLastActiveSceneView();
         }
     }
 }
