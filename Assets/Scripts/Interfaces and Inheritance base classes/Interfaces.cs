@@ -58,13 +58,11 @@ public interface IEdible
 public interface IInteractable
 {
 	public void Interact();
-	
 }
 
 public interface IEnergyDrainer
 {
 	public IEnumerator DrainCoroutine();
-
 }
 
 
@@ -94,8 +92,6 @@ public interface IItem
 	/// </summary>
 	/// <returns></returns>
 	ItemInfo GetInfo();
-
-	
 }
 
 [Serializable]
@@ -120,34 +116,36 @@ public class CreatureBase : SerializedMonoBehaviour
 	public int   litterSizeMax;
 	public float metabolism; // Energy efficiency and energy absorbing speed
 	public float mutationRate;
-	
+
 	// Optional
 	public float empathy;
 	public float aggression;
 	public float dangerLevel;
-	
+
 	/// <summary>
 	/// This is a percentage of the maxSize. Useful for breeding a kid that eg has half your maxsize
 	/// Also mutating the maxsize in the kids is useful
 	/// </summary>
 	public float sizeScale;
+
 	public float maxSize;
-	
+
 	public Color colour;
 
-	Health component;
-	
+	Health health;
+
 	public enum Sex
 	{
 		Male,
 		Female
 	}
 
-	public Sex sex;
+	public Sex   sex;
+	public float slowlyDieWhenOldRate;
 
 	public virtual void Awake()
 	{
-		component = GetComponent<Health>();
+		health = GetComponent<Health>();
 	}
 
 	public virtual void FixedUpdate()
@@ -157,10 +155,10 @@ public class CreatureBase : SerializedMonoBehaviour
 
 		if (age > maxAge)
 		{
-			component.ChangeHealth(Time.fixedDeltaTime);
+			if (health != null) health.ChangeHealth(-Time.fixedDeltaTime * slowlyDieWhenOldRate);
 		}
 	}
-	
+
 	// public float Mutate(Stat selfTrait, Stat partnerTrait, Stat baseMinimum, Stat baseMaximum)
 	// {
 	// 	int   determinant = Random.Range(0, 100);
@@ -183,5 +181,4 @@ public class CreatureBase : SerializedMonoBehaviour
 	// 	}
 	// 	return result;
 	// }
-
 }
