@@ -109,7 +109,7 @@ public class LobbyUIManager : NetworkBehaviour
         GUILayout.BeginArea(new Rect(10, 10, 300, 300));
         if (NetworkManager.Singleton.IsClient && NetworkManager.Singleton.IsServer)
         {
-            if(debugStatusLabels)
+            if (debugStatusLabels)
                 StatusLabels();
         }
 
@@ -143,16 +143,16 @@ public class LobbyUIManager : NetworkBehaviour
     private void Start()
     {
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientJoin;
-        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientLeave;
+        //NetworkManager.Singleton.OnClientDisconnectCallback += OnClientLeave;
 
         serverIPInputField.text = NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectAddress;
 
-        if(autoHost)
+        if (autoHost)
         {
             HostGame();
         }
 
-        if(autoLoadLevel)
+        if (autoLoadLevel)
         {
             StartGame();
         }
@@ -165,14 +165,14 @@ public class LobbyUIManager : NetworkBehaviour
 
     #region Handle Clients Joining/Leaving
 
-    private void OnClientLeave(ulong obj)
+    /*private void OnClientLeave(ulong obj)
     {
         //HACK to work around Unity Calling this event before ConnectedClientList is updated
         if (NetworkManager.Singleton.IsServer)
         {
             Invoke("HandleClientNames", 1f);
         }
-    }
+    }*/
 
     public void OnClientJoin(ulong clientID)
     {
@@ -195,7 +195,7 @@ public class LobbyUIManager : NetworkBehaviour
             HandleLocalClient(clientID);
         }
         else
-           RequestClientNamesLobbyUIServerRpc(clientID);
+            RequestClientNamesLobbyUIServerRpc(clientID);
 
         if (clientID == NetworkManager.Singleton.LocalClientId)
             myLocalClientId = clientID;
@@ -252,7 +252,7 @@ public class LobbyUIManager : NetworkBehaviour
         if (NetworkManager.Singleton.LocalClientId != callerClientId)
         {
             //SO we only care about spawning new lobby UI's if the incomming cient Id's are greater then the clients (as these should be clients that this client don't know about)
-            if(incommingClientId > NetworkManager.Singleton.LocalClientId)
+            if (incommingClientId > NetworkManager.Singleton.LocalClientId)
             {
                 SpawnClientLobbyUI(clientName); ;
             }
@@ -311,11 +311,9 @@ public class LobbyUIManager : NetworkBehaviour
         clientUI.text = _name;
     }
 
-    //Currently syncs client to server but not server to client 
-
     public void UpdateClientName()
     {
-        if(IsServer)
+        if (IsServer)
         {
             if (myLocalClient != null)
             {
@@ -343,7 +341,7 @@ public class LobbyUIManager : NetworkBehaviour
 
     public void StartGame()
     {
-        if(sceneToLoad == "")
+        if (sceneToLoad == "")
         {
             Debug.Log("Select a level to load!");
             levelSelectUI.transform.DOPunchScale(new Vector3(0.25f, 0.25f, 1f), 0.25f, 2, 0.1f);
@@ -361,7 +359,7 @@ public class LobbyUIManager : NetworkBehaviour
         {
             NetworkManager.Singleton.SceneManager.LoadScene(sceneToLoad, LoadSceneMode.Additive);
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Debug.LogException(e, this);
         }
@@ -384,7 +382,7 @@ public class LobbyUIManager : NetworkBehaviour
             John.PlayerController controller;
 
             //spawn a player
-            if(spawnPoints.Length > 0)
+            if (spawnPoints.Length > 0)
             {
                 SpawnPoint randomSpawn = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
                 tempPlayer = Instantiate(playerPrefab, randomSpawn.transform.position, Quaternion.identity);
@@ -438,9 +436,9 @@ public class LobbyUIManager : NetworkBehaviour
         controller.playerInput.SwitchCurrentActionMap("InGame");
         controller.OnPlayerAssigned();
 
+        //controller.playerModel.myClientInfo = myClient.GetComponent<ClientInfo>();
         //controller.playerModel.OnClientAssigned(myClient.GetComponent<ClientInfo>());
     }
-
     private void SceneManagerOnOnSceneEvent(SceneEvent sceneEvent)
     {
         NetworkManager.Singleton.SceneManager.OnSceneEvent -= SceneManagerOnOnSceneEvent;

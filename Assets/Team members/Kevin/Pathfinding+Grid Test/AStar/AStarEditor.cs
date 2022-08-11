@@ -11,12 +11,11 @@ public class AStarEditor : Editor
     {
         base.OnInspectorGUI();
         AStarManager aStar = (AStarManager) target;
-        /*if(GUILayout.Button("Random Path"))
+        if(GUILayout.Button("Random Path"))
         {
-            AStarManager aStar = (AStarManager) target;
             aStar.startPosition = aStar.RandomiseStartLocation();
             aStar.endPosition = aStar.RandomiseEndLocation();
-        }*/
+        }
 
         if (GUILayout.Button("Pathfinding Start"))
         {

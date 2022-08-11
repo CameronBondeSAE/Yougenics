@@ -21,11 +21,9 @@ namespace Kevin
         public Vector2Int currentPosition;
         
         public NodeClass currentNode;
-        public NodeClass startNode;
         public NodeClass endNode;
         
         public List<NodeClass> openedNode = new();
-        public List<NodeClass> closedNode = new();
         public List<NodeClass> pathNode = new();
         
         public LayerMask obstacle;
@@ -62,6 +60,7 @@ namespace Kevin
 
         public void AStarAlgorithm()
         {
+            //currentNode = currentNode[startPosition.x, startPosition.y]; 
             //pathfinding code here
         }
         public void CheckNeighbours()
@@ -88,13 +87,13 @@ namespace Kevin
             CheckNeighbours();
         }*/
 
-        /*public void Restart()
+        public void Restart()
         {
             
         }
         public Vector2Int RandomiseStartLocation()
         {
-            startPosition = new Vector2Int(Random.Range(0,gridSizeX), Random.Range(0,gridSizeY));
+            startPosition = new Vector2Int(Random.Range(0,gridSizeX), Random.Range(0,gridSizeZ));
             if (gridNodes[startPosition.x, startPosition.y].isBlocked || startPosition == endPosition)
             {
                 RandomiseStartLocation();
@@ -104,13 +103,13 @@ namespace Kevin
         
         public Vector2Int RandomiseEndLocation()
         {
-            endPosition = new Vector2Int(Random.Range(0,gridSizeX), Random.Range(0,gridSizeY));
+            endPosition = new Vector2Int(Random.Range(0,gridSizeX), Random.Range(0,gridSizeZ));
             if (gridNodes[startPosition.x, startPosition.y].isBlocked || startPosition == endPosition)
             {
                 RandomiseEndLocation();
             }
             return endPosition;
-        }*/
+        }
         public void Awake()
         {
             nodeDiameter = nodeRadius * 2f;
@@ -130,9 +129,9 @@ namespace Kevin
                     {
                         if (gridNodes != null)
                         {
-                            if (gridNodes[x, y] == startNode)
+                            if (gridNodes[x, y] == currentNode)
                             {
-                                Gizmos.color = Color.yellow;
+                                Gizmos.color = Color.blue;
                                 Gizmos.DrawCube(gridNodes[x,y].worldPosition, Vector3.one * (nodeDiameter - 0.1f));
                             }
                             else if (gridNodes[x, y] == endNode)
@@ -140,16 +139,27 @@ namespace Kevin
                                 Gizmos.color = Color.yellow;
                                 Gizmos.DrawCube(gridNodes[x,y].worldPosition, Vector3.one * (nodeDiameter - 0.1f));
                             }
+                            else if (openedNode.Contains(gridNodes[x,y]))
+                            {
+                                Gizmos.color = Color.green;
+                                Gizmos.DrawCube(gridNodes[x,y].worldPosition,Vector3.one * (nodeDiameter - 0.1f));
+                            }
+                            else if (gridNodes[x, y].isClosed)
+                            {
+                                Gizmos.color = Color.red;
+                                Gizmos.DrawCube(gridNodes[x,y].worldPosition,Vector3.one * (nodeDiameter - 0.1f));
+                            }
                             else if (gridNodes[x, y].isBlocked)
                             {
                                 Gizmos.color = Color.black;
                                 Gizmos.DrawCube(gridNodes[x,y].worldPosition, Vector3.one * (nodeDiameter - 0.1f));
                             }
-                            else
+                            else 
                             {
                                 Gizmos.color = Color.white;
                                 Gizmos.DrawCube(gridNodes[x,y].worldPosition, Vector3.one * (nodeDiameter - 0.1f));
                             }
+                            
                             
 
                         }

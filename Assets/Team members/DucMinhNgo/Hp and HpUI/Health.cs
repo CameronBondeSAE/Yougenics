@@ -13,6 +13,8 @@ namespace Minh
         public NetworkVariable<float> CurrentHealth = new NetworkVariable<float>();
         public NetworkVariable<bool> IsDead = new NetworkVariable<bool>();
 
+        public float maxHealth = 100f;
+        
         //public int Hp = 100;
         //public int curHp;
         //public bool dead;
@@ -32,8 +34,8 @@ namespace Minh
 
             if (IsServer)
             {
-                GetComponent<Interactf>().healing += startHealthincreasing;
-                GetComponent<Interactf>().dealdamage += startHealthdepeting;
+                // GetComponent<Interactf>().healing += startHealthincreasing;
+                // GetComponent<Interactf>().dealdamage += startHealthdepeting;
                 GetComponent<Energy>().NoEnergyEvent += startHealthdepeting;
                 GetComponent<Energy>().FullEnergyEvent += startHealthincreasing;
             }
@@ -49,6 +51,19 @@ namespace Minh
             if (NetworkManager.Singleton == null)
                 Debug.Log("No Network Manager Found - ADD ManagerScene For Testing To Your Scene");
             
+        }
+        
+        public void ChangeHealth(float amount)
+        {
+            if (IsServer)
+            {
+                CurrentHealth.Value += amount;
+                if (CurrentHealth.Value > maxHealth)
+                {
+                    CurrentHealth.Value = maxHealth;
+                }
+                ChangedEvent?.Invoke(amount);
+            }
         }
 
         public void Deathcheck()
@@ -66,18 +81,21 @@ namespace Minh
             if (CurrentHealth.Value <= 0)
             {
                 IsDead.Value = true;
+                DeathEvent?.Invoke();
             }
         }
 
         public void FullHp()
         {
             //Hp = 100f;
-            CurrentHealth.Value = 100f;
+            ChangeHealth(100000);
         }
 
         public void Deadtrigger()
         {
-            Destroy(gameObject);
+            // CAM NOTE: Nope, we can't assume how a Critter will die, so we can't do things like Destroy the gameObject. What if they want to play an animation with a cool sound? What if they split in two or something weird? We'll leave that up to the critter AI programmer, so all we can really do is invoke an event and let them react to it.
+            // ChangeHealth();
+            //Destroy(gameObject);
         }
 
         void OnCollisionEnter(Collision collision)

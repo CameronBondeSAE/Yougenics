@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 1220652111159811100}
   - component: {fileID: 1220652111159811093}
   m_Layer: 6
-  m_Name: Critter
+  m_Name: OllieCritterBehaviourTree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

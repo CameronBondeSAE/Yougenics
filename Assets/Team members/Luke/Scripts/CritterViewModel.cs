@@ -11,6 +11,9 @@ public class CritterViewModel : NetworkBehaviour
 	public ParticleSystemRenderer ps;
 	[SerializeField]
 	public List<Material> psMats;
+	public Renderer crystals1;
+	public Renderer crystals2;
+	public List<Color> crystalColours;
 
 	public Critter critter;
 
@@ -26,5 +29,7 @@ public class CritterViewModel : NetworkBehaviour
 	public void ChangeEmotionClientRpc(Critter.Emotions type)
 	{
 		ps.material = psMats[(int)type];
+		crystals1.material.SetColor("_Crystal_Colour", crystalColours[(int)type]);
+		crystals2.material.SetColor("_Crystal_Colour", crystalColours[(int)type]);
 	}
 }
