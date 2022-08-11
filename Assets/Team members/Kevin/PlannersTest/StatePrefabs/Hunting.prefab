@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6644626594426541107}
   - component: {fileID: -5066854870307317840}
   m_Layer: 0
-  m_Name: ChaseFood
+  m_Name: Hunting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Anthill.AI;
 using Cam;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Kevin
@@ -9,8 +10,8 @@ namespace Kevin
     public class PatrolState : AntAIState
     {
         
-            public GameObject gluttonPrefab;
-            public GluttonBase gluttonBase;
+            public GameObject parentPrefab;
+            public CritterA parentScript;
             
             
             public bool walkPointSet;
@@ -20,8 +21,8 @@ namespace Kevin
             public override void Create(GameObject aGameObject)
             {
                 base.Create(aGameObject);
-                gluttonPrefab = aGameObject;
-                gluttonBase = gluttonPrefab.GetComponent<GluttonBase>();
+                parentPrefab = aGameObject;
+                parentScript = parentPrefab.GetComponent<CritterA>();
             }
             public override void Execute(float aDeltaTime, float aTimeScale)
             {
@@ -35,7 +36,7 @@ namespace Kevin
                 if (walkPointSet)
                 {
                     TurnTo(walkPoint);
-                    gluttonPrefab.transform.position = Vector3.MoveTowards(transform.position, walkPoint, 0.025f);
+                    parentPrefab.transform.position = Vector3.MoveTowards(transform.position, walkPoint, 0.025f);
                 
                     //checks if the distance to the walk point is too short in which case it sets the walkPointSet to false and retries the random generation.
                     Vector3 distanceToWalkPoint = transform.position - walkPoint;
@@ -43,12 +44,19 @@ namespace Kevin
                     {
                         walkPointSet = false;
                     }
+
+                    //StartCoroutine(NewWalkPoint());
                 }
+            }
+
+            IEnumerator NewWalkPoint()
+            {
+                yield return new WaitForSeconds(5f);
             }
             private void TurnTo(Vector3 target)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(target - transform.position);
-                gluttonPrefab.transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation,Time.deltaTime);
+                parentPrefab.transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation,Time.deltaTime);
             }
             
             public void GenerateNextWalkPoint()
