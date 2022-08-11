@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Tanks;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace Ollie
@@ -15,11 +16,17 @@ namespace Ollie
         public List<Transform> mateLocationList;
         public float moveSpeed = 0.25f;
         public WaterNode currentLocation;
-        public Vector3 targetTransform;
+        public Transform target;
+        [FormerlySerializedAs("targetTransform")] public Vector3 targetPos;
         public AStar aStar;
         public float timer;
         public Vector3 facingDirection;
         private Rigidbody rigidbody;
+
+        private WanderSteering wanderSteering;
+        private Avoidance avoidance;
+        private ForwardMovement forwardMovement;
+        private TurnTowards turnTowards;
 
         #region Bools for planner World State
         public bool isSafe;
@@ -51,6 +58,12 @@ namespace Ollie
             path = new List<Vector3>();
             moveSpeed = 0.25f;
             rigidbody = GetComponent<Rigidbody>();
+            
+            wanderSteering = GetComponentInChildren<WanderSteering>();
+            avoidance = GetComponentInChildren<Avoidance>();
+            forwardMovement = GetComponentInChildren<ForwardMovement>();
+            turnTowards = GetComponentInChildren<TurnTowards>();
+            
             //testing purposes only
             //isHungry = true;
             //healthLow = true;
@@ -62,12 +75,26 @@ namespace Ollie
             if (timer >= 2f)
             {
                 timer = 0;
-                if (!LevelManager.instance.ConvertToGrid(targetTransform).isBlocked)
+                if (target != null)
                 {
-                    aStar.FindPath(transform.position, targetTransform);
+                    wanderSteering.enabled = false;
+                    avoidance.enabled = false;
+                    forwardMovement.enabled = false;
+                    targetPos = target.position;
+                    if (!LevelManager.instance.ConvertToGrid(targetPos).isBlocked)
+                    {
+                        aStar.FindPath(transform.position, targetPos);
+                    }
                 }
+                else
+                {
+                    wanderSteering.enabled = true;
+                    avoidance.enabled = true;
+                    forwardMovement.enabled = true;
+                }
+                
             }
-            Debug.DrawLine(transform.position,transform.position + transform.forward * 5, Color.red);
+            //Debug.DrawLine(transform.position,transform.position + transform.forward * 5, Color.red);
             
         }
 
@@ -75,10 +102,18 @@ namespace Ollie
         {
             if (path.Count > 0)
             {
-                transform.rotation = Quaternion.LookRotation(targetTransform);
+                //transform.rotation = Quaternion.LookRotation(targetTransform);
                 if (transform.position != path[0])
                 {
-                    facingDirection = path[0];
+                    //facingDirection = path[0];
+                    
+                    //check vector3.distance to check if you're close to path point, then progress
+                    //this should work below
+                    //turnTowards.targetTransform = path[0];
+                    
+                    
+                    
+                    turnTowards.TurnParent(targetPos);
                     transform.position = Vector3.MoveTowards(transform.position,path[0],moveSpeed);
                 }
                 else if (transform.position == path[0])
@@ -94,12 +129,12 @@ namespace Ollie
             float posY = 1; //update this with heights eventually
             float posZ = (Random.Range((-LevelManager.instance.sizeZ/2)+LevelManager.instance.offsetZ,(LevelManager.instance.sizeZ/2))+LevelManager.instance.offsetZ);
             
-            targetTransform = new Vector3(posX,posY,posZ);
+            targetPos = new Vector3(posX,posY,posZ);
         }
 
-        public void SetTarget(Vector3 newTarget)
+        public void SetTarget(Transform newTarget)
         {
-            targetTransform = newTarget;
+            target = newTarget;
         }
 
         public void AddFoodToList(GameObject foodLocation)

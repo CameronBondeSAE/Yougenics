@@ -70,7 +70,7 @@ namespace Ollie
             {
                 if (brain.transform.position != closest.position)
                 {
-                    brain.SetTarget(closest.position);
+                    brain.SetTarget(closest);
                 }
                 else
                 {

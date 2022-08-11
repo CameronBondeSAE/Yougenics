@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Luke;
@@ -10,11 +11,17 @@ namespace Ollie
     {
         private Rigidbody rigidbody;
         public float speed;
+        public float magnitude;
 
         // Start is called before the first frame update
         void Start()
         {
-            rigidbody = GetComponent<Rigidbody>();
+            rigidbody = GetComponentInParent<Rigidbody>();
+        }
+
+        private void Update()
+        {
+            magnitude = rigidbody.velocity.magnitude;
         }
 
         // Update is called once per frame

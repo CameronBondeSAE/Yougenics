@@ -12,7 +12,7 @@ namespace Ollie
         
         void Start()
         {
-            rigidbody = GetComponent<Rigidbody>();
+            rigidbody = GetComponentInParent<Rigidbody>();
             rng = 0;
         }
         

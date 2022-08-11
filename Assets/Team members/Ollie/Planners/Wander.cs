@@ -26,7 +26,7 @@ namespace Ollie
         {
             if (brain.path.Count == 0)
             {
-                brain.RandomTarget();
+                //brain.RandomTarget();
             }
         }
 
