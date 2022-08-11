@@ -17,7 +17,7 @@ namespace Alex
 
                 if(playerModel != null)
                     transform.LookAt(playerModel.transform);
-                //transform.Rotate(0,180,0,Space.Self);
+                transform.Rotate(0,180,0,Space.Self);
             }
         }
     }
