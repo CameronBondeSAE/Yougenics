@@ -5,35 +5,38 @@ using TMPro;
 using System;
 using Unity.Netcode;
 
-public class PlayerViewModel : NetworkBehaviour
+namespace John
 {
-    public PlayerModel playerModel;
-    public TMP_Text nameTagText;
-    ClientInfo client;
-
-    private void Start()
+    public class PlayerViewModel : NetworkBehaviour
     {
-        //playerModel.onClientAssignedEvent += InitClientInfo;
+        public PlayerModel playerModel;
+        public TMP_Text    nameTagText;
+        ClientInfo         client;
 
-        if (playerModel.myClientInfo != null)
+        private void Start()
         {
-            playerModel.myClientInfo.onNameChangeEvent += UpdateNameTag;
-            nameTagText.text = playerModel.myClientInfo.ClientName.Value.ToString();
-        }
-        else
-        {
-            Debug.Log("Cannot update NameTag, No Client Reference Found");
-        }
-    }
-    /*private void InitClientInfo()
-    {
-        client = playerModel.myClientInfo;
-        client.onNameChangeEvent += UpdateNameTag;
-        nameTagText.text = client.ClientName.Value.ToString();
-    }*/
+            //playerModel.onClientAssignedEvent += InitClientInfo;
 
-    private void UpdateNameTag(string newName)
-    {
-        nameTagText.text = newName;
+            if (playerModel.myClientInfo != null)
+            {
+                playerModel.myClientInfo.onNameChangeEvent += UpdateNameTag;
+                nameTagText.text                           =  playerModel.myClientInfo.ClientName.Value.ToString();
+            }
+            else
+            {
+                Debug.Log("Cannot update NameTag, No Client Reference Found");
+            }
+        }
+        /*private void InitClientInfo()
+        {
+            client = playerModel.myClientInfo;
+            client.onNameChangeEvent += UpdateNameTag;
+            nameTagText.text = client.ClientName.Value.ToString();
+        }*/
+
+        private void UpdateNameTag(string newName)
+        {
+            nameTagText.text = newName;
+        }
     }
 }

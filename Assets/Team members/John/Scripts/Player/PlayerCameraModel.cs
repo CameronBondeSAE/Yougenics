@@ -2,34 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCameraModel : MonoBehaviour
+namespace John
 {
-    public bool lockMouse;
-    public PlayerModel target;
-    public float heightOffset;
-
-    float xRotation;
-
-    private void Start()
+    public class PlayerCameraModel : MonoBehaviour
     {
-        if(lockMouse)
-            Cursor.lockState = CursorLockMode.Locked;
+        public bool        lockMouse;
+        public PlayerModel target;
+        public float       heightOffset;
 
-        //Wanted to set players camera to their active camera? - not working
-        //Camera.SetupCurrent(GetComponent<Camera>());
+        float xRotation;
 
-        //transform.SetParent(target.transform);
-    }
+        private void Start()
+        {
+            if (lockMouse)
+                Cursor.lockState = CursorLockMode.Locked;
 
-    // Update is called once per frame
-    void Update()
-    {
-        transform.position = target.gameObject.transform.position;
+            //Wanted to set players camera to their active camera? - not working
+            //Camera.SetupCurrent(GetComponent<Camera>());
 
-        //Setting x rotation to match mouse direction + locking it at 90 angle
-        xRotation -= target.mouseY * target.lookSensitivity * Time.deltaTime;
-        xRotation =  Mathf.Clamp(xRotation, -90f, 90f);
+            //transform.SetParent(target.transform);
+        }
 
-        transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+        // Update is called once per frame
+        void Update()
+        {
+            transform.position = target.gameObject.transform.position;
+
+            //Setting x rotation to match mouse direction + locking it at 90 angle
+            xRotation -= target.mouseY * target.lookSensitivity * Time.deltaTime;
+            xRotation =  Mathf.Clamp(xRotation, -90f, 90f);
+
+            transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+        }
     }
 }

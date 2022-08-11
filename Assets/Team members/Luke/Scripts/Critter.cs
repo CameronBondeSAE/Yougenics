@@ -489,7 +489,7 @@ namespace Luke
 		
 		private void SetInitialCritterStats()
 		{
-			critterInfo.deadliness = dangerLevel;
+			// critterInfo.deadliness = dangerLevel;
 			awakeDecayDelay = 11-metabolism;
 			critterInfo.gender = sex;
 		}

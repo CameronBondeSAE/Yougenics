@@ -34,8 +34,8 @@ namespace Minh
 
             if (IsServer)
             {
-                GetComponent<Interactf>().healing += startHealthincreasing;
-                GetComponent<Interactf>().dealdamage += startHealthdepeting;
+                // GetComponent<Interactf>().healing += startHealthincreasing;
+                // GetComponent<Interactf>().dealdamage += startHealthdepeting;
                 GetComponent<Energy>().NoEnergyEvent += startHealthdepeting;
                 GetComponent<Energy>().FullEnergyEvent += startHealthincreasing;
             }

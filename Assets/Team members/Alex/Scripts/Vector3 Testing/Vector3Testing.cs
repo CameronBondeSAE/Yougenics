@@ -14,8 +14,6 @@ public class Vector3Testing : MonoBehaviour
     {
         Reflect();
         //Debug.DrawLine(new Vector3(0,0,0), test.normalized, Color.red);
-        
-    
 
         //Adds the power of 2 of each axis together
         //Debug.Log("sqrMagnitude = "+test.sqrMagnitude);

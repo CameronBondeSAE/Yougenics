@@ -4,40 +4,43 @@ using System;
 using Unity.Collections;
 using TMPro;
 
-public class ClientInfo : NetworkBehaviour
+namespace John
 {
-    public string clientName = "Player";
-    public NetworkVariable<FixedString512Bytes> ClientName = new NetworkVariable<FixedString512Bytes>();
-    public GameObject lobbyUIRef;
-
-    public event Action<string> onNameChangeEvent;
-
-    public override void OnNetworkSpawn()
+    public class ClientInfo : NetworkBehaviour
     {
-        ClientName.OnValueChanged += OnNameChange;
-    }
+        public string                               clientName = "Player";
+        public NetworkVariable<FixedString512Bytes> ClientName = new NetworkVariable<FixedString512Bytes>();
+        public GameObject                           lobbyUIRef;
 
-    private void OnNameChange(FixedString512Bytes previousValue, FixedString512Bytes newValue)
-    {
-        onNameChangeEvent?.Invoke(newValue.ToString());
+        public event Action<string> onNameChangeEvent;
 
-        if(lobbyUIRef != null)
-            lobbyUIRef.GetComponent<TMP_Text>().text = newValue.ToString();
-    }
+        public override void OnNetworkSpawn()
+        {
+            ClientName.OnValueChanged += OnNameChange;
+        }
 
-    public void Init(ulong clientId)
-    {
-        ClientName.Value = "Player " + clientId;
-    }
+        private void OnNameChange(FixedString512Bytes previousValue, FixedString512Bytes newValue)
+        {
+            onNameChangeEvent?.Invoke(newValue.ToString());
 
-    public override void OnDestroy()
-    {
-        base.OnDestroy();
+            if (lobbyUIRef != null)
+                lobbyUIRef.GetComponent<TMP_Text>().text = newValue.ToString();
+        }
 
-        if (lobbyUIRef != null)
-            Destroy(lobbyUIRef);
+        public void Init(ulong clientId)
+        {
+            ClientName.Value = "Player " + clientId;
+        }
 
-        if(LobbyUIManager.instance != null)
-            LobbyUIManager.instance.RequestClientUIUpdateServerRpc();
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            if (lobbyUIRef != null)
+                Destroy(lobbyUIRef);
+
+            if (LobbyUIManager.instance != null)
+                LobbyUIManager.instance.RequestClientUIUpdateServerRpc();
+        }
     }
 }
