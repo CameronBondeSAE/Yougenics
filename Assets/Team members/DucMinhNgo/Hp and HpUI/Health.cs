@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Minh;
+using Tanks;
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.UI;
@@ -23,8 +24,8 @@ namespace Minh
         
         
 
-        public event Action DeathEvent;
-        public delegate void ChangedDelegate(float changedAmount);
+        public event Action          DeathEvent;
+        public delegate void         ChangedDelegate(float changedAmount, GameObject whoDidThis);
         public event ChangedDelegate ChangedEvent;
 
         public override void OnNetworkSpawn()
@@ -53,8 +54,8 @@ namespace Minh
                 Debug.Log("No Network Manager Found - ADD ManagerScene For Testing To Your Scene");
             
         }
-        
-        public void ChangeHealth(float amount)
+
+        public void ChangeHealth(float amount, GameObject whoDidThis)
         {
             if (IsServer)
             {
@@ -63,8 +64,13 @@ namespace Minh
                 {
                     CurrentHealth.Value = maxHealth;
                 }
-                ChangedEvent?.Invoke(amount);
+                ChangedEvent?.Invoke(amount, whoDidThis);
             }
+        }
+        
+        public void ChangeHealth(float amount)
+        {
+            ChangeHealth(amount, null);
         }
 
         public void Deathcheck()
