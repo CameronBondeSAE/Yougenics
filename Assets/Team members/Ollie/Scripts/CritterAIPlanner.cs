@@ -77,9 +77,9 @@ namespace Ollie
                 timer = 0;
                 if (target != null)
                 {
-                    wanderSteering.enabled = false;
-                    avoidance.enabled = false;
-                    forwardMovement.enabled = false;
+                    //wanderSteering.enabled = false;
+                    //avoidance.enabled = false;
+                    //forwardMovement.enabled = false;
                     targetPos = target.position;
                     if (!LevelManager.instance.ConvertToGrid(targetPos).isBlocked)
                     {
@@ -88,13 +88,12 @@ namespace Ollie
                 }
                 else
                 {
-                    wanderSteering.enabled = true;
-                    avoidance.enabled = true;
-                    forwardMovement.enabled = true;
+                    //wanderSteering.enabled = true;
+                    //avoidance.enabled = true;
+                    //forwardMovement.enabled = true;
                 }
                 
             }
-            //Debug.DrawLine(transform.position,transform.position + transform.forward * 5, Color.red);
             
         }
 
@@ -102,24 +101,41 @@ namespace Ollie
         {
             if (path.Count > 0)
             {
-                //transform.rotation = Quaternion.LookRotation(targetTransform);
-                if (transform.position != path[0])
-                {
-                    //facingDirection = path[0];
-                    
-                    //check vector3.distance to check if you're close to path point, then progress
-                    //this should work below
-                    //turnTowards.targetTransform = path[0];
-                    
-                    
-                    
-                    turnTowards.TurnParent(targetPos);
-                    transform.position = Vector3.MoveTowards(transform.position,path[0],moveSpeed);
-                }
-                else if (transform.position == path[0])
-                {
-                    path.Remove(path[0]);
-                }
+               if (path.Count > 3)
+               {
+                   if (Vector3.Distance(transform.position, path[3]) > 3)
+                   {
+                       turnTowards.TurnParent(path[3]);
+                   }
+                   else
+                   {
+                       path.Remove(path[0]);
+                   }
+               }
+               else
+               {
+                   if (Vector3.Distance(transform.position, targetPos) > 3)
+                   {
+                       turnTowards.TurnParent(targetPos);
+                   }
+                   else
+                   {
+                       path.Clear();
+                   }
+               }
+               #region Original "sliding" pathfinding, but with turnTowards final target
+
+               // if (transform.position != path[0])
+               // {
+               //     turnTowards.TurnParent(targetPos);
+               //     transform.position = Vector3.MoveTowards(transform.position,path[0],moveSpeed);
+               // }
+               // else if (transform.position == path[0])
+               // {
+               //     path.Remove(path[0]);
+               // }
+
+               #endregion
             }
         }
 

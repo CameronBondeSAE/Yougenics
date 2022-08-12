@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Ollie
 {
@@ -8,20 +9,22 @@ namespace Ollie
     {
         private Rigidbody rigidbody;
         public float timer;
-        public float rng;
+        public float timeToWanderRotation;
+        [FormerlySerializedAs("rng")] public float perlinRNG;
         
         void Start()
         {
             rigidbody = GetComponentInParent<Rigidbody>();
-            rng = 0;
+            perlinRNG = 0;
+            timeToWanderRotation = 2;
         }
         
         void Update()
         {
-            if (timer > 2f)
+            if (timer > timeToWanderRotation)
             {
                 timer = 0;
-                rng = Random.Range(-15, 15);
+                perlinRNG = (Mathf.PerlinNoise(rigidbody.transform.position.x, rigidbody.transform.position.z))*2-1;
                 WanderTurn();
             }
             timer += Time.deltaTime;
@@ -29,7 +32,7 @@ namespace Ollie
         
         void WanderTurn()
         {
-            rigidbody.AddRelativeTorque(0,rng,0);
+            rigidbody.AddRelativeTorque(0,perlinRNG,0,ForceMode.Impulse);
         }
     }
 }
