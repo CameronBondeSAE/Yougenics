@@ -54,11 +54,12 @@ namespace John
 
 		[Header("Hack for now/Ignore")]
 		public GameObject playerPrefab;
+		//public Camera playerCamera;
 
 		public GameObject lobbyCam;
 		bool              inGame = false;
 		public GameObject lukeAITest;
-
+		[SerializeField]
 		ulong         myLocalClientId;
 		NetworkObject myLocalClient;
 		string        clientName;
@@ -249,6 +250,7 @@ namespace John
 			UpdateLobbyClientRPC(clientName);
 		}
 
+		//This handles NEW clients joining the server - Ensuring the lobby UI is accurate on all clients
 		[ClientRpc]
 		public void HandleNewClientsJoiningClientRpc(string clientName, ulong incommingClientId, ulong callerClientId)
 		{
@@ -256,21 +258,20 @@ namespace John
 			if (IsServer)
 				return;
 
-			//HACK: Doing this to still update lobby UI for clients when NEW clients join
+			//HACK: Doing this to still update lobby UI for existing clients when NEW clients join
 			if (NetworkManager.Singleton.LocalClientId != callerClientId)
 			{
 				//SO we only care about spawning new lobby UI's if the incomming cient Id's are greater then the clients (as these should be clients that this client don't know about)
 				if (incommingClientId > NetworkManager.Singleton.LocalClientId)
 				{
-					SpawnClientLobbyUI(clientName);
-					;
+					SpawnClientLobbyUI(clientName, incommingClientId);
 				}
 
 				return;
 			}
 
 			//Otherwise for the client that just joined - spawn a lobby UI for all the clients currently in the lobby including their own
-			SpawnClientLobbyUI(clientName);
+			SpawnClientLobbyUI(clientName, incommingClientId);
 		}
 
 		[ServerRpc(RequireOwnership = false)]
@@ -287,21 +288,23 @@ namespace John
 
 			foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
 			{
-				SpawnClientLobbyUIClientRpc(client.PlayerObject.GetComponent<ClientInfo>().ClientName.Value.ToString());
+				SpawnClientLobbyUIClientRpc(client.PlayerObject.GetComponent<ClientInfo>().ClientName.Value.ToString(), client.ClientId);
 			}
 		}
 
 		[ClientRpc]
-		public void SpawnClientLobbyUIClientRpc(string newName)
+		public void SpawnClientLobbyUIClientRpc(string newName, ulong incommingId)
 		{
-			SpawnClientLobbyUI(newName);
+			SpawnClientLobbyUI(newName, incommingId);
 		}
 
-		void SpawnClientLobbyUI(string clientName)
+		void SpawnClientLobbyUI(string clientName, ulong incommingId)
 		{
 			GameObject uiRef = Instantiate(clientLobbyUIPrefab, clientField.transform);
 			uiRef.GetComponent<TMP_Text>().text                                                     = clientName;
-			NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<ClientInfo>().lobbyUIRef = uiRef;
+
+			if(incommingId == myLocalClientId)
+				NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<ClientInfo>().lobbyUIRef = uiRef;
 		}
 
 		[ClientRpc]
@@ -351,9 +354,11 @@ namespace John
 			HandleClientNameChange();
 		}
 
-		#endregion
+        #endregion
 
-		public void StartGame()
+        #region Handle Starting / Leaving Game
+
+        public void StartGame()
 		{
 			if (sceneToLoad == "")
 			{
@@ -362,7 +367,7 @@ namespace John
 				return;
 			}
 
-			NetworkManager.Singleton.SceneManager.OnSceneEvent += SceneManagerOnOnSceneEvent;
+			//NetworkManager.Singleton.SceneManager.OnSceneEvent += SceneManagerOnOnSceneEvent;
 
 			//BUG: use this to know when the scene IS loaded - ligting doesn't load when this is called?
 			NetworkManager.Singleton.SceneManager.OnLoadComplete += OnLevelLoaded;
@@ -413,15 +418,12 @@ namespace John
 				controller             = client.PlayerObject.GetComponent<John.PlayerController>();
 				controller.playerModel = tempPlayer.GetComponent<PlayerModel>();
 
+				//This only works on the server
 				tempPlayer.GetComponent<PlayerModel>().myClientInfo = client.PlayerObject.GetComponent<ClientInfo>();
 			}
 
 			//Activate controller on all clients
 			InitControllerClientRpc();
-
-			//Spawn Luke AI For Testing
-			/*GameObject lukeAI = Instantiate(lukeAITest);
-			lukeAI.GetComponent<NetworkObject>().Spawn();*/
 
 			critterSpawner.SpawnMultiple();
 
@@ -429,6 +431,10 @@ namespace John
 			{
 				spawnedSpawnerGO.GetComponent<Spawner>().SpawnMultiple();
 			}
+
+			//Update UI
+			lobbyCam.SetActive(false);
+			SubmitLobbyUIStateClientRpc(true);
 		}
 
 		[ClientRpc]
@@ -462,8 +468,8 @@ namespace John
 			//SceneManager.SetActiveScene(scene);
 
 			//Update UI
-			lobbyCam.SetActive(false);
-			SubmitLobbyUIStateClientRpc(true);
+			/*lobbyCam.SetActive(false);
+			SubmitLobbyUIStateClientRpc(true);*/
 		}
 
 		public void ReturnToLobby()
@@ -471,6 +477,7 @@ namespace John
 			//Load lobby
 
 			NetworkManager.Singleton.SceneManager.UnloadScene(SceneManager.GetSceneByName(sceneToLoad));
+			critterSpawner.spawned.Clear();
 
 			//Turn Off Controller on all clients
 			ResetControllerClientRpc();
@@ -498,9 +505,11 @@ namespace John
 			controller.playerInput.DeactivateInput();
 		}
 
-		#region UI Hacky Code
+        #endregion
 
-		[ClientRpc]
+        #region UI Hacky Code
+
+        [ClientRpc]
 		public void SubmitLobbyUIStateClientRpc(bool inGame)
 		{
 			lobbyCanvas.SetActive(!inGame);
