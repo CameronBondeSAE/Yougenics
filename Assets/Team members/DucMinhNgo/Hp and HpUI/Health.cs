@@ -128,7 +128,8 @@ namespace Minh
                 //if we have health
                 if (CurrentHealth.Value > 0)
                 {
-                    CurrentHealth.Value -= 1;
+                    if(IsServer)
+                        CurrentHealth.Value -= 1;
                     yield return new WaitForSeconds(1);
                 }
                 else
@@ -170,7 +171,8 @@ namespace Minh
 
                 if (CurrentHealth.Value < maxHealth)
                 {
-                    CurrentHealth.Value += 1;
+                    if(IsServer)
+                        CurrentHealth.Value += 1;
                     yield return new WaitForSeconds(1);
                 }
                 else
