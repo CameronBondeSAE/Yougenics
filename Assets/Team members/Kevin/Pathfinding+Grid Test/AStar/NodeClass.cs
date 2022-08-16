@@ -10,16 +10,16 @@ namespace Kevin
         {
             public Vector3 worldPosition; 
             public bool isBlocked;
-            public bool isClosed;
             public Vector2Int gridPosition;
-
+    
             public int gCost;
             public int hCost;
             
-            public NodeClass(Vector3 _worldPosition, bool _isBlocked)
+            public NodeClass(Vector3 _worldPosition, bool _isBlocked, Vector2Int _gridPosition)
             {
                 worldPosition = _worldPosition;
                 isBlocked = _isBlocked;
+                gridPosition = _gridPosition;
             }
 
             /*public NodeClass()

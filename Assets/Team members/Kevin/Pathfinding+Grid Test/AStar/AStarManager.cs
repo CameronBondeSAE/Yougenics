@@ -11,7 +11,7 @@ namespace Kevin
         [SerializeField] private Vector2 gridWorldSize;
         [SerializeField] private float nodeRadius;
         [SerializeField] private float nodeDiameter;
-        
+        [SerializeField] private Vector3 worldBottomLeft;
         private Vector3 _gridTileSize;
         private int gridSizeX, gridSizeZ;
 
@@ -27,13 +27,16 @@ namespace Kevin
         public List<NodeClass> pathNode = new();
         
         public LayerMask obstacle;
-        
 
+        public Transform start;
+        public Transform end;
         public void CreateGrid()
         {
             gridNodes = new NodeClass[gridSizeX, gridSizeZ];
+            
             _gridTileSize = new Vector3(gridSizeX/gridWorldSize.x, 1, gridSizeZ/gridWorldSize.y);
-            Vector3 worldBottomLeft = transform.position - Vector3.right * gridWorldSize.x / 2 -
+            
+            worldBottomLeft = transform.position - Vector3.right * gridWorldSize.x / 2 -
                                       Vector3.forward * gridWorldSize.y / 2; 
             
             for (int x = 0; x < gridSizeX; x++)
@@ -43,9 +46,8 @@ namespace Kevin
                     Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) +
                                          Vector3.forward * (z * nodeDiameter + nodeRadius);
                     bool isBlocked = (Physics.CheckSphere(worldPoint, nodeRadius,obstacle));
-                    gridNodes[x, z] = new NodeClass(worldPoint,isBlocked);
-                    gridNodes[x, z].gridPosition = new Vector2Int(x, z);
-
+                    gridNodes[x, z] = new NodeClass(worldPoint,isBlocked, new Vector2Int(x,z));
+                    
                     /*gridNodes[x,z] = new NodeClass();
                     Vector3 worldPoint = new Vector3(0+x, 0, 0+z);
                     gridNodes[x, z].worldPosition = worldPoint;
@@ -57,7 +59,29 @@ namespace Kevin
                 }
             }
         }
+       // + _gridTileSize.x / 2f
+        public Vector2Int ConvertWorldPositionIndex(Vector3 position)
+        {
+            int xIndex = Mathf.RoundToInt((position.x - _gridTileSize.x / 2f - worldBottomLeft.x) / _gridTileSize.x);
+            int yIndex = Mathf.RoundToInt((position.z - _gridTileSize.z / 2f - worldBottomLeft.z) / _gridTileSize.z);
 
+            return new Vector2Int(xIndex, yIndex);
+        }
+        
+        public Vector3 ConvertWorldPositionIndex(Vector2Int index)
+        {
+            float xCoord = index.x * _gridTileSize.x + 0.5f * _gridTileSize.x + worldBottomLeft.x; 
+            //float xCoord = (index.x * _gridTileSize.x) / (worldBottomLeft.x + _gridTileSize.x * gridSizeX) - worldBottomLeft.x; 
+            //float zCoord = (index.y * _gridTileSize.z) / (worldBottomLeft.z + _gridTileSize.z * gridSizeZ) - worldBottomLeft.z; 
+            float zCoord = index.y * _gridTileSize.z + 0.5f * _gridTileSize.z + worldBottomLeft.z; 
+            return new Vector3(xCoord, 1, zCoord);
+        }
+        
+        public void Update()
+        {
+            startPosition = ConvertWorldPositionIndex(start.position);
+            endPosition = ConvertWorldPositionIndex(end.position);
+        }
         public void AStarAlgorithm()
         {
             //currentNode = currentNode[startPosition.x, startPosition.y]; 
@@ -118,7 +142,7 @@ namespace Kevin
             CreateGrid();
         }
         
-        void OnDrawGizmosSelected()
+        void OnDrawGizmos()
         {
             Gizmos.DrawWireCube(transform.position,new Vector3(gridSizeX, 1, gridSizeZ));
             
@@ -144,11 +168,11 @@ namespace Kevin
                                 Gizmos.color = Color.green;
                                 Gizmos.DrawCube(gridNodes[x,y].worldPosition,Vector3.one * (nodeDiameter - 0.1f));
                             }
-                            else if (gridNodes[x, y].isClosed)
+                            /*else if (gridNodes[x, y].isClosed)
                             {
                                 Gizmos.color = Color.red;
                                 Gizmos.DrawCube(gridNodes[x,y].worldPosition,Vector3.one * (nodeDiameter - 0.1f));
-                            }
+                            }*/
                             else if (gridNodes[x, y].isBlocked)
                             {
                                 Gizmos.color = Color.black;
@@ -157,6 +181,18 @@ namespace Kevin
                             else 
                             {
                                 Gizmos.color = Color.white;
+                                Gizmos.DrawCube(gridNodes[x,y].worldPosition, Vector3.one * (nodeDiameter - 0.1f));
+                            }
+                            
+                            if (x == startPosition.x && y == startPosition.y)
+                            {
+                                Gizmos.color = Color.red;
+                                Gizmos.DrawCube(gridNodes[x,y].worldPosition, Vector3.one * (nodeDiameter - 0.1f));
+                            } 
+                            
+                            if (x == endPosition.x && y == endPosition.y)
+                            {
+                                Gizmos.color = Color.cyan;
                                 Gizmos.DrawCube(gridNodes[x,y].worldPosition, Vector3.one * (nodeDiameter - 0.1f));
                             }
                             

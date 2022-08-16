@@ -54,6 +54,12 @@ namespace Kev
         public Vector3 walkPoint;
         public float walkPointRange;
 
+        public Renderer renderer = new ();
+
+        public float randomX;
+        public float randomY;
+
+        private Material material;
         //public RaycastHit raycastHit;
         public void Awake()
         {
@@ -69,13 +75,20 @@ namespace Kev
             {
                 genderRandom = 1;
             }
-            MeshRenderer gameObjectRendere = this.GetComponent<MeshRenderer>();
-            gameObjectRendere.material = genderColors[genderRandom];
+            //MeshRenderer gameObjectRenderer = this.GetComponent<MeshRenderer>();
+            //gameObjectRenderer.material = genderColors[genderRandom];
             foodChain = (Interface.Foodchain)Random.Range(0f, 3f);
+            
+
+            material = GetComponent<MeshRenderer>().sharedMaterial; 
+            //renderer = GetComponent<Renderer>();
         }
 
         public void FixedUpdate()
         {
+            randomX = Random.Range(-100f, 100f);
+            randomY = Random.Range(-100f, 100f);
+            material.SetFloat("_perlinNoise", Mathf.PerlinNoise(randomX,randomY));
             //I am straight doodoo at behaviour trees
             
             //these if statements are just for testing
