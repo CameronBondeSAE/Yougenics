@@ -774,7 +774,7 @@ PrefabInstance:
     - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 4780785408960720621, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: dangerLevel
       value: 15
@@ -960,7 +960,7 @@ PrefabInstance:
     - target: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
     - target: {fileID: 7004539971532304000, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: m_Name
       value: LukeCritterPlanner (2)
