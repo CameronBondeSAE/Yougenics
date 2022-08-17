@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using Anthill.AI;
 using Cam;
 using DG.Tweening;
+using Maya;
 using NodeCanvas.BehaviourTrees;
 using NodeCanvas.Framework;
 using ParadoxNotion;
+using Unity.Mathematics;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -58,6 +61,8 @@ namespace Luke
 
         //spawn these in and give them angles
         [SerializeField] private List<LukeAntenna> antennae = new();
+        public int numberOfAntennae;
+        public GameObject antennaPrefab;
         [SerializeField] private GameObject beam;
         
         [SerializeField]
@@ -230,9 +235,9 @@ namespace Luke
 		
 		#endregion
 
-		void OnEnable()
+		void Start()
 		{
-			_rb = GetComponent<Rigidbody>();
+            _rb = GetComponent<Rigidbody>();
 			_transform = GetComponent<Transform>();
 			SetInitialCritterStats();
 			sleepLevel = critterInfo.maxSleepLevel;
@@ -258,6 +263,13 @@ namespace Luke
 			StartCoroutine(RandomiseDefaultBehaviour());
 			StartCoroutine(IterateBestBiome());
 			StartCoroutine(SleepLevelDecay());
+
+            for (int i = 0; i < numberOfAntennae; i++)
+            {
+                GameObject go = Instantiate(antennaPrefab, _transform);
+                go.transform.localPosition = new Vector3(0, -_transform.localScale.y/4f, 0);
+                go.transform.localEulerAngles = new Vector3(0, -45+75*i/(numberOfAntennae-1), 0);
+            }
 		}
 
 		public override void FixedUpdate()
@@ -280,48 +292,48 @@ namespace Luke
 		{
             //Change once allegiances are implemented
 			if (other.transform == _transform) return;
-			CreatureBase go1 = other.GetComponent<CreatureBase>();
-			IEdible go2 = other.GetComponent<IEdible>();
-			CommonAttributes go3 = other.GetComponent<CommonAttributes>();
-			ILukeEdible go4 = other.GetComponent<ILukeEdible>();
+			CreatureBase go1 = other.GetComponentInParent<CreatureBase>();
+			IEdible go2 = other.GetComponentInParent<IEdible>();
+			CommonAttributes go3 = other.GetComponentInParent<CommonAttributes>();
+			ILukeEdible go4 = other.GetComponentInParent<ILukeEdible>();
 			
 			if (go1 != null)
 			{
 				float otherDangerLevel = go3.dangerLevel;
 				if (otherDangerLevel >= critterInfo.dangerLevel + 3)
 				{
-					if (!predatorsList.Contains(other.transform))
+					if (!predatorsList.Contains(go1.transform))
 					{
-						predatorsList.Add(other.transform);
+						predatorsList.Add(go1.transform);
 						if (go4 != null) go4.RemoveFromListEvent += RemoveTransformFromList;
 					}
 				}
 				else if (otherDangerLevel < critterInfo.dangerLevel+3 && otherDangerLevel > critterInfo.dangerLevel-3)
 				{
-					if (!matesList.Contains(other.transform))
+					if (!matesList.Contains(go1.transform))
 					{
-						Critter otherCritter = other.GetComponent<Critter>();
-						if (critterInfo.gender != otherCritter.critterInfo.gender && !otherCritter.cannotMate)
+						Critter otherCritter = other.GetComponentInParent<Critter>();
+						if (otherCritter != null && critterInfo.gender != otherCritter.critterInfo.gender && !otherCritter.cannotMate)
 						{
-							matesList.Add(other.transform);
+							matesList.Add(otherCritter.transform);
                             if (go4 != null) go4.RemoveFromListEvent += RemoveTransformFromList;
 						}
 					}
 				}
 				else if (critterInfo.isCarnivore)
 				{
-					if (!foodList.Contains(other.transform))
+					if (!foodList.Contains(go1.transform))
 					{
-						foodList.Add(other.transform);
+						foodList.Add(go1.transform);
                         if (go4 != null) go4.RemoveFromListEvent += RemoveTransformFromList;
 					}
 				}
 			}
 			else if (go2 != null)
 			{
-				if (!foodList.Contains(other.transform))
+				if (!foodList.Contains(((MonoBehaviour)go2).transform))
 				{
-					foodList.Add(other.transform);
+					foodList.Add(((MonoBehaviour)go2).transform);
                     if (go4 != null) go4.RemoveFromListEvent += RemoveTransformFromList;
 				}
 			}
@@ -450,7 +462,7 @@ namespace Luke
 		
 		private void SetInitialCritterStats()
 		{
-			critterInfo.dangerLevel = _commonAttributes.dangerLevel;
+			_commonAttributes.dangerLevel = critterInfo.dangerLevel;
             energyComp.drainSpeed = 11-metabolism;
 			critterInfo.gender = sex;
             ageOfMatingStart = critterInfo.firstMatingDelay;
@@ -470,10 +482,11 @@ namespace Luke
 		public Vector3 GetMoveTargetAStar()
 		{
 			return aStarUser.path[^2].worldPosition;
-		}
+        }
 
 		public bool CheckHasFood()
-		{
+        {
+            if (_transform == null) return false;
 			if (isSleeping) return false;
 			if (!Physics.Raycast(_transform.position, _transform.TransformDirection(Vector3.forward), out RaycastHit raycastHit, 1)) return false;
 			if (!foodList.Contains(raycastHit.collider.transform)) return false;
@@ -487,8 +500,12 @@ namespace Luke
 		{
 			if (isSleeping) return;
 			if (currentFood == null) return;
-			IEdible go = currentFood.GetComponent<IEdible>();
-			// go.TakeDamage(critterInfo.dangerLevel);
+            GameObject go = Instantiate(beam, _transform);
+            go.GetComponent<Beam>().target = currentFood.transform;
+			Minh.Health targetHealth = currentFood.GetComponent<Minh.Health>();
+            targetHealth.ChangeHealth(-critterInfo.dangerLevel);
+            IEdible targetIEdible = currentFood.GetComponent<IEdible>();
+            energyComp.ChangeEnergy(targetIEdible.EatMe(-critterInfo.dangerLevel));
             energyComp.ChangeEnergy(critterInfo.dangerLevel);
             justAte = true;
 			StopCoroutine(EnergyDecayCooldown());
@@ -497,6 +514,7 @@ namespace Luke
 
 		public bool CheckHasMate()
 		{
+            if (_transform == null) return false;
 			if (!Physics.Raycast(_transform.position, _transform.TransformDirection(Vector3.forward), out RaycastHit raycastHit, 1)) return false;
 			
 			Collider other = raycastHit.collider;
@@ -584,6 +602,7 @@ namespace Luke
 			if (aStarUser.path.Count > 5)
 			{
 				TurnTowardsTarget(GetMoveTargetAStar());
+                Debug.Log(GetMoveTargetAStar());
 			}
 			else
 			{
