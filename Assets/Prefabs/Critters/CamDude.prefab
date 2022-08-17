@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 974450663}
   - component: {fileID: -98636685822751051}
   - component: {fileID: 7008398664021068612}
+  - component: {fileID: 793941931468051256}
   m_Layer: 0
   m_Name: CamDude
   m_TagString: Untagged
@@ -264,6 +265,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
+  age: 0
   ageOfMatingStart: 0
   ageOfMatingEnd: 0
   maxAge: 0
@@ -274,10 +276,11 @@ MonoBehaviour:
   mutationRate: 0
   empathy: 0
   aggression: 0
-  dangerLevel: 0
-  size: 0
+  sizeScale: 0
+  maxSize: 0
   colour: {r: 0, g: 0, b: 0, a: 0}
   sex: 0
+  slowlyDieWhenOldRate: 0
   target: {fileID: 0}
   stateManager: {fileID: 0}
   myGo: {fileID: 0}
@@ -409,3 +412,22 @@ MonoBehaviour:
   turnForce: 5
   moveForce: 50
   distance: 5
+  target: {fileID: 0}
+  localPos: {x: 0, y: 0, z: 0}
+  turnSpeed: 0.1
+--- !u!114 &793941931468051256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5627932282388674726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2fa0cdd9a3541d2863b2ab871f3c22f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dangerLevel: 0
+  allegiances:
+    serializedVersion: 2
+    m_Bits: 0

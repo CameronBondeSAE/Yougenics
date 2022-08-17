@@ -111,13 +111,13 @@ namespace Ollie
             WaterNode node = null;
             
             // HACK CAM: to just return the edge of the map if you try to access past it
-            if (positionX > gridNodeReferences.GetLength(0))
+            if (positionX > gridNodeReferences.GetLength(0)-1)
             {
-                positionX = gridNodeReferences.GetLength(0);
+                positionX = gridNodeReferences.GetLength(0)-1;
             }
-            if (positionZ > gridNodeReferences.GetLength(1))
+            if (positionZ > gridNodeReferences.GetLength(1)-1)
             {
-                positionZ = gridNodeReferences.GetLength(1);
+                positionZ = gridNodeReferences.GetLength(1)-1;
             }
             node = gridNodeReferences[positionX,positionZ];
             return node;

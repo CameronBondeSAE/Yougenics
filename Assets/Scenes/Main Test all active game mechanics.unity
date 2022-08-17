@@ -287,6 +287,67 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1001 &282395944
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2764626321808243858, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
+      propertyPath: m_Name
+      value: Gun
+      objectReference: {fileID: 0}
+    - target: {fileID: 2764626321808243861, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2764626321808243861, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.7099247
+      objectReference: {fileID: 0}
+    - target: {fileID: 2764626321808243861, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 2764626321808243861, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 15.065919
+      objectReference: {fileID: 0}
+    - target: {fileID: 2764626321808243861, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2764626321808243861, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2764626321808243861, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2764626321808243861, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2764626321808243861, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2764626321808243861, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2764626321808243861, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3850238727689681086, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 607953712
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
 --- !u!1 &420528223
 GameObject:
   m_ObjectHideFlags: 0
@@ -429,42 +490,6 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 658569296
       objectReference: {fileID: 0}
-    - target: {fileID: 7859651946545734, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: energyGoal
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7859651946545735, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.39
-      objectReference: {fileID: 0}
-    - target: {fileID: 7859651946545735, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.52
-      objectReference: {fileID: 0}
-    - target: {fileID: 7859651946545735, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 6.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 7859651946545735, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7859651946545735, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7859651946545735, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7859651946545735, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7859651946545735, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
-      objectReference: {fileID: 0}
     - target: {fileID: 571487181114714512, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -509,41 +534,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1060208983765323435, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.022787608
+    - target: {fileID: 1412855882115979655, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 67496412
       objectReference: {fileID: 0}
-    - target: {fileID: 1060208983765323435, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.22000003
+    - target: {fileID: 1814109594569006628, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 4246847733
       objectReference: {fileID: 0}
-    - target: {fileID: 1060208983765323435, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.40663484
-      objectReference: {fileID: 0}
-    - target: {fileID: 1060208983765323435, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1060208983765323435, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1060208983765323435, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1060208983765323435, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1060208983765323435, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 2349694431984710004, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: camera
-      value: 
+    - target: {fileID: 3431454474778989102, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 115432221
       objectReference: {fileID: 0}
     - target: {fileID: 4413486585807475198, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: GlobalObjectIdHash
@@ -557,34 +558,6 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 1232717128
       objectReference: {fileID: 0}
-    - target: {fileID: 5143038861659981668, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemToSpawn
-      value: 
-      objectReference: {fileID: 2771155819252852944, guid: b4d1714588920c340a985a1842caada3, type: 3}
-    - target: {fileID: 5143038861659981668, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.name
-      value: Energy Container
-      objectReference: {fileID: 0}
-    - target: {fileID: 5143038861659981668, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.height
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5143038861659981668, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.buildTime
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 5143038861659981668, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.description
-      value: Drain energy from everything hostile around you
-      objectReference: {fileID: 0}
-    - target: {fileID: 5143038861659981668, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.energyRequired
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 5143038861659981670, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: m_Name
-      value: ShopEnergyDrainer
-      objectReference: {fileID: 0}
     - target: {fileID: 5352129823055067222, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 3804829850
@@ -593,73 +566,21 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 4054453119
       objectReference: {fileID: 0}
-    - target: {fileID: 5936546673643130614, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: GlobalObjectIdHash
-      value: 2248867047
-      objectReference: {fileID: 0}
-    - target: {fileID: 5936546673643130615, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: energyMax
-      value: 1000000
-      objectReference: {fileID: 0}
     - target: {fileID: 6376789068918350115, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 1306025709
-      objectReference: {fileID: 0}
-    - target: {fileID: 6376789069509395081, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: m_Name
-      value: ShopVehicle
-      objectReference: {fileID: 0}
-    - target: {fileID: 6376789069509395083, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.name
-      value: Alex's Vehicle
-      objectReference: {fileID: 0}
-    - target: {fileID: 6376789069509395083, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.height
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6376789069509395083, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.buildTime
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6376789069509395083, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.description
-      value: Drive around the terrain in this awesome vehicle
-      objectReference: {fileID: 0}
-    - target: {fileID: 6376789069509395083, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.energyRequired
-      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 7518922475590686048, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: m_Name
       value: Base
       objectReference: {fileID: 0}
-    - target: {fileID: 7688424790749575067, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: gameManager
-      value: 
-      objectReference: {fileID: 5942840491211313436, guid: d4ec5a789319b624482cdabda213b3f5, type: 3}
+    - target: {fileID: 7518922475590686048, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7984070037712497961, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 2453570741
-      objectReference: {fileID: 0}
-    - target: {fileID: 8111039989858690183, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.name
-      value: Food
-      objectReference: {fileID: 0}
-    - target: {fileID: 8111039989858690183, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.height
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8111039989858690183, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.buildTime
-      value: 9001
-      objectReference: {fileID: 0}
-    - target: {fileID: 8111039989858690183, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.description
-      value: Cost of living
-      objectReference: {fileID: 0}
-    - target: {fileID: 8111039989858690183, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.energyRequired
-      value: 1000000
       objectReference: {fileID: 0}
     - target: {fileID: 8111039990374893359, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: GlobalObjectIdHash
@@ -677,65 +598,9 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 2757638555
       objectReference: {fileID: 0}
-    - target: {fileID: 8942927819649351297, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: m_Name
-      value: ShopDrone
-      objectReference: {fileID: 0}
-    - target: {fileID: 8942927819649351299, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemToSpawn
-      value: 
-      objectReference: {fileID: 6628694674896416980, guid: a113eb118bcdb2f40bebeecf9a1810a0, type: 3}
-    - target: {fileID: 8942927819649351299, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.name
-      value: Drone
-      objectReference: {fileID: 0}
-    - target: {fileID: 8942927819649351299, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.height
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8942927819649351299, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.buildTime
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8942927819649351299, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.description
-      value: Fly the drone around to scout the surrounding area
-      objectReference: {fileID: 0}
-    - target: {fileID: 8942927819649351299, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.energyRequired
-      value: 200
-      objectReference: {fileID: 0}
     - target: {fileID: 9004225132045087836, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 673837632
-      objectReference: {fileID: 0}
-    - target: {fileID: 9004225132611917812, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemToSpawn
-      value: 
-      objectReference: {fileID: 7691366154368066806, guid: 05d1a0ffc92e31b41b7d9d64c27d3ca5, type: 3}
-    - target: {fileID: 9004225132611917812, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.name
-      value: Drop off point
-      objectReference: {fileID: 0}
-    - target: {fileID: 9004225132611917812, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.height
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9004225132611917812, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.buildTime
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9004225132611917812, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.description
-      value: Drop your energy containers here to transfer it to the main bass
-      objectReference: {fileID: 0}
-    - target: {fileID: 9004225132611917812, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: itemInfo.energyRequired
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 9004225132611917814, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
-      propertyPath: m_Name
-      value: ShopDropOffPoint
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
