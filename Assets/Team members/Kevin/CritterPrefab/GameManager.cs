@@ -17,6 +17,7 @@ namespace Kevin
         public float energyGoal;
         public Energy energy;
         public float currentEnergy;
+        public float remainingTime;
         
         
         //reference to Drop off point script 
@@ -43,6 +44,11 @@ namespace Kevin
         public void Update()
         {
             currentEnergy = energy.EnergyAmount.Value;
+
+            if (remainingTime > 0)
+            {
+                remainingTime -= Time.deltaTime;
+            }
         }
         public IEnumerator DrainCoroutine()
         {
