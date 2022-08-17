@@ -21,14 +21,13 @@ namespace Minh
             
         }
 
-        // Update is called once per frame
-        public void Updatewallstatus(float health)
+        private void Updatewallstatus(float changedamount, GameObject whodidthis)
         {
-            if (health <= 10)
+            if (changedamount <= 10)
             {
                 Healing(); 
             }
-            if (health >= 100)
+            if (changedamount >= 100)
             {
                 Interact();    
             }
