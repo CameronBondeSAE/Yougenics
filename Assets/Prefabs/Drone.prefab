@@ -229,7 +229,7 @@ MonoBehaviour:
     description: Fly around and scout the surrounding area
     energyRequired: 50
     height: 2
-    buildTime: 20
+    buildTime: 2
 --- !u!54 &6628694674896416983
 Rigidbody:
   m_ObjectHideFlags: 0

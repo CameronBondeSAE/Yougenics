@@ -166,7 +166,7 @@ MonoBehaviour:
     description: Drain energy from everything around you
     energyRequired: 100
     height: 2
-    buildTime: 100
+    buildTime: 2
 --- !u!54 &7389904
 Rigidbody:
   m_ObjectHideFlags: 0

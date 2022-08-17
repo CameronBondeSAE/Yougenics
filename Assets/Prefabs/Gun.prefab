@@ -116,7 +116,7 @@ MonoBehaviour:
     description: 'Shoot critters to death with destructive force! '
     energyRequired: 50
     height: 2
-    buildTime: 5
+    buildTime: 2
 --- !u!114 &3850238727689681086
 MonoBehaviour:
   m_ObjectHideFlags: 0
