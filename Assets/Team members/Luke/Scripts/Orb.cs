@@ -11,13 +11,11 @@ public class Orb : MonoBehaviour
     public Vector3 baseScale = Vector3.one;
     public float rotationSpeed = 1;
     
-    // Start is called before the first frame update
     void OnEnable()
     {
         t = transform;
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         float scale = amplitude*Mathf.Sin(Time.time*frequency);
