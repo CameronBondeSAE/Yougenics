@@ -38,6 +38,8 @@ namespace Minh
             Physics.SphereCast(ray, 0.5f, out hit, interactDistance);
             return hit;
         }
+        
+
         public void Update()
         {
             RaycastHit hit = CheckWhatsInFrontOfMe();

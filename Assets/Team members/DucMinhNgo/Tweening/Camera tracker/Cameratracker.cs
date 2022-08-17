@@ -12,7 +12,7 @@ namespace  Minh
 
         public float speed = 10f;
     
-        void LateUpdate()
+        void FixedUpdate()
         {
             transform.position = Vector3.Slerp(transform.position, target.position + offset, speed * Time.deltaTime);
             transform.LookAt(target.position);

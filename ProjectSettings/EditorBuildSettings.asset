@@ -26,4 +26,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Team members/Alex/Scenes/Alex's Level 2.unity
     guid: 9ca71fbd84a619e4ead41f08a7d60679
+  - enabled: 1
+    path: Assets/Team members/DucMinhNgo/Minh Test Scene/Minh's_Test_Scene.unity
+    guid: b53849e17dcd9b54a94736072621738d
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   m_configObjects: {}

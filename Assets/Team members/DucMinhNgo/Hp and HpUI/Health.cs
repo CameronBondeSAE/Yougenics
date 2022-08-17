@@ -25,6 +25,7 @@ namespace Minh
         
 
         public event Action          DeathEvent;
+        public event Action Food;
         public delegate void         ChangedDelegate(float changedAmount, GameObject whoDidThis);
         public event ChangedDelegate ChangedEvent;
 
@@ -43,6 +44,7 @@ namespace Minh
         }
         void Start()
         {
+            Minhfood();
             startHealthincreasing();
             if (NetworkManager.Singleton == null)
                 Debug.Log("No Network Manager Found - ADD ManagerScene For Testing To Your Scene");
@@ -84,6 +86,12 @@ namespace Minh
             }
         }
 
+        public void Minhfood()
+        {
+            maxHealth -= 50;
+            Food.Invoke();
+            
+        }
         public void FullHp()
         {
             //Hp = 100f;

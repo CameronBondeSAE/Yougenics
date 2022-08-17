@@ -2814,6 +2814,8 @@ MonoBehaviour:
     levelNameOnUI: Test all mechanics
   - level: {fileID: 102900000, guid: ecb4e1236a6628c48b12bbab26f64972, type: 3}
     levelNameOnUI: Alex's level 1
+  - level: {fileID: 102900000, guid: b53849e17dcd9b54a94736072621738d, type: 3}
+    levelNameOnUI: Minh's Level
   levelHolder: {fileID: 2470996678052708765}
   levelButtonPrefab: {fileID: 8248577337387485405, guid: 98aed31625b87c1448bb00bdda875d43, type: 3}
   critterSpawner: {fileID: 0}
@@ -2831,6 +2833,7 @@ MonoBehaviour:
   playerPrefab: {fileID: 8611620220612625317, guid: cc02e9a49a115264eb5ef1f88085b227, type: 3}
   lobbyCam: {fileID: 0}
   lukeAITest: {fileID: 7265986140717145438, guid: 23b1db56bb65d2d4abffe12b850cadef, type: 3}
+  myLocalClientId: 0
   debugStatusLabels: 1
 --- !u!114 &2470996679314236396
 MonoBehaviour:
