@@ -317,7 +317,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 262868570}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &491130082
+--- !u!1001 &601363755
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -328,6 +328,14 @@ PrefabInstance:
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 1388483787997497219, guid: f5369be61feb1e240bd9e7f7f00e95d7, type: 3}
+    - target: {fileID: 1388483787997497222, guid: f5369be61feb1e240bd9e7f7f00e95d7, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388483787997497223, guid: f5369be61feb1e240bd9e7f7f00e95d7, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1388483787997497225, guid: f5369be61feb1e240bd9e7f7f00e95d7, type: 3}
       propertyPath: m_Name
       value: KevinCritterPrefab
@@ -338,15 +346,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1388483787997497343, guid: f5369be61feb1e240bd9e7f7f00e95d7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.27187
+      value: -9.879307
       objectReference: {fileID: 0}
     - target: {fileID: 1388483787997497343, guid: f5369be61feb1e240bd9e7f7f00e95d7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.1391144
+      value: 1.1391153
       objectReference: {fileID: 0}
     - target: {fileID: 1388483787997497343, guid: f5369be61feb1e240bd9e7f7f00e95d7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 14.6130495
+      value: 4.5648165
       objectReference: {fileID: 0}
     - target: {fileID: 1388483787997497343, guid: f5369be61feb1e240bd9e7f7f00e95d7, type: 3}
       propertyPath: m_LocalRotation.w
@@ -378,7 +386,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6446122254239337073, guid: f5369be61feb1e240bd9e7f7f00e95d7, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 4179538380
+      value: 2539983975
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5369be61feb1e240bd9e7f7f00e95d7, type: 3}

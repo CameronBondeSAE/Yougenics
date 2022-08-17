@@ -16,6 +16,10 @@ namespace Kevin
         {
             base.Enter();
             //Change emotion UI
+            //critterA.alphaFloat = Mathf.Lerp(1f, 0f, 0.1f);
+            critterA.currentState = 2;
+            critterA.alphaFloat = 0f;
+            critterA.Chameleon();
         }
 
         public override void Execute(float aDeltaTime, float aTimeScale)
@@ -68,7 +72,14 @@ namespace Kevin
 
             walkPointSet = true;
         }
-        
+
+        public override void Exit()
+        {
+            base.Exit();
+            critterA.alphaFloat = 1f;
+
+        }
+
         /*private void TurnTo(Vector3 target)
         {
             Quaternion targetRotation = Quaternion.LookRotation(target - transform.position);

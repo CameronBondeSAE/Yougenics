@@ -6,7 +6,9 @@ using Anthill.AI;
 using Cam;
 using Minh;
 using Unity.VisualScripting;
+using UnityEditor.VersionControl;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class CritterA : CreatureBase, IEdible, ISense
@@ -42,12 +44,10 @@ public class CritterA : CreatureBase, IEdible, ISense
         public Transform closestMate;
         public Transform closestFood;
 
-        
-        
         //Separate Components
         [SerializeField] private CommonAttributes commonAttributes;
-        [SerializeField] private Energy energy;
-        [SerializeField] private Health health;
+        [SerializeField] private Energy currentEnergy;
+        [SerializeField] private Health currentHealth;
         
         //Planner Bools
         public bool isHungry;
@@ -68,9 +68,14 @@ public class CritterA : CreatureBase, IEdible, ISense
         
         //View Code
         public Renderer renderer;
+        public float alphaFloat;
+        public RawImage rawImagePrefab;
+        public List<Texture> iconStates;
+        public int currentState;
         
-        public void Awake()
+        public override void Awake()
         {
+            base.Awake();
             commonAttributes = GetComponent<CommonAttributes>();
             rb = GetComponent<Rigidbody>();
         }
@@ -95,10 +100,21 @@ public class CritterA : CreatureBase, IEdible, ISense
 
         }
 
+        public void EmoteChange()
+        {
+            rawImagePrefab.GetComponent<RawImage>().texture = iconStates[currentState];
+        }
         public void Chameleon()
         {
-            
+            renderer.material.SetFloat("_Alpha",alphaFloat);
+            //StartCoroutine(Revert());
         }
+
+        /*IEnumerator Revert()
+        {
+            alphaFloat = 1f;
+            yield return new WaitForSeconds(5f);
+        }*/
 
         #region CritterExecutables
 
