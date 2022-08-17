@@ -21,24 +21,26 @@ namespace Alex
         void Start()
         {
 
-            canSpawn = false;
+            canSpawn = true;
             energy = GetComponent<Energy>();
-            //StartCoroutine(SpawnThisTree());
+            StartCoroutine(SpawnThisTree());
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (GetComponent<Energy>().EnergyAmount.Value <= 40)
+            if (energy.EnergyAmount.Value <= 40)
                 StartCoroutine(SpawnThisTree());
 
         }
 
         public IEnumerator SpawnThisTree()
         {
-            yield return new WaitForSeconds(2f);
-            spawner.SpawnSingle(foodPrefab,new Vector3(treeTop.transform.localPosition.x , treeTop.transform.localPosition.y - 3f,
+            if (canSpawn)
+                spawner.SpawnSingle(foodPrefab,new Vector3(treeTop.transform.localPosition.x , treeTop.transform.localPosition.y - 3f,
                 treeTop.transform.localPosition.z), Quaternion.identity);
+            canSpawn = false;
+            yield return new WaitForSeconds(2f);
             StopCoroutine(SpawnThisTree());
         }
        

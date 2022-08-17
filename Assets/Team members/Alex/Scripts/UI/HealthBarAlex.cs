@@ -13,6 +13,7 @@ namespace Alex
         public Slider slider;
         public Gradient gradient;
         public Image fill;
+        public JohnPlayerModel player;
 
         public void SetMaxHealth(float healthHp)
         {
