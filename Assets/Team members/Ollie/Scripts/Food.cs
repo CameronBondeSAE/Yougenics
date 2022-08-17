@@ -6,11 +6,12 @@ using UnityEngine;
 
 namespace Ollie
 {
-    public class Food : NPCBehaviour, iNPC, iFood
+    public class Food : NPCBehaviour, iNPC, iFood, IEdible
     {
         public override void Start()
         {
             base.Start();
+            
 
             SetNpcType();
         }
@@ -18,6 +19,16 @@ namespace Ollie
         public void SetNpcType()
         {
             npcType = NpcType.Food;
+        }
+
+        public float GetEnergyAmount()
+        {
+            throw new NotImplementedException();
+        }
+
+        public float EatMe(float energyRemoved)
+        {
+            throw new NotImplementedException();
         }
     }
 }

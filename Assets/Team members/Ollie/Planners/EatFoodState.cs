@@ -8,33 +8,40 @@ namespace Ollie
     public class EatFoodState : AntAIState
     {
         private GameObject parent;
+        private CritterAIPlanner brain;
+        
         private Controller controller;
         private GameObject target;
         private bool doneEating;
-        private CritterAIPlanner brain;
+        
         public override void Create(GameObject aGameObject)
         {
             base.Create(aGameObject);
             doneEating = false;
             parent = aGameObject;
             brain = aGameObject.GetComponent<CritterAIPlanner>();
-            controller = aGameObject.GetComponentInChildren<Controller>();
+            //controller = aGameObject.GetComponentInChildren<Controller>();
         }
 
         public override void Enter()
         {
             base.Enter();
-            target = controller.target;
-            controller.target = null;
-            controller.DisableCollider();
+            target = brain.target.gameObject;
+            brain.turnTowards.TurnParent(target.transform.position);
             StartCoroutine(EatFoodCoroutine());
+            
+            //controller.target = null;
+            //controller.DisableCollider();
+            
             //Finish();
         }
 
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
             brain.StateViewerChange(2);
+            brain.turnTowards.TurnParent(target.transform.position);
             base.Execute(aDeltaTime, aTimeScale);
+            
             if (doneEating)
             {
                 print("done eating");
@@ -57,12 +64,14 @@ namespace Ollie
 
         public IEnumerator EatFoodCoroutine()
         {
+            print("coroutine started");
             yield return new WaitForSeconds(5);
             Destroy(target);
-            //testing to move into Mating phase
-            parent.GetComponent<CritterAIPlanner>().SetIsHungry(false);
-            //parent.GetComponent<CritterAIPlanner>().SetIsHorny(true);
-            print("in coroutine");
+            
+            //need to implement EatMe here!!!
+            
+            brain.SetIsHungry(false);
+            brain.SetHealthLow(false);
             doneEating = true;
         }
     }

@@ -13,8 +13,8 @@ namespace Ollie
         //adds anything within range with iNPC interface to a list
         private void OnTriggerEnter(Collider other)
         {
-            iNPC iNPC = other.gameObject.GetComponent<iNPC>();
-            if (iNPC != null)
+            IEdible iEdible = other.gameObject.GetComponent<IEdible>();
+            if (iEdible != null)
             {
                 if (!npcTargets.Contains(other.gameObject))
                 {
@@ -26,8 +26,8 @@ namespace Ollie
         //removes anything exiting trigger from list
         private void OnTriggerExit(Collider other)
         {
-            iNPC iNPC = other.gameObject.GetComponent<iNPC>();
-            if (iNPC != null)
+            IEdible iEdible = other.gameObject.GetComponent<IEdible>();
+            if (iEdible != null)
             {
                 if (npcTargets.Contains(other.gameObject))
                 {

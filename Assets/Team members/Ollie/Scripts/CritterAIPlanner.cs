@@ -11,11 +11,11 @@ using Random = UnityEngine.Random;
 
 namespace Ollie
 {
-    public class CritterAIPlanner : CreatureBase, iPathable
+    public class CritterAIPlanner : CreatureBase, iPathable, IEdible
     {
         public List<Vector3> path;
         public List<Transform> foodLocationList;
-        public List<Transform> mateLocationList;
+        public List<GameObject> mateLocationList;
         public float moveSpeed = 0.25f;
         public WaterNode currentLocation;
         public Transform target;
@@ -25,10 +25,9 @@ namespace Ollie
         public Vector3 facingDirection;
         private Rigidbody rigidbody;
         
-        private TurnTowards turnTowards;
-
-        private Health health;
-        private Energy energy;
+        public TurnTowards turnTowards;
+        private Avoidance avoidance;
+        
 
         private Health healthComponent;
         private Energy energyComponent;
@@ -68,18 +67,15 @@ namespace Ollie
             moveSpeed = 3;
             rigidbody = GetComponent<Rigidbody>();
             turnTowards = GetComponentInChildren<TurnTowards>();
+            avoidance = GetComponentInChildren<Avoidance>();
             stateViewer = GetComponentInChildren<StateViewer>();
             
-            health = GetComponent<Minh.Health>();
-            health.CurrentHealth.Value = health.maxHealth;
+            healthComponent = GetComponent<Minh.Health>();
+            healthComponent.CurrentHealth.Value = healthComponent.maxHealth;
             
 
-            energy = GetComponent<Energy>();
-            energy.useEnergyOnMovement = true;
-            energy.EnergyAmount.Value = energy.energyMax;
-
             energyComponent = GetComponent<Energy>();
-            //energyComponent.useEnergyOnMovement = true;
+            energyComponent.useEnergyOnMovement = true;
             energyComponent.EnergyAmount.Value = energyComponent.energyMax;
 
 
@@ -96,11 +92,12 @@ namespace Ollie
         private void Update()
         {
             timer += Time.deltaTime;
-            if (timer >= 2f)
+            if (timer >= 0.1f)
             {
                 timer = 0;
                 if (target != null)
                 {
+                    avoidance.ignoreList.Add(target.gameObject);
                     targetPos = target.position;
                     if (!LevelManager.instance.ConvertToGrid(targetPos).isBlocked)
                     {
@@ -109,19 +106,19 @@ namespace Ollie
                 }
             }
 
-            if (health.CurrentHealth.Value < 50)
+            if (healthComponent.CurrentHealth.Value < 50)
             {
                 //SetHealthLow(true);
             }
 
-            if (health.CurrentHealth.Value <= 0)
+            if (healthComponent.CurrentHealth.Value <= 0)
             {
                 Death();
                 
             }
             //else SetHealthLow(false);
 
-            if (energy.EnergyAmount.Value <= energy.energyMin)
+            if (energyComponent.EnergyAmount.Value <= energyComponent.energyMin)
             {
                 moveSpeed = 0;
                 sleeping = true;
@@ -146,23 +143,19 @@ namespace Ollie
         private void Death()
         {
             dead = true;
-            health.IsDead.Value = true;
-            energy.useEnergyOnMovement = false;
+            healthComponent.IsDead.Value = true;
+            energyComponent.useEnergyOnMovement = false;
             moveSpeed = 0;
         }
 
         private void Sleep()
         {
-
-            energy.EnergyAmount.Value += 10 * Time.deltaTime;
-            if (energy.EnergyAmount.Value >= energy.energyMax)
-
             StateViewerChange(4);
             energyComponent.EnergyAmount.Value += 10 * Time.deltaTime;
-            if (energyComponent.EnergyAmount.Value >= energyComponent.energyMax)
 
+            if (energyComponent.EnergyAmount.Value >= energyComponent.energyMax)
             {
-                energy.EnergyAmount.Value = energy.energyMax;
+                energyComponent.EnergyAmount.Value = energyComponent.energyMax;
                 sleeping = false;
                 moveSpeed = 3;
             }
@@ -240,9 +233,9 @@ namespace Ollie
 
         public void AddMateToList(GameObject mateLocation)
         {
-            if (!mateLocationList.Contains(mateLocation.transform))
+            if (!mateLocationList.Contains(mateLocation))
             {
-                mateLocationList.Add(mateLocation.transform);
+                mateLocationList.Add(mateLocation);
             }
         }
 
@@ -291,6 +284,20 @@ namespace Ollie
         public void ClearPath()
         {
             path.Clear();
+        }
+
+        #endregion
+
+        #region IEdible Interface
+
+        public float GetEnergyAmount()
+        {
+            throw new NotImplementedException();
+        }
+
+        public float EatMe(float energyRemoved)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
