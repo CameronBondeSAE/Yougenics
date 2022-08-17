@@ -22,6 +22,15 @@ namespace Minh
         }
 
         private void Updatewallstatus(float changedamount, GameObject whodidthis)
+<<<<<<< HEAD
+=======
+        {
+            throw new NotImplementedException();
+        }
+
+        // Update is called once per frame
+        public void Updatewallstatus(float health)
+>>>>>>> 09824c89f65bc865eba752b65b82bb81e2cf8bf1
         {
             if (changedamount <= 10)
             {
