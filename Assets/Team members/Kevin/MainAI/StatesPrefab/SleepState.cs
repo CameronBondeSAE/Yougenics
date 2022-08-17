@@ -5,18 +5,18 @@ using UnityEngine;
 
 namespace Kevin
 {
-    public class SleepState : AntAIState
+    public class SleepState : CritterAAIState
     {
-        // Start is called before the first frame update
-        void Start()
+        public override void Enter()
         {
-        
+            base.Enter();
+            critterA.Sleep();
         }
 
-        // Update is called once per frame
-        void Update()
+        public override void Execute(float aDeltaTime, float aTimeScale)
         {
-        
+            base.Execute(aDeltaTime, aTimeScale);
+            Debug.Log("Im sleeping!!!");
         }
     }
 }

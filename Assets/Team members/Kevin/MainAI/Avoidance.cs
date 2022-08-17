@@ -29,7 +29,14 @@ namespace Kevin
             RaycastHit hitRight;
             RaycastHit hitLeft;
 
-            if (rayDistance < 2)
+            if (Physics.Raycast(new Ray(transform.position, dirF), out hitInfo, rayDistance, 255,
+                    QueryTriggerInteraction.Ignore))
+            {
+                Debug.DrawRay(transform.position, dirF * rayDistance, Color.red);
+                rb.AddRelativeTorque(0, turnForce,0, ForceMode.Impulse);
+            }
+            
+            /*if (rayDistance < 2)
             {
                 rb.AddRelativeTorque(0,turnForce*2f,0,ForceMode.Impulse);
             }
@@ -50,8 +57,7 @@ namespace Kevin
                          QueryTriggerInteraction.Ignore))
             {
                 Debug.DrawRay(transform.position,dirL * rayDistance * 1.5f ,Color.blue);
-                rb.AddRelativeTorque(0,turnForce,0,ForceMode.Impulse);
-            }
+                rb.AddRelativeTorque(0,turnForce,0,ForceMode.Impulse);*/
         }
     }
 }
