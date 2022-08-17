@@ -7,11 +7,13 @@ namespace Maya
 
 
 
+    [RequireComponent(typeof(Energy))]
     public class Food : MonoBehaviour, IEdible, IItem
     {
         public int energyValue;
         public int scaleFactor;
         public int maxScale = 5;
+        Energy     energy;
 
         public ItemInfo info;
         
@@ -19,19 +21,21 @@ namespace Maya
         {
             scaleFactor = Random.Range(1, maxScale);
             gameObject.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
-            
+            energy = GetComponent<Energy>();
         }
 
         public float GetEnergyAmount()
         {
-            energyValue = scaleFactor * 10;
-            return energyValue;
+            return energy.EnergyAmount.Value;
         }
 
         public float EatMe(float energyRemoved)
         {
-            gameObject.transform.localScale = new Vector3(scaleFactor - energyRemoved, scaleFactor - energyRemoved,
-                scaleFactor - energyRemoved);
+            energy.EnergyAmount.Value -= energyRemoved;
+            
+            // View
+            gameObject.transform.localScale = new Vector3(energy.EnergyAmount.Value * scaleFactor, energy.EnergyAmount.Value * scaleFactor,
+                                                          energy.EnergyAmount.Value * scaleFactor);
             return energyRemoved;
         }
 

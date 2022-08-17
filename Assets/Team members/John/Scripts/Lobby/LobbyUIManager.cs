@@ -66,6 +66,9 @@ namespace John
 
 		public static LobbyUIManager instance;
 
+		public event Action<ulong> PlayerPrefabSpawnedClientIDEvent;
+
+
 		#region NetworkButtons/Status Info
 
 		public void HostGame()
@@ -420,6 +423,9 @@ namespace John
 
 				//This only works on the server
 				tempPlayer.GetComponent<PlayerModel>().myClientInfo = client.PlayerObject.GetComponent<ClientInfo>();
+				
+				// Tell anyone (probably clients) that the playercontroll has been assigned an actual player prefab
+				OnPlayerPrefabSpawnedClientRpc(controller.GetComponent<NetworkObject>().NetworkObjectId);
 			}
 
 			//Activate controller on all clients
@@ -435,6 +441,12 @@ namespace John
 			//Update UI
 			lobbyCam.SetActive(false);
 			SubmitLobbyUIStateClientRpc(true);
+		}
+
+		[ClientRpc]
+		public void OnPlayerPrefabSpawnedClientRpc(ulong playerControllerNetworkObject)
+		{
+			PlayerPrefabSpawnedClientIDEvent?.Invoke(playerControllerNetworkObject);
 		}
 
 		[ClientRpc]

@@ -387,6 +387,7 @@ GameObject:
   - component: {fileID: 246153594134181686}
   - component: {fileID: 4893272656999116077}
   - component: {fileID: 3352273563504024227}
+  - component: {fileID: 9169002304504710391}
   m_Layer: 0
   m_Name: JohnPlayerModel
   m_TagString: Untagged
@@ -447,7 +448,7 @@ MonoBehaviour:
   onGroundDrag: 10
   inAirDrag: 0.1
   rb: {fileID: 8611620220612625321}
-  myCam: {fileID: 8638494978573017827}
+  cameraMount: {fileID: 8638494978573017855}
   mouseX: 0
   mouseY: 0
   myClientInfo: {fileID: 0}
@@ -595,6 +596,24 @@ MonoBehaviour:
   m_DefaultActionMap: InGame
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &9169002304504710391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8611620220612625317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46eb57fc3ab7b274b8f74ed8f48af58e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactDistance: 1.5
+  interactRayOffset: {x: 0, y: 0.5, z: 0}
+  adjust1: 0
+  adjust2: 0.5
+  adjust3: 0
+  Player: {fileID: 8611620220612625326}
 --- !u!1 &8611620220984584861
 GameObject:
   m_ObjectHideFlags: 0

@@ -113,7 +113,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   energyValue: 0
   scaleFactor: 0
-  maxScale: 5
+  maxScale: 3
+  info:
+    name: 
+    description: 
+    energyRequired: 0
+    height: 0
+    buildTime: 0
 --- !u!54 &550026090
 Rigidbody:
   m_ObjectHideFlags: 0

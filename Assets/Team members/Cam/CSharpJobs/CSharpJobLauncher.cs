@@ -14,7 +14,13 @@ public class CSharpJobLauncher : MonoBehaviour
 
 		for (int i = 0; i < 10; i++)
 		{
-			CamJob    camJob     = new CamJob();
+			CamJob camJob = new CamJob
+							{
+								thing = 4f,
+								stuff = 15134f
+							};
+
+
 			JobHandle jobHandle1 = camJob.Schedule();
 
 			handles[i] = jobHandle1;

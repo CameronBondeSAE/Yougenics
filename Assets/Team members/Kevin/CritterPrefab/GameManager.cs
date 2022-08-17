@@ -1,9 +1,11 @@
+using John;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using Ollie;
 using TMPro;
+using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -29,16 +31,37 @@ namespace Kevin
         public List<GameObject> dropOffPoints;
         private bool currentlyDraining;
         public float drainRate;
+
+        public Camera mainCameraPrefab;
         
 
         public void Awake()
         {
             instance = this;
+         
+            // Client side only
+            LobbyUIManager.instance.PlayerPrefabSpawnedClientIDEvent += OnInstanceOnPlayerPrefabSpawnedClientIDEvent;
+            
             energy = GetComponent<Energy>();
             energyGoal = energy.energyMax;
             
             dropOffPoints = new List<GameObject>();
             StartCoroutine(DrainCoroutine());
+        }
+
+        // Assign LOCAL camera to actual player prefab
+        void OnInstanceOnPlayerPrefabSpawnedClientIDEvent(ulong clientID)
+        {
+            NetworkObject controller = NetworkManager.Singleton.ConnectedClients[clientID-1].PlayerObject;
+            PlayerModel   playerModel   = controller.GetComponent<PlayerController>().playerModel;
+
+            if (controller.IsLocalPlayer)
+            {
+                Camera newCamera = Instantiate(mainCameraPrefab);
+                newCamera.transform.parent        = playerModel.cameraMount;
+                newCamera.transform.localPosition = Vector3.zero;
+            }
+            
         }
 
         public void Update()

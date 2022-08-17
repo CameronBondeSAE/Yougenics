@@ -21,7 +21,8 @@ namespace John
 		public float      onGroundDrag = 4f;
 		public float      inAirDrag    = 0.1f;
 		public Rigidbody  rb;
-		public GameObject myCam;
+		
+		public Transform  cameraMount;
 
 		//Input control variables
 		Vector3 movement;
@@ -45,12 +46,6 @@ namespace John
 		public PlayerInput playerInput;
 
 		public Transform playerHead;
-
-		public override void OnNetworkSpawn()
-		{
-			if (!IsOwner)
-				myCam.SetActive(false);
-		}
 
 		//Setting up controller if non-networked
 		private void Start()

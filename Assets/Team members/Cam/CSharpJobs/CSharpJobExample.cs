@@ -5,6 +5,9 @@ using UnityEngine;
 
 public struct CamJob : IJob
 {
+    public float thing;
+    public float stuff;
+    
     public void Execute()
     {
         float answer = 0;
@@ -14,6 +17,6 @@ public struct CamJob : IJob
             answer += Mathf.Sqrt(i) + Mathf.PerlinNoise(i * 1.24f, 0);
         }
 
-        Debug.Log("I did something! : " + answer);
+        Debug.Log("I did something! : " + answer + " : Thing = "+thing);
     }
 }

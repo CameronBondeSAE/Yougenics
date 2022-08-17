@@ -5,6 +5,8 @@ public class JohnPlayerModel : NetworkBehaviour
 {
     public NetworkVariable<Vector3> Position = new NetworkVariable<Vector3>();
 
+    public Transform cameraMount;
+    
     public override void OnNetworkSpawn()
     {
         if (IsOwner)
