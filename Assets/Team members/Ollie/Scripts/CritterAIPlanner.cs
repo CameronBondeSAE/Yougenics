@@ -26,14 +26,14 @@ namespace Ollie
         private Rigidbody rigidbody;
         
         private TurnTowards turnTowards;
-<<<<<<< Updated upstream
+
         private Health health;
         private Energy energy;
-=======
+
         private Health healthComponent;
         private Energy energyComponent;
         private StateViewer stateViewer;
->>>>>>> Stashed changes
+
         private bool sleeping;
         private bool dead;
 
@@ -73,15 +73,15 @@ namespace Ollie
             health = GetComponent<Minh.Health>();
             health.CurrentHealth.Value = health.maxHealth;
             
-<<<<<<< Updated upstream
+
             energy = GetComponent<Energy>();
             energy.useEnergyOnMovement = true;
             energy.EnergyAmount.Value = energy.energyMax;
-=======
+
             energyComponent = GetComponent<Energy>();
             //energyComponent.useEnergyOnMovement = true;
             energyComponent.EnergyAmount.Value = energyComponent.energyMax;
->>>>>>> Stashed changes
+
 
             if (Random.Range(0, 2) == 0)
             {
@@ -153,14 +153,14 @@ namespace Ollie
 
         private void Sleep()
         {
-<<<<<<< Updated upstream
+
             energy.EnergyAmount.Value += 10 * Time.deltaTime;
             if (energy.EnergyAmount.Value >= energy.energyMax)
-=======
+
             StateViewerChange(4);
             energyComponent.EnergyAmount.Value += 10 * Time.deltaTime;
             if (energyComponent.EnergyAmount.Value >= energyComponent.energyMax)
->>>>>>> Stashed changes
+
             {
                 energy.EnergyAmount.Value = energy.energyMax;
                 sleeping = false;
