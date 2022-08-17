@@ -9,30 +9,29 @@ namespace Alex
     
     public class HealthBarAlex : MonoBehaviour
     {
-        public Health minhHealth;
+        public Health myHealth;
         public Slider slider;
         public Gradient gradient;
         public Image fill;
-        public JohnPlayerModel player;
 
         public void SetMaxHealth(float healthHp)
         {
-            slider.maxValue = minhHealth.CurrentHealth.Value;
-            slider.value = minhHealth.CurrentHealth.Value;
+            slider.maxValue = myHealth.CurrentHealth.Value;
+            slider.value = myHealth.CurrentHealth.Value;
 
             fill.color = gradient.Evaluate(1f);
         }
 
         public void SetHealth(float healthHp)
         {
-            slider.value = minhHealth.CurrentHealth.Value;
+            slider.value = myHealth.CurrentHealth.Value;
 
             fill.color = gradient.Evaluate(slider.normalizedValue);
         }
 
         public void Update()
         {
-            slider.value = minhHealth.CurrentHealth.Value;
+            slider.value = myHealth.CurrentHealth.Value;
             fill.color = gradient.Evaluate(slider.normalizedValue);
         }
     }
