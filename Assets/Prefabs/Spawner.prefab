@@ -47,11 +47,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoStart: 0
   autoNetworkStart: 0
-  radius: 25
+  radius: 50
   groupInfos:
-  - prefabs: []
+  - prefabs:
+    - {fileID: 1299172797838932261, guid: 0a913f892598f5f418b2996bad0a4fd5, type: 3}
     spawnPoints: []
-    countPerGroup: 5
+    countPerGroup: 1
+  - prefabs:
+    - {fileID: 7918710336458080463, guid: f1e04ec4224f0da408655217b058f5a3, type: 3}
+    spawnPoints: []
+    countPerGroup: 1
+  - prefabs:
+    - {fileID: 7918710336458080463, guid: de202a3b7247a4143bba3e8489a9cea7, type: 3}
+    spawnPoints: []
+    countPerGroup: 1
   groundOffset: 1
   spawned: []
 --- !u!114 &9165690428412196990

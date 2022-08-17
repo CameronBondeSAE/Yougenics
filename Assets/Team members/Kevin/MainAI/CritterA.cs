@@ -66,6 +66,9 @@ public class CritterA : CreatureBase, IEdible, ISense
         public bool noHealth;
         public bool isDead;
         
+        //View Code
+        public Renderer renderer;
+        
         public void Awake()
         {
             commonAttributes = GetComponent<CommonAttributes>();
@@ -88,6 +91,13 @@ public class CritterA : CreatureBase, IEdible, ISense
             myDangerLevel = 5;
             //commonAttributes.allegiances = "critter, player, etc"
             //spawnPosition = transform;
+            renderer = GetComponent<Renderer>();
+
+        }
+
+        public void Chameleon()
+        {
+            
         }
 
         #region CritterExecutables
