@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using Anthill.AI;
 using UnityEngine;
 
-namespace Kevin
+namespace k
 {
     public class EatFoodState : AntAIState
     {
         public GameObject gluttonPrefab;
-        public GluttonBase gluttonBase;
+        //public GluttonBase gluttonBase;
         public override void Create(GameObject aGameObject)
         {
             base.Create(aGameObject);
             gluttonPrefab = aGameObject;
-            gluttonBase = gluttonPrefab.GetComponent<GluttonBase>();
+            //gluttonBase = gluttonPrefab.GetComponent<GluttonBase>();
         }
     }
 }

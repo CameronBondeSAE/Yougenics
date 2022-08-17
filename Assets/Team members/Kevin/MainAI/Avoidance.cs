@@ -28,10 +28,6 @@ namespace Kevin
             RaycastHit hitInfo;
             RaycastHit hitRight;
             RaycastHit hitLeft;
-            
-            
-            
-            
 
             if (rayDistance < 2)
             {

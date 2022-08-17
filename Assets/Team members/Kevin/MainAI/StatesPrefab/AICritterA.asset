@@ -15,7 +15,343 @@ MonoBehaviour:
   conditions:
     list:
     - id: 0
-      name: <Unnamed>
-  actions: []
-  goals: []
-  worldStates: []
+      name: isHungry
+    - id: 1
+      name: isEating
+    - id: 2
+      name: isInDanger
+    - id: 3
+      name: isSleeping
+    - id: 4
+      name: canHunt
+    - id: 5
+      name: caughtFood
+    - id: 6
+      name: isHealthy
+    - id: 7
+      name: readyToMate
+    - id: 8
+      name: foundMate
+    - id: 9
+      name: isSafe
+    - id: 10
+      name: isMating
+    - id: 11
+      name: enemyNearby
+    - id: 12
+      name: isTired
+    - id: 13
+      name: noHealth
+    - id: 14
+      name: isDead
+    - id: 15
+      name: WanderingBehaviour
+    - id: 16
+      name: HungryBehaviour
+    - id: 17
+      name: MateBehaviour
+    - id: 18
+      name: RunningBehaviour
+    - id: 19
+      name: SleepingBehaviour
+    - id: 20
+      name: DeathBehaviour
+  actions:
+  - name: WanderingBehaviour
+    isDefault: 1
+    state: {fileID: 2671737503152595324, guid: 5a0c1f135f808b74895130f443bd5298, type: 3}
+    cost: 0
+    position: {x: 417.04938, y: 31.172844}
+    pre: []
+    post:
+    - id: 15
+      value: 0
+  - name: HungryBehaviour
+    isDefault: 0
+    state: {fileID: 6320499820265716607, guid: a294c3d453e1c7d47b13320b76439dd1, type: 3}
+    cost: 0
+    position: {x: 619.51855, y: 32.40741}
+    pre: []
+    post:
+    - id: 16
+      value: 0
+  - name: MateBehaviour
+    isDefault: 0
+    state: {fileID: 46118274216976976, guid: a37ef8c681b448345b42c285e0fc307f, type: 3}
+    cost: 0
+    position: {x: 823.45703, y: 31.172852}
+    pre: []
+    post:
+    - id: 17
+      value: 0
+  - name: RunningBehaviour
+    isDefault: 0
+    state: {fileID: 6057210449112101807, guid: 21bc87adc949737428d116a5fd571bae, type: 3}
+    cost: 0
+    position: {x: 1027.1608, y: 33.641968}
+    pre: []
+    post:
+    - id: 18
+      value: 0
+  - name: DeathBehaviour
+    isDefault: 0
+    state: {fileID: 4723009986244244221, guid: 6d6cad0bbfc50d9449fe4c0b4837c00d, type: 3}
+    cost: 0
+    position: {x: 1640.5573, y: 35.110115}
+    pre: []
+    post:
+    - id: 20
+      value: 0
+  - name: SleepingBehaviour
+    isDefault: 0
+    state: {fileID: 8679892986948459551, guid: b699612c722abeb4d9eb145f2170a8e5, type: 3}
+    cost: 0
+    position: {x: 1440.7648, y: 34.144142}
+    pre: []
+    post:
+    - id: 19
+      value: 0
+  - name: FindFood
+    isDefault: 0
+    state: {fileID: 3909752266124299117, guid: 66f877821b17d654f821d3838521e4ab, type: 3}
+    cost: 0
+    position: {x: 620, y: 220}
+    pre:
+    - id: 0
+      value: 1
+    - id: 1
+      value: 0
+    - id: 9
+      value: 1
+    post:
+    - id: 4
+      value: 1
+  - name: MoveToFood
+    isDefault: 0
+    state: {fileID: 810026550026606748, guid: a9256a2aa4762cc4183e33bde4a9c075, type: 3}
+    cost: 0
+    position: {x: 619.52167, y: 452.96014}
+    pre:
+    - id: 4
+      value: 1
+    - id: 5
+      value: 0
+    post:
+    - id: 5
+      value: 1
+    - id: 1
+      value: 1
+  - name: EatFood
+    isDefault: 0
+    state: {fileID: 6533381805297026233, guid: 359b00200f3885a4f805349543b95e46, type: 3}
+    cost: 0
+    position: {x: 620.4365, y: 686.8354}
+    pre:
+    - id: 1
+      value: 1
+    - id: 5
+      value: 1
+    post:
+    - id: 0
+      value: 0
+    - id: 1
+      value: 0
+    - id: 5
+      value: 0
+    - id: 4
+      value: 0
+  - name: FindMate
+    isDefault: 0
+    state: {fileID: 7947509287053671847, guid: c5d4194dd6659b6418ff78ff88fbccf6, type: 3}
+    cost: 0
+    position: {x: 820, y: 220}
+    pre:
+    - id: 7
+      value: 1
+    - id: 9
+      value: 1
+    post:
+    - id: 8
+      value: 1
+  - name: MoveToMate
+    isDefault: 0
+    state: {fileID: 3553369137563149797, guid: bdc142b7dba987d4b9f7ecdd56589ff4, type: 3}
+    cost: 0
+    position: {x: 821.0416, y: 446.04172}
+    pre:
+    - id: 8
+      value: 1
+    - id: 9
+      value: 1
+    post:
+    - id: 10
+      value: 1
+  - name: Mate
+    isDefault: 0
+    state: {fileID: 7045074645206208456, guid: 0a900d974e014c7448d702e0b163afb3, type: 3}
+    cost: 0
+    position: {x: 823.0753, y: 665.8225}
+    pre:
+    - id: 10
+      value: 1
+    post:
+    - id: 10
+      value: 0
+    - id: 7
+      value: 0
+    - id: 8
+      value: 0
+  - name: RunAway
+    isDefault: 0
+    state: {fileID: 5744404553060368130, guid: 04e2a1d0c380bb0478a7af1b844c48e0, type: 3}
+    cost: 0
+    position: {x: 1025.7715, y: 227.0835}
+    pre:
+    - id: 9
+      value: 0
+    post:
+    - id: 9
+      value: 1
+  - name: Sleep
+    isDefault: 0
+    state: {fileID: 938379795196379377, guid: 328765787ff767e41bdfe2098f429f0e, type: 3}
+    cost: 0
+    position: {x: 1436.6588, y: 229.05789}
+    pre:
+    - id: 12
+      value: 1
+    - id: 9
+      value: 1
+    - id: 0
+      value: 0
+    - id: 10
+      value: 0
+    post:
+    - id: 3
+      value: 1
+  - name: Dead
+    isDefault: 0
+    state: {fileID: 5073432008754628702, guid: 8639b3cbe0f1f5b429d921db51bca001, type: 3}
+    cost: 0
+    position: {x: 1639.9517, y: 226.13443}
+    pre:
+    - id: 13
+      value: 1
+    post:
+    - id: 14
+      value: 1
+  - name: WakeUp
+    isDefault: 0
+    state: {fileID: 8795710798257936374, guid: a83dae0afd22e00458f25df67a0c090d, type: 3}
+    cost: 0
+    position: {x: 1436.9384, y: 485.09537}
+    pre:
+    - id: 3
+      value: 1
+    post:
+    - id: 3
+      value: 0
+    - id: 12
+      value: 0
+  - name: SecurityCheck
+    isDefault: 0
+    state: {fileID: 2849469699540722678, guid: bb300fddb1d86c7408842048e464d0f7, type: 3}
+    cost: 0
+    position: {x: 418.51862, y: 224.08817}
+    pre:
+    - id: 2
+      value: 0
+    - id: 3
+      value: 0
+    post:
+    - id: 9
+      value: 1
+  goals:
+  - name: isHealthy
+    isDefault: 1
+    position: {x: 210.0487, y: 31.263885}
+    conditions:
+    - id: 0
+      value: 0
+    - id: 1
+      value: 0
+    - id: 4
+      value: 0
+    - id: 5
+      value: 0
+    - id: 6
+      value: 0
+    - id: 7
+      value: 0
+    - id: 8
+      value: 0
+    - id: 9
+      value: 1
+    - id: 10
+      value: 0
+    - id: 11
+      value: 0
+    - id: 12
+      value: 0
+    - id: 13
+      value: 0
+    - id: 14
+      value: 0
+    - id: 15
+      value: 0
+    - id: 16
+      value: 0
+    - id: 17
+      value: 0
+    - id: 18
+      value: 0
+    - id: 19
+      value: 0
+    - id: 20
+      value: 0
+  worldStates:
+  - position: {x: 223.24387, y: 1009.2083}
+    isAutoUpdate: 1
+    list:
+    - id: 0
+      value: 0
+    - id: 1
+      value: 0
+    - id: 2
+      value: 0
+    - id: 3
+      value: 0
+    - id: 4
+      value: 0
+    - id: 5
+      value: 0
+    - id: 6
+      value: 0
+    - id: 7
+      value: 0
+    - id: 8
+      value: 0
+    - id: 9
+      value: 1
+    - id: 10
+      value: 0
+    - id: 11
+      value: 0
+    - id: 12
+      value: 0
+    - id: 13
+      value: 0
+    - id: 14
+      value: 0
+    - id: 15
+      value: 0
+    - id: 16
+      value: 0
+    - id: 17
+      value: 0
+    - id: 18
+      value: 0
+    - id: 19
+      value: 0
+    - id: 20
+      value: 0
