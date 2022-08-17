@@ -23,17 +23,11 @@ namespace Minh
 
         private void Updatewallstatus(float changedamount, GameObject whodidthis)
         {
-            throw new NotImplementedException();
-        }
-
-        // Update is called once per frame
-        public void Updatewallstatus(float health)
-        {
-            if (health <= 10)
+            if (changedamount <= 10)
             {
                 Healing(); 
             }
-            if (health >= 100)
+            if (changedamount >= 100)
             {
                 Interact();    
             }
