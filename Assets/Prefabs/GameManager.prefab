@@ -49,6 +49,7 @@ MonoBehaviour:
   energyGoal: 0
   energy: {fileID: 2049367469}
   currentEnergy: 0
+  remainingTime: 0
   dropOffPoints: []
   drainRate: 5
 --- !u!114 &2049367469
@@ -64,8 +65,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnergyAmount:
-    m_InternalValue: 10
-  energyMax: 1000000
+    m_InternalValue: 500
+  energyMax: 1000
   energyMin: 0
   drainAmount: 0
   moveDrainAmount: 1

@@ -274,12 +274,9 @@ MonoBehaviour:
     m_InternalValue: -300
   IsDead:
     m_InternalValue: 0
-  Hp: 100
-  curHp: 0
-  dead: 0
+  maxHealth: 100
   fullenergy: 1
   noenergy: 0
-  hpui: {fileID: 0}
 --- !u!65 &581917050
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -596,3 +593,68 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
+--- !u!1001 &7489592741543736093
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7489592742427255253, guid: a6926c88bc3687642a9f50f3ff429400, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1174241428
+      objectReference: {fileID: 0}
+    - target: {fileID: 7489592742504237872, guid: a6926c88bc3687642a9f50f3ff429400, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 4035719298
+      objectReference: {fileID: 0}
+    - target: {fileID: 7489592742504237873, guid: a6926c88bc3687642a9f50f3ff429400, type: 3}
+      propertyPath: m_Name
+      value: LazerCharger
+      objectReference: {fileID: 0}
+    - target: {fileID: 7489592742504237874, guid: a6926c88bc3687642a9f50f3ff429400, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7489592742504237874, guid: a6926c88bc3687642a9f50f3ff429400, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7489592742504237874, guid: a6926c88bc3687642a9f50f3ff429400, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7489592742504237874, guid: a6926c88bc3687642a9f50f3ff429400, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7489592742504237874, guid: a6926c88bc3687642a9f50f3ff429400, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7489592742504237874, guid: a6926c88bc3687642a9f50f3ff429400, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7489592742504237874, guid: a6926c88bc3687642a9f50f3ff429400, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7489592742504237874, guid: a6926c88bc3687642a9f50f3ff429400, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7489592742504237874, guid: a6926c88bc3687642a9f50f3ff429400, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7489592742504237874, guid: a6926c88bc3687642a9f50f3ff429400, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7489592742504237874, guid: a6926c88bc3687642a9f50f3ff429400, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a6926c88bc3687642a9f50f3ff429400, type: 3}

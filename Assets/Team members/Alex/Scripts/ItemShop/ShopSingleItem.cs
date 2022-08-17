@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using Alex;
+using Kevin;
 using UnityEngine;
 using Unity.Netcode;
 
@@ -12,9 +14,15 @@ public class ShopSingleItem : NetworkBehaviour
 	public  Spawner    spawner;
 	public  Button     button;
 	public bool canSpawn = true;
+	private GameManager gameManager;
 
 
-    public override void OnNetworkSpawn()
+	private void Start()
+	{
+		gameManager = GetComponent<GameManager>();
+	}
+
+	public override void OnNetworkSpawn()
     {
 		if (!IsServer)
 			return;
@@ -31,10 +39,11 @@ public class ShopSingleItem : NetworkBehaviour
 
 	public IEnumerator StartBuild()
 	{
-		if (canSpawn)
+		if (canSpawn && itemInfo.energyRequired <= GameManager.instance.energy.EnergyAmount.Value)
 		{
 			//Can spawn set to false to prevent multiple objects being built at the same time
 			canSpawn = false;
+			GameManager.instance.energy.EnergyAmount.Value -= itemInfo.energyRequired;
 
 			//Waits for build time before creating object in scene
 			yield return new WaitForSeconds(itemInfo.buildTime);

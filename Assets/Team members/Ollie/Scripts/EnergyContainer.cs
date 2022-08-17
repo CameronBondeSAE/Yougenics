@@ -2,6 +2,7 @@ using John;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Anthill.Pool;
 using UnityEngine;
 
 
@@ -54,8 +55,9 @@ namespace Ollie
 
         public void OnTriggerEnter(Collider other)
         {
+            IItem otherItem = other.GetComponent<IItem>();
             //need to check for player too!! maybe?
-            if (other.GetComponent<Energy>() != null && !drainTargets.Contains(other.gameObject) && !other.GetComponent<PlayerModel>() && !other.GetComponent<DropOffPoint>())
+            if (other.GetComponent<Energy>() != null || !drainTargets.Contains(other.gameObject) ||!other.GetComponent<PlayerModel>() || !other.GetComponent<DropOffPoint>() || otherItem != null)
             {
                 drainTargets.Add(other.gameObject);
             }

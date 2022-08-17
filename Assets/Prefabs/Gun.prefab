@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2764626321808243856}
   - component: {fileID: 2764626321808243857}
   - component: {fileID: 3850238727689681086}
+  - component: {fileID: 245786362973887071}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 2764626321808243858}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.32825, y: 0.32825, z: 0.32825}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -112,10 +113,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemInfo:
-    name: Gun
+    name: Lazer
     description: 'Shoot critters to death with destructive force! '
     energyRequired: 50
-    height: 2
+    height: 0
     buildTime: 2
 --- !u!114 &3850238727689681086
 MonoBehaviour:
@@ -133,3 +134,25 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &245786362973887071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2764626321808243858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86b58142ff8a3804fa71c5004d10d94b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnergyAmount:
+    m_InternalValue: 0
+  energyMax: 100
+  energyMin: 0
+  drainAmount: 0
+  moveDrainAmount: 0
+  drainSpeed: 0
+  energyUserMoving: 0
+  myMagnitude: 0
+  useEnergyOnMovement: 0
