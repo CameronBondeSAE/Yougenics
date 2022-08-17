@@ -19,6 +19,6 @@ public class TimeRemaining : MonoBehaviour
     void Update()
     {
         //EnergyLevel();
-        textMeshPro.text = "Time Remaining: " + GetComponent<GameManager>().remainingTime.ToString("0:00:00"); 
+        textMeshPro.text = "Death in " + GameManager.instance.remainingTime.ToString("0:00:00"); 
     }
 }
