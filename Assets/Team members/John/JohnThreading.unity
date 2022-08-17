@@ -242,7 +242,7 @@ MonoBehaviour:
     m_Bits: 0
   autoGenerateGridOnAwake: 1
   constantScan: 0
-  nodeSize: 2
+  nodeSize: 1
   debugGizmos: 1
 --- !u!4 &292774132
 Transform:

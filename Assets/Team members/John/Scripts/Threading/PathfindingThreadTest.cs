@@ -117,8 +117,9 @@ public struct JohnPathfindJob : IJob
         }
 
         path.Reverse();
-        Debug.Log("Path Found: " + path);
+        Debug.Log("Path Found: " + path.Count + " entries");
         pathList = path.ToNativeArray<Vector2>(Allocator.Persistent);
+        Debug.Log("pathList has " + pathList.Length + " entries");
 
         //WorldScanner.instance.path = path;
         // WorldScanner.instance.endNode = end;
