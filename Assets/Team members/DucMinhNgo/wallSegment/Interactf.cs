@@ -38,14 +38,15 @@ namespace Minh
             Debug.Log("repairing");
             health.startHealthincreasing();
             GetComponent<Renderer>().material.color = Color.green;
-            GetComponent<Renderer>().material.DOColor(Color.gray, 5f);
+            GetComponent<Renderer>().material.DOColor(Color.gray, 3f);
             healing?.Invoke();
         }
         public void Interact()
         {
             Debug.Log("destroying");
             health.startHealthdepeting();
-            //GetComponent<Renderer>().material.color;
+            GetComponent<Renderer>().material.color = Color.red;
+            GetComponent<Renderer>().material.DOColor(Color.gray, 3f);
             dealdamage?.Invoke();
         }
     }
