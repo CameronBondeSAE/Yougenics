@@ -64,6 +64,28 @@ namespace Minh
                     }
                 }
             }
+            if (InputSystem.GetDevice<Keyboard>().digit2Key.wasPressedThisFrame)
+            {
+                if(slot2 != null)
+                {
+                    MonoBehaviour monoBehaviour = slot2 as MonoBehaviour;
+                    slot2 = null;
+                    monoBehaviour.transform.parent = null;
+                    Debug.Log("dropped");
+                }
+                else if (hit.collider != null)
+                {
+                    IItem item2 = hit.collider.gameObject.GetComponentInParent<IItem>();
+                    if (item2 != null)
+                    {
+                        slot1 = item2;
+                        MonoBehaviour monoBehaviour = item2 as MonoBehaviour;
+                        monoBehaviour.transform.parent = Player.transform;
+                        monoBehaviour.transform.position = Player.transform.position + new Vector3(0f, adjust2 * adjust3 * Time.deltaTime, 1 * adjust1 * Time.deltaTime);
+                        Debug.Log("picked up");
+                    }
+                }
+            }
             if (InputSystem.GetDevice<Mouse>().leftButton.wasPressedThisFrame)
             {
                 IInteractable items1 = slot1 as IInteractable;

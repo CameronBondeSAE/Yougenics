@@ -238,6 +238,59 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+--- !u!1 &437171787
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 437171789}
+  - component: {fileID: 437171788}
+  m_Layer: 0
+  m_Name: reflect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &437171788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437171787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 546a3b900eed91f42b600385bbade752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  test: {x: 105.6, y: 105.6, z: 105.6}
+  x: 7.45
+  y: 1.08
+  z: 2.01
+  adjust1: 2.34
+  shoot: 1
+  maxDistance: 4.21
+  adjust2: {x: 54.6, y: 54.6, z: 54.6}
+  Object: {fileID: 1787457145}
+--- !u!4 &437171789
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437171787}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 497.578, y: -472.49023, z: 1718.188}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &869988467
 GameObject:
   m_ObjectHideFlags: 0
@@ -506,7 +559,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2134570086}
-  - component: {fileID: 2134570085}
   m_Layer: 0
   m_Name: raycast
   m_TagString: Untagged
@@ -514,24 +566,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2134570085
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2134570084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 546a3b900eed91f42b600385bbade752, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  test: {x: 129.2, y: 129.2, z: 129.2}
-  x: 145
-  y: -1
-  z: 0
-  adjust1: 25
-  shoot: 1
 --- !u!4 &2134570086
 Transform:
   m_ObjectHideFlags: 0
