@@ -19,11 +19,13 @@ namespace Ollie
 
         public override void Enter()
         {
+            
             base.Enter();
         }
 
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
+            brain.StateViewerChange(5);
             if (brain.path.Count == 0)
             {
                 //brain.RandomTarget();

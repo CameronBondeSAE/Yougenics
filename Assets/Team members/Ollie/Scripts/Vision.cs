@@ -23,7 +23,7 @@ namespace Ollie
 
         public void Start()
         {
-            myGender = Critter.Gender.Female;
+            
         }
 
         public void VisionRefresh()
@@ -70,12 +70,9 @@ namespace Ollie
                                 FoodSpottedEvent?.Invoke();
                             }
                             
-                            if (hitData.transform.gameObject.GetComponent<iCritter>() != null)
+                            if (hitData.transform.gameObject.GetComponent<CritterAIPlanner>() != null)
                             {
-                                //if hitData is NOT nonbinary, and not the same gender as me
-                                if (hitData.transform.gameObject.GetComponent<Critter>().gender != myGender &&
-                                    hitData.transform.gameObject.GetComponent<Critter>().gender !=
-                                    Critter.Gender.NonBinary)
+                                if (hitData.transform.gameObject.GetComponent<CritterAIPlanner>().sex != parent.sex)
                                 {
                                     parent.AddMateToList(hitData.transform.gameObject);
                                 }

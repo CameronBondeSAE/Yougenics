@@ -26,8 +26,14 @@ namespace Ollie
         private Rigidbody rigidbody;
         
         private TurnTowards turnTowards;
+<<<<<<< Updated upstream
         private Health health;
         private Energy energy;
+=======
+        private Health healthComponent;
+        private Energy energyComponent;
+        private StateViewer stateViewer;
+>>>>>>> Stashed changes
         private bool sleeping;
         private bool dead;
 
@@ -62,13 +68,20 @@ namespace Ollie
             moveSpeed = 3;
             rigidbody = GetComponent<Rigidbody>();
             turnTowards = GetComponentInChildren<TurnTowards>();
+            stateViewer = GetComponentInChildren<StateViewer>();
             
             health = GetComponent<Minh.Health>();
             health.CurrentHealth.Value = health.maxHealth;
             
+<<<<<<< Updated upstream
             energy = GetComponent<Energy>();
             energy.useEnergyOnMovement = true;
             energy.EnergyAmount.Value = energy.energyMax;
+=======
+            energyComponent = GetComponent<Energy>();
+            //energyComponent.useEnergyOnMovement = true;
+            energyComponent.EnergyAmount.Value = energyComponent.energyMax;
+>>>>>>> Stashed changes
 
             if (Random.Range(0, 2) == 0)
             {
@@ -98,7 +111,7 @@ namespace Ollie
 
             if (health.CurrentHealth.Value < 50)
             {
-                SetHealthLow(true);
+                //SetHealthLow(true);
             }
 
             if (health.CurrentHealth.Value <= 0)
@@ -106,7 +119,7 @@ namespace Ollie
                 Death();
                 
             }
-            else SetHealthLow(false);
+            //else SetHealthLow(false);
 
             if (energy.EnergyAmount.Value <= energy.energyMin)
             {
@@ -125,6 +138,11 @@ namespace Ollie
             }
         }
 
+        public void StateViewerChange(int index)
+        {
+            stateViewer.ChangeParticles(index);
+        }
+
         private void Death()
         {
             dead = true;
@@ -135,8 +153,14 @@ namespace Ollie
 
         private void Sleep()
         {
+<<<<<<< Updated upstream
             energy.EnergyAmount.Value += 10 * Time.deltaTime;
             if (energy.EnergyAmount.Value >= energy.energyMax)
+=======
+            StateViewerChange(4);
+            energyComponent.EnergyAmount.Value += 10 * Time.deltaTime;
+            if (energyComponent.EnergyAmount.Value >= energyComponent.energyMax)
+>>>>>>> Stashed changes
             {
                 energy.EnergyAmount.Value = energy.energyMax;
                 sleeping = false;
@@ -149,8 +173,9 @@ namespace Ollie
             print(this + " has no health or energy, should be destroyed");
         }
 
-        private void FixedUpdate()
+        public override void FixedUpdate()
         {
+            base.FixedUpdate();
             if (path.Count > 0)
             {
                if (path.Count > 3)

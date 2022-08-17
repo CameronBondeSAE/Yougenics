@@ -64,6 +64,7 @@ namespace Ollie
 
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
+            brain.StateViewerChange(1);
             base.Execute(aDeltaTime, aTimeScale);
             
             if (brain.path.Count == 0)
