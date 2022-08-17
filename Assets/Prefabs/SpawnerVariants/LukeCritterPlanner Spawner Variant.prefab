@@ -16,8 +16,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5076254510905692312, guid: ccbab0122c7c9304fab7deacc164e04e, type: 3}
+      propertyPath: groupInfos.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5076254510905692312, guid: ccbab0122c7c9304fab7deacc164e04e, type: 3}
       propertyPath: groupInfos.Array.data[0].countPerGroup
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5076254510905692312, guid: ccbab0122c7c9304fab7deacc164e04e, type: 3}
       propertyPath: groupInfos.Array.data[0].prefabs.Array.size
@@ -27,6 +31,10 @@ PrefabInstance:
       propertyPath: groupInfos.Array.data[0].prefabs.Array.data[0]
       value: 
       objectReference: {fileID: 7265986140717145438, guid: 23b1db56bb65d2d4abffe12b850cadef, type: 3}
+    - target: {fileID: 5076254510905692312, guid: ccbab0122c7c9304fab7deacc164e04e, type: 3}
+      propertyPath: groupInfos.Array.data[1].prefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 7918710336458080463, guid: de202a3b7247a4143bba3e8489a9cea7, type: 3}
     - target: {fileID: 5076254510905692313, guid: ccbab0122c7c9304fab7deacc164e04e, type: 3}
       propertyPath: m_RootOrder
       value: 0
