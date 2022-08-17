@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Kev;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -37,13 +38,14 @@ namespace Minh
             Debug.Log("repairing");
             health.startHealthincreasing();
             GetComponent<Renderer>().material.color = Color.green;
+            GetComponent<Renderer>().material.DOColor(Color.gray, 5f);
             healing?.Invoke();
         }
         public void Interact()
         {
             Debug.Log("destroying");
             health.startHealthdepeting();
-            GetComponent<Renderer>().material.color = Color.red;
+            //GetComponent<Renderer>().material.color;
             dealdamage?.Invoke();
         }
     }

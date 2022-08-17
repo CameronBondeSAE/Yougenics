@@ -22,38 +22,6 @@ namespace Minh
         public Transform Player;
 
         // Update is called once per frame
-        public void FixedUpdate() 
-        {
-            RaycastHit hit = CheckWhatsInFrontOfMe();
-            //if (hit.transform != null) Debug.Log(hit.transform.gameObject.name);
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                if (hit.collider != null)
-                {
-                    IItem item1 = hit.collider.gameObject.GetComponentInParent<IItem>();
-                    if (item1 != null)
-                    {
-                        slot1 = item1;
-                        MonoBehaviour monoBehaviour = item1 as MonoBehaviour;
-                        monoBehaviour.transform.parent = Player.transform;
-                        monoBehaviour.transform.position = Player.transform.position + new Vector3(0f, adjust2 * adjust3 * Time.deltaTime, 1 * adjust1 * Time.deltaTime);
-                        Debug.Log("picked up");
-                    }
-                }
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                IItem slot1 = hit.collider.gameObject.GetComponentInParent<IItem>();
-                if(slot1 != null)
-                {
-                    MonoBehaviour monoBehaviour = slot1 as MonoBehaviour;
-                    slot1 = null;
-                    monoBehaviour.transform.parent = null;
-                    Debug.Log("dropped");
-                } 
-            }
-        }
         private RaycastHit CheckWhatsInFrontOfMe()
         {
             // Check what's in front of me. TODO: Make it scan the area or something less precise
@@ -72,16 +40,40 @@ namespace Minh
         }
         public void Update()
         {
+            RaycastHit hit = CheckWhatsInFrontOfMe();
+            //if (hit.transform != null) Debug.Log(hit.transform.gameObject.name);
+            if (InputSystem.GetDevice<Keyboard>().digit1Key.wasPressedThisFrame)
+            {
+                if(slot1 != null)
+                {
+                    MonoBehaviour monoBehaviour = slot1 as MonoBehaviour;
+                    slot1 = null;
+                    monoBehaviour.transform.parent = null;
+                    Debug.Log("dropped");
+                }
+                else if (hit.collider != null)
+                {
+                    IItem item1 = hit.collider.gameObject.GetComponentInParent<IItem>();
+                    if (item1 != null)
+                    {
+                        slot1 = item1;
+                        MonoBehaviour monoBehaviour = item1 as MonoBehaviour;
+                        monoBehaviour.transform.parent = Player.transform;
+                        monoBehaviour.transform.position = Player.transform.position + new Vector3(0f, adjust2 * adjust3 * Time.deltaTime, 1 * adjust1 * Time.deltaTime);
+                        Debug.Log("picked up");
+                    }
+                }
+            }
             if (InputSystem.GetDevice<Mouse>().leftButton.wasPressedThisFrame)
             {
                 IInteractable items1 = slot1 as IInteractable;
-                items1.Interact();
+                if (items1 != null) items1.Interact();
             }
 
             if (InputSystem.GetDevice<Mouse>().rightButton.wasPressedThisFrame)
             {
                 IInteractable items2 = slot2 as IInteractable;
-                items2.Interact();
+                if (items2 != null) items2.Interact();
             }
         }
     }
