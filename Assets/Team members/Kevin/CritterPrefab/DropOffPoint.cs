@@ -18,36 +18,23 @@ public class DropOffPoint : MonoBehaviour, IEnergyDrainer, IItem
     public GameManager gameManager;
     public ItemInfo itemInfo;
 
+    public Renderer cube;
+    public Material inactive;
+    public Material active;
+    
+
     void Awake()
     {
-        GameManager.instance.dropOffPoints.Add(gameObject);
+        
         //energy = GetComponent<Energy>();
         energyContainers = new List<GameObject>();
         StartCoroutine(DrainCoroutine());
     }
-    
-    
-    // HACK change from stay to a corouting or something
-    public void OnTriggerStay(Collider other)
+
+    void Start()
     {
-        /*
-        EnergyContainer otherEnergy = other.GetComponent<EnergyContainer>();
-        if (otherEnergy != null)
-        {
-            DrainFromContainer();
-            // TODO remove energy from container gradually
-
-            // TODO put "energy container" energy into our energy component
-
-        }
-        
-        if (other.GetComponent<EnergyContainer>() != null && !drainTargets.Contains(other.gameObject))
-        {
-            drainTargets.Add(other.gameObject);
-        }
-        */
+        GameManager.instance.dropOffPoints.Add(gameObject);
     }
-
 
     public IEnumerator DrainCoroutine()
     {
@@ -62,14 +49,22 @@ public class DropOffPoint : MonoBehaviour, IEnergyDrainer, IItem
                     //gameManager.energy.ChangeEnergy(drainRate);
                     energy.ChangeEnergy(drainRate);
                     //print("Energy being received in drop off point");
+                    
+                    cube.material = active;
                 }
                 
                 else if  (target.GetComponent<Energy>().EnergyAmount.Value <= 0)
                 {
                     currentlyDraining = false;
+                    cube.material = inactive;
                 }
             }
             
+        }
+        else
+        {
+            currentlyDraining = false;
+            cube.material = inactive;
         }
         yield return new WaitForSeconds(1f);
         StartCoroutine(DrainCoroutine());

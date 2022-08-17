@@ -393,6 +393,9 @@ MonoBehaviour:
     energyRequired: 50
     height: 2
     buildTime: 2
+  cube: {fileID: 8373309874826726821}
+  inactive: {fileID: 2100000, guid: 7cc4c70753ddfa840ae9f8a93d15b6d0, type: 2}
+  active: {fileID: 2100000, guid: 0cab07ca72f37ea419b579fb52d7c925, type: 2}
 --- !u!114 &-9094710341096795886
 MonoBehaviour:
   m_ObjectHideFlags: 0

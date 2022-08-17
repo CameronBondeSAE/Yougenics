@@ -14,7 +14,8 @@ namespace Ollie
         private bool currentlyDraining;
         public List<GameObject> drainTargets;
         public ItemInfo iteminfo;
-        
+        public GameObject orb;
+
         private void Awake()
         {
             energy = GetComponent<Energy>();
@@ -36,10 +37,13 @@ namespace Ollie
                         target.GetComponent<Energy>().ChangeEnergy(-drainRate);
                         energy.ChangeEnergy(drainRate);
                         print("yoink");
+                        orb.SetActive(true);
+                        
                     }
                     else if  (target.GetComponent<Energy>().EnergyAmount.Value <= 0)
                     {
                         currentlyDraining = false;
+                        orb.SetActive(false);
                     }
                 }
             }
@@ -51,12 +55,9 @@ namespace Ollie
         public void OnTriggerEnter(Collider other)
         {
             //need to check for player too!! maybe?
-            if (other.GetComponent<Energy>() != null && !drainTargets.Contains(other.gameObject))
+            if (other.GetComponent<Energy>() != null && !drainTargets.Contains(other.gameObject) && !other.GetComponent<PlayerModel>() && !other.GetComponent<DropOffPoint>())
             {
                 drainTargets.Add(other.gameObject);
-                if(other.GetComponent<DropOffPoint>() != null)
-                drainTargets.Remove(other.GetComponent<DropOffPoint>().gameObject);
-                drainTargets.Remove(other.GetComponent<PlayerModel>().gameObject);
             }
         }
 

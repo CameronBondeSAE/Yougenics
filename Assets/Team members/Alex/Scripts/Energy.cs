@@ -130,7 +130,7 @@ public class Energy : NetworkBehaviour
 	{
 		//if(IsServer)
 
-		EnergyAmount.Value -= moveDrainAmount;
+		EnergyAmount.Value -= Time.deltaTime;
 	}
 
 
