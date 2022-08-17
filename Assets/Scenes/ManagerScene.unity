@@ -761,8 +761,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1023956929}
     - target: {fileID: 2470996679314236398, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
+      propertyPath: levels.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2470996679314236398, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
       propertyPath: spawnPlayerOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2470996679314236398, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
+      propertyPath: levels.Array.data[4].level
+      value: 
+      objectReference: {fileID: 102900000, guid: 62a29b4ac0853484bb9556d3b6905276, type: 3}
+    - target: {fileID: 2470996679314236398, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
+      propertyPath: levels.Array.data[4].levelNameOnUI
+      value: Minh's Level
       objectReference: {fileID: 0}
     - target: {fileID: 2470996679314236399, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
       propertyPath: m_RootOrder

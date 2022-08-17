@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Team members/Alex/Scenes/Alex's Level 2.unity
     guid: 9ca71fbd84a619e4ead41f08a7d60679
+  - enabled: 1
+    path: Assets/Team members/DucMinhNgo/Minh's Level.unity
+    guid: 62a29b4ac0853484bb9556d3b6905276
   m_configObjects: {}
