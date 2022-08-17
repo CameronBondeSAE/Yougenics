@@ -26,8 +26,8 @@ namespace Ollie
         private Rigidbody rigidbody;
         
         private TurnTowards turnTowards;
-        private Health health;
-        private Energy energy;
+        private Health healthComponent;
+        private Energy energyComponent;
         private bool sleeping;
         private bool dead;
 
@@ -63,12 +63,12 @@ namespace Ollie
             rigidbody = GetComponent<Rigidbody>();
             turnTowards = GetComponentInChildren<TurnTowards>();
             
-            health = GetComponent<Minh.Health>();
-            health.CurrentHealth.Value = health.maxHealth;
+            healthComponent = GetComponent<Minh.Health>();
+            healthComponent.CurrentHealth.Value = healthComponent.maxHealth;
             
-            energy = GetComponent<Energy>();
-            energy.useEnergyOnMovement = true;
-            energy.EnergyAmount.Value = energy.energyMax;
+            energyComponent = GetComponent<Energy>();
+            energyComponent.useEnergyOnMovement = true;
+            energyComponent.EnergyAmount.Value = energyComponent.energyMax;
 
             if (Random.Range(0, 2) == 0)
             {
@@ -96,19 +96,19 @@ namespace Ollie
                 }
             }
 
-            if (health.CurrentHealth.Value < 50)
+            if (healthComponent.CurrentHealth.Value < 50)
             {
                 SetHealthLow(true);
             }
 
-            if (health.CurrentHealth.Value <= 0)
+            if (healthComponent.CurrentHealth.Value <= 0)
             {
                 Death();
                 
             }
             else SetHealthLow(false);
 
-            if (energy.EnergyAmount.Value <= energy.energyMin)
+            if (energyComponent.EnergyAmount.Value <= energyComponent.energyMin)
             {
                 moveSpeed = 0;
                 sleeping = true;
@@ -128,17 +128,17 @@ namespace Ollie
         private void Death()
         {
             dead = true;
-            health.IsDead.Value = true;
-            energy.useEnergyOnMovement = false;
+            healthComponent.IsDead.Value = true;
+            energyComponent.useEnergyOnMovement = false;
             moveSpeed = 0;
         }
 
         private void Sleep()
         {
-            energy.EnergyAmount.Value += 10 * Time.deltaTime;
-            if (energy.EnergyAmount.Value >= energy.energyMax)
+            energyComponent.EnergyAmount.Value += 10 * Time.deltaTime;
+            if (energyComponent.EnergyAmount.Value >= energyComponent.energyMax)
             {
-                energy.EnergyAmount.Value = energy.energyMax;
+                energyComponent.EnergyAmount.Value = energyComponent.energyMax;
                 sleeping = false;
                 moveSpeed = 3;
             }
