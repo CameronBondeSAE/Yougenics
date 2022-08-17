@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Kevin;
+using Minh;
 using Tanks;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,7 +11,7 @@ using Random = UnityEngine.Random;
 
 namespace Ollie
 {
-    public class CritterAIPlanner : MonoBehaviour, iPathable
+    public class CritterAIPlanner : CreatureBase, iPathable
     {
         public List<Vector3> path;
         public List<Transform> foodLocationList;
@@ -22,11 +24,12 @@ namespace Ollie
         public float timer;
         public Vector3 facingDirection;
         private Rigidbody rigidbody;
-
-        private WanderSteering wanderSteering;
-        private Avoidance avoidance;
-        private ForwardMovement forwardMovement;
+        
         private TurnTowards turnTowards;
+        private Health health;
+        private Energy energy;
+        private bool sleeping;
+        private bool dead;
 
         #region Bools for planner World State
         public bool isSafe;
@@ -56,14 +59,22 @@ namespace Ollie
         private void Start()
         {
             path = new List<Vector3>();
-            moveSpeed = 0.25f;
+            moveSpeed = 3;
             rigidbody = GetComponent<Rigidbody>();
-            
-            wanderSteering = GetComponentInChildren<WanderSteering>();
-            avoidance = GetComponentInChildren<Avoidance>();
-            forwardMovement = GetComponentInChildren<ForwardMovement>();
             turnTowards = GetComponentInChildren<TurnTowards>();
             
+            health = GetComponent<Minh.Health>();
+            health.CurrentHealth.Value = health.maxHealth;
+            
+            energy = GetComponent<Energy>();
+            energy.useEnergyOnMovement = true;
+            energy.EnergyAmount.Value = energy.energyMax;
+
+            if (Random.Range(0, 2) == 0)
+            {
+                sex = Sex.Female;
+            }
+            else sex = Sex.Male;
             //testing purposes only
             //isHungry = true;
             //healthLow = true;
@@ -77,24 +88,65 @@ namespace Ollie
                 timer = 0;
                 if (target != null)
                 {
-                    //wanderSteering.enabled = false;
-                    //avoidance.enabled = false;
-                    //forwardMovement.enabled = false;
                     targetPos = target.position;
                     if (!LevelManager.instance.ConvertToGrid(targetPos).isBlocked)
                     {
                         aStar.FindPath(transform.position, targetPos);
                     }
                 }
-                else
-                {
-                    //wanderSteering.enabled = true;
-                    //avoidance.enabled = true;
-                    //forwardMovement.enabled = true;
-                }
+            }
+
+            if (health.CurrentHealth.Value < 50)
+            {
+                SetHealthLow(true);
+            }
+
+            if (health.CurrentHealth.Value <= 0)
+            {
+                Death();
                 
             }
-            
+            else SetHealthLow(false);
+
+            if (energy.EnergyAmount.Value <= energy.energyMin)
+            {
+                moveSpeed = 0;
+                sleeping = true;
+            }
+
+            if (sleeping)
+            {
+                Sleep();
+            }
+
+            if (sleeping && dead)
+            {
+                DestroyMe();
+            }
+        }
+
+        private void Death()
+        {
+            dead = true;
+            health.IsDead.Value = true;
+            energy.useEnergyOnMovement = false;
+            moveSpeed = 0;
+        }
+
+        private void Sleep()
+        {
+            energy.EnergyAmount.Value += 10 * Time.deltaTime;
+            if (energy.EnergyAmount.Value >= energy.energyMax)
+            {
+                energy.EnergyAmount.Value = energy.energyMax;
+                sleeping = false;
+                moveSpeed = 3;
+            }
+        }
+
+        private void DestroyMe()
+        {
+            print(this + " has no health or energy, should be destroyed");
         }
 
         private void FixedUpdate()
@@ -172,6 +224,11 @@ namespace Ollie
         public void SetFoodLocated(bool toggle)
         {
             foodLocated = toggle;
+        }
+
+        public void SetHealthLow(bool toggle)
+        {
+            healthLow = toggle;
         }
 
         public void SetFoodFound(bool toggle)

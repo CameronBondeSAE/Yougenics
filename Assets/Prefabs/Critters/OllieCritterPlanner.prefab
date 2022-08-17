@@ -77,6 +77,9 @@ GameObject:
   - component: {fileID: 4705565605658891061}
   - component: {fileID: 1020810247810737757}
   - component: {fileID: 5950386179713793681}
+  - component: {fileID: 4024868717280287780}
+  - component: {fileID: 1987901841}
+  - component: {fileID: 1987901842}
   m_Layer: 6
   m_Name: OllieCritterPlanner
   m_TagString: Untagged
@@ -194,10 +197,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7392689303276e54cbcf7e5cdcf9f4c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: currentLocation
+      Entry: 6
+      Data: 
+  age: 0
+  ageOfMatingStart: 0
+  ageOfMatingEnd: 0
+  maxAge: 0
+  isPregnant: 0
+  gestationTime: 0
+  litterSizeMax: 0
+  metabolism: 0
+  mutationRate: 0
+  empathy: 0
+  aggression: 0
+  sizeScale: 0
+  maxSize: 0
+  colour: {r: 0, g: 0, b: 0, a: 0}
+  sex: 0
+  slowlyDieWhenOldRate: 0
   path: []
   foodLocationList: []
   mateLocationList: []
-  moveSpeed: 0
+  moveSpeed: 3
   target: {fileID: 0}
   targetPos: {x: 0, y: 0, z: 0}
   aStar: {fileID: 3705235251873564705}
@@ -271,6 +302,63 @@ MonoBehaviour:
   currentTarget: {fileID: 0}
   parent: {fileID: 968368501291413216}
   myGender: 0
+--- !u!114 &4024868717280287780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5861305019518734890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2fa0cdd9a3541d2863b2ab871f3c22f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dangerLevel: 0
+  allegiances:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!114 &1987901841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5861305019518734890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86b58142ff8a3804fa71c5004d10d94b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnergyAmount:
+    m_InternalValue: 0
+  energyMax: 100
+  energyMin: 0
+  drainAmount: 1
+  moveDrainAmount: 1
+  drainSpeed: 1
+  energyUserMoving: 0
+  myMagnitude: 0
+  useEnergyOnMovement: 0
+--- !u!114 &1987901842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5861305019518734890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac5e6230bb3415145a9b23ae4df86714, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentHealth:
+    m_InternalValue: 0
+  IsDead:
+    m_InternalValue: 0
+  maxHealth: 100
+  fullenergy: 1
+  noenergy: 0
 --- !u!1 &8654584319481658008
 GameObject:
   m_ObjectHideFlags: 0

@@ -30,14 +30,18 @@ namespace Ollie
             {
                 Vector3 rayAngle = Quaternion.Euler(0, i, 0) * parentTransform.forward;
                 Ray ray = new Ray(myPos, rayAngle.normalized);
-                if (i is > -5 and < 5)
-                {
-                    Debug.DrawRay(ray.origin, ray.direction * hitData.distance, Color.red, 0.01f);
-                }
-                else
-                {
-                    Debug.DrawRay(ray.origin, ray.direction * hitData.distance, Color.blue, 0.01f);
-                }
+
+
+                #region Visualize FOV
+                // if (i is > -5 and < 5)
+                // {
+                //     Debug.DrawRay(ray.origin, ray.direction * hitData.distance, Color.red, 0.01f);
+                // }
+                // else
+                // {
+                //     Debug.DrawRay(ray.origin, ray.direction * hitData.distance, Color.blue, 0.01f);
+                // }
+                #endregion
                 
                 if (Physics.Raycast(ray, out hitData))
                 {
@@ -46,19 +50,19 @@ namespace Ollie
                         //emergency bailout left
                         rigidbody.AddRelativeTorque(0,-6,0);
                     }
-                    //right rays, turn left
+                    
+                        //right rays, turn left
                     else if (hitData.distance < 2 && i > 0)
                     {
                         rigidbody.AddRelativeTorque(0,-4,0);
                         rigidbody.AddRelativeForce(Vector3.back/2);
-                        //*(forwardMovement.speed/2)
                     }
-                    //left rays, turn right
+                    
+                        //left rays, turn right
                     else if (hitData.distance < 3 && i < 0)
                     {
                         rigidbody.AddRelativeTorque(0,4,0);
                         rigidbody.AddRelativeForce(Vector3.back/2);
-                        //*(forwardMovement.speed/2)
                     }
                     
                     //-((i/fovAngle)*2)

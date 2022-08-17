@@ -10,11 +10,13 @@ namespace Ollie
     public class ForwardMovement : MonoBehaviour
     {
         private Rigidbody rigidbody;
-        public float speed;
+        private CritterAIPlanner parent;
+        private float speed;
 
         void Start()
         {
             rigidbody = GetComponentInParent<Rigidbody>();
+            parent = GetComponentInParent<CritterAIPlanner>();
         }
 
         void FixedUpdate()
@@ -26,7 +28,7 @@ namespace Ollie
         {
             if (rigidbody.velocity.magnitude < 3)
             {
-                rigidbody.AddRelativeForce(Vector3.forward * speed);
+                rigidbody.AddRelativeForce(Vector3.forward * parent.moveSpeed);
             }
         }
     }
