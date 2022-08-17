@@ -12,6 +12,7 @@ public class VehicleModel : MonoBehaviour, IVehicleControls, IItem
 	public List<Wheel> frontWheels;
 	public float       turningSpeed  = 50f;
 	public float       movementSpeed = 20f;
+	public Transform outPos;
 
 
 	public void AccelerateAndReverse(float amount)
@@ -34,7 +35,7 @@ public class VehicleModel : MonoBehaviour, IVehicleControls, IItem
 
 	public Vector3 GetExitPosition()
 	{
-		return Vector3.zero;
+		return outPos.transform.position;
 	}
 
 

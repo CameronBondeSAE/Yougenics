@@ -451,6 +451,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1093299629232218347, guid: 750f470c605ac2145bc3aff043dd2a5f, type: 3}
+      propertyPath: NetworkConfig.NetworkPrefabs.Array.size
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1093299629232218347, guid: 750f470c605ac2145bc3aff043dd2a5f, type: 3}
+      propertyPath: NetworkConfig.NetworkPrefabs.Array.data[9].Prefab
+      value: 
+      objectReference: {fileID: 2771155819252852944, guid: b4d1714588920c340a985a1842caada3, type: 3}
+    - target: {fileID: 1093299629232218347, guid: 750f470c605ac2145bc3aff043dd2a5f, type: 3}
+      propertyPath: NetworkConfig.NetworkPrefabs.Array.data[10].Prefab
+      value: 
+      objectReference: {fileID: 7691366154368066806, guid: 05d1a0ffc92e31b41b7d9d64c27d3ca5, type: 3}
+    - target: {fileID: 1093299629232218347, guid: 750f470c605ac2145bc3aff043dd2a5f, type: 3}
+      propertyPath: NetworkConfig.NetworkPrefabs.Array.data[11].Prefab
+      value: 
+      objectReference: {fileID: 6628694674896416980, guid: a113eb118bcdb2f40bebeecf9a1810a0, type: 3}
+    - target: {fileID: 1093299629232218347, guid: 750f470c605ac2145bc3aff043dd2a5f, type: 3}
+      propertyPath: NetworkConfig.NetworkPrefabs.Array.data[12].Prefab
+      value: 
+      objectReference: {fileID: 2764626321808243858, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
+    - target: {fileID: 1093299629232218347, guid: 750f470c605ac2145bc3aff043dd2a5f, type: 3}
+      propertyPath: NetworkConfig.NetworkPrefabs.Array.data[13].Prefab
+      value: 
+      objectReference: {fileID: 6538142482682508728, guid: 69a299a19828f084b916616053b88cea, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 750f470c605ac2145bc3aff043dd2a5f, type: 3}
 --- !u!1 &1640972067

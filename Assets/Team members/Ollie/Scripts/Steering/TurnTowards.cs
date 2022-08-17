@@ -8,7 +8,6 @@ namespace Ollie
     {
         private Rigidbody rigidbody;
         private Transform parentTransform;
-        public Vector3 targetTransform;
         public Vector3 dir;
         public float turnSpeed;
         
@@ -16,12 +15,6 @@ namespace Ollie
         {
             rigidbody = GetComponentInParent<Rigidbody>();
             parentTransform = GetComponentInParent<Transform>();
-        }
-        
-        void FixedUpdate()
-        {
-            //dir = parentTransform.InverseTransformPoint(targetTransform);
-            //TurnParent(dir);
         }
 
         public void TurnParent(Vector3 targetTransform)

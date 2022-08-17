@@ -11,20 +11,12 @@ namespace Ollie
     {
         private Rigidbody rigidbody;
         public float speed;
-        public float magnitude;
 
-        // Start is called before the first frame update
         void Start()
         {
             rigidbody = GetComponentInParent<Rigidbody>();
         }
 
-        private void Update()
-        {
-            magnitude = rigidbody.velocity.magnitude;
-        }
-
-        // Update is called once per frame
         void FixedUpdate()
         {
             MoveForward();

@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b88811a3da73034484083893a83e264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+  speed: 5
 --- !u!114 &199154212032570668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,7 +73,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: 0
-  rng: 0
+  timeToWanderRotation: 0
+  perlinRNG: 0
 --- !u!114 &4665460535129180748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,4 +87,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3f5e2c9138e074ca749265f013e195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTransform: {fileID: 0}
+  dir: {x: 0, y: 0, z: 0}
+  turnSpeed: 0.1

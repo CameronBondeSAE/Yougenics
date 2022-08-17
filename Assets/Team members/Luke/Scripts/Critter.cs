@@ -22,6 +22,7 @@ namespace Luke
 		public DefaultBehaviours defaultBehaviour;
 		public float sleepLevel;
 		public float acceleration;
+		public float turnSpeed = 3f;
 		public float maxSpeed;
 		public float awakeDecayDelay;
 		public float regularMatingDelay;
@@ -55,6 +56,10 @@ namespace Luke
         [SerializeField] private Energy energyComp;
         [SerializeField] private CommonAttributes _commonAttributes;
 
+        //spawn these in and give them angles
+        [SerializeField] private List<LukeAntenna> antennae = new();
+        [SerializeField] private GameObject beam;
+        
         [SerializeField]
 		private Transform view;
 		[SerializeField] private AStarUser aStarUser;
@@ -231,8 +236,8 @@ namespace Luke
 			_transform = GetComponent<Transform>();
 			SetInitialCritterStats();
 			sleepLevel = critterInfo.maxSleepLevel;
-			acceleration = Mathf.Max(1,15+5f/metabolism);
-			regularMatingDelay = critterInfo.firstMatingDelay * 0.5f;
+			acceleration = Mathf.Clamp(20+10f/metabolism,20,30);
+			regularMatingDelay = ageOfMatingStart * 0.5f;
 
 			foreach (Transform t in predatorsList)
 			{
@@ -346,7 +351,7 @@ namespace Luke
 		private void SetScale()
 		{
 			//include eating in equation
-            float scale = Mathf.Min(maxSize * age / maxAge,maxSize);
+            float scale = Mathf.Min(0.5f+(maxSize-0.5f) * age / maxAge,maxSize);
 			view.localScale = Vector3.one*scale;
 		}
 		
@@ -458,30 +463,13 @@ namespace Luke
 		private void TurnTowardsTarget(Vector3 target)
 		{
 			float angle = Vector3.SignedAngle(_transform.forward, target - _transform.position, Vector3.up);
-			_transform.Rotate(new Vector3(0f, angle, 0f));
+			_rb.AddRelativeTorque(new Vector3(0,Mathf.Sign(angle)*turnSpeed,0));
+			// _transform.Rotate(new Vector3(0f, angle, 0f));
 		}
 
 		public Vector3 GetMoveTargetAStar()
 		{
-			Vector3 target = _transform.position;
-			if (aStarUser.path.Count > 1)
-			{
-				/*foreach (AStarNode node in aStarUser.path)
-				{
-					if (Physics.Linecast(node.worldPosition, target))
-					{
-						target = node.worldPosition;
-						break;
-					}
-				}*/
-				target = aStarUser.path[^2].worldPosition;
-			}
-			else
-			{
-				target = aStarUser.path[0].worldPosition;
-			}
-
-			return target;
+			return aStarUser.path[^2].worldPosition;
 		}
 
 		public bool CheckHasFood()
@@ -593,10 +581,15 @@ namespace Luke
 				StartCoroutine(AStarReactionTime(Random.Range(0f,1f), nearestFood.position));
 			}
 
-			Physics.Linecast(_transform.position, nearestFood.position, out RaycastHit hitInfo);
-                                                         			if(hitInfo.collider.transform == nearestFood) TurnTowardsTarget(nearestFood.position);
-                                                         			else TurnTowardsTarget(GetMoveTargetAStar());
-			_rb.AddForce(_transform.TransformDirection(Vector3.forward)*acceleration);
+			if (aStarUser.path.Count > 5)
+			{
+				TurnTowardsTarget(GetMoveTargetAStar());
+			}
+			else
+			{
+				TurnTowardsTarget(nearestFood.position);
+			}
+			_rb.AddForce(_transform.TransformDirection(Vector3.forward)*acceleration, ForceMode.Acceleration);
 			_rb.velocity = Vector3.ClampMagnitude(_rb.velocity, maxSpeed);
 		}
 		
@@ -609,10 +602,15 @@ namespace Luke
 				_currentTarget = CurrentTarget.Mate;
 				StartCoroutine(AStarReactionTime(Random.Range(0f,1f), nearestMate.position));
 			}
-			Physics.Linecast(_transform.position, nearestMate.position, out RaycastHit hitInfo);
-			if(hitInfo.collider.transform == nearestMate) TurnTowardsTarget(nearestMate.position);
-			else TurnTowardsTarget(GetMoveTargetAStar());
-			_rb.AddForce(_transform.TransformDirection(Vector3.forward)*acceleration);
+			if (aStarUser.path.Count > 5)
+			{
+				TurnTowardsTarget(GetMoveTargetAStar());
+			}
+			else
+			{
+				TurnTowardsTarget(nearestMate.position);
+			}
+			_rb.AddForce(_transform.TransformDirection(Vector3.forward)*acceleration, ForceMode.Acceleration);
 			_rb.velocity = Vector3.ClampMagnitude(_rb.velocity, maxSpeed);
 		}
 		
@@ -624,7 +622,7 @@ namespace Luke
 			Vector3 position = _transform.position;
 			Vector3 heading = position - nearestPredator.position;
 			TurnTowardsTarget(position + heading);
-			_rb.AddForce(_transform.TransformDirection(Vector3.forward)*acceleration);
+			_rb.AddForce(_transform.TransformDirection(Vector3.forward)*acceleration, ForceMode.Acceleration);
 			_rb.velocity = Vector3.ClampMagnitude(_rb.velocity, maxSpeed);
 		}
 
@@ -637,7 +635,7 @@ namespace Luke
 			mainHeading += randomAdjustment;
 			_currentTarget = CurrentTarget.Wander;
 			TurnTowardsTarget(_transform.position + mainHeading);
-			_rb.AddForce(_transform.TransformDirection(Vector3.forward)*acceleration);
+			_rb.AddForce(_transform.TransformDirection(Vector3.forward)*acceleration, ForceMode.Acceleration);
 			_rb.velocity = Vector3.ClampMagnitude(_rb.velocity, maxSpeed);
 		}
 

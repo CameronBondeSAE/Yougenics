@@ -4,7 +4,7 @@ using Ollie;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-/*
+
 namespace K
 {
     public class GameManager : MonoBehaviour
@@ -12,7 +12,7 @@ namespace K
         public float energyInsideDropOff;
         public EnergyContainer energyContainer;
         public TextMeshProUGUI energyUI;
-        void OnEnable()
+        /*void OnEnable()
         {
             energyContainer.OnEnergyUpdate += UpdateEnergy;
         }
@@ -20,7 +20,7 @@ namespace K
         void OnDisable()
         {
             energyContainer.OnEnergyUpdate -= UpdateEnergy;
-        }
+        }*/
 
         private void UpdateEnergy()
         {
@@ -38,4 +38,3 @@ namespace K
     }
 
 }
-*/

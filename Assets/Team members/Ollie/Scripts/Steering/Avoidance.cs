@@ -11,75 +11,68 @@ namespace Ollie
         private RaycastHit hitData;
         private Vector3 myPos;
         private Transform parentTransform;
-        private ForwardMovement forwardMovement;
+        private int fovAngle;
         
-        // Start is called before the first frame update
         void Start()
         {
             rigidbody = GetComponentInParent<Rigidbody>();
             parentTransform = GetComponentInParent<Transform>();
-            forwardMovement = GetComponent<ForwardMovement>();
+            
+            //replace with parent's sight/FOV
+            fovAngle = 30;
         }
-
-        // Update is called once per frame
+        
         void FixedUpdate()
         {
             myPos = parentTransform.position;
-            
-            Vector3 rightFOV = Quaternion.Euler(0, 30f, 0) * parentTransform.forward;
-            Vector3 leftFOV = Quaternion.Euler(0, -30f, 0) * parentTransform.forward;
-            
-            Ray rayCenter = new Ray(myPos, parentTransform.forward.normalized);
-            Ray rayRight = new Ray(myPos, rightFOV.normalized);
-            Ray rayLeft = new Ray(myPos, leftFOV.normalized);
-            
-            Debug.DrawRay(rayCenter.origin, rayCenter.direction*hitData.distance,Color.blue,0.1f);
-            Debug.DrawRay(rayRight.origin, rayRight.direction*hitData.distance,Color.blue,0.1f);
-            Debug.DrawRay(rayLeft.origin, rayLeft.direction*hitData.distance,Color.blue,0.1f);
-            
-            //for loop through 60 rays (x = -30, less than +30)
-            //shoot ray
-            //if hit, turn away
-            
-            if (Physics.Raycast(rayCenter, out hitData))
-            {
-                if (hitData.distance < 2)
-                {
-                    rigidbody.AddRelativeTorque(0,6,0);
-                    rigidbody.AddRelativeForce(Vector3.back*(forwardMovement.speed/2));
-                }
-                else if (hitData.distance < 4)
-                {
-                    rigidbody.AddRelativeTorque(0,4,0);
-                    rigidbody.AddRelativeForce(Vector3.back*(forwardMovement.speed/2));
-                }
-            }
 
-            if (Physics.Raycast(rayRight, out hitData))
+            for (int i = -fovAngle; i < fovAngle; i++)
             {
-                if (hitData.distance < 4)
+                Vector3 rayAngle = Quaternion.Euler(0, i, 0) * parentTransform.forward;
+                Ray ray = new Ray(myPos, rayAngle.normalized);
+                if (i is > -5 and < 5)
                 {
-                    rigidbody.AddRelativeTorque(0,-4,0);
-                    rigidbody.AddRelativeForce(Vector3.back*(forwardMovement.speed/2));
+                    Debug.DrawRay(ray.origin, ray.direction * hitData.distance, Color.red, 0.01f);
                 }
-                else if (hitData.distance < 6)
+                else
                 {
-                    rigidbody.AddRelativeTorque(0,-2,0);
-                    rigidbody.AddRelativeForce(Vector3.back*(forwardMovement.speed/2));
+                    Debug.DrawRay(ray.origin, ray.direction * hitData.distance, Color.blue, 0.01f);
                 }
-            }
-            
-            if (Physics.Raycast(rayLeft, out hitData))
-            {
-                if (hitData.distance < 4)
+                
+                if (Physics.Raycast(ray, out hitData))
                 {
-                    rigidbody.AddRelativeTorque(0,4,0);
-                    rigidbody.AddRelativeForce(Vector3.back*(forwardMovement.speed/2));
-                }
-                else if (hitData.distance < 8)
-                {
-                    rigidbody.AddRelativeTorque(0,2,0);
-                    rigidbody.AddRelativeForce(Vector3.back*(forwardMovement.speed/2));
+                    if (hitData.distance < 1 && i is > -5 and < 5)
+                    {
+                        //emergency bailout left
+                        rigidbody.AddRelativeTorque(0,-6,0);
+                    }
+                    //right rays, turn left
+                    else if (hitData.distance < 2 && i > 0)
+                    {
+                        rigidbody.AddRelativeTorque(0,-4,0);
+                        rigidbody.AddRelativeForce(Vector3.back/2);
+                        //*(forwardMovement.speed/2)
+                    }
+                    //left rays, turn right
+                    else if (hitData.distance < 3 && i < 0)
+                    {
+                        rigidbody.AddRelativeTorque(0,4,0);
+                        rigidbody.AddRelativeForce(Vector3.back/2);
+                        //*(forwardMovement.speed/2)
+                    }
+                    
+                    //-((i/fovAngle)*2)
+                    
+                    //if X distance
+                    //addRelativeTorque (0, angle * turnForce, 0)
+                    //need to set turnForce to something
+                    //CAMMATH
+                    //i want -2 for 30 angle
+                    //i want +2 for -30 angle
+                    //something like angle.normalized, but that's probably generic
+                    //actual angle (i) / fovAngle (30) effectively normalises it
+                    //eg 30 / 30 = 1.... * turnForce (2) = 2!
+                    // -15 / 30 = -0.5 * 2 = - 1
                 }
             }
         }

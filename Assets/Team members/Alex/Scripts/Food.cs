@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Alex
@@ -11,7 +12,7 @@ namespace Alex
         public float currentFoodAmount;
         public ItemInfo itemInfo;
 
-        
+
         void Start()
         {
             GetComponent<Minh.Health>();
@@ -64,5 +65,7 @@ namespace Alex
             return itemInfo;
         }
     }
+    
+    
 
 }
