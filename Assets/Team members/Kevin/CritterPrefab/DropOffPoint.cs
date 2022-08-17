@@ -17,13 +17,16 @@ public class DropOffPoint : MonoBehaviour, IEnergyDrainer, IItem
     public float drainRate;
     public GameManager gameManager;
     public ItemInfo itemInfo;
-
     void Awake()
     {
-        GameManager.instance.dropOffPoints.Add(gameObject);
         //energy = GetComponent<Energy>();
         energyContainers = new List<GameObject>();
         StartCoroutine(DrainCoroutine());
+    }
+
+    void Start()
+    {
+        GameManager.instance.dropOffPoints.Add(gameObject);
     }
     
     
