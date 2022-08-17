@@ -45,9 +45,9 @@ public class CritterA : CreatureBase, IEdible, ISense
         
         
         //Separate Components
-        [SerializeField] private CommonAttributes commonAttributes;
-        [SerializeField] private Energy energy;
-        [SerializeField] private Health health;
+        private CommonAttributes commonAttributes;
+        private Energy energy;
+        private Health health;
         
         //Planner Bools
         public bool isHungry;
@@ -65,6 +65,7 @@ public class CritterA : CreatureBase, IEdible, ISense
         public bool isTired;
         public bool noHealth;
         public bool isDead;
+        public bool isAwake;
         
         //View Code
         public Renderer renderer;
@@ -73,6 +74,8 @@ public class CritterA : CreatureBase, IEdible, ISense
         {
             commonAttributes = GetComponent<CommonAttributes>();
             rb = GetComponent<Rigidbody>();
+            energy = GetComponent<Energy>();
+            health = GetComponent<Health>();
         }
         public void OnEnable()
         {
@@ -232,7 +235,14 @@ public class CritterA : CreatureBase, IEdible, ISense
 
         public void Sleep()
         {
-            
+            StartCoroutine(SleepTimer());
+        }
+        public IEnumerator SleepTimer()
+        {
+            yield return new WaitForSeconds(10f);
+            acceleration = 0f;
+            energy.EnergyAmount.Value = energy.energyMax;
+            isSleeping = false;
         }
 
         #endregion
@@ -420,6 +430,7 @@ public class CritterA : CreatureBase, IEdible, ISense
         #endregion
 
         #region ISense
+      
         public enum AICritterA
         {
             isHungry = 0,
@@ -442,9 +453,9 @@ public class CritterA : CreatureBase, IEdible, ISense
             MateBehaviour = 17,
             RunningBehaviour = 18,
             SleepingBehaviour = 19,
-            DeathBehaviour = 20
+            DeathBehaviour = 20,
+            isWaking = 21
         }
-        
         public VisionCritterA visionCritterA;
         
         public void CollectConditions(AntAIAgent aAgent, AntAICondition aWorldState)
@@ -464,6 +475,7 @@ public class CritterA : CreatureBase, IEdible, ISense
             aWorldState.Set(AICritterA.isTired, IsTired());
             aWorldState.Set(AICritterA.noHealth, NoHealth());
             aWorldState.Set(AICritterA.isDead, IsDead());
+            aWorldState.Set(AICritterA.isWaking, IsAwake());
             //aWorldState.Set(AICritterA.WanderingBehaviour, true);
             /*aWorldState.Set(AICritterA.HungryBehaviour, true);
             aWorldState.Set(AICritterA.MateBehaviour, true);
@@ -513,7 +525,7 @@ public class CritterA : CreatureBase, IEdible, ISense
 
         public bool IsSleeping()
         {
-            if (isSleeping)
+            if (isTired && isSafe && !isHungry && !isMating)
             {
                 isSleeping = true;
             }
@@ -522,6 +534,20 @@ public class CritterA : CreatureBase, IEdible, ISense
                 isSleeping = false;
             }
             return isSleeping;
+        }
+
+        public bool IsAwake()
+        {
+            /*if (!isSleeping)
+            {
+                isWaking = true;
+            }
+            else
+            {
+                isWaking = false;
+            }*/
+
+            return isAwake; 
         }
 
         public bool CanHunt()
@@ -623,10 +649,14 @@ public class CritterA : CreatureBase, IEdible, ISense
 
         public bool IsTired()
         {
-            /*if (energyTest < 50f)
+            if (energy.EnergyAmount.Value < 1f)
             {
                 isTired = true;
-            }*/
+            }
+            else if (energy.EnergyAmount.Value > 99)
+            {
+                isTired = false;
+            }
             return isTired;
         }
 
@@ -634,7 +664,11 @@ public class CritterA : CreatureBase, IEdible, ISense
         {
             if (healthTest < 1f)
             { 
-                isDead = true;
+                noHealth = true;
+            }
+            else
+            {
+                noHealth = false;
             }
             return noHealth;
         }
@@ -644,6 +678,10 @@ public class CritterA : CreatureBase, IEdible, ISense
             if (noHealth)
             {
                 isDead = true;
+            }
+            else
+            {
+                isDead = false;
             }
             return isDead;
         }

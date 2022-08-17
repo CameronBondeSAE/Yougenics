@@ -8,11 +8,13 @@ namespace Minh
     public class Food : MonoBehaviour
     {
         public GameObject food;
+
+        public Health health;
         // Start is called before the first frame update
         void Start()
         {
             //subcribe to Health script
-            //GetComponent<Health>().Collectfood += UnityEngine.PlayerLoop.FixedUpdate;
+            GetComponent<Health>().Food += Eatfood;
 
         }
 
@@ -20,6 +22,12 @@ namespace Minh
         public void OnCollisionEnter(Collision collision)
         {
             Destroy(gameObject);
+            Instantiate(food, new Vector3( 0, Random.Range(0,3), 0), Quaternion.identity);
+        }
+
+        public void Eatfood()
+        {
+            
         }
     }
 }

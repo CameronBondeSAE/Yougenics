@@ -19,7 +19,9 @@ GameObject:
   - component: {fileID: 1388483787997497223}
   - component: {fileID: 1388483787997497224}
   - component: {fileID: 1388483787997497342}
+  - component: {fileID: 6580612465480188160}
   - component: {fileID: 5925719224910446028}
+  - component: {fileID: 8861051235859846677}
   - component: {fileID: -3068811709233675902}
   - component: {fileID: 6446122254239337073}
   m_Layer: 0
@@ -167,9 +169,6 @@ MonoBehaviour:
   closestPredator: {fileID: 0}
   closestMate: {fileID: 0}
   closestFood: {fileID: 0}
-  commonAttributes: {fileID: 0}
-  energy: {fileID: 0}
-  health: {fileID: 0}
   isHungry: 0
   isEating: 0
   isInDanger: 0
@@ -185,6 +184,7 @@ MonoBehaviour:
   isTired: 0
   noHealth: 0
   isDead: 0
+  isAwake: 0
   renderer: {fileID: 0}
   visionCritterA: {fileID: 0}
 --- !u!114 &1388483787997497220
@@ -222,13 +222,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1388483787997497225}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac5e6230bb3415145a9b23ae4df86714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentHealth:
-    m_InternalValue: 0
+    m_InternalValue: 100
   IsDead:
     m_InternalValue: 0
   maxHealth: 100
@@ -241,13 +241,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1388483787997497225}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86b58142ff8a3804fa71c5004d10d94b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   EnergyAmount:
-    m_InternalValue: 0
+    m_InternalValue: 100
   energyMax: 100
   energyMin: 0
   drainAmount: 1
@@ -255,7 +255,7 @@ MonoBehaviour:
   drainSpeed: 1
   energyUserMoving: 0
   myMagnitude: 0
-  useEnergyOnMovement: 0
+  useEnergyOnMovement: 1
 --- !u!114 &1388483787997497224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,6 +288,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &6580612465480188160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388483787997497225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca2c885f844662e4fb36c283e9f51903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acceleration: 6
 --- !u!114 &5925719224910446028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,7 +308,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1388483787997497225}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84b8dd5003a16f54788ab613c8ca44cf, type: 3}
   m_Name: 
@@ -304,6 +317,21 @@ MonoBehaviour:
   rayDistance: 5
   dirR: {x: 0, y: 0, z: 0}
   dirL: {x: 0, y: 0, z: 0}
+--- !u!114 &8861051235859846677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388483787997497225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e68a1b2d93a2d9e43ac8d6f3175b7c4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  perlinValue: 0
+  minAngle: 0
+  maxAngle: 0
 --- !u!114 &-3068811709233675902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -467,7 +495,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: cdb76d14335431942a1119307388f189, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

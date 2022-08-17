@@ -56,6 +56,8 @@ MonoBehaviour:
       name: SleepingBehaviour
     - id: 20
       name: DeathBehaviour
+    - id: 21
+      name: isAwake
   actions:
   - name: WanderingBehaviour
     isDefault: 1
@@ -209,6 +211,8 @@ MonoBehaviour:
     pre:
     - id: 9
       value: 0
+    - id: 3
+      value: 0
     post:
     - id: 9
       value: 1
@@ -216,18 +220,12 @@ MonoBehaviour:
     isDefault: 0
     state: {fileID: 938379795196379377, guid: 328765787ff767e41bdfe2098f429f0e, type: 3}
     cost: 0
-    position: {x: 1436.6588, y: 229.05789}
+    position: {x: 1442.6588, y: 223.05789}
     pre:
     - id: 12
       value: 1
-    - id: 9
-      value: 1
-    - id: 0
-      value: 0
-    - id: 10
-      value: 0
     post:
-    - id: 3
+    - id: 21
       value: 1
   - name: Dead
     isDefault: 0
@@ -244,9 +242,9 @@ MonoBehaviour:
     isDefault: 0
     state: {fileID: 8795710798257936374, guid: a83dae0afd22e00458f25df67a0c090d, type: 3}
     cost: 0
-    position: {x: 1436.9384, y: 485.09537}
+    position: {x: 1438.9384, y: 429.09534}
     pre:
-    - id: 3
+    - id: 21
       value: 1
     post:
     - id: 3
