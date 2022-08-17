@@ -15,7 +15,8 @@ namespace Kevin
         {
             base.Enter();
             //Change emotion UI
-            
+            critterA.alphaFloat = 1f;
+            critterA.currentState = 1;
         }
 
         public override void Execute(float aDeltaTime, float aTimeScale)
