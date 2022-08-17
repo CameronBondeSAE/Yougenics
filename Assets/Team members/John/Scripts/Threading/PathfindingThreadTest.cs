@@ -6,14 +6,13 @@ using Unity.Collections;
 
 public struct JohnPathfindJob : IJob
 {
-    Vector3 targetPos;
-    Vector3 startPos;
-    Node targetNode;
-    List<Node> path;
+    public Vector3 targetPos;
+    public Vector3 startPos;
+    public NativeArray<Vector2> pathList;
 
     public void Execute()
     {
-        //FindPath();
+        FindPath(startPos, targetPos);
     }
 
     public void FindPath(Vector3 _startPos, Vector3 _targetPos)
@@ -23,21 +22,10 @@ public struct JohnPathfindJob : IJob
         startPos = _startPos;
 
         Node startNode = WorldScanner.instance.WorldToNodePos(_startPos);
-        targetNode = WorldScanner.instance.WorldToNodePos(_targetPos);
+        Node targetNode = WorldScanner.instance.WorldToNodePos(_targetPos);
 
         List<Node> openList = new List<Node>();
         List<Node> closedList = new List<Node>();
-
-        /*if (visualizeOpenCloseLists)
-        {
-            WorldScanner.instance.openList = openList;
-            WorldScanner.instance.closedList = closedList;
-        }
-        else
-        {
-            WorldScanner.instance.openList = null;
-            WorldScanner.instance.closedList = null;
-        }*/
 
         openList.Add(startNode);
 
@@ -116,27 +104,26 @@ public struct JohnPathfindJob : IJob
     }
 
     //Retrace the finalized path
-    Vector3 RetracePath(Node start, Node end)
+    void RetracePath(Node start, Node end)
     {
+        List<Vector2> path = new List<Vector2>();
         Node currentNode = end;
 
         while (currentNode != start)
         {
             //Create a path from the end node to the start node following the node parent trail
-            path.Add(currentNode);
+            path.Add(currentNode.gridPos);
             currentNode = currentNode.parent;
         }
 
         path.Reverse();
+        Debug.Log("Path Found: " + path);
+        pathList = path.ToNativeArray<Vector2>(Allocator.Persistent);
 
-        WorldScanner.instance.path = path;
-        WorldScanner.instance.endNode = end;
+        //WorldScanner.instance.path = path;
+        // WorldScanner.instance.endNode = end;
 
-        //Astar being an instance is setting a target pos for every entity that subscribes to this
-        //pathFoundEvent?.Invoke(path);
-        //entityUsingAstar.GetComponent<PathTracker>().GeneratePathList(path);
-
-        return Vector3.zero;
+        //return Vector3.zero;
     }
 
     int DistanceCheck(Node a, Node b)
@@ -153,9 +140,17 @@ public class PathfindingThreadTest : MonoBehaviour
         // Complete an arbitrary number of jobs
         NativeArray<JobHandle> handles = new NativeArray<JobHandle>(100, Allocator.Temp);
 
-        for (int i = 0; i < 10; i++)
+        NativeArray<Vector2> myPathList = new NativeArray<Vector2>(1, Allocator.Persistent);
+
+        for (int i = 0; i < 1; i++)
         {
-            JohnPathfindJob johnPathfindJob = new JohnPathfindJob();
+            JohnPathfindJob johnPathfindJob = new JohnPathfindJob
+            {
+                startPos = new Vector3(2, 2, 2),
+                targetPos = new Vector3(5, 5, 5),
+                pathList = myPathList
+            };
+
             JobHandle jobHandle1 = johnPathfindJob.Schedule();
 
             handles[i] = jobHandle1;
