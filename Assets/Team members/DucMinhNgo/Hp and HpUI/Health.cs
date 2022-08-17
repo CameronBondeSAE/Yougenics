@@ -41,20 +41,12 @@ namespace Minh
                 GetComponent<Energy>().FullEnergyEvent += startHealthincreasing;
             }
         }
-        public void Awake()
-        {
-            startHealthincreasing();
-            
-            
-        }
-        
         void Start()
         {
+            startHealthincreasing();
             if (NetworkManager.Singleton == null)
                 Debug.Log("No Network Manager Found - ADD ManagerScene For Testing To Your Scene");
-            
         }
-
         public void ChangeHealth(float amount, GameObject whoDidThis)
         {
             if (IsServer)
