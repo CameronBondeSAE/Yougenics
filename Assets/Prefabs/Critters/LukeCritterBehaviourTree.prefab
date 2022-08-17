@@ -5376,7 +5376,7 @@ MonoBehaviour:
   empathy: 0
   aggression: 0
   sizeScale: 0
-  maxSize: 3
+  maxSize: 2
   colour: {r: 0, g: 0, b: 0, a: 0}
   sex: 0
   slowlyDieWhenOldRate: 0
@@ -5393,6 +5393,7 @@ MonoBehaviour:
   defaultBehaviour: 0
   sleepLevel: 0
   acceleration: 1
+  turnSpeed: 8
   maxSpeed: 5
   awakeDecayDelay: 0
   regularMatingDelay: 0
@@ -5417,6 +5418,10 @@ MonoBehaviour:
   healthComp: {fileID: 88437224887789900}
   energyComp: {fileID: 5684984655429772065}
   _commonAttributes: {fileID: 6418234058956923653}
+  antennae: []
+  numberOfAntennae: 0
+  antennaPrefab: {fileID: 0}
+  beam: {fileID: 0}
   view: {fileID: 7895041571512506896}
   aStarUser: {fileID: 0}
   currentEmotion: 0
