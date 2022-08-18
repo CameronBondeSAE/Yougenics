@@ -24,10 +24,10 @@ namespace John
 	{
 		[Header("Testing Setup")]
 		public bool autoHost;
-
 		public bool   autoLoadLevel;
 		public bool   spawnPlayerOnAwake;
 		public string sceneToLoad;
+		public bool critterSpawning = true;
 
 		[Header("Level Setup")]
 		public List<Level> levels;
@@ -190,27 +190,34 @@ namespace John
 		{
 			if (NetworkManager.Singleton.IsServer || IsOwner)
 			{
-				NetworkClient client;
-				if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientID, out client))
-				{
-					ClientInfo clientInfo = client.PlayerObject.GetComponent<ClientInfo>();
+				//Update the lobby UI each tine a client joins
+				HandleNewClientLobbyUI(clientID);
 
-					//Using the client count as the player number reference as clientID does not lower if a player leaves and rejoins (so player 2 ends up incrementing to player 3 etc)
-					clientInfo.Init((ulong)NetworkManager.Singleton.ConnectedClients.Count);
-
-					GameObject uiRef = Instantiate(clientLobbyUIPrefab, clientField.transform);
-					clientInfo.lobbyUIRef               = uiRef;
-					uiRef.GetComponent<TMP_Text>().text = clientInfo.ClientName.Value.ToString();
-				}
-
-				//HandleClientNames();
+				//Get our own local client Reference
 				HandleLocalClient(clientID);
 			}
 			else
 				RequestClientNamesLobbyUIServerRpc(clientID);
 
+			//Each client gets a reference to their localID - use this when updating names
 			if (clientID == NetworkManager.Singleton.LocalClientId)
 				myLocalClientId = clientID;
+		}
+
+		void HandleNewClientLobbyUI(ulong clientId)
+        {
+			NetworkClient client;
+			if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out client))
+			{
+				ClientInfo clientInfo = client.PlayerObject.GetComponent<ClientInfo>();
+
+				//Using the client count as the player number reference as clientID does not lower if a player leaves and rejoins (so player 2 ends up incrementing to player 3 etc)
+				clientInfo.Init((ulong)NetworkManager.Singleton.ConnectedClients.Count);
+
+				GameObject uiRef = Instantiate(clientLobbyUIPrefab, clientField.transform);
+				clientInfo.lobbyUIRef = uiRef;
+				uiRef.GetComponent<TMP_Text>().text = clientInfo.ClientName.Value.ToString();
+			}
 		}
 
 		[ServerRpc(RequireOwnership = false)]
@@ -241,6 +248,7 @@ namespace John
 
 		#region Handle Client Names/Lobby UI
 
+		//OLD--------------------------
 		public void HandleClientNames()
 		{
 			clientName = "";
@@ -253,6 +261,9 @@ namespace John
 
 			UpdateLobbyClientRPC(clientName);
 		}
+		//----------------------------
+
+		//NEW SETUP:
 
 		//This handles NEW clients joining the server - Ensuring the lobby UI is accurate on all clients
 		[ClientRpc]
@@ -496,6 +507,9 @@ namespace John
 		}
 		void SpawnCritters()
         {
+			if (!critterSpawning)
+				return;
+
 			if (critterSpawner != null)
 				critterSpawner.SpawnMultiple();
 			else
