@@ -25,7 +25,7 @@ namespace Maya
             if (other.CompareTag("Food"))
             {
                 foodImTouching = other.GetComponent<Food>();
-                timeToEat = foodImTouching.energyValue / 2;
+                timeToEat = foodImTouching.GetEnergyAmount() / 2;
                 isNearFood = true;
             }
             
