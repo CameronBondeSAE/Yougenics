@@ -26,7 +26,7 @@ namespace Ollie
 
         void MoveForward()
         {
-            if (rigidbody.velocity.magnitude < 3)
+            if (rigidbody.velocity.magnitude < parent.moveSpeed)
             {
                 rigidbody.AddRelativeForce(Vector3.forward * parent.moveSpeed);
             }

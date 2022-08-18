@@ -277,6 +277,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CritterSpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 5076254510905692314, guid: ccbab0122c7c9304fab7deacc164e04e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9165690428412196990, guid: ccbab0122c7c9304fab7deacc164e04e, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 1119584213
@@ -777,6 +781,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1771076256}
     m_Modifications:
+    - target: {fileID: 3526151265006774312, guid: 8d94b24b99119e7448e2fb1227715494, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3526151265006774314, guid: 8d94b24b99119e7448e2fb1227715494, type: 3}
       propertyPath: m_RootOrder
       value: 0

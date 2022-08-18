@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2732531495952430937}
   - component: {fileID: -6029351560365900564}
   - component: {fileID: 550026090}
+  - component: {fileID: 7835277940391260337}
   m_Layer: 0
   m_Name: Food
   m_TagString: Food
@@ -111,15 +112,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab7e08fa153190948a0ed8f118e01532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyValue: 0
-  scaleFactor: 0
-  maxScale: 3
+  scaleFactor: 0.01
   info:
-    name: 
-    description: 
-    energyRequired: 0
+    name: Food bit
+    description: Bit of food
+    energyRequired: 15
     height: 0
-    buildTime: 0
+    buildTime: 4
 --- !u!54 &550026090
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -136,3 +135,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &7835277940391260337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4220855056752116273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86b58142ff8a3804fa71c5004d10d94b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnergyAmount:
+    m_InternalValue: 0
+  energyMax: 50
+  energyMin: 0
+  drainAmount: 0
+  moveDrainAmount: 0
+  drainSpeed: 0
+  energyUserMoving: 0
+  myMagnitude: 0
+  useEnergyOnMovement: 0

@@ -14,18 +14,21 @@ namespace Luke
 		public float turnSpeed;
         public float size;
         public Vector3 forward;
+
+        private float angle;
 		
 		// Start is called before the first frame update
-		void OnEnable()
+		void Start()
 		{
 			_rb = GetComponentInParent<Rigidbody>();
-			_parentTransform = GetComponentInParent<Transform>();
-			_myTransform = GetComponent<Transform>();
+			_myTransform = transform;
+			_parentTransform = _myTransform.parent;
             Critter parent = GetComponentInParent<Critter>();
             acceleration = parent.acceleration*2;
-            turnSpeed = parent.turnSpeed*5;
-            
-        }
+            turnSpeed = parent.turnSpeed/parent.numberOfAntennae;
+            angle = transform.rotation.eulerAngles.y;
+            if (angle > 180) angle -= 360;
+		}
 
 		// Update is called once per frame
 		void FixedUpdate()
@@ -37,8 +40,10 @@ namespace Luke
 			if (Physics.Linecast(position, position+forward*growingSize, out RaycastHit hitInfo))
 			{
                 _rb.AddForce(hitInfo.normal*(acceleration*(growingSize-hitInfo.distance)/growingSize), ForceMode.Acceleration);
-                float angle = Vector3.SignedAngle(forward,_parentTransform.forward, Vector3.up);
-				_rb.AddRelativeTorque(new Vector3(0,-Mathf.Sign(angle)*turnSpeed*((growingSize-hitInfo.distance)/growingSize),0), ForceMode.Acceleration);
+                float normalAngle = Vector3.SignedAngle(-forward,hitInfo.normal, Vector3.up);
+                float angleToWall = 90 + normalAngle + angle;
+                if (angleToWall > 90) angleToWall -= 180;
+				_rb.AddRelativeTorque(new Vector3(0,angleToWall*turnSpeed*((growingSize-hitInfo.distance)/growingSize/2f),0), ForceMode.Acceleration);
 			}
 		}
 	}

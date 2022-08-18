@@ -260,7 +260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnergyAmount:
     m_InternalValue: 0
-  energyMax: 100
+  energyMax: 1000
   energyMin: 0
   drainAmount: 1
   moveDrainAmount: 1

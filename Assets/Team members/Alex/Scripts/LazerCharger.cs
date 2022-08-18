@@ -20,6 +20,7 @@ namespace Alex
         }
         
 
+
         public void Charge()
         {
             lazer.energy.ChangeEnergy(lazer.energy.energyMax);

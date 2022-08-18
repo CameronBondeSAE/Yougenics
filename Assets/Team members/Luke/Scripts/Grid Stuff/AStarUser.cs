@@ -13,14 +13,17 @@ namespace Luke
 	public class AStarUser : MonoBehaviour
 	{
 		public LukeAStar aStar;
-		public AStarNode[,] nodeParents;
+		private Vector2Int[,] _parents;
 		public Vector3 endLocation;
-		public AStarNode currentNode;
-		public AStarNode startNode;
-        public AStarNode endNode;
-		public List<AStarNode> openNodes = new();
-		public List<AStarNode> closedNodes = new();
-		public List<AStarNode> path = new();
+		public Vector2Int currentNode;
+		public Vector2Int startNode;
+        public Vector2Int endNode;
+		private List<Vector2Int> _openNodes = new();
+		private List<Vector2Int> _closedNodes = new();
+		private  int[,] _gCosts;
+		private  int[,] _hCosts;
+		private  int[,] _fCosts;
+		public List<Vector2Int> path = new();
 		public bool breaker;
 
 		void Start()
@@ -31,38 +34,43 @@ namespace Luke
 
 		public void CopyGrid()
 		{
-			nodeParents = new AStarNode[aStar.Nodes.GetLength(0),aStar.Nodes.GetLength(1)];
+			_parents = new Vector2Int[aStar.Nodes.GetLength(0),aStar.Nodes.GetLength(1)];
+			_gCosts = new int[aStar.Nodes.GetLength(0),aStar.Nodes.GetLength(1)];
+			_fCosts = new int[aStar.Nodes.GetLength(0),aStar.Nodes.GetLength(1)];
+			_hCosts = new int[aStar.Nodes.GetLength(0),aStar.Nodes.GetLength(1)];
 		}
 
-		public void AStarAlgorithmFast()
+		public void BeginAStarAlgorithm()
         {
-	        currentNode = startNode;
-	        currentNode.GCost = Mathf.RoundToInt(1000*Vector3.Distance(currentNode.worldPosition, endLocation));
-	        currentNode.HCost = 0;
-	        openNodes.Add(currentNode);
+	        currentNode = new Vector2Int(startNode.x, startNode.y);
+	        _gCosts[currentNode.x, currentNode.y] = Mathf.RoundToInt(1000*Vector3.Distance(aStar.Nodes[currentNode.x,currentNode.y].worldPosition, endLocation));
+	        _hCosts[currentNode.x, currentNode.y] = 0;
+	        _fCosts[currentNode.x, currentNode.y] =
+		        _gCosts[currentNode.x, currentNode.y] + _hCosts[currentNode.x, currentNode.y];
+	        _openNodes.Add(currentNode);
 	        CheckNeighbours();
-	        currentNode = openNodes[OpenNodesComparison()];
-	        if (currentNode != endNode) AStarLoopFast();
+	        currentNode = _openNodes[OpenNodesComparison()];
+	        if (currentNode != endNode) AStarLoop();
 	        else CreatePath();
         }
 
-		private void AStarLoopFast()
+		private void AStarLoop()
 		{
 			while (currentNode != endNode)
 			{
 		        CheckNeighbours(currentNode);
-		        if (openNodes.Count > 0) currentNode = openNodes[OpenNodesComparison()];
+		        if (_openNodes.Count > 0) break;
+				currentNode = _openNodes[OpenNodesComparison()];
 	        }
 			if(currentNode == endNode) CreatePath();
         }
 
         private void CreatePath()
         {
-	        path.Clear();
-	        while (currentNode != startNode || currentNode.parent != null)
+	        while (_parents[currentNode.x, currentNode.y] != new Vector2Int(-1,-1))
 	        {
 		        path.Add(currentNode);
-		        currentNode = nodeParents[currentNode.indices[0], currentNode.indices[1]];
+		        currentNode = _parents[currentNode.x, currentNode.y];
 	        }
         }
 
@@ -73,75 +81,78 @@ namespace Luke
             {
                 for (int y = 0; y < 3; y++)
                 {
-	                int indexX = currentNode.indices[0] - 1 + x;
-	                int indexY = currentNode.indices[1] - 1 + y;
+	                int indexX = currentNode.x - 1 + x;
+	                int indexY = currentNode.y - 1 + y;
 	                if (indexX < 0 || indexX >= aStar.Nodes.GetLength(0)) continue;
 	                if (indexY < 0 || indexY >= aStar.Nodes.GetLength(1)) continue;
-	                AStarNode neighbour = aStar.Nodes[indexX, indexY];
-                    if (neighbour.isBlocked || closedNodes.Contains(neighbour) || openNodes.Contains(neighbour)) continue;
-                    openNodes.Add(neighbour);
-                    neighbour.GCost = Mathf.RoundToInt(1000*Vector3.Distance(neighbour.worldPosition, endLocation));
-                    nodeParents[indexX, indexY] = currentNode;
-                    neighbour.HCost =
-                            Mathf.RoundToInt(1000*Vector3.Distance(neighbour.worldPosition, currentNode.worldPosition) +
-                                             currentNode.HCost);
+	                Vector2Int neighbour = new Vector2Int(indexX, indexY);
+                    if (aStar.Nodes[neighbour.x,neighbour.y].isBlocked || _closedNodes.Contains(neighbour) || _openNodes.Contains(neighbour)) continue;
+                    _openNodes.Add(neighbour);
+                    _gCosts[indexX, indexY] = Mathf.RoundToInt(1000*Vector3.Distance(aStar.Nodes[indexX,indexY].worldPosition, endLocation));
+                    _parents[indexX, indexY] = currentNode;
+                    _hCosts[indexX, indexY] = Mathf.RoundToInt(1000*Vector3.Distance(aStar.Nodes[indexX,indexY].worldPosition,
+	                                                               aStar.Nodes[currentNode.x,currentNode.y].worldPosition) +
+                                                               _hCosts[currentNode.x,currentNode.y]);
+                    _fCosts[indexX, indexY] = _gCosts[indexX, indexY] + _hCosts[indexX, indexY];
                 }
             }
-            closedNodes.Add(currentNode);
-            openNodes.Remove(currentNode);
+            _closedNodes.Add(currentNode);
+            _openNodes.Remove(currentNode);
         }
         
-        private void CheckNeighbours(AStarNode node)
+        private void CheckNeighbours(Vector2Int node)
         {
             for (int x = 0; x < 3; x++)
             {
                 for (int y = 0; y < 3; y++)
                 {
-	                int indexX = node.indices[0] - 1 + x;
-	                int indexY = node.indices[1] - 1 + y;
+	                int indexX = node.x - 1 + x;
+	                int indexY = node.y - 1 + y;
 	                if (indexX < 0 || indexX >= aStar.Nodes.GetLength(0)) continue;
 	                if (indexY < 0 || indexY >= aStar.Nodes.GetLength(1)) continue;
-	                AStarNode neighbour = aStar.Nodes[indexX, indexY];
-                    if (neighbour.isBlocked || closedNodes.Contains(neighbour) || openNodes.Contains(neighbour)) continue;
-                    openNodes.Add(neighbour);
-                    neighbour.GCost = Mathf.RoundToInt(1000*Vector3.Distance(neighbour.worldPosition, endLocation));
-                    if (nodeParents[indexX, indexY] != null && neighbour.HCost < nodeParents[node.indices[0], node.indices[1]].HCost)
+	                Vector2Int neighbour = new Vector2Int(indexX, indexY);
+	                if (aStar.Nodes[neighbour.x,neighbour.y].isBlocked || _closedNodes.Contains(neighbour) || _openNodes.Contains(neighbour)) continue;
+                    _openNodes.Add(neighbour);
+                    _gCosts[indexX, indexY] = Mathf.RoundToInt(1000*Vector3.Distance(aStar.Nodes[indexX,indexY].worldPosition, endLocation));
+                    if (_parents[indexX,indexY] != new Vector2Int(-1,-1) && _hCosts[indexX, indexY] < _hCosts[_parents[node.x, node.y].x,_parents[node.x, node.y].y])
                     {
-                        nodeParents[node.indices[0], node.indices[1]] = neighbour;
-                        node.HCost = Mathf.RoundToInt(1000*Vector3.Distance(neighbour.worldPosition, node.worldPosition) +
-                                                      neighbour.HCost);
+                        _parents[node.x, node.y] = neighbour;
+                        _hCosts[node.x,node.y] = Mathf.RoundToInt(1000*Vector3.Distance(aStar.Nodes[indexX,indexY].worldPosition,
+	                                                                  aStar.Nodes[node.x,node.y].worldPosition) + _hCosts[indexX, indexY]);
+                        _fCosts[node.x, node.y] = _gCosts[node.x, node.y] + _hCosts[node.x, node.y];
                     }
                     else
                     {
-                        nodeParents[indexX, indexY] = node;
-                        neighbour.HCost =
-                            Mathf.RoundToInt(1000*Vector3.Distance(neighbour.worldPosition, node.worldPosition) +
-                                             node.HCost);
+                        _parents[indexX, indexY] = node;
+                        _hCosts[indexX, indexY] =
+                            Mathf.RoundToInt(1000*Vector3.Distance(aStar.Nodes[indexX,indexY].worldPosition, aStar.Nodes[node.x,node.y].worldPosition) +
+                                             _hCosts[node.x,node.y]);
+                        _fCosts[indexX, indexY] = _gCosts[indexX, indexY] + _hCosts[indexX, indexY];
                     }
                 }
             }
-            closedNodes.Add(currentNode);
-            openNodes.Remove(node);
+            _closedNodes.Add(currentNode);
+            _openNodes.Remove(node);
         }
 
         private int OpenNodesComparison()
         {
 	        int lowestFCostIndex = 0;
 	        int lowestGCostIndex = 0;
-	        int lowestFCost = openNodes[lowestFCostIndex].fCost;
-	        int lowestGCost = openNodes[lowestFCostIndex].GCost;
-	        for (int i=0; i < openNodes.Count; i++)
+	        int lowestFCost = _fCosts[_openNodes[lowestFCostIndex].x, _openNodes[lowestFCostIndex].y];
+	        int lowestGCost = _gCosts[_openNodes[lowestFCostIndex].x, _openNodes[lowestFCostIndex].y];
+	        for (int i=0; i < _openNodes.Count; i++)
 	        {
-		        if (openNodes[i].fCost < lowestFCost)
+		        if (_fCosts[_openNodes[i].x, _openNodes[i].y] < lowestFCost)
 		        {
-			        lowestFCost = openNodes[i].fCost;
+			        lowestFCost = _fCosts[_openNodes[i].x, _openNodes[i].y];
 			        lowestFCostIndex = i;
-			        lowestGCost = openNodes[i].GCost;
+			        lowestGCost = _gCosts[_openNodes[i].x, _openNodes[i].y];
 			        lowestGCostIndex = i;
 		        }
-		        else if (openNodes[i].fCost == lowestFCost && openNodes[i].GCost < lowestGCost)
+		        else if (_fCosts[_openNodes[i].x, _openNodes[i].y] == lowestFCost && _gCosts[_openNodes[i].x, _openNodes[i].y] < lowestGCost)
 		        {
-			        lowestGCost = openNodes[i].GCost;
+			        lowestGCost = _gCosts[_openNodes[i].x, _openNodes[i].y];
 			        lowestGCostIndex = i;
 		        }
 	        }
@@ -153,14 +164,26 @@ namespace Luke
         public void ResetNodes(Vector3 startPosition, Vector3 targetPosition)
         {
 	        breaker = true;
-	        openNodes.Clear();
-            closedNodes.Clear();
+	        _openNodes.Clear();
+            _closedNodes.Clear();
             CopyGrid();
+            for (int i = 0; i < aStar.Nodes.GetLength(0); i++)
+            {
+	            for (int j = 0; j < aStar.Nodes.GetLength(1); j++)
+	            {
+		            _gCosts[i, j] = 0;
+		            _hCosts[i, j] = 0;
+		            _fCosts[i, j] = 0;
+		            _parents[i,j] = new Vector2Int(-1,-1);
+		            path.Clear();
+	            }
+            }
+            
             int[] index = aStar.ConvertIndexAndPosition(startPosition);
-	        startNode = aStar.Nodes[index[0], index[1]];
+	        startNode = new Vector2Int(index[0], index[1]);
 	        currentNode = startNode;
 	        index = aStar.ConvertIndexAndPosition(targetPosition); 
-	        endNode = aStar.Nodes[index[0], index[1]];
+	        endNode = new Vector2Int(index[0], index[1]);
         }
 	}
 }

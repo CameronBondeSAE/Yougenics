@@ -14,15 +14,14 @@ namespace Kevin
         public override void Enter()
         {
             base.Enter();
-            //Change emotion UI
-            
+            critterA.fireObjects[0].GetComponent<MeshRenderer>().material =  critterA.fireMaterial[0];
+            critterA.fireObjects[1].GetComponent<MeshRenderer>().material =  critterA.fireMaterial[1];
+            critterA.fireObjects[2].GetComponent<MeshRenderer>().material =  critterA.fireMaterial[2];
         }
 
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
             base.Execute(aDeltaTime, aTimeScale);
-            //critterA.Wander();
-            
             if (!walkPointSet)
             {
                 GenerateNextWalkPoint();
@@ -32,7 +31,6 @@ namespace Kevin
             {
                 TurnTo(walkPoint);
                 critterA.transform.position = Vector3.MoveTowards(transform.position, walkPoint, 0.025f);
-
                 //checks if the distance to the walk point is too short in which case it sets the walkPointSet to false and retries the random generation.
                 Vector3 distanceToWalkPoint = transform.position - walkPoint;
                 if (distanceToWalkPoint.magnitude < 1f)

@@ -12,6 +12,7 @@ namespace Ollie
         private Vector3 myPos;
         private Transform parentTransform;
         private int fovAngle;
+        public List<GameObject> ignoreList;
         
         void Start()
         {
@@ -45,21 +46,21 @@ namespace Ollie
                 
                 if (Physics.Raycast(ray, out hitData))
                 {
-                    if (hitData.distance < 1 && i is > -5 and < 5)
+                    if (hitData.distance < 1 && i is > -5 and < 5 && !ignoreList.Contains(hitData.collider.gameObject) && !hitData.collider.gameObject.GetComponent<CritterTrigger>())
                     {
                         //emergency bailout left
                         rigidbody.AddRelativeTorque(0,-6,0);
                     }
                     
                         //right rays, turn left
-                    else if (hitData.distance < 2 && i > 0)
+                    else if (hitData.distance < 2 && i > 0 && !ignoreList.Contains(hitData.collider.gameObject) && !hitData.collider.gameObject.GetComponent<CritterTrigger>())
                     {
                         rigidbody.AddRelativeTorque(0,-4,0);
                         rigidbody.AddRelativeForce(Vector3.back/2);
                     }
                     
                         //left rays, turn right
-                    else if (hitData.distance < 3 && i < 0)
+                    else if (hitData.distance < 3 && i < 0 && !ignoreList.Contains(hitData.collider.gameObject) && !hitData.collider.gameObject.GetComponent<CritterTrigger>())
                     {
                         rigidbody.AddRelativeTorque(0,4,0);
                         rigidbody.AddRelativeForce(Vector3.back/2);

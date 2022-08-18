@@ -52,7 +52,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 83e6414e86e07054dae81c888ff0de72, type: 2}
   - {fileID: 2100000, guid: ea2bf15bb5ef37d408273efb4580a5c8, type: 2}
   - {fileID: 2100000, guid: da61a755d2ca20a4eb8f8532aa71931b, type: 2}
-  - {fileID: 2100000, guid: 35a4d40e7421a1a4ab1196671d59ca50, type: 2}
+  - {fileID: 2100000, guid: ab4f0fb64a937034f9d332889d9d7705, type: 2}
 --- !u!198 &796071943
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -4948,7 +4948,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad8dee710ddae994ca5e0c0493a6eca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parent: {fileID: 0}
   npcTargets: []
 --- !u!1 &5861305019518734890
 GameObject:
@@ -5096,10 +5095,7 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: currentLocation
-      Entry: 6
-      Data: 
+    SerializationNodes: []
   age: 0
   ageOfMatingStart: 0
   ageOfMatingEnd: 0
@@ -5124,7 +5120,11 @@ MonoBehaviour:
   targetPos: {x: 0, y: 0, z: 0}
   aStar: {fileID: 3705235251873564705}
   timer: 0
-  facingDirection: {x: 0, y: 0, z: 0}
+  turnTowards: {fileID: 0}
+  olliePrefabReferenceHack: {fileID: 11400000, guid: af9d2ae06fb5e994196ff274825aa2f4, type: 2}
+  healthComponent: {fileID: 0}
+  energyComponent: {fileID: 0}
+  chompAmount: 0
   isSafe: 0
   isHungry: 0
   npcNearby: 0
@@ -5205,9 +5205,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2fa0cdd9a3541d2863b2ab871f3c22f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allyList: 
-  enemyList: 
   dangerLevel: 0
+  allegiances:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &1987901841
 MonoBehaviour:
   m_ObjectHideFlags: 0

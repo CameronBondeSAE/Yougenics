@@ -14,6 +14,8 @@ namespace Kevin
         public override void Enter()
         {
             base.Enter();
+            critterA.currentState = 1;
+            critterA.FireEmotionsUpdate();
         }
 
         public override void Execute(float aDeltaTime, float aTimeScale)

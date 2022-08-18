@@ -5,7 +5,7 @@ using Tanks;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public class VehicleModel : MonoBehaviour, IVehicleControls, IItem
+public class VehicleModel : MonoBehaviour, IVehicleControls, IItem, IInteractable
 {
 	public ItemInfo    itemInfo;
 	public List<Wheel> wheels;
@@ -13,14 +13,20 @@ public class VehicleModel : MonoBehaviour, IVehicleControls, IItem
 	public float       turningSpeed  = 50f;
 	public float       movementSpeed = 20f;
 	public Transform outPos;
+	public float annoyingValue;
 
 
 	public void AccelerateAndReverse(float amount)
 	{
+		annoyingValue = amount;
+	}
+
+	private void FixedUpdate()
+	{
 		//Moves each wheel attached to vehicle forward and backwards
 		foreach (Wheel wheel in wheels)
 		{
-			wheel.ApplyForwardForce(amount * movementSpeed);
+			wheel.ApplyForwardForce(annoyingValue * movementSpeed);
 		}
 	}
 
@@ -50,4 +56,8 @@ public class VehicleModel : MonoBehaviour, IVehicleControls, IItem
 	}
 
 	public object transform { get; set; }
+	public void   Interact()
+	{
+		
+	}
 }

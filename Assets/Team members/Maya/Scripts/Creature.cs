@@ -101,7 +101,7 @@ namespace Maya
         {
             if (atFood)
             {
-                energyScript.EnergyAmount.Value += foodObj.energyValue;
+                energyScript.EnergyAmount.Value += foodObj.GetEnergyAmount();
             }
         }
 

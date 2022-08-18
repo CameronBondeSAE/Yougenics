@@ -128,6 +128,7 @@ namespace John
         [ServerRpc]
         void RequestInteractServerRpc()
         {
+            playerModel?.Interact();
             playerModel?.InteractClientRpc();
         }
 
@@ -160,6 +161,8 @@ namespace John
         [ServerRpc]
         void RequestMovementServerRpc(Vector2 input)
         {
+            playerModel?.Movement(input);
+            
             playerModel?.MovementClientRpc(input);
         }
         #endregion

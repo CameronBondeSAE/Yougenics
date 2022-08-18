@@ -87,13 +87,7 @@ public class DropOffPoint : MonoBehaviour, IEnergyDrainer, IItem
             energyContainers.Remove(other.gameObject);
         }
     }
-    void FixedUpdate()
-    {
-        //GetComponent<GameManager>().energy.EnergyAmount.Value += energy.EnergyAmount.Value;
-
-        //gameManagerEnergy.EnergyAmount.Value += energy.EnergyAmount.Value;
-    }
-
+    
     public void SpawnedAsNormal()
     {
         throw new NotImplementedException();
