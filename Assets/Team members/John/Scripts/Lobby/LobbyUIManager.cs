@@ -64,6 +64,7 @@ namespace John
 		ulong         myLocalClientId;
 		NetworkObject myLocalClient;
 		string        clientName;
+		public Animator transitionAnimController;
 
 		public static LobbyUIManager instance;
 
@@ -392,6 +393,7 @@ namespace John
 			try
 			{
 				NetworkManager.Singleton.SceneManager.LoadScene(sceneToLoad, LoadSceneMode.Additive);
+				PlayTransitionClientRpc();
 			}
 			catch (Exception e)
 			{
@@ -631,6 +633,12 @@ namespace John
 			ipAddressCanvas.SetActive(false);
 			levelSelectUI.SetActive(false);
 			waitForHostBanner.SetActive(true);
+		}
+
+		[ClientRpc]
+		public void PlayTransitionClientRpc()
+        {
+			transitionAnimController.SetTrigger("PlayTransition");
 		}
 
 		#endregion
