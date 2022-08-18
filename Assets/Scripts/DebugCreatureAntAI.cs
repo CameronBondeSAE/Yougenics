@@ -18,24 +18,23 @@ namespace Cam.Interfaces_and_Inheritance_base_classes
 			GameObject o = new GameObject("Debug");
 			o.transform.parent                = transform;
 			textMeshPro                       = o.AddComponent<TextMeshPro>();
-			textMeshPro.alignment             = TextAlignmentOptions.TopLeft;
-			textMeshPro.fontSize              = 9f;
-			textMeshPro.autoSizeTextContainer = true;
+			textMeshPro.alignment             = TextAlignmentOptions.Bottom;
+			textMeshPro.fontSize              = 6f;
+			// textMeshPro.autoSizeTextContainer = true;
 
 			RectTransform rectTransform = o.GetComponent<RectTransform>();
 			rectTransform.pivot     = new Vector2(0.5f, 0f);
-			rectTransform.sizeDelta = new Vector2(8f,   100f); // = 10f;// = new Rect(0,0, 8f, 12f);
+			// rectTransform.sizeDelta = new Vector2(8f,   100f); // = 10f;// = new Rect(0,0, 8f, 12f);
 
 			// HACK: Assuming root has main collider
-			rectTransform.localPosition  = new Vector3(0, transform.GetComponent<Collider>().bounds.extents.y,0);
-			
+			rectTransform.localPosition = new Vector3(0, transform.GetComponent<Collider>().bounds.extents.y, 0);
+
 			rectTransform.ForceUpdateRectTransforms();
 		}
 
 		void OnEnable()
 		{
 			textMeshPro.enabled = true;
-			textMeshPro.text    = "CAM!";
 		}
 
 		void OnDisable()
@@ -45,13 +44,21 @@ namespace Cam.Interfaces_and_Inheritance_base_classes
 
 		void Update()
 		{
-			textMeshPro.text = "";
+			if (active)
+			{
+				textMeshPro.enabled = true;
+				textMeshPro.text    = "";
 
-			if (antAIPlan != null)
-				foreach (string action in antAIPlan._actions)
-				{
-					textMeshPro.text += action;
-				}
+				if (antAIPlan != null)
+					foreach (string action in antAIPlan._actions)
+					{
+						textMeshPro.text += action + "\n";
+					}
+			}
+			else
+			{
+				textMeshPro.enabled = false;
+			}
 		}
 	}
 }
