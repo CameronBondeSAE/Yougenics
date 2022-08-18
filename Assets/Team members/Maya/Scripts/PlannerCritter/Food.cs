@@ -22,12 +22,12 @@ namespace Maya
 
 		void EnergyOnEnergyChangedEvent(float amount)
 		{
-			float energyAmountValue = energy.EnergyAmount.Value * scaleFactor;
+			float energyAmountValue = Mathf.Clamp(energy.EnergyAmount.Value * scaleFactor, 0.01f, 9999f);
 			gameObject.transform.DOScale(new Vector3(energyAmountValue, energyAmountValue, energyAmountValue), 1f).SetEase(Ease.OutElastic);
 
 			if (energy.EnergyAmount.Value <=0)
 			{
-				Destroy(gameObject);
+				Destroy(gameObject, 1f);
 				// TODO: Networking
 			}
 		}
