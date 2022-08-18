@@ -7,6 +7,7 @@ using Cam;
 using Minh;
 using Unity.VisualScripting;
 using UnityEngine;
+using Object = System.Object;
 using Random = UnityEngine.Random;
 
 public class CritterA : CreatureBase, IEdible, ISense
@@ -68,8 +69,10 @@ public class CritterA : CreatureBase, IEdible, ISense
         
         //View Code
         public Renderer renderer;
-        
-        public void Awake()
+        public List<GameObject> fireObjects;
+        public List<Material> fireMaterial;
+        public int currentState;
+        public override void Awake()
         {
             commonAttributes = GetComponent<CommonAttributes>();
             rb = GetComponent<Rigidbody>();
@@ -92,7 +95,13 @@ public class CritterA : CreatureBase, IEdible, ISense
             //commonAttributes.allegiances = "critter, player, etc"
             //spawnPosition = transform;
             renderer = GetComponent<Renderer>();
+        }
 
+        public void FireEmotionsUpdate()
+        {
+            fireObjects[0].GetComponent<MeshRenderer>().material = fireMaterial[currentState];
+            fireObjects[1].GetComponent<MeshRenderer>().material = fireMaterial[currentState];
+            fireObjects[2].GetComponent<MeshRenderer>().material = fireMaterial[currentState];
         }
 
         public void Chameleon()
@@ -539,6 +548,7 @@ public class CritterA : CreatureBase, IEdible, ISense
 
         public bool CaughtFood()
         {
+            RaycastHit hitInfo;
             if (canHunt && inActionRange)
             {
                 caughtFood = true;

@@ -15,7 +15,8 @@ namespace Kevin
         public override void Enter()
         {
             base.Enter();
-            //Change emotion UI
+            critterA.currentState = 2; 
+            critterA.FireEmotionsUpdate();
         }
 
         public override void Execute(float aDeltaTime, float aTimeScale)
@@ -25,14 +26,13 @@ namespace Kevin
             {
                 if (critterA.predatorList.Count > 0)
                 {
-                    GenerateNextWalkPoint();
                     TurnTo((-GetClosestPredator(critterA.predatorList,this.transform).transform.position));
                     critterA.transform.position = Vector3.MoveTowards(this.transform.position, 
                         (-GetClosestPredator(critterA.predatorList,this.transform).transform.position),-1 * 0.05f);
                 }
             }
-            //critterA.RunAway();
             
+            GenerateNextWalkPoint();
         }
         Transform GetClosestPredator(List<Transform> predators, Transform thisCritter)
         {
