@@ -43,7 +43,7 @@ namespace Ollie
                 spawnLocation = new Vector3(posX, posY, posZ);
                 
                 var rng = UnityEngine.Random.Range(1, 101);
-                if (rng <= 40)
+                if (rng <= 100) //set to 40 if randomising all 3
                 {
                     GameObject go = Instantiate(food);
                     go.transform.position = spawnLocation;

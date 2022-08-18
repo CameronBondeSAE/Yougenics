@@ -43,15 +43,19 @@ namespace Ollie
             //copied from Behaviour Tree Critter - the trigger child should be modular
             for (int i = 0; i < trigger.npcTargets.Count; i++)
             {
-                target = trigger.npcTargets[i];
-                targetPos = trigger.npcTargets[i].transform.position;
+                if (trigger.npcTargets[i] != null)
+                {
+                    target = trigger.npcTargets[i];
+                    targetPos = trigger.npcTargets[i].transform.position;
+                }
+
                 if (target != null)
                 {
                     Ray ray = new Ray(transform.position, (targetPos-transform.position).normalized);
-                    Debug.DrawRay(ray.origin, ray.direction*hitData.distance,Color.blue,1f);
+                    //Debug.DrawRay(ray.origin, ray.direction*hitData.distance,Color.blue,1f);
                     if (Physics.Raycast(ray, out hitData))
                     {
-                        if (hitData.transform.gameObject.GetComponent<iNPC>() != null)
+                        if (hitData.transform.gameObject.GetComponent<IEdible>() != null)
                         {
                             if (!targetsInSight.Contains(hitData.transform.gameObject))
                             {
@@ -64,10 +68,9 @@ namespace Ollie
                                 // }
                             }
 
-                            if (hitData.transform.gameObject.GetComponent<iFood>() != null)
+                            if (hitData.transform.gameObject.GetComponent<CritterAIPlanner>() == null)
                             {
                                 parent.AddFoodToList(hitData.transform.gameObject);
-                                FoodSpottedEvent?.Invoke();
                             }
                             
                             if (hitData.transform.gameObject.GetComponent<CritterAIPlanner>() != null)

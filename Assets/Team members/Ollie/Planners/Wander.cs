@@ -19,7 +19,8 @@ namespace Ollie
 
         public override void Enter()
         {
-            
+            brain.moveSpeed = 3;
+            brain.target = null;
             base.Enter();
         }
 

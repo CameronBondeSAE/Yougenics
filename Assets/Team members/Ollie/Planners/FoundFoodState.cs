@@ -11,23 +11,24 @@ namespace Ollie
     {
         private GameObject parent;
         private CritterAIPlanner brain;
-        
-        private Vector3 parentPos;
-        private Controller controller;
-        private BoxCollider parentCollider;
         public List<Transform> positionsList;
-        public List<Vector3> distancesList;
-        public Vector3[] distancesToFood;
         public Transform closest;
+        
+        //private Vector3 parentPos;
+        //private Controller controller;
+        //private BoxCollider parentCollider;
+        //public List<Vector3> distancesList;
+        //public Vector3[] distancesToFood;
+        
 
         public override void Create(GameObject aGameObject)
         {
             base.Create(aGameObject);
             parent = aGameObject;
             brain = parent.GetComponent<CritterAIPlanner>();
-            controller = aGameObject.GetComponentInChildren<Controller>();
-            parentPos = parent.transform.position;
-            parentCollider = controller.GetComponent<BoxCollider>();
+            //controller = aGameObject.GetComponentInChildren<Controller>();
+            //parentPos = parent.transform.position;
+            //parentCollider = controller.GetComponent<BoxCollider>();
         }
         
 
@@ -41,24 +42,20 @@ namespace Ollie
         void CheckFoodDistances()
         {
             closest = null;
-            positionsList = parent.GetComponent<CritterAIPlanner>().foodLocationList;
-            
-            // for (int i = 0;
-            //      i < positionsList.Count;
-            //      i++)
-            // {
-            //     float distance = Vector3.Distance(positionsList[i].position, parentPos);
-            // }
-            
+            positionsList = brain.foodLocationList;
+
             float smallestdistance = 99999999;
 
             foreach (var position in positionsList)
             {
-                if (Vector3.Distance(position.position, parent.transform.position) < smallestdistance)
+                if (position != null)
                 {
-                    smallestdistance = Vector3.Distance(position.position,parent.transform.position);
+                    if (Vector3.Distance(position.position, parent.transform.position) < smallestdistance)
+                    {
+                        smallestdistance = Vector3.Distance(position.position,parent.transform.position);
+                        closest = position;
+                    }
                 }
-                closest = position;
             }
         }
 
@@ -67,46 +64,25 @@ namespace Ollie
             brain.StateViewerChange(1);
             base.Execute(aDeltaTime, aTimeScale);
             
-            if (brain.path.Count == 0)
+            if (brain.path.Count == 0 && closest != null)
             {
                 if (brain.transform.position != closest.position)
                 {
                     brain.SetTarget(closest);
+                    print("target food set");
                 }
                 else
                 {
-                    parentCollider.enabled = enabled;
+                    //parentCollider.enabled = enabled;
                     CheckFoodDistances();
                 }
-                
-                //else
-                //invoke Event to turn on Controller's collider
-                //if it collides with food, controller will set bool to progress planner
-                //pick new closest target
-                    //will be overwritten if planner progresses
-                
-                
-                
-                
-                /*else if (!foodExists)
-                {
-                    //this needs to check if food exists before exiting
-                    //trigger could fire off event?
-                    //change trigger to coroutine so it returns whatever hit?
-                    //if null, disable collider and then move to next closest food?
-                    
-                    parentCollider.enabled = enabled;
-                }
-                else if (foodMissing)
-                {
-                    parentCollider.enabled = !enabled;
-                }
-                else
-                {
-                    parentCollider.enabled = !enabled;
-                    brain.SetFoodFound(true);
-                    base.Exit();
-                }*/
+            }
+            
+            if (Vector3.Distance(parent.transform.position, closest.position) < 1)
+            {
+                brain.moveSpeed = 0;
+                print("its NOMming time");
+                brain.SetFoodFound(true);
             }
         }
 
@@ -120,12 +96,6 @@ namespace Ollie
         {
             base.Destroy(aGameObject);
         }
-
-        void MoveToFood(Transform closest)
-        {
-            parent.GetComponentInChildren<Controller>().MoveToTarget(closest.position);
-            
-            
-        }
+        
     }
 }
