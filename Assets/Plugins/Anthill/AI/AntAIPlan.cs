@@ -11,7 +11,7 @@ namespace Anthill.AI
 
 		public bool isSuccess; // True if plan is successed.
 
-		private readonly List<string> _actions;
+		public List<string> _actions;
 
 	#endregion
 

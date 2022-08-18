@@ -19,15 +19,15 @@ public class LukeAStarUserEditor : Editor
 			aStarUser.ResetNodes(startPos, endPos);
 			int[] indexStart = aStar.ConvertIndexAndPosition(startPos);
 			int[] indexEnd = aStar.ConvertIndexAndPosition(endPos);
-			aStarUser.startNode = aStar.Nodes[indexStart[0], indexStart[1]];
+			aStarUser.startNode = new Vector2Int(indexStart[0], indexStart[1]);
 			aStarUser.currentNode = aStarUser.startNode;
-			aStarUser.endNode = aStar.Nodes[indexEnd[0], indexEnd[1]];
+			aStarUser.endNode = new Vector2Int(indexEnd[0], indexEnd[1]);
 		}
         
         if (GUILayout.Button("Begin AStar Algorithm"))
         {
 	        AStarUser aStarUser = (AStarUser) target;
-	        aStarUser.AStarAlgorithmFast();
+	        aStarUser.BeginAStarAlgorithm();
         }
 	}
 }

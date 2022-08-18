@@ -89,14 +89,14 @@ namespace Luke
 			{
 				StartCoroutine(BreakerSwitch());
 			}
-			else aStarUser.AStarAlgorithmFast();
+			else aStarUser.BeginAStarAlgorithm();
 		}
 
 		private IEnumerator BreakerSwitch()
 		{
 			yield return new WaitForSeconds(1);
 			aStarUser.breaker = false;
-			aStarUser.AStarAlgorithmFast();
+			aStarUser.BeginAStarAlgorithm();
 			
 		}
 
@@ -268,7 +268,7 @@ namespace Luke
             {
                 GameObject go = Instantiate(antennaPrefab, _transform);
                 go.transform.localPosition = new Vector3(0, -_transform.localScale.y/4f, 0);
-                go.transform.localEulerAngles = new Vector3(0, -45+75*i/(numberOfAntennae-1), 0);
+                go.transform.localEulerAngles = new Vector3(0, -45+90*i/(numberOfAntennae-1), 0);
             }
 		}
 
@@ -481,7 +481,7 @@ namespace Luke
 
 		public Vector3 GetMoveTargetAStar()
 		{
-			return aStarUser.path[^2].worldPosition;
+			return aStarUser.aStar.Nodes[aStarUser.path[^2].x,aStarUser.path[^2].y].worldPosition;
         }
 
 		public bool CheckHasFood()
