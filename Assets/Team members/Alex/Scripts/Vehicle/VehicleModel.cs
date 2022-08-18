@@ -13,14 +13,20 @@ public class VehicleModel : MonoBehaviour, IVehicleControls, IItem, IInteractabl
 	public float       turningSpeed  = 50f;
 	public float       movementSpeed = 20f;
 	public Transform outPos;
+	public float annoyingValue;
 
 
 	public void AccelerateAndReverse(float amount)
 	{
+		annoyingValue = amount;
+	}
+
+	private void FixedUpdate()
+	{
 		//Moves each wheel attached to vehicle forward and backwards
 		foreach (Wheel wheel in wheels)
 		{
-			wheel.ApplyForwardForce(amount * movementSpeed);
+			wheel.ApplyForwardForce(annoyingValue * movementSpeed);
 		}
 	}
 

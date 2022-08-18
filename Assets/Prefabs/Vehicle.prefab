@@ -276,10 +276,9 @@ MonoBehaviour:
   - {fileID: 392720054664321577}
   - {fileID: 8860035961690252253}
   turningSpeed: 50
-  movementSpeed: 20
+  movementSpeed: 200
   outPos: {fileID: 5157005637430250220}
-  inVehicle: 0
-  energy: {fileID: 3424407603559874322}
+  annoyingValue: 0
 --- !u!114 &9178562772029902593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,7 +308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnergyAmount:
-    m_InternalValue: 0
+    m_InternalValue: 100
   energyMax: 100
   energyMin: 0
   drainAmount: 0
