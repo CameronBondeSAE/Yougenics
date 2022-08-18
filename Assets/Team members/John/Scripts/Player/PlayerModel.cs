@@ -242,6 +242,8 @@ namespace John
 			transform.position = vehicleReference.GetExitPosition();
 			// transform.rotation = vehicleReference.GetVehicleExitPoint().rotation;
 
+			transform.rotation = Quaternion.identity;
+			
 			// vehicleReference.Exit();
 		}
 
