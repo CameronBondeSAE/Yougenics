@@ -622,13 +622,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1991825516}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 300092e2ce1d0c34392f8f01d472118f, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ea09f562e5b8f1499fa5e457b8f905a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 5
-  minhobject: {fileID: 1991825521}
-  length: 10
-  width: 20
+  zoomLevel: 9.34
+  animationspeed: 25
+  duration: 5.27
+  tween: {fileID: 1991825516}
+  width: 14.79
 --- !u!1001 &4093272418427513532
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -730,6 +731,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8096429527941459459, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9093261768159887334, guid: 8f9d960b679af914a8d5d6ed8c2edeb7, type: 3}
+      propertyPath: m_UseGravity
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:

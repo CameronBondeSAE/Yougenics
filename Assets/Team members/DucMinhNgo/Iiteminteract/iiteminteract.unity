@@ -182,7 +182,6 @@ MonoBehaviour:
   adjust2: 0
   adjust3: 0
   Player: {fileID: 584940611}
-  pick: 0
 --- !u!4 &431292235
 Transform:
   m_ObjectHideFlags: 0
@@ -211,7 +210,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3181597930356307251, guid: 252850b7f97b1964fa6adebf548858d3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 485.48
+      value: 499.98
       objectReference: {fileID: 0}
     - target: {fileID: 3181597930356307251, guid: 252850b7f97b1964fa6adebf548858d3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -369,7 +368,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!1 &766952759
 GameObject:
@@ -515,7 +514,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2764626321808243861, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 499.46
+      value: 507.1
       objectReference: {fileID: 0}
     - target: {fileID: 2764626321808243861, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
       propertyPath: m_LocalPosition.y

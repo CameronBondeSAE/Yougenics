@@ -78,7 +78,7 @@ namespace Minh
                     IItem item2 = hit.collider.gameObject.GetComponentInParent<IItem>();
                     if (item2 != null)
                     {
-                        slot1 = item2;
+                        slot2 = item2;
                         MonoBehaviour monoBehaviour = item2 as MonoBehaviour;
                         monoBehaviour.transform.parent = Player.transform;
                         monoBehaviour.transform.position = Player.transform.position + new Vector3(0f, adjust2 * adjust3 * Time.deltaTime, 1 * adjust1 * Time.deltaTime);
