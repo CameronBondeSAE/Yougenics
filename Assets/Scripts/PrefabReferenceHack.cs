@@ -8,5 +8,5 @@ using UnityEngine;
 [CreateAssetMenu]
 public class PrefabReferenceHack : ScriptableObject
 {
-    public Transform prefab;
+    public GameObject prefab;
 }
