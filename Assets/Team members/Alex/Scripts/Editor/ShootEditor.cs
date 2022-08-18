@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using Alex;
 
-[CustomEditor(typeof(Gun), true)]
+[CustomEditor(typeof(LazerGun), true)]
 public class ShootEditor : Editor
 {
     public override void OnInspectorGUI()
@@ -13,7 +13,7 @@ public class ShootEditor : Editor
         
         if (GUILayout.Button("Shoot"))
         {
-            (target as Gun)?.Shoot();
+            (target as LazerGun)?.Interact();
         }
     }
 }

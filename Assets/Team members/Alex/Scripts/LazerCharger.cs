@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Alex;
+using Kevin;
 using UnityEngine;
 using UnityEngine.InputSystem.HID;
 
@@ -9,19 +10,21 @@ namespace Alex
 {
     public class LazerCharger : MonoBehaviour, IInteractable
     {
-        Gun lazer;
+        LazerGun lazer;
         public Button button;
 
         // Start is called before the first frame update
         void Start()
         {
-            lazer = GetComponent<Gun>();
+            lazer = GetComponent<LazerGun>();
         }
         
 
-        void Charge()
+        public void Charge()
         {
-            lazer.GetComponent<Energy>().ChangeEnergy(lazer.GetComponent<Energy>().energyMax);
+            lazer.energy.ChangeEnergy(lazer.energy.energyMax);
+            GameManager.instance.energy.EnergyAmount.Value -=
+                (lazer.energy.energyMax - lazer.energy.EnergyAmount.Value);
         }
 
         public void Interact()
