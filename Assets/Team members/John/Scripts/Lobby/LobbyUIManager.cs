@@ -9,6 +9,7 @@ using System;
 using UnityEngine.SceneManagement;
 using Unity.Netcode.Transports.UNET;
 using DG.Tweening;
+using Kevin;
 
 namespace John
 {
@@ -425,7 +426,14 @@ namespace John
 				tempPlayer.GetComponent<PlayerModel>().myClientInfo = client.PlayerObject.GetComponent<ClientInfo>();
 				
 				// Tell anyone (probably clients) that the playercontroll has been assigned an actual player prefab
-				OnPlayerPrefabSpawnedClientRpc(controller.GetComponent<NetworkObject>().NetworkObjectId);
+				// OwnerClientID points to PlayerController
+			
+				
+				// HACK BUG: Event can't be subscribed to in time before level load event goes off...so we'll just wait a bit and hope the client has finished loading
+				// StartCoroutine(OnPlayerPrefabSpawnedClientRpcCoroutine(controller.GetComponent<NetworkObject>().OwnerClientId));
+				StartCoroutine(OnPlayerPrefabSpawnedClientRpcCoroutine(controller.GetComponent<NetworkObject>().OwnerClientId, controller.playerModel.GetComponent<NetworkObject>().NetworkObjectId));
+				
+				// OnPlayerPrefabSpawnedClientRpc(controller.GetComponent<NetworkObject>().OwnerClientId);
 			}
 
 			//Activate controller on all clients
@@ -442,11 +450,20 @@ namespace John
 			lobbyCam.SetActive(false);
 			SubmitLobbyUIStateClientRpc(true);
 		}
+		
+		// HACK HACK HACK: Wait for levels to load on clients HOPEFULLY
+		public IEnumerator OnPlayerPrefabSpawnedClientRpcCoroutine(ulong playerControllerNetworkObject, ulong networkObjectId)
+		{
+			yield return new WaitForSeconds(2f);
+			OnPlayerPrefabSpawnedClientRpc(playerControllerNetworkObject, networkObjectId);
+		}
 
 		[ClientRpc]
-		public void OnPlayerPrefabSpawnedClientRpc(ulong playerControllerNetworkObject)
+		public void OnPlayerPrefabSpawnedClientRpc(ulong controllerNetworkObject, ulong playerControllerNetworkObject)
 		{
-			PlayerPrefabSpawnedClientIDEvent?.Invoke(playerControllerNetworkObject);
+			// PlayerPrefabSpawnedClientIDEvent?.Invoke(playerControllerNetworkObject);
+			// Hack: GM should sub, but levelloaded happens before Awake
+			GameManager.instance.OnInstanceOnPlayerPrefabSpawnedClientIDEvent(controllerNetworkObject, playerControllerNetworkObject);
 		}
 
 		[ClientRpc]

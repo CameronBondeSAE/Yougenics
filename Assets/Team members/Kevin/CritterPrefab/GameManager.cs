@@ -40,7 +40,8 @@ namespace Kevin
             instance = this;
          
             // Client side only
-            LobbyUIManager.instance.PlayerPrefabSpawnedClientIDEvent += OnInstanceOnPlayerPrefabSpawnedClientIDEvent;
+            // BUG Can't subscribe in time
+            // LobbyUIManager.instance.PlayerPrefabSpawnedClientIDEvent += OnInstanceOnPlayerPrefabSpawnedClientIDEvent;
             
             energy = GetComponent<Energy>();
             energyGoal = energy.energyMax;
@@ -50,17 +51,31 @@ namespace Kevin
         }
 
         // Assign LOCAL camera to actual player prefab
-        void OnInstanceOnPlayerPrefabSpawnedClientIDEvent(ulong clientID)
+        public void OnInstanceOnPlayerPrefabSpawnedClientIDEvent(ulong clientOwnerID, ulong playerModelID)
         {
-            NetworkObject controller = NetworkManager.Singleton.ConnectedClients[clientID-1].PlayerObject;
-            PlayerModel   playerModel   = controller.GetComponent<PlayerController>().playerModel;
+            // NetworkObject controller = NetworkManager.Singleton.ConnectedClients[clientOwnerID].PlayerObject;
+            // PlayerModel   playerModel   = controller.GetComponent<PlayerController>().playerModel;
 
-            if (controller.IsLocalPlayer)
+            if (NetworkManager.Singleton.LocalClientId == clientOwnerID)
             {
-                Camera newCamera = Instantiate(mainCameraPrefab);
-                newCamera.transform.parent        = playerModel.cameraMount;
-                newCamera.transform.localPosition = Vector3.zero;
+                NetworkObject localClientPlayerObject = NetworkManager.Singleton.LocalClient.PlayerObject;
+
+                NetworkObject thing = null;
+                NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(playerModelID, out thing);
+
+                // Find the possessed playerModel prefab
+                NetworkObject networkObject = NetworkManager.Singleton.LocalClient.OwnedObjects.Find(item => item.NetworkObjectId == playerModelID);
+                
+                if (networkObject != null)
+                {
+                    PlayerModel playerModel = networkObject.GetComponent<PlayerModel>();
+                    
+                    Camera newCamera = Instantiate(mainCameraPrefab);
+                    newCamera.transform.parent        = playerModel.cameraMount;
+                    newCamera.transform.localPosition = Vector3.zero;
+                }
             }
+            
             
         }
 
