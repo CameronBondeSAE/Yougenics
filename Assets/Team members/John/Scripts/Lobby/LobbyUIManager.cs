@@ -9,6 +9,7 @@ using System;
 using UnityEngine.SceneManagement;
 using Unity.Netcode.Transports.UNET;
 using DG.Tweening;
+using Kevin;
 
 namespace John
 {
@@ -393,82 +394,16 @@ namespace John
 
 			SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
 
-			SpawnPoint[] spawnPoints = FindObjectsOfType<SpawnPoint>();
-
-			//TODO: Refactor this out of this script?
-			//Spawn a player for each client
-			foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
-			{
-				GameObject            tempPlayer;
-				John.PlayerController controller;
-
-				//spawn a player
-				if (spawnPoints.Length > 0)
-				{
-					SpawnPoint randomSpawn = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
-					tempPlayer = Instantiate(playerPrefab, randomSpawn.transform.position, Quaternion.identity);
-				}
-				else
-				{
-					tempPlayer = Instantiate(playerPrefab);
-					Debug.Log("No Spawn Points Found");
-				}
-
-				//set ownership
-				tempPlayer.GetComponent<NetworkObject>().SpawnWithOwnership(client.ClientId);
-
-				//Posses that player object
-				controller             = client.PlayerObject.GetComponent<John.PlayerController>();
-				controller.playerModel = tempPlayer.GetComponent<PlayerModel>();
-
-				//This only works on the server
-				tempPlayer.GetComponent<PlayerModel>().myClientInfo = client.PlayerObject.GetComponent<ClientInfo>();
-				
-				// Tell anyone (probably clients) that the playercontroll has been assigned an actual player prefab
-				OnPlayerPrefabSpawnedClientRpc(controller.GetComponent<NetworkObject>().NetworkObjectId);
-			}
+			//Spawn Players
+			HandlePlayerSpawning();
 
 			//Activate controller on all clients
 			InitControllerClientRpc();
 
-			critterSpawner.SpawnMultiple();
+			SpawnCritters();
 
-			foreach (GameObject spawnedSpawnerGO in critterSpawner.spawned)
-			{
-				spawnedSpawnerGO.GetComponent<Spawner>().SpawnMultiple();
-			}
-
-			//Update UI
-			lobbyCam.SetActive(false);
-			SubmitLobbyUIStateClientRpc(true);
-		}
-
-		[ClientRpc]
-		public void OnPlayerPrefabSpawnedClientRpc(ulong playerControllerNetworkObject)
-		{
-			PlayerPrefabSpawnedClientIDEvent?.Invoke(playerControllerNetworkObject);
-		}
-
-		[ClientRpc]
-		public void InitControllerClientRpc()
-		{
-			NetworkObject         myClient;
-			John.PlayerController controller;
-
-			if (!IsServer)
-			{
-				myClient = NetworkManager.Singleton.LocalClient.PlayerObject;
-			}
-			else
-				myClient = myLocalClient;
-
-			controller = myClient.GetComponent<John.PlayerController>();
-			controller.playerInput.ActivateInput();
-			controller.playerInput.SwitchCurrentActionMap("InGame");
-			controller.OnPlayerAssigned();
-
-			//controller.playerModel.myClientInfo = myClient.GetComponent<ClientInfo>();
-			//controller.playerModel.OnClientAssigned(myClient.GetComponent<ClientInfo>());
+			//Entering Game - Turn Off Lobby Camera & Turn On Game UI
+			UpdateLobbyCameraAndUI(false, true);
 		}
 
 		private void SceneManagerOnOnSceneEvent(SceneEvent sceneEvent)
@@ -494,15 +429,115 @@ namespace John
 			//Turn Off Controller on all clients
 			ResetControllerClientRpc();
 
-			//Update Lobby UI
-			SubmitLobbyUIStateClientRpc(false);
-			lobbyCam.SetActive(true);
+			//Update Lobby UI & Camera
+			UpdateLobbyCameraAndUI(true, false);
+		}
+
+		void HandlePlayerSpawning()
+        {
+			SpawnPoint[] spawnPoints = FindObjectsOfType<SpawnPoint>();
+
+			//Spawn a player for each client
+			foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
+			{
+				GameObject tempPlayer;
+				John.PlayerController controller;
+
+				//spawn a player
+				if (spawnPoints.Length > 0)
+				{
+					SpawnPoint randomSpawn = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
+					tempPlayer = Instantiate(playerPrefab, randomSpawn.transform.position, Quaternion.identity);
+				}
+				else
+				{
+					tempPlayer = Instantiate(playerPrefab);
+					Debug.Log("No Spawn Points Found");
+				}
+
+				//set ownership
+				tempPlayer.GetComponent<NetworkObject>().SpawnWithOwnership(client.ClientId);
+
+				//Posses that player object
+				controller = client.PlayerObject.GetComponent<John.PlayerController>();
+				controller.playerModel = tempPlayer.GetComponent<PlayerModel>();
+
+				//This only works on the server
+				tempPlayer.GetComponent<PlayerModel>().myClientInfo = client.PlayerObject.GetComponent<ClientInfo>();
+
+				// Tell anyone (probably clients) that the playercontroll has been assigned an actual player prefab
+				// OwnerClientID points to PlayerController
+
+				// HACK BUG: Event can't be subscribed to in time before level load event goes off...so we'll just wait a bit and hope the client has finished loading
+				// StartCoroutine(OnPlayerPrefabSpawnedClientRpcCoroutine(controller.GetComponent<NetworkObject>().OwnerClientId));
+				StartCoroutine(OnPlayerPrefabSpawnedClientRpcCoroutine(controller.GetComponent<NetworkObject>().OwnerClientId, controller.playerModel.GetComponent<NetworkObject>().NetworkObjectId));
+
+				// OnPlayerPrefabSpawnedClientRpc(controller.GetComponent<NetworkObject>().OwnerClientId);
+			}
+		}
+
+		// HACK HACK HACK: Wait for levels to load on clients HOPEFULLY
+		public IEnumerator OnPlayerPrefabSpawnedClientRpcCoroutine(ulong playerControllerNetworkObject, ulong networkObjectId)
+		{
+			yield return new WaitForSeconds(2f);
+			OnPlayerPrefabSpawnedClientRpc(playerControllerNetworkObject, networkObjectId);
 		}
 
 		[ClientRpc]
+		public void OnPlayerPrefabSpawnedClientRpc(ulong controllerNetworkObject, ulong playerControllerNetworkObject)
+		{
+			// PlayerPrefabSpawnedClientIDEvent?.Invoke(playerControllerNetworkObject);
+			// Hack: GM should sub, but levelloaded happens before Awake
+
+			if (GameManager.instance != null)
+				GameManager.instance.OnInstanceOnPlayerPrefabSpawnedClientIDEvent(controllerNetworkObject, playerControllerNetworkObject);
+			else
+				Debug.Log("No GameManager Found! - Make Sure You Have A GameManager In The Level To Setup Player Cameras");
+		}
+		void SpawnCritters()
+        {
+			if (critterSpawner != null)
+				critterSpawner.SpawnMultiple();
+			else
+				Debug.Log("Critter Spawner Reference Not Set");
+
+			foreach (GameObject spawnedSpawnerGO in critterSpawner.spawned)
+			{
+				Spawner subSpawner = spawnedSpawnerGO.GetComponent<Spawner>();
+				if (subSpawner != null)
+					subSpawner.SpawnMultiple();
+			}
+		}
+
+		#endregion
+
+		#region Handle Player Controllers
+
+		[ClientRpc]
+		public void InitControllerClientRpc()
+		{
+			NetworkObject myClient;
+			John.PlayerController controller;
+
+			if (!IsServer)
+			{
+				myClient = NetworkManager.Singleton.LocalClient.PlayerObject;
+			}
+			else
+				myClient = myLocalClient;
+
+			controller = myClient.GetComponent<John.PlayerController>();
+			controller.playerInput.ActivateInput();
+			controller.playerInput.SwitchCurrentActionMap("InGame");
+			controller.OnPlayerAssigned();
+
+			//controller.playerModel.myClientInfo = myClient.GetComponent<ClientInfo>();
+			//controller.playerModel.OnClientAssigned(myClient.GetComponent<ClientInfo>());
+		}
+		[ClientRpc]
 		public void ResetControllerClientRpc()
 		{
-			NetworkObject         myClient;
+			NetworkObject myClient;
 			John.PlayerController controller;
 
 			if (!IsServer)
@@ -517,11 +552,21 @@ namespace John
 			controller.playerInput.DeactivateInput();
 		}
 
-        #endregion
+		#endregion
 
-        #region UI Hacky Code
+		#region UI Hacky Code
 
-        [ClientRpc]
+		void UpdateLobbyCameraAndUI(bool lobbyCameraState, bool inGameUIState)
+		{
+			if (lobbyCam != null)
+				lobbyCam.SetActive(lobbyCameraState);
+			else
+				Debug.Log("Lobby Cam Reference Missing");
+
+			SubmitLobbyUIStateClientRpc(inGameUIState);
+		}
+
+		[ClientRpc]
 		public void SubmitLobbyUIStateClientRpc(bool inGame)
 		{
 			lobbyCanvas.SetActive(!inGame);

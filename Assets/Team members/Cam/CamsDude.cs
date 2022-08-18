@@ -1,3 +1,4 @@
+using Anthill.AI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,12 +9,15 @@ namespace Cam
 {
     public class CamsDude : CreatureBase, IEdible
     {
+        public AntAIAgent agent;
+        
+        
         public Transform target;
 
         public StateManager stateManager;
         
         void Start()
-        { 
+        {
             stateManager = GetComponent<StateManager>();
             
             // I am interested in this event, so I 'subscribe/listen/observe' to the event
@@ -35,6 +39,11 @@ namespace Cam
 
         private void Update()
         {
+            Ray myRay = new Ray(transform.position, transform.forward);
+
+            // Physics.Raycast(myRay, )
+            
+            
             
             if (GetComponent<Energy>().EnergyAmount.Value < 10)
             {
