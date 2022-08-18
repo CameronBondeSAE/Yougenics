@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 173137075370810391}
-  m_LocalRotation: {x: -0, y: -0.7071069, z: -0, w: -0.7071067}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: 0, w: -0.7071068}
   m_LocalPosition: {x: 16.77, y: 2.39, z: -0.39}
   m_LocalScale: {x: 0.81438, y: 0.81438, z: 0.81438}
   m_ConstrainProportionsScale: 0
@@ -103,12 +103,6 @@ MonoBehaviour:
   energy: {fileID: 7571459881327520243}
   energyUsers: []
   rechargeAmount: 10
-  itemInfo:
-    name: 
-    description: 
-    energyRequired: 0
-    height: 0
-    buildTime: 0
   cube: {fileID: 2083437591032378692}
   inactive: {fileID: 2100000, guid: 7cc4c70753ddfa840ae9f8a93d15b6d0, type: 2}
   active: {fileID: 2100000, guid: 0cab07ca72f37ea419b579fb52d7c925, type: 2}

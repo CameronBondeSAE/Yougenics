@@ -57,7 +57,7 @@ namespace Ollie
         {
             IItem otherItem = other.GetComponent<IItem>();
             //need to check for player too!! maybe?
-            if (other.GetComponent<Energy>() != null || !drainTargets.Contains(other.gameObject) ||!other.GetComponent<PlayerModel>() || !other.GetComponent<DropOffPoint>() || otherItem != null)
+            if (other.GetComponent<Energy>() != null && !drainTargets.Contains(other.gameObject) && !other.GetComponent<PlayerModel>() && !other.GetComponent<DropOffPoint>() && otherItem != null)
             {
                 drainTargets.Add(other.gameObject);
             }

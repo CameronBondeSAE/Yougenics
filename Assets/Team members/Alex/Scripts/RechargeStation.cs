@@ -42,7 +42,7 @@ public class RechargeStation : MonoBehaviour, IEnergyDrainer
                 if (target.GetComponent<Energy>().EnergyAmount.Value >= 0)
                 {
                     target.GetComponent<Energy>().ChangeEnergy(rechargeAmount);
-                    GameManager.instance.energy.ChangeEnergy(-rechargeAmount);
+                    GameManager.instance.energy.ChangeEnergy(-target.GetComponent<Energy>().ChangeEnergy(rechargeAmount));
 
                     cube.material = active;
                 }

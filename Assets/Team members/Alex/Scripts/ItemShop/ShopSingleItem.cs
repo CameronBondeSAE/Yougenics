@@ -15,6 +15,7 @@ public class ShopSingleItem : NetworkBehaviour
 	public  Button     button;
 	public bool canSpawn = true;
 	private GameManager gameManager;
+	
 
 
 	private void Start()
@@ -48,6 +49,9 @@ public class ShopSingleItem : NetworkBehaviour
 			//Waits for build time before creating object in scene
 			yield return new WaitForSeconds(itemInfo.buildTime);
 			spawner.SpawnSingle(itemToSpawn, spawningPoint.position +  new Vector3(0, itemInfo.height,0), spawningPoint.rotation);
+			itemToSpawn.GetComponent<Energy>().EnergyAmount.Value = itemToSpawn.GetComponent<Energy>().energyMax;
+
+			UINotifcations.instance.NotificationText(itemInfo.name +  " has finished building", 5);
 
 			//Doubles the cost of the item to build
 			itemInfo.energyRequired += (itemInfo.energyRequired * 2);

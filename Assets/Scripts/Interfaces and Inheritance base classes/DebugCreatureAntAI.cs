@@ -45,6 +45,7 @@ namespace Cam.Interfaces_and_Inheritance_base_classes
 
 		void Update()
 		{
+			/*
 			textMeshPro.text = "";
 
 			if (antAIPlan != null)
@@ -52,6 +53,7 @@ namespace Cam.Interfaces_and_Inheritance_base_classes
 				{
 					textMeshPro.text += action;
 				}
+				*/
 		}
 	}
 }
