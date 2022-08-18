@@ -47,6 +47,9 @@ namespace John
 
 		public Transform playerHead;
 
+		public bool      inVehicle = false;
+		public IVehicleControls vehicleReference;
+		
 		//Setting up controller if non-networked
 		private void Start()
 		{
@@ -116,23 +119,7 @@ namespace John
 		[ClientRpc]
 		public void InteractClientRpc()
 		{
-			RaycastHit hit = CheckWhatsInFrontOfMe();
-
-			if (hit.collider != null)
-			{
-				// Get in parent, because the collider might be a child and IInteractable should be on the root GO
-				IInteractable interactable = hit.collider.gameObject.GetComponentInParent<IInteractable>();
-				if (interactable != null)
-				{
-					interactable.Interact();
-				}
-				else
-					Debug.Log("Collider Not Interactable");
-			}
-			else
-			{
-				Debug.Log("Nothing found");
-			}
+			// View stuff
 		}
 
 		bool onGround = false;
@@ -153,9 +140,17 @@ namespace John
 
 		public void Movement(Vector2 movementInput)
 		{
-			// movement = transform.right * movementInput.x + transform.forward * movementInput.y;
-			movement.x = movementInput.x;
-			movement.z = movementInput.y;
+			if (inVehicle)
+			{
+				vehicleReference.AccelerateAndReverse(movementInput.y);
+				vehicleReference.Steer(movementInput.x);
+			}
+			else
+			{
+				// movement = transform.right * movementInput.x + transform.forward * movementInput.y;
+				movement.x = movementInput.x;
+				movement.z = movementInput.y;
+			}
 		}
 
 		public void MouseX(float value)
@@ -170,22 +165,40 @@ namespace John
 
 		public void Interact()
 		{
+			// Get OUT of vehicle
+			if (inVehicle)
+			{
+				GetOutOfVehicle();
+				return;
+			}
+			
+			
+			// Normal interact with items in the scene
 			RaycastHit hit = CheckWhatsInFrontOfMe();
 
 			if (hit.collider != null)
 			{
+				// HACK: Bit hard coded
+				vehicleReference = hit.collider.gameObject.GetComponentInParent<IVehicleControls>();
+				if (vehicleReference != null)
+				{
+					GetInVehicle();
+				}
+
+				
+				
 				IInteractable interactable = hit.collider.gameObject.GetComponentInParent<IInteractable>();
 				if (interactable != null)
 				{
 					interactable.Interact();
 				}
-				else
-					Debug.Log("Collider Not Interactable");
+				// else
+					// Debug.Log("Collider Not Interactable");
 			}
-			else
-			{
-				Debug.Log("Nothing found");
-			}
+			// else
+			// {
+				// Debug.Log("Nothing found");
+			// }
 		}
 
 		public void Jump()
@@ -196,6 +209,42 @@ namespace John
 		}
 
 		#endregion
+		
+		public void GetInVehicle()
+		{
+			// TODO: This only works if there's one collider on root
+			inVehicle                        = true;
+			GetComponent<Collider>().enabled = false;
+			rb.isKinematic                   = true;
+			// GetInVehicleEvent?.Invoke(true);
+
+
+			// Lock me to the vehicle, just so the camera doesn't need to retarget anything. I don't actually need to be a child
+			MonoBehaviour vehicleComponent = vehicleReference as MonoBehaviour;
+			transform.parent        = vehicleComponent.transform;
+			transform.localPosition = Vector3.zero;
+
+			// vehicleReference.Enter();
+		}
+
+		public void GetOutOfVehicle()
+		{
+			// TODO: This only works if there's one collider on root
+			inVehicle                        = false;
+			GetComponent<Collider>().enabled = true;
+			rb.isKinematic                   = false;
+			// GetInVehicleEvent?.Invoke(false);
+
+			// UNLock me from the vehicle, just so the camera doesn't need to retarget anything. I don't actually need to be a child
+			transform.parent = null;
+
+			// Put player at exit point on vehicle
+			transform.position = vehicleReference.GetExitPosition();
+			// transform.rotation = vehicleReference.GetVehicleExitPoint().rotation;
+
+			// vehicleReference.Exit();
+		}
+
 
 		RaycastHit CheckWhatsInFrontOfMe()
 		{

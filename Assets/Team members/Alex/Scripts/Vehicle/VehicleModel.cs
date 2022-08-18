@@ -5,7 +5,7 @@ using Tanks;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public class VehicleModel : MonoBehaviour, IVehicleControls, IItem
+public class VehicleModel : MonoBehaviour, IVehicleControls, IItem, IInteractable
 {
 	public ItemInfo    itemInfo;
 	public List<Wheel> wheels;
@@ -50,4 +50,8 @@ public class VehicleModel : MonoBehaviour, IVehicleControls, IItem
 	}
 
 	public object transform { get; set; }
+	public void   Interact()
+	{
+		
+	}
 }

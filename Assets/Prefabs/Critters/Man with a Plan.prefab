@@ -16,8 +16,9 @@ GameObject:
   - component: {fileID: 4755736322474575531}
   - component: {fileID: 976931788533668752}
   - component: {fileID: 293177851}
-  - component: {fileID: 293177859}
+  - component: {fileID: 2658168377695689253}
   - component: {fileID: 293177860}
+  - component: {fileID: 4729197807215064909}
   m_Layer: 0
   m_Name: Man with a Plan
   m_TagString: Untagged
@@ -153,18 +154,44 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2810053913193074319}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a3789274c042f94185dfcc13dc76edd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  age: 0
+  ageOfMatingStart: 0
+  ageOfMatingEnd: 0
+  maxAge: 0
+  isPregnant: 0
+  gestationTime: 0
+  litterSizeMax: 0
+  metabolism: 0
+  mutationRate: 0
+  empathy: 0
+  aggression: 0
+  sizeScale: 0
+  maxSize: 0
+  colour: {r: 0, g: 0, b: 0, a: 0}
+  sex: 0
+  slowlyDieWhenOldRate: 0
+  agent: {fileID: 0}
   target: {fileID: 0}
+  stateManager: {fileID: 0}
   myGo: {fileID: 0}
   camSmash: {fileID: 0}
-  currentState: {fileID: 0}
   isHealthy: 0
-  camshasFood: 0
---- !u!114 &293177859
+  hasFood: 0
+--- !u!114 &2658168377695689253
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -173,11 +200,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2810053913193074319}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd95a418070c3014eb6368bceeef6adf, type: 3}
+  m_Script: {fileID: 11500000, guid: ac5e6230bb3415145a9b23ae4df86714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hp: 100
-  dead: 0
+  CurrentHealth:
+    m_InternalValue: 0
+  IsDead:
+    m_InternalValue: 0
+  maxHealth: 100
   fullenergy: 1
   noenergy: 0
 --- !u!114 &293177860
@@ -192,8 +222,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86b58142ff8a3804fa71c5004d10d94b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyAmount: 50
+  EnergyAmount:
+    m_InternalValue: 0
   energyMax: 100
   energyMin: 0
   drainAmount: 1
+  moveDrainAmount: 1
   drainSpeed: 1
+  energyUserMoving: 0
+  myMagnitude: 0
+  useEnergyOnMovement: 0
+--- !u!114 &4729197807215064909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2810053913193074319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90d471e11a924f1fbb1db944262d7a4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

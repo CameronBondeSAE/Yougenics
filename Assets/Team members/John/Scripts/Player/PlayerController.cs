@@ -128,6 +128,7 @@ namespace John
         [ServerRpc]
         void RequestInteractServerRpc()
         {
+            playerModel?.Interact();
             playerModel?.InteractClientRpc();
         }
 

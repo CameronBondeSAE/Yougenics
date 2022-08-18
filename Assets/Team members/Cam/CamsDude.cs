@@ -27,7 +27,7 @@ namespace Cam
             GetComponent<Minh.Health>().DeathEvent += CamSuperDeath;
             
             // Initialise states
-            stateManager.ChangeState(GetComponent<DiscoState>());
+            // stateManager.ChangeState(GetComponent<DiscoState>());
         }
 
 
