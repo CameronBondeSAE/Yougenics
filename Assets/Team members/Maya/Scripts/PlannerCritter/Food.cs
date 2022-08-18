@@ -24,6 +24,12 @@ namespace Maya
 		{
 			float energyAmountValue = energy.EnergyAmount.Value * scaleFactor;
 			gameObject.transform.DOScale(new Vector3(energyAmountValue, energyAmountValue, energyAmountValue), 1f).SetEase(Ease.OutElastic);
+
+			if (energy.EnergyAmount.Value <=0)
+			{
+				Destroy(gameObject);
+				// TODO: Networking
+			}
 		}
 
 		public float GetEnergyAmount()
@@ -33,7 +39,7 @@ namespace Maya
 
 		public float EatMe(float energyRemoved)
 		{
-			energy.EnergyAmount.Value -= energyRemoved;
+			energy.ChangeEnergy(-energyRemoved);
 
 			return energyRemoved;
 		}
