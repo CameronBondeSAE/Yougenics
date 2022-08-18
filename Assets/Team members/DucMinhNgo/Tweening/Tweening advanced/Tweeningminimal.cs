@@ -7,11 +7,11 @@ using UnityEditor;
 public class Tweeningminimal : MonoBehaviour
 {
     public float duration;
-    public GameObject minhobject;
+    public Transform minhobject;
     private Vector3 localChange;
     public float length;
     public float width;
-        void Start()
+        public void Start()
         {
             DOTween.To(JustASetter, width, length, duration);
         }
