@@ -711,6 +711,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7329730064323366979, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 697295525, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 1419120417
@@ -782,6 +786,10 @@ PrefabInstance:
     - target: {fileID: 7004539971532304000, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: m_Name
       value: LukeCritterPlanner
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004539971532304000, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 429a275c45a89484a8851ad97df49258, type: 3}
@@ -889,6 +897,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7329730064323366979, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 697295525, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 3995526564
@@ -899,7 +911,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 514204295691242781, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.05
+      value: -8.49
       objectReference: {fileID: 0}
     - target: {fileID: 514204295691242781, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: m_LocalPosition.y
@@ -907,7 +919,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 514204295691242781, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.66
+      value: -4.87
       objectReference: {fileID: 0}
     - target: {fileID: 514204295691242781, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: m_LocalRotation.w
@@ -961,6 +973,10 @@ PrefabInstance:
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 3124390809528273905, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+    - target: {fileID: 3128564274136016781, guid: 429a275c45a89484a8851ad97df49258, type: 3}
+      propertyPath: m_Constraints
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 7004539971532304000, guid: 429a275c45a89484a8851ad97df49258, type: 3}
       propertyPath: m_Name
       value: LukeCritterPlanner (2)
