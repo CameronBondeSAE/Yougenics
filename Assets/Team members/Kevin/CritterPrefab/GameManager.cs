@@ -73,6 +73,7 @@ namespace Kevin
                     Camera newCamera = Instantiate(mainCameraPrefab);
                     newCamera.transform.parent        = playerModel.cameraMount;
                     newCamera.transform.localPosition = Vector3.zero;
+                    newCamera.transform.localRotation = Quaternion.Euler(Vector3.zero);
                 }
             }
             
