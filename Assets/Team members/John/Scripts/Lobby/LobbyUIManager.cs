@@ -28,6 +28,7 @@ namespace John
 		public bool   spawnPlayerOnAwake;
 		public string sceneToLoad;
 		public bool critterSpawning = true;
+		public bool useClientSidePrediction = true;
 
 		[Header("Level Setup")]
 		public List<Level> levels;
@@ -413,7 +414,8 @@ namespace John
 			//Activate controller on all clients
 			InitControllerClientRpc();
 
-			SpawnCritters();
+			//SpawnCritters();
+			Invoke("SpawnCritters", 5f);
 
 			//Entering Game - Turn Off Lobby Camera & Turn On Game UI
 			UpdateLobbyCameraAndUI(false, true);
@@ -460,7 +462,7 @@ namespace John
 				if (spawnPoints.Length > 0)
 				{
 					SpawnPoint randomSpawn = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
-					tempPlayer = Instantiate(playerPrefab, randomSpawn.transform.position, Quaternion.identity);
+					tempPlayer = Instantiate(playerPrefab, randomSpawn.transform.position, Quaternion.Euler(randomSpawn.transform.forward));
 				}
 				else
 				{
@@ -476,7 +478,9 @@ namespace John
 				controller.playerModel = tempPlayer.GetComponent<PlayerModel>();
 
 				//This only works on the server
-				tempPlayer.GetComponent<PlayerModel>().myClientInfo = client.PlayerObject.GetComponent<ClientInfo>();
+				//tempPlayer.GetComponent<PlayerModel>().myClientInfo = client.PlayerObject.GetComponent<ClientInfo>();
+				//HACK: Using ClientRPC to set the reference
+				SetClientReferenceClientRpc(controller.NetworkObjectId, controller.playerModel.GetComponent<NetworkObject>().NetworkObjectId);
 
 				// Tell anyone (probably clients) that the playercontroll has been assigned an actual player prefab
 				// OwnerClientID points to PlayerController
@@ -506,6 +510,17 @@ namespace John
 				GameManager.instance.OnInstanceOnPlayerPrefabSpawnedClientIDEvent(controllerNetworkObject, playerControllerNetworkObject);
 			else
 				Debug.Log("No GameManager Found! - Make Sure You Have A GameManager In The Level To Setup Player Cameras");
+		}
+
+		[ClientRpc]
+		public void SetClientReferenceClientRpc(ulong controllerId, ulong playerModelId)
+        {
+			NetworkObject playerModelNetworkObjRef = null;
+			NetworkObject clientInfoNetworkObjRef = null;
+			NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(playerModelId, out playerModelNetworkObjRef);
+			NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(controllerId, out clientInfoNetworkObjRef);
+			playerModelNetworkObjRef.GetComponent<PlayerModel>().myClientInfo = clientInfoNetworkObjRef.GetComponent<ClientInfo>();
+			clientInfoNetworkObjRef.GetComponent<John.PlayerController>().playerModel = playerModelNetworkObjRef.GetComponent<PlayerModel>();
 		}
 		void SpawnCritters()
         {
@@ -545,10 +560,12 @@ namespace John
 			controller = myClient.GetComponent<John.PlayerController>();
 			controller.playerInput.ActivateInput();
 			controller.playerInput.SwitchCurrentActionMap("InGame");
-			controller.OnPlayerAssigned();
 
-			//controller.playerModel.myClientInfo = myClient.GetComponent<ClientInfo>();
-			//controller.playerModel.OnClientAssigned(myClient.GetComponent<ClientInfo>());
+			if (useClientSidePrediction)
+				controller.OnPlayerAssignedUsingClientSidePredictition();
+			else
+				controller.OnPlayerAssigned();
+
 		}
 		[ClientRpc]
 		public void ResetControllerClientRpc()
@@ -564,7 +581,12 @@ namespace John
 				myClient = myLocalClient;
 
 			controller = myClient.GetComponent<John.PlayerController>();
-			controller.OnPlayerUnassigned();
+
+			if (useClientSidePrediction)
+				controller.OnPlayerUnassignedUsingClientSidePredictition();
+			else
+				controller.OnPlayerUnassigned();
+
 			controller.playerInput.DeactivateInput();
 		}
 

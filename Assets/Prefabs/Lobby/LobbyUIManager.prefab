@@ -3005,6 +3005,7 @@ MonoBehaviour:
   spawnPlayerOnAwake: 0
   sceneToLoad: 
   critterSpawning: 1
+  useClientSidePrediction: 1
   levels:
   - level: {fileID: 102900000, guid: 2be4a0ddf9120e94abeccc4a529b76e6, type: 3}
     levelNameOnUI: John's Test Level
