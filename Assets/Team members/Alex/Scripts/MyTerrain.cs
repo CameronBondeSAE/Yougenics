@@ -26,8 +26,11 @@ namespace Alex
 
             GameObject energyBalls = energyBall;
             if (energyBall != null)
-                if (Random.Range(0, 100) == 0) 
-                    Instantiate(energyBall, new Vector3(x + transform.position.x, (perlinNoise * heightMultiplier) * terrainGenerator.depth + transform.position.y,z + transform.position.z), Quaternion.identity);
+                if (Random.Range(0, 100) == 0 && (perlinNoise * heightMultiplier) > .6f)
+                {
+                    Instantiate(energyBall, new Vector3(z + transform.position.x, perlinNoise * heightMultiplier * terrainGenerator.depth + transform.position.y + 2f,x + transform.position.z), Quaternion.identity);
+                    
+                }
 
             return perlinNoise * heightMultiplier;
             
