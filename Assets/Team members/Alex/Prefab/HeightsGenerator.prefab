@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 256
   height: 256
-  depth: 20
+  depth: 50
   scale: 20
   offsetX: 100
   offsetY: 100
@@ -66,5 +66,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   terrainGenerator: {fileID: 9197623580334767075}
-  scaler: 0.02
-  heightMultiplier: 1
+  scaler: 0.2
+  heightMultiplier: 10
+  energyBall: {fileID: 6538142482682508728, guid: 69a299a19828f084b916616053b88cea, type: 3}
