@@ -14,57 +14,6 @@ namespace John
 
         //public bool inMenu = false;
 
-        #region Non-Network Setup
-        public void OnPlayerAssignedNonNetworked(PlayerModel player)
-        {
-            playerModel = player;
-            playerInput = player.playerInput;
-
-            playerInput.actions.FindAction("Interact").performed += aContext => Interact();
-            playerInput.actions.FindAction("Jump").performed += aContext => Jump();
-
-            //Player Movement
-            playerInput.actions.FindAction("Movement").performed += OnMovementOnperformed;
-            playerInput.actions.FindAction("Movement").canceled += OnMovementOnperformed;
-
-            //Player Look Direction
-            playerInput.actions.FindAction("MouseX").performed += aContext => PlayerMouseX(aContext.ReadValue<float>());
-            playerInput.actions.FindAction("MouseY").performed += aContext => PlayerMouseY(aContext.ReadValue<float>());
-        }
-
-        private void OnMovementOnperformed(InputAction.CallbackContext obj)
-        {
-            if (obj.phase == InputActionPhase.Performed)
-            {
-                playerModel.Movement(obj.ReadValue<Vector2>());
-            }
-            else if (obj.phase == InputActionPhase.Canceled)
-            {
-                playerModel.Movement(Vector2.zero);
-            }
-        }
-
-        private void PlayerMouseY(float v)
-        {
-            playerModel.MouseY(v);
-        }
-
-        private void PlayerMouseX(float v)
-        {
-            playerModel.MouseX(v);
-        }
-
-        private void Jump()
-        {
-            playerModel.Jump();
-        }
-
-        private void Interact()
-        {
-            playerModel.Interact();
-        }
-        #endregion
-
         #region Networked Setup
         public void OnPlayerAssigned()
         {
@@ -77,9 +26,33 @@ namespace John
             playerInput.actions.FindAction("Movement").performed += OnMovementOnperformedNetworked;
             playerInput.actions.FindAction("Movement").canceled += OnMovementOnperformedNetworked;
 
+            playerInput.actions.FindAction("Sprint").performed += OnSprintOnperformedNetworked;
+            playerInput.actions.FindAction("Sprint").canceled += OnSprintOnperformedNetworked;
+
             //Player Look Direction
             playerInput.actions.FindAction("MouseX").performed += aContext => RequestPlayerMouseXServerRpc(aContext.ReadValue<float>());
             playerInput.actions.FindAction("MouseY").performed += aContext => RequestPlayerMouseYServerRpc(aContext.ReadValue<float>());
+
+            playerInput.actions.FindAction("OpenMenu").performed += aContext => ShowLobby();
+            playerInput.actions.FindAction("CloseMenu").performed += aContext => HideLobby();
+        }
+        public void OnPlayerAssignedUsingClientSidePredictition()
+        {
+            playerInput.actions.Enable();
+
+            playerInput.actions.FindAction("Interact").performed += aContext => Interact();
+            playerInput.actions.FindAction("Jump").performed += aContext => Jump();
+
+            //Player Movement
+            playerInput.actions.FindAction("Movement").performed += OnMovementOnperformed;
+            playerInput.actions.FindAction("Movement").canceled += OnMovementOnperformed;
+
+            playerInput.actions.FindAction("Sprint").performed += OnSprintOnperformedNetworked;
+            playerInput.actions.FindAction("Sprint").canceled += OnSprintOnperformedNetworked;
+
+            //Player Look Direction
+            playerInput.actions.FindAction("MouseX").performed += aContext => PlayerMouseX(aContext.ReadValue<float>());
+            playerInput.actions.FindAction("MouseY").performed += aContext => PlayerMouseY(aContext.ReadValue<float>());
 
             playerInput.actions.FindAction("OpenMenu").performed += aContext => ShowLobby();
             playerInput.actions.FindAction("CloseMenu").performed += aContext => HideLobby();
@@ -94,9 +67,33 @@ namespace John
             playerInput.actions.FindAction("Movement").performed -= OnMovementOnperformedNetworked;
             playerInput.actions.FindAction("Movement").canceled -= OnMovementOnperformedNetworked;
 
+            playerInput.actions.FindAction("Sprint").performed -= OnSprintOnperformedNetworked;
+            playerInput.actions.FindAction("Sprint").canceled -= OnSprintOnperformedNetworked;
+
             //Player Look Direction
             playerInput.actions.FindAction("MouseX").performed -= aContext => RequestPlayerMouseXServerRpc(aContext.ReadValue<float>());
             playerInput.actions.FindAction("MouseY").performed -= aContext => RequestPlayerMouseYServerRpc(aContext.ReadValue<float>());
+
+            playerInput.actions.FindAction("OpenMenu").performed -= aContext => ShowLobby();
+            playerInput.actions.FindAction("CloseMenu").performed -= aContext => HideLobby();
+
+            playerInput.actions.Disable();
+        }
+        public void OnPlayerUnassignedUsingClientSidePredictition()
+        {
+            playerInput.actions.FindAction("Interact").performed -= aContext => Interact();
+            playerInput.actions.FindAction("Jump").performed -= aContext => Jump();
+
+            //Player Movement
+            playerInput.actions.FindAction("Movement").performed -= OnMovementOnperformed;
+            playerInput.actions.FindAction("Movement").canceled -= OnMovementOnperformed;
+
+            playerInput.actions.FindAction("Sprint").performed -= OnSprintOnperformedNetworked;
+            playerInput.actions.FindAction("Sprint").canceled -= OnSprintOnperformedNetworked;
+
+            //Player Look Direction
+            playerInput.actions.FindAction("MouseX").performed -= aContext => PlayerMouseX(aContext.ReadValue<float>());
+            playerInput.actions.FindAction("MouseY").performed -= aContext => PlayerMouseY(aContext.ReadValue<float>());
 
             playerInput.actions.FindAction("OpenMenu").performed -= aContext => ShowLobby();
             playerInput.actions.FindAction("CloseMenu").performed -= aContext => HideLobby();
@@ -122,6 +119,7 @@ namespace John
         [ServerRpc]
         void RequestJumpServerRpc()
         {
+            playerModel?.Jump();
             playerModel?.JumpClientRpc();
         }
 
@@ -136,14 +134,22 @@ namespace John
         void RequestPlayerMouseXServerRpc(float value)
         {
             if (playerModel != null)
+            {
+                playerModel.MouseX(value);
+
                 playerModel.MouseXClientRpc(value);
+            }
         }
 
         [ServerRpc]
         void RequestPlayerMouseYServerRpc(float value)
         {
             if(playerModel != null)
+            {
+                playerModel.MouseY(value);
+
                 playerModel.MouseYClientRpc(value);
+            }
         }
 
         private void OnMovementOnperformedNetworked(InputAction.CallbackContext aContext)
@@ -164,6 +170,84 @@ namespace John
             playerModel?.Movement(input);
             
             playerModel?.MovementClientRpc(input);
+        }
+
+        private void OnSprintOnperformedNetworked(InputAction.CallbackContext aContext)
+        {
+            if (aContext.phase == InputActionPhase.Performed)
+            {
+                playerModel.Sprint(true);
+                RequestSprintServerRpc(true);
+            }
+            else if (aContext.phase == InputActionPhase.Canceled)
+            {
+                playerModel.Sprint(false);
+                RequestSprintServerRpc(false);
+            }
+        }
+
+        [ServerRpc]
+        void RequestSprintServerRpc(bool isSprinting)
+        {
+            playerModel?.Sprint(isSprinting);
+
+            playerModel?.SprintClientRpc(isSprinting);
+        }
+        #endregion
+
+        #region Client Side Prediction
+        private void OnMovementOnperformed(InputAction.CallbackContext obj)
+        {
+            if (obj.phase == InputActionPhase.Performed)
+            {
+                playerModel.Movement(obj.ReadValue<Vector2>());
+                RequestMovementServerRpc(obj.ReadValue<Vector2>());
+            }
+            else if (obj.phase == InputActionPhase.Canceled)
+            {
+                playerModel.Movement(Vector2.zero);
+                RequestMovementServerRpc(Vector2.zero);
+            }
+        }
+
+        private void PlayerMouseY(float v)
+        {
+            if(playerModel != null)
+            {
+                playerModel.MouseY(v);
+
+                RequestPlayerMouseYServerRpc(v);
+            }
+        }
+
+        private void PlayerMouseX(float v)
+        {
+            if (playerModel != null)
+            {
+                playerModel.MouseX(v);
+
+                RequestPlayerMouseXServerRpc(v);
+            }
+        }
+
+        private void Jump()
+        {
+            if (playerModel != null)
+            {
+                playerModel.Jump();
+
+                RequestJumpServerRpc();
+            }
+        }
+
+        private void Interact()
+        {
+            if (playerModel != null)
+            {
+                //playerModel.Interact();
+
+                RequestInteractServerRpc();
+            }
         }
         #endregion
     }

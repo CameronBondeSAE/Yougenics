@@ -28,6 +28,7 @@ namespace John
 		public bool   spawnPlayerOnAwake;
 		public string sceneToLoad;
 		public bool critterSpawning = true;
+		public bool useClientSidePrediction = true;
 
 		[Header("Level Setup")]
 		public List<Level> levels;
@@ -559,7 +560,12 @@ namespace John
 			controller = myClient.GetComponent<John.PlayerController>();
 			controller.playerInput.ActivateInput();
 			controller.playerInput.SwitchCurrentActionMap("InGame");
-			controller.OnPlayerAssigned();
+
+			if (useClientSidePrediction)
+				controller.OnPlayerAssignedUsingClientSidePredictition();
+			else
+				controller.OnPlayerAssigned();
+
 		}
 		[ClientRpc]
 		public void ResetControllerClientRpc()
@@ -575,7 +581,12 @@ namespace John
 				myClient = myLocalClient;
 
 			controller = myClient.GetComponent<John.PlayerController>();
-			controller.OnPlayerUnassigned();
+
+			if (useClientSidePrediction)
+				controller.OnPlayerUnassignedUsingClientSidePredictition();
+			else
+				controller.OnPlayerUnassigned();
+
 			controller.playerInput.DeactivateInput();
 		}
 

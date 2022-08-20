@@ -12,12 +12,15 @@ namespace John
 	{
 		[Header("Player Setup")]
 		public float movementSpeed = 10f;
+		float defaultMovementSpeed;
+		public float sprintSpeed = 15f;
 
 		public float   lookSensitivity   = 50f;
 		public float   jumpHeight        = 5f;
 		public float   interactDistance  = 1f;
 		public Vector3 interactRayOffset = new Vector3(0, 0.5f, 0);
 
+		bool onGround = false;
 		public float      onGroundDrag = 4f;
 		public float      inAirDrag    = 0.1f;
 		public Rigidbody  rb;
@@ -40,11 +43,6 @@ namespace John
 			onClientAssignedEvent?.Invoke();
 		}*/
 
-		[Header("For Non Networking Setup")]
-		public John.PlayerController controller;
-
-		public PlayerInput playerInput;
-
 		public Transform playerHead;
 
 		public bool      inVehicle = false;
@@ -55,13 +53,10 @@ namespace John
 		{
 			if (NetworkManager.Singleton == null)
 			{
-				Debug.Log("No Network Manager found - Using local controller");
-				controller.enabled  = true;
-				playerInput.enabled = true;
-				controller.OnPlayerAssignedNonNetworked(this);
+				Debug.Log("No Network Manager found - Load level using ManagerScene or Drag ManagerScene into your Level");
 			}
 
-			// NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<John.PlayerController>().playerModel.transform
+			defaultMovementSpeed = movementSpeed;
 		}
 
 		private void Update()
@@ -94,26 +89,25 @@ namespace John
 			}
 		}
 
-		#region Input Controlls Networked
+		#region Client Side Functionality
 
 		[ClientRpc]
 		public void MovementClientRpc(Vector2 movementInput)
 		{
-			// movement = transform.right * movementInput.x + transform.forward * movementInput.y;
-			movement.x = movementInput.x;
-			movement.z = movementInput.y;
+			// View Stuff
 		}
 
 		[ClientRpc]
 		public void MouseXClientRpc(float value)
 		{
-			mouseX = value;
+
+			//View Stuff
 		}
 
 		[ClientRpc]
 		public void MouseYClientRpc(float value)
 		{
-			mouseY = value;
+			//View Stuff
 		}
 
 		[ClientRpc]
@@ -122,21 +116,22 @@ namespace John
 			// View stuff
 		}
 
-		bool onGround = false;
-
 
 		[ClientRpc]
 		public void JumpClientRpc()
 		{
-			if (onGround)
-			{
-				rb.AddForce(0, jumpHeight, 0, ForceMode.VelocityChange);
-			}
+			//View Stuff
+		}
+
+		[ClientRpc]
+		public void SprintClientRpc(bool isSprinting)
+		{
+			//View Stuff
 		}
 
 		#endregion
 
-		#region Input Controlls Non-Networked
+		#region Server Side Functionality
 
 		public void Movement(Vector2 movementInput)
 		{
@@ -203,10 +198,23 @@ namespace John
 
 		public void Jump()
 		{
-			//TODO: Add jump restriction when already in the air
-
-			rb.AddForce(0, jumpHeight, 0, ForceMode.VelocityChange);
+			if (onGround)
+			{
+				rb.AddForce(0, jumpHeight, 0, ForceMode.VelocityChange);
+			}
 		}
+
+		public void Sprint(bool isSprinting)
+        {
+			if(isSprinting)
+            {
+				movementSpeed = sprintSpeed;
+            }
+			else
+            {
+				movementSpeed = defaultMovementSpeed;
+            }
+        }
 
 		#endregion
 		
