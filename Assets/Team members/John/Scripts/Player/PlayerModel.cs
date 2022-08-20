@@ -28,7 +28,7 @@ namespace John
 		public Transform  cameraMount;
 
 		//Input control variables
-		Vector3 movement;
+		public Vector3 movement;
 
 		[HideInInspector]
 		public float mouseX, mouseY;
@@ -47,7 +47,13 @@ namespace John
 
 		public bool      inVehicle = false;
 		public IVehicleControls vehicleReference;
-		
+
+		//EVENTS
+		public event Action onJumpEvent;
+		public event Action onDeathEvent;
+		public event Action<Vector2> onMovementEvent;
+		public event Action<float> onMovementSpeedEvent;
+
 		//Setting up controller if non-networked
 		private void Start()
 		{
@@ -57,9 +63,18 @@ namespace John
 			}
 
 			defaultMovementSpeed = movementSpeed;
+			GetComponent<Minh.Health>().DeathEvent += PlayerDeath;
 		}
 
-		private void Update()
+        private void PlayerDeath()
+        {
+			//What should happen?
+
+			//View Stuff
+			onDeathEvent?.Invoke();
+        }
+
+        private void Update()
 		{
 			transform.Rotate(new Vector3(0, mouseX * Time.deltaTime * lookSensitivity, 0), Space.Self);
 		}
@@ -95,6 +110,8 @@ namespace John
 		public void MovementClientRpc(Vector2 movementInput)
 		{
 			// View Stuff
+			onMovementEvent?.Invoke(movementInput);
+			onMovementSpeedEvent?.Invoke(movement.sqrMagnitude);
 		}
 
 		[ClientRpc]
@@ -121,6 +138,7 @@ namespace John
 		public void JumpClientRpc()
 		{
 			//View Stuff
+			onJumpEvent?.Invoke();
 		}
 
 		[ClientRpc]

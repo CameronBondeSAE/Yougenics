@@ -712,6 +712,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2470996678417566554, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2470996678417566554, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2470996678417566554, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2470996678417566554, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2470996679243095473, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2470996679243095473, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2470996679243095473, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2470996679243095473, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2470996679314236393, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
       propertyPath: m_Name
       value: LobbyUIManager
@@ -728,6 +760,14 @@ PrefabInstance:
       propertyPath: critterSpawner
       value: 
       objectReference: {fileID: 1023956929}
+    - target: {fileID: 2470996679314236398, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
+      propertyPath: critterSpawning
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2470996679314236398, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
+      propertyPath: useClientSidePrediction
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2470996679314236399, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
       propertyPath: m_RootOrder
       value: 1

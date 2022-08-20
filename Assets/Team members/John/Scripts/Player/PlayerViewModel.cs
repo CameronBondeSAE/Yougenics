@@ -12,6 +12,7 @@ namespace John
         public PlayerModel playerModel;
         public TMP_Text    nameTagText;
         ClientInfo         client;
+        public Animator animator;
 
         private void Start()
         {
@@ -26,13 +27,40 @@ namespace John
             {
                 Debug.Log("Cannot update NameTag, No Client Reference Found");
             }
+
+            playerModel.onJumpEvent += PlayJumpAnimation;
+            playerModel.onDeathEvent += PlayDeathAnimation;
+            playerModel.onMovementEvent += PlayMovementDirectionAnimation;
+            playerModel.onMovementSpeedEvent += PlayMovementAnimation;
         }
-        /*private void InitClientInfo()
+
+        private void PlayMovementAnimation(float speed)
         {
-            client = playerModel.myClientInfo;
-            client.onNameChangeEvent += UpdateNameTag;
-            nameTagText.text = client.ClientName.Value.ToString();
-        }*/
+            animator.SetFloat("Speed", speed);
+        }
+
+        private void PlayMovementDirectionAnimation(Vector2 movement)
+        {
+            animator.SetFloat("Horizontal", movement.x);
+            animator.SetFloat("Vertical", movement.y);
+        }
+
+        private void PlayDeathAnimation()
+        {
+            animator.SetTrigger("Death");
+        }
+
+        private void PlayJumpAnimation()
+        {
+            animator.SetTrigger("Jump");
+        }
+
+        /*private void InitClientInfo()
+{
+   client = playerModel.myClientInfo;
+   client.onNameChangeEvent += UpdateNameTag;
+   nameTagText.text = client.ClientName.Value.ToString();
+}*/
 
         private void UpdateNameTag(string newName)
         {
