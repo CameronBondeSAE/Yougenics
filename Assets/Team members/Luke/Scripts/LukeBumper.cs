@@ -14,6 +14,7 @@ namespace Luke
 		public float turnSpeed;
         public float size = 0.6f;
         public Vector3 forward;
+        public LayerMask layerMask;
         public List<GameObject> antennae;
 		
 		// Start is called before the first frame update
@@ -34,7 +35,7 @@ namespace Luke
             forward = _myTransform.forward;
             Vector3 position = _myTransform.position;
 			Debug.DrawLine(position, position+forward*growingSize);
-			if (Physics.Linecast(position, position+forward*growingSize, out RaycastHit hitInfo))
+			if (Physics.Linecast(position, position+forward*growingSize, out RaycastHit hitInfo, layerMask))
 			{
 				foreach (GameObject t in antennae)
 				{

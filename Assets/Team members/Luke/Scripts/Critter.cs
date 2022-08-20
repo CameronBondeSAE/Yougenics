@@ -34,6 +34,10 @@ namespace Luke
 		public bool isSleeping = false;
 		public bool justAte = false;
 		public bool isAttacking = false;
+		public bool canWakeUp = true;
+		public float attackRange = 2f;
+
+		private bool turnBiasRight;
 
 		public List<Transform> matesList;
 		public List<Transform> predatorsList;
@@ -82,6 +86,19 @@ namespace Luke
 
 		#region IEnumerators
 
+		private IEnumerator SleepDebt()
+		{
+			yield return new WaitForSeconds(3f);
+			canWakeUp = true;
+		}
+
+		private IEnumerator ChangeTurnBias()
+		{
+			yield return new WaitForSeconds(4f);
+			turnBiasRight = !turnBiasRight;
+			StartCoroutine(ChangeTurnBias());
+		}
+		
 		private IEnumerator AStarReactionTime(float delay, Vector3 target)
 		{
 			yield return new WaitForSeconds(delay);
@@ -264,6 +281,7 @@ namespace Luke
 			StartCoroutine(RandomiseDefaultBehaviour());
 			StartCoroutine(IterateBestBiome());
 			StartCoroutine(SleepLevelDecay());
+			StartCoroutine(ChangeTurnBias());
 
 			GameObject go1 = Instantiate(bumperPrefab, _transform);
 			LukeBumper bumper = go1.GetComponent<LukeBumper>();
@@ -279,6 +297,7 @@ namespace Luke
 		public override void FixedUpdate()
 		{
 			base.FixedUpdate();
+			_transform.rotation = Quaternion.Euler(new Vector3(0, _transform.rotation.eulerAngles.y, 0));
 			SetScale();
 		}
 
@@ -390,6 +409,7 @@ namespace Luke
 			aWorldState.Set(LukeCritterScenario.DefaultBehaviourLovelorn, defaultBehaviour == DefaultBehaviours.Lovelorn);
 			aWorldState.Set(LukeCritterScenario.DefaultBehaviourRestless, defaultBehaviour == DefaultBehaviours.Restless);
 			aWorldState.Set(LukeCritterScenario.DefaultBehaviourTired, defaultBehaviour == DefaultBehaviours.Tired);
+			aWorldState.Set(LukeCritterScenario.canWakeUp, canWakeUp);
 		}
 		
 		#region RandomiseInfoValue Methods
@@ -478,21 +498,24 @@ namespace Luke
 		
 		private void TurnTowardsTarget(Vector3 target)
 		{
-			float angle = Vector3.SignedAngle(_transform.forward, target - _transform.position, Vector3.up);
-			_rb.AddRelativeTorque(new Vector3(0,Mathf.Sign(angle)*turnSpeed,0));
-			// _transform.Rotate(new Vector3(0f, angle, 0f));
+			//Commented out because of edge case where repeated turning into wall and steering back leads to walking away from target.
+			/*float angle = Vector3.SignedAngle(_transform.forward, target - _transform.position, Vector3.up);
+			_rb.AddRelativeTorque(new Vector3(0,Mathf.Sign(angle)*turnSpeed,0));*/
+			
+			if (turnBiasRight) _rb.AddRelativeTorque(new Vector3(0,turnSpeed,0));
+			else _rb.AddRelativeTorque(new Vector3(0,-turnSpeed,0));
 		}
 
 		public Vector3 GetMoveTargetAStar()
 		{
-			return aStarUser.aStar.Nodes[aStarUser.path[^2].x,aStarUser.path[^2].y].worldPosition;
+			return aStarUser.aStarManager.Nodes[aStarUser.path[^2].x,aStarUser.path[^2].y].worldPosition;
         }
 
 		public bool CheckHasFood()
         {
             if (_transform == null) return false;
 			if (isSleeping) return false;
-			if (!Physics.Raycast(_transform.position, _transform.TransformDirection(Vector3.forward), out RaycastHit raycastHit, 1)) return false;
+			if (!Physics.Raycast(_transform.position, _transform.forward*attackRange, out RaycastHit raycastHit, 1)) return false;
 			if (!foodList.Contains(raycastHit.collider.transform)) return false;
 			if (isAttacking) return false;
 			StartCoroutine(AttackCooldown());
@@ -819,11 +842,14 @@ namespace Luke
 		public void GoToSleep()
 		{
 			isSleeping = true;
+			canWakeUp = false;
+			StartCoroutine(SleepDebt());
 		}
 
 		public void WakeUp()
 		{
 			isSleeping = false;
+			canWakeUp = true;
 		}
 
 		public bool JustAte()
@@ -881,6 +907,7 @@ namespace Luke
 		DefaultBehaviourLovelorn = 13,
 		DefaultBehaviourTired = 14,
 		DefaultBehaviourHungry = 15,
-		DefaultBehaviourRestless = 16
+		DefaultBehaviourRestless = 16,
+		canWakeUp = 17
 	}
 }

@@ -8,11 +8,19 @@ using Random = UnityEngine.Random;
 
 namespace Luke
 {
-    public class LukeAStar : MonoBehaviour
+    public class LukeAStarManager : MonoBehaviour
     {
-	    public static LukeAStar Instance;
+	    public static LukeAStarManager Instance;
         
-	    
+	    private void OnEnable()
+	    {
+		    Utilities.WorldObstacleUpdatedEvent += RescanArea;
+	    }
+
+	    private void OnDisable()
+	    {
+		    Utilities.WorldObstacleUpdatedEvent -= RescanArea;
+	    }
         
         #region Field Variables
 
@@ -24,9 +32,6 @@ namespace Luke
         [SerializeField] private float gridTileHeight;
         [SerializeField] private Vector2 gridSize;
         [SerializeField] private Vector3 gridOrigin;
-
-        [SerializeField] private int gCostWeight = 1;
-        [SerializeField] private int hCostWeight = 1;
 
         private Vector3 _gridTileSize;
 
@@ -60,8 +65,6 @@ namespace Luke
                     Nodes[x, y] = new AStarNode
 					{
 						worldPosition = ConvertIndexAndPosition(new []{x,y}),
-						gCostWeight = gCostWeight,
-						hCostWeight = hCostWeight,
 						indices = new []{x,y}
 					};
                     
@@ -75,7 +78,28 @@ namespace Luke
 			FinishedFillingGridEvent?.Invoke();
         }
 
-		public IEnumerator AStarAlgorithm()
+		private void RescanArea(GameObject go, Bounds bounds)
+		{
+			int[] minCorner = ConvertIndexAndPosition(bounds.center-bounds.extents/2f);
+			int[] maxCorner = ConvertIndexAndPosition(bounds.center+bounds.extents/2f);
+			for (int x = minCorner[0]; x < maxCorner[0]; x++)
+			{
+				for (int z = minCorner[1]; z < maxCorner[1]; z++)
+				{
+					if (Physics.OverlapBox(Nodes[x,z].worldPosition, _gridTileSize*0.5f, 
+						    Quaternion.identity, layerMask).Length != 0)
+					{
+						Nodes[x, z].isBlocked = true;
+					}
+					else
+					{
+						Nodes[x, z].isBlocked = false;
+					}
+				}
+			}
+		}
+
+		/*public IEnumerator AStarAlgorithm()
         {
             breaker = false;
 	        CurrentNode = StartNode;
@@ -228,7 +252,7 @@ namespace Luke
 
 	        if (lowestFCostIndex == lowestGCostIndex) return lowestFCostIndex;
 	        return lowestGCostIndex;
-        }
+        }*/
 
 
         private Vector3 ConvertIndexAndPosition(int[] index)
@@ -257,7 +281,7 @@ namespace Luke
             return result;
         }
 
-        public void ResetNodes()
+        /*public void ResetNodes()
         {
 	        if(coroutineInstance != null) StopCoroutine(coroutineInstance);
             breaker = true;
@@ -288,7 +312,7 @@ namespace Luke
 	        CurrentNode = StartNode;
 	        index = ConvertIndexAndPosition(targetPosition); 
 	        EndNode = Nodes[index[0], index[1]];
-        }
+        }*/
 
         #endregion
 
@@ -305,7 +329,7 @@ namespace Luke
                 for (int y = 0; y < numberOfTiles.y; y++)
                 {
                     if (Nodes == null) return;
-                    if (Nodes[x, y] == CurrentNode)
+                    /*if (Nodes[x, y] == CurrentNode)
                     {
                         Gizmos.color = new Color(0f, 0f, 1f, 0.5f);
                         Gizmos.DrawCube(Nodes[x, y].worldPosition, _gridTileSize);
@@ -314,13 +338,13 @@ namespace Luke
                     {
 	                    Gizmos.color = new Color(1f, 1f, 1f, 0.5f);
 	                    Gizmos.DrawCube(Nodes[x, y].worldPosition, _gridTileSize);
-                    }
+                    }*/
                     else if (Nodes[x, y].isBlocked)
                     {
                         Gizmos.color = new Color(1f, 0f, 0f, 0.5f);
                         Gizmos.DrawCube(Nodes[x, y].worldPosition, _gridTileSize);
                     }
-                    else if (Nodes[x, y].isClosed)
+                    /*else if (Nodes[x, y].isClosed)
                     {
                         Gizmos.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
                         Gizmos.DrawCube(Nodes[x, y].worldPosition, _gridTileSize);
@@ -329,7 +353,7 @@ namespace Luke
                     {
                         Gizmos.color = new Color(1f, 1f, 0f, 0.5f);
                         Gizmos.DrawCube(Nodes[x, y].worldPosition, _gridTileSize);
-                    }
+                    }*/
                     else
                     {
                         Gizmos.color = new Color(0f, 1f, 0f, 0.5f);
@@ -338,14 +362,14 @@ namespace Luke
                 }
             }
 
-            if (path.Count > 0)
+            /*if (path.Count > 0)
             {
                 for (int i = 1; i < path.Count; i++)
                 {
                     Gizmos.color = Color.white;
                     Gizmos.DrawLine(path[i - 1].worldPosition, path[i].worldPosition);
                 }
-            }
+            }*/
         }
     }
 }

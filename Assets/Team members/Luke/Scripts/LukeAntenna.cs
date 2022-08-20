@@ -14,6 +14,7 @@ namespace Luke
 		public float turnSpeed;
         public float size;
         public Vector3 forward;
+        public LayerMask layerMask;
 
         private float angle;
 		
@@ -24,7 +25,7 @@ namespace Luke
 			_myTransform = transform;
 			_parentTransform = _myTransform.parent;
             Critter parent = GetComponentInParent<Critter>();
-            acceleration = parent.acceleration*2;
+            acceleration = parent.acceleration;
             turnSpeed = parent.turnSpeed/parent.numberOfAntennae;
             angle = transform.rotation.eulerAngles.y;
             if (angle > 180) angle -= 360;
@@ -37,7 +38,7 @@ namespace Luke
             forward = _myTransform.forward;
             Vector3 position = _myTransform.position;
 			Debug.DrawLine(position, position+forward*growingSize);
-			if (Physics.Linecast(position, position+forward*growingSize, out RaycastHit hitInfo))
+			if (Physics.Linecast(position, position+forward*growingSize, out RaycastHit hitInfo, layerMask))
 			{
                 _rb.AddForce(hitInfo.normal*(acceleration*(growingSize-hitInfo.distance)/growingSize), ForceMode.Acceleration);
                 float normalAngle = Vector3.SignedAngle(-forward,hitInfo.normal, Vector3.up);

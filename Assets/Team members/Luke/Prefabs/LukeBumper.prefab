@@ -49,6 +49,9 @@ MonoBehaviour:
   _myTransform: {fileID: 0}
   acceleration: 0
   turnSpeed: 0
-  size: 0.8
+  size: 1
   forward: {x: 0, y: 0, z: 0}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 128
   antennae: []

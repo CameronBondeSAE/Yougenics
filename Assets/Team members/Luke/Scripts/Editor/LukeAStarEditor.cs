@@ -3,7 +3,7 @@ using Luke;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(LukeAStar))]
+[CustomEditor(typeof(LukeAStarManager))]
 public class LukeAStarEditor : Editor
 {
 	public override void OnInspectorGUI()
@@ -12,37 +12,37 @@ public class LukeAStarEditor : Editor
 
 		if (GUILayout.Button("Randomise Start Location"))
 		{
-			LukeAStar aStar = (LukeAStar) target;
-            aStar.startLocation = aStar.RandomLocation();
-            aStar.ResetNodes();
+			LukeAStarManager aStarManager = (LukeAStarManager) target;
+            aStarManager.startLocation = aStarManager.RandomLocation();
+            // aStarManager.ResetNodes();
 		}
 
 		if (GUILayout.Button("Randomise End Location"))
 		{
-            LukeAStar aStar = (LukeAStar) target;
-            aStar.endLocation = aStar.RandomLocation();
-            aStar.ResetNodes();
+            LukeAStarManager aStarManager = (LukeAStarManager) target;
+            aStarManager.endLocation = aStarManager.RandomLocation();
+            // aStarManager.ResetNodes();
 		}
         
-        if (GUILayout.Button("Begin AStar Algorithm"))
+        /*if (GUILayout.Button("Begin AStar Algorithm"))
         {
-	        LukeAStar aStar = (LukeAStar) target;
-            if (!aStar.slowMode)
+	        LukeAStarManager aStarManager = (LukeAStarManager) target;
+            if (!aStarManager.slowMode)
             {
-                aStar.breaker = true;
-                    ((LukeAStar) target).AStarAlgorithmFast();
+                aStarManager.breaker = true;
+                    ((LukeAStarManager) target).AStarAlgorithmFast();
             }
             else
             {
-                if(aStar.coroutineInstance != null) aStar.StopCoroutine(aStar.coroutineInstance);
-                aStar.coroutineInstance = aStar.StartCoroutine(((LukeAStar) target).AStarAlgorithm());
+                if(aStarManager.coroutineInstance != null) aStarManager.StopCoroutine(aStarManager.coroutineInstance);
+                aStarManager.coroutineInstance = aStarManager.StartCoroutine(((LukeAStarManager) target).AStarAlgorithm());
             }
-        }
+        }*/
         
-        if (GUILayout.Button("Reset Nodes"))
+        /*if (GUILayout.Button("Reset Nodes"))
         {
-	        LukeAStar aStar = (LukeAStar) target;
-	        aStar.ResetNodes();
-        }
+	        LukeAStarManager aStarManager = (LukeAStarManager) target;
+	        aStarManager.ResetNodes();
+        }*/
 	}
 }

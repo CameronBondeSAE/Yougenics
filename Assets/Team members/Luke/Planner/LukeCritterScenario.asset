@@ -48,6 +48,8 @@ MonoBehaviour:
       name: DefaultBehaviourHungry
     - id: 16
       name: DefaultBehaviourRestless
+    - id: 17
+      name: canWakeUp
   actions:
   - name: MoveToFood
     isDefault: 0
@@ -91,7 +93,7 @@ MonoBehaviour:
     isDefault: 0
     state: {fileID: 8370195556850952778, guid: 167dda51128316e4da5880d7b2b48b4d, type: 3}
     cost: 0
-    position: {x: 950.25867, y: 288.9096}
+    position: {x: 944.2777, y: 299.6751}
     pre:
     - id: 7
       value: 0
@@ -108,9 +110,9 @@ MonoBehaviour:
     pre:
     - id: 1
       value: 1
-    - id: 12
-      value: 0
     - id: 0
+      value: 0
+    - id: 12
       value: 0
     post:
     - id: 1
@@ -157,7 +159,7 @@ MonoBehaviour:
     isDefault: 0
     state: {fileID: 8370195556850952778, guid: b757aade5cd807a41a5ab5de579b6b6f, type: 3}
     cost: 0
-    position: {x: 297.21448, y: 876.03}
+    position: {x: 310.48462, y: 871.29065}
     pre:
     - id: 10
       value: 1
@@ -191,9 +193,11 @@ MonoBehaviour:
     isDefault: 0
     state: {fileID: 8370195556850952778, guid: 8aa7941689eaf804d8efca2a6994e18e, type: 3}
     cost: 0
-    position: {x: 739.67084, y: 1233.334}
+    position: {x: 739.67084, y: 1234.282}
     pre:
     - id: 12
+      value: 1
+    - id: 17
       value: 1
     post:
     - id: 12
@@ -221,6 +225,8 @@ MonoBehaviour:
       value: 1
     - id: 6
       value: 0
+    - id: 17
+      value: 0
   - name: GoToSleepVeryTired
     isDefault: 0
     state: {fileID: 8370195556850952778, guid: 0fdc06656b97bbd4d851e5651d831975, type: 3}
@@ -240,6 +246,8 @@ MonoBehaviour:
       value: 0
     - id: 6
       value: 1
+    - id: 17
+      value: 0
   - name: EatVeryHungry
     isDefault: 0
     state: {fileID: 8370195556850952778, guid: f0cd6e75f5e7d5949a54b9ab4c0952db, type: 3}
@@ -285,7 +293,7 @@ MonoBehaviour:
     isDefault: 0
     state: {fileID: 3207718892820481763, guid: 22eb888f5d64db248a4a4802db4b019c, type: 3}
     cost: 1
-    position: {x: 922, y: 46}
+    position: {x: 929, y: 47}
     pre: []
     post:
     - id: 14
@@ -298,6 +306,30 @@ MonoBehaviour:
     pre: []
     post:
     - id: 15
+      value: 0
+  - name: Sleeping
+    isDefault: 0
+    state: {fileID: 8370195556850952778, guid: 62711613383339848b7b830c7dbccc75, type: 3}
+    cost: 0
+    position: {x: 1156.7593, y: 1232.98}
+    pre:
+    - id: 17
+      value: 0
+    post:
+    - id: 17
+      value: 1
+  - name: WakeUpImminentDanger
+    isDefault: 0
+    state: {fileID: 8370195556850952778, guid: d47b6f865300bcc44835b97577deba2d, type: 3}
+    cost: 0
+    position: {x: 944.68713, y: 1235.6399}
+    pre:
+    - id: 1
+      value: 1
+    - id: 12
+      value: 1
+    post:
+    - id: 12
       value: 0
   goals:
   - name: isHealthy
@@ -333,15 +365,15 @@ MonoBehaviour:
     - id: 0
       value: 0
     - id: 1
-      value: 1
-    - id: 2
       value: 0
+    - id: 2
+      value: 1
     - id: 3
       value: 1
     - id: 4
       value: 0
     - id: 5
-      value: 1
+      value: 0
     - id: 6
       value: 1
     - id: 7
@@ -359,8 +391,10 @@ MonoBehaviour:
     - id: 13
       value: 0
     - id: 14
-      value: 0
+      value: 1
     - id: 15
       value: 0
     - id: 16
       value: 1
+    - id: 17
+      value: 0

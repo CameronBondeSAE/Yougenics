@@ -13,12 +13,12 @@ public class LukeAStarUserEditor : Editor
 		if (GUILayout.Button("Set AStarUser"))
 		{
 			AStarUser aStarUser = (AStarUser) target;
-			LukeAStar aStar = aStarUser.aStar;
-			Vector3 startPos = aStar.startLocation;
-			Vector3 endPos = aStar.endLocation;
+			LukeAStarManager aStarManager = aStarUser.aStarManager;
+			Vector3 startPos = aStarManager.startLocation;
+			Vector3 endPos = aStarManager.endLocation;
 			aStarUser.ResetNodes(startPos, endPos);
-			int[] indexStart = aStar.ConvertIndexAndPosition(startPos);
-			int[] indexEnd = aStar.ConvertIndexAndPosition(endPos);
+			int[] indexStart = aStarManager.ConvertIndexAndPosition(startPos);
+			int[] indexEnd = aStarManager.ConvertIndexAndPosition(endPos);
 			aStarUser.startNode = new Vector2Int(indexStart[0], indexStart[1]);
 			aStarUser.currentNode = aStarUser.startNode;
 			aStarUser.endNode = new Vector2Int(indexEnd[0], indexEnd[1]);

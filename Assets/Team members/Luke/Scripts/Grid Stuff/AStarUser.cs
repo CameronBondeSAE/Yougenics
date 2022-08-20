@@ -12,7 +12,7 @@ namespace Luke
 {
 	public class AStarUser : MonoBehaviour
 	{
-		public LukeAStar aStar;
+		public LukeAStarManager aStarManager;
 		private Vector2Int[,] _parents;
 		public Vector3 endLocation;
 		public Vector2Int currentNode;
@@ -28,22 +28,22 @@ namespace Luke
 
 		void Start()
 		{
-			aStar = LukeAStar.Instance;
+			aStarManager = LukeAStarManager.Instance;
 			CopyGrid();
 		}
 
 		public void CopyGrid()
 		{
-			_parents = new Vector2Int[aStar.Nodes.GetLength(0),aStar.Nodes.GetLength(1)];
-			_gCosts = new int[aStar.Nodes.GetLength(0),aStar.Nodes.GetLength(1)];
-			_fCosts = new int[aStar.Nodes.GetLength(0),aStar.Nodes.GetLength(1)];
-			_hCosts = new int[aStar.Nodes.GetLength(0),aStar.Nodes.GetLength(1)];
+			_parents = new Vector2Int[aStarManager.Nodes.GetLength(0),aStarManager.Nodes.GetLength(1)];
+			_gCosts = new int[aStarManager.Nodes.GetLength(0),aStarManager.Nodes.GetLength(1)];
+			_fCosts = new int[aStarManager.Nodes.GetLength(0),aStarManager.Nodes.GetLength(1)];
+			_hCosts = new int[aStarManager.Nodes.GetLength(0),aStarManager.Nodes.GetLength(1)];
 		}
 
 		public void BeginAStarAlgorithm()
         {
 	        currentNode = new Vector2Int(startNode.x, startNode.y);
-	        _gCosts[currentNode.x, currentNode.y] = Mathf.RoundToInt(1000*Vector3.Distance(aStar.Nodes[currentNode.x,currentNode.y].worldPosition, endLocation));
+	        _gCosts[currentNode.x, currentNode.y] = Mathf.RoundToInt(1000*Vector3.Distance(aStarManager.Nodes[currentNode.x,currentNode.y].worldPosition, endLocation));
 	        _hCosts[currentNode.x, currentNode.y] = 0;
 	        _fCosts[currentNode.x, currentNode.y] =
 		        _gCosts[currentNode.x, currentNode.y] + _hCosts[currentNode.x, currentNode.y];
@@ -83,15 +83,15 @@ namespace Luke
                 {
 	                int indexX = currentNode.x - 1 + x;
 	                int indexY = currentNode.y - 1 + y;
-	                if (indexX < 0 || indexX >= aStar.Nodes.GetLength(0)) continue;
-	                if (indexY < 0 || indexY >= aStar.Nodes.GetLength(1)) continue;
+	                if (indexX < 0 || indexX >= aStarManager.Nodes.GetLength(0)) continue;
+	                if (indexY < 0 || indexY >= aStarManager.Nodes.GetLength(1)) continue;
 	                Vector2Int neighbour = new Vector2Int(indexX, indexY);
-                    if (aStar.Nodes[neighbour.x,neighbour.y].isBlocked || _closedNodes.Contains(neighbour) || _openNodes.Contains(neighbour)) continue;
+                    if (aStarManager.Nodes[neighbour.x,neighbour.y].isBlocked || _closedNodes.Contains(neighbour) || _openNodes.Contains(neighbour)) continue;
                     _openNodes.Add(neighbour);
-                    _gCosts[indexX, indexY] = Mathf.RoundToInt(1000*Vector3.Distance(aStar.Nodes[indexX,indexY].worldPosition, endLocation));
+                    _gCosts[indexX, indexY] = Mathf.RoundToInt(1000*Vector3.Distance(aStarManager.Nodes[indexX,indexY].worldPosition, endLocation));
                     _parents[indexX, indexY] = currentNode;
-                    _hCosts[indexX, indexY] = Mathf.RoundToInt(1000*Vector3.Distance(aStar.Nodes[indexX,indexY].worldPosition,
-	                                                               aStar.Nodes[currentNode.x,currentNode.y].worldPosition) +
+                    _hCosts[indexX, indexY] = Mathf.RoundToInt(1000*Vector3.Distance(aStarManager.Nodes[indexX,indexY].worldPosition,
+	                                                               aStarManager.Nodes[currentNode.x,currentNode.y].worldPosition) +
                                                                _hCosts[currentNode.x,currentNode.y]);
                     _fCosts[indexX, indexY] = _gCosts[indexX, indexY] + _hCosts[indexX, indexY];
                 }
@@ -108,24 +108,24 @@ namespace Luke
                 {
 	                int indexX = node.x - 1 + x;
 	                int indexY = node.y - 1 + y;
-	                if (indexX < 0 || indexX >= aStar.Nodes.GetLength(0)) continue;
-	                if (indexY < 0 || indexY >= aStar.Nodes.GetLength(1)) continue;
+	                if (indexX < 0 || indexX >= aStarManager.Nodes.GetLength(0)) continue;
+	                if (indexY < 0 || indexY >= aStarManager.Nodes.GetLength(1)) continue;
 	                Vector2Int neighbour = new Vector2Int(indexX, indexY);
-	                if (aStar.Nodes[neighbour.x,neighbour.y].isBlocked || _closedNodes.Contains(neighbour) || _openNodes.Contains(neighbour)) continue;
+	                if (aStarManager.Nodes[neighbour.x,neighbour.y].isBlocked || _closedNodes.Contains(neighbour) || _openNodes.Contains(neighbour)) continue;
                     _openNodes.Add(neighbour);
-                    _gCosts[indexX, indexY] = Mathf.RoundToInt(1000*Vector3.Distance(aStar.Nodes[indexX,indexY].worldPosition, endLocation));
+                    _gCosts[indexX, indexY] = Mathf.RoundToInt(1000*Vector3.Distance(aStarManager.Nodes[indexX,indexY].worldPosition, endLocation));
                     if (_parents[indexX,indexY] != new Vector2Int(-1,-1) && _hCosts[indexX, indexY] < _hCosts[_parents[node.x, node.y].x,_parents[node.x, node.y].y])
                     {
                         _parents[node.x, node.y] = neighbour;
-                        _hCosts[node.x,node.y] = Mathf.RoundToInt(1000*Vector3.Distance(aStar.Nodes[indexX,indexY].worldPosition,
-	                                                                  aStar.Nodes[node.x,node.y].worldPosition) + _hCosts[indexX, indexY]);
+                        _hCosts[node.x,node.y] = Mathf.RoundToInt(1000*Vector3.Distance(aStarManager.Nodes[indexX,indexY].worldPosition,
+	                                                                  aStarManager.Nodes[node.x,node.y].worldPosition) + _hCosts[indexX, indexY]);
                         _fCosts[node.x, node.y] = _gCosts[node.x, node.y] + _hCosts[node.x, node.y];
                     }
                     else
                     {
                         _parents[indexX, indexY] = node;
                         _hCosts[indexX, indexY] =
-                            Mathf.RoundToInt(1000*Vector3.Distance(aStar.Nodes[indexX,indexY].worldPosition, aStar.Nodes[node.x,node.y].worldPosition) +
+                            Mathf.RoundToInt(1000*Vector3.Distance(aStarManager.Nodes[indexX,indexY].worldPosition, aStarManager.Nodes[node.x,node.y].worldPosition) +
                                              _hCosts[node.x,node.y]);
                         _fCosts[indexX, indexY] = _gCosts[indexX, indexY] + _hCosts[indexX, indexY];
                     }
@@ -167,9 +167,9 @@ namespace Luke
 	        _openNodes.Clear();
             _closedNodes.Clear();
             CopyGrid();
-            for (int i = 0; i < aStar.Nodes.GetLength(0); i++)
+            for (int i = 0; i < aStarManager.Nodes.GetLength(0); i++)
             {
-	            for (int j = 0; j < aStar.Nodes.GetLength(1); j++)
+	            for (int j = 0; j < aStarManager.Nodes.GetLength(1); j++)
 	            {
 		            _gCosts[i, j] = 0;
 		            _hCosts[i, j] = 0;
@@ -179,10 +179,10 @@ namespace Luke
 	            }
             }
             
-            int[] index = aStar.ConvertIndexAndPosition(startPosition);
+            int[] index = aStarManager.ConvertIndexAndPosition(startPosition);
 	        startNode = new Vector2Int(index[0], index[1]);
 	        currentNode = startNode;
-	        index = aStar.ConvertIndexAndPosition(targetPosition); 
+	        index = aStarManager.ConvertIndexAndPosition(targetPosition); 
 	        endNode = new Vector2Int(index[0], index[1]);
         }
 	}
