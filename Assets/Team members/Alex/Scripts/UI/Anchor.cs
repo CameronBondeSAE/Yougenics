@@ -8,17 +8,20 @@ namespace Alex
 {
     public class Anchor : MonoBehaviour
     {
-        
+        PlayerModel playerModel;
+
+        private void Start()
+        {
+            playerModel = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<John.PlayerController>().playerModel;
+        }
+
         void LateUpdate()
         {
-            if (GetComponent<Anchor>() != null)
-            {
-                PlayerModel playerModel = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<John.PlayerController>().playerModel;
 
-                if(playerModel != null)
-                    transform.LookAt(playerModel.transform);
-                transform.Rotate(0,180,0,Space.Self);
-            }
+            if (playerModel != null)
+                transform.LookAt(playerModel.transform);
+
+            transform.Rotate(0, 180, 0, Space.Self);
         }
     }
 }

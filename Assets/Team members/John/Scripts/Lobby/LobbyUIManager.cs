@@ -519,6 +519,7 @@ namespace John
 			NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(playerModelId, out playerModelNetworkObjRef);
 			NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(controllerId, out clientInfoNetworkObjRef);
 			playerModelNetworkObjRef.GetComponent<PlayerModel>().myClientInfo = clientInfoNetworkObjRef.GetComponent<ClientInfo>();
+			clientInfoNetworkObjRef.GetComponent<John.PlayerController>().playerModel = playerModelNetworkObjRef.GetComponent<PlayerModel>();
 		}
 		void SpawnCritters()
         {
