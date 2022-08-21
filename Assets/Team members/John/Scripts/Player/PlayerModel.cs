@@ -63,10 +63,14 @@ namespace John
 			}
 
 			defaultMovementSpeed = movementSpeed;
+		}
+
+        public override void OnNetworkSpawn()
+        {
 			GetComponent<Minh.Health>().DeathEvent += PlayerDeath;
 		}
 
-        private void PlayerDeath()
+		private void PlayerDeath()
         {
 			//What should happen?
 
@@ -123,13 +127,15 @@ namespace John
 		[ClientRpc]
 		public void MouseXClientRpc(float value)
 		{
-
 			//View Stuff
 		}
 
 		[ClientRpc]
 		public void MouseYClientRpc(float value)
 		{
+			//Need to set this here as the client's Camera ALSO needs this value - so only setting this on the server removes this functionality
+			mouseY = value;
+
 			//View Stuff
 		}
 

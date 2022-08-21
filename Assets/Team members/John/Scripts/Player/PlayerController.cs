@@ -12,8 +12,6 @@ namespace John
         public PlayerInput playerInput;
         public PlayerModel playerModel;
 
-        //public bool inMenu = false;
-
         #region Networked Setup
         public void OnPlayerAssigned()
         {
@@ -234,7 +232,8 @@ namespace John
         {
             if (playerModel != null)
             {
-                playerModel.Jump();
+                if(!IsServer)
+                    playerModel.Jump();
 
                 RequestJumpServerRpc();
             }
