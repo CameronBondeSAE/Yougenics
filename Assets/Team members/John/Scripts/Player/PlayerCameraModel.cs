@@ -26,7 +26,7 @@ namespace John
         // Update is called once per frame
         void Update()
         {
-            transform.position = target.gameObject.transform.position;
+            //transform.position = target.gameObject.transform.position;
 
             //Setting x rotation to match mouse direction + locking it at 90 angle
             xRotation -= target.mouseY * target.lookSensitivity * Time.deltaTime;

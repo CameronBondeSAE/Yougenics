@@ -275,6 +275,9 @@ namespace John
 			// transform.rotation = vehicleReference.GetVehicleExitPoint().rotation;
 
 			transform.rotation = Quaternion.identity;
+
+			//BUG HACK: Getting out of the vehicle seems to be changing the player's scale
+			transform.localScale = new Vector3(1, 1, 1);
 			
 			// vehicleReference.Exit();
 		}
