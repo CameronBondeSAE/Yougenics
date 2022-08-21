@@ -13,11 +13,19 @@ namespace John
         public TMP_Text    nameTagText;
         ClientInfo         client;
         public Animator animator;
+
+        //General Sounds
         public AudioSource audioSource;
         public AudioClip deathSound;
         public AudioClip normalJumpSound;
         public AudioClip sprintJumpSound;
         AudioClip finalJumpSound;
+
+        //Walking Sounds
+        public AudioSource footstepsAudioSource;
+        public AudioClip walkFootsteps;
+        public AudioClip sprintFootsteps;
+        AudioClip finalFootstepSound;
 
         private void Start()
         {
@@ -45,16 +53,39 @@ namespace John
 
         private void OnPlayerSprint(bool isSprinting)
         {
-            //Update Jump Sounds
+            //Update Jump & Walk Sounds
             if (isSprinting)
+            {
                 finalJumpSound = sprintJumpSound;
+                finalFootstepSound = sprintFootsteps;
+            }
             else
+            {
                 finalJumpSound = normalJumpSound;
+                finalFootstepSound = walkFootsteps;
+            }
+
+            if (footstepsAudioSource.isPlaying)
+            {
+                footstepsAudioSource.Stop();
+                footstepsAudioSource.clip = finalFootstepSound;
+                footstepsAudioSource.Play();
+            }
         }
 
         private void PlayMovementAnimation(float speed)
         {
             animator.SetFloat("Speed", speed);
+
+            if(speed > 0)
+            {
+                footstepsAudioSource.clip = finalFootstepSound;
+                footstepsAudioSource.Play();
+            }
+            else
+            {
+                footstepsAudioSource.Stop();
+            }
         }
 
         private void PlayMovementDirectionAnimation(Vector2 movement)
