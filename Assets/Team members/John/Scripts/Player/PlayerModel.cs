@@ -110,8 +110,14 @@ namespace John
 		public void MovementClientRpc(Vector2 movementInput)
 		{
 			// View Stuff
+
 			onMovementEvent?.Invoke(movementInput);
-			onMovementSpeedEvent?.Invoke(movement.sqrMagnitude);
+
+			//HACK: This is only called when movement is first pressed or released, so using a vector2.zero check to see if we are moving or not- speed is used to set running animations
+			if (movementInput != Vector2.zero)
+				onMovementSpeedEvent?.Invoke(1);
+			else
+				onMovementSpeedEvent?.Invoke(0);
 		}
 
 		[ClientRpc]
