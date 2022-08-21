@@ -53,6 +53,7 @@ MonoBehaviour:
   offsetY: 100
   randomHeightTest: 0
   terrainDataFile: {fileID: 15600000, guid: b963ae34b907e8a448aabc73c1d11284, type: 2}
+  dayNightManager: {fileID: 0}
 --- !u!114 &9197623580334767073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,6 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   terrainGenerator: {fileID: 9197623580334767075}
-  scaler: 0.2
+  scaler: 0.02
+  scalers: 0.01
   heightMultiplier: 10
   energyBall: {fileID: 6538142482682508728, guid: 69a299a19828f084b916616053b88cea, type: 3}
