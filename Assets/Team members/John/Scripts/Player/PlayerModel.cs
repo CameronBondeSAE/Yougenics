@@ -51,6 +51,7 @@ namespace John
 		//EVENTS
 		public event Action onJumpEvent;
 		public event Action onDeathEvent;
+		public event Action<bool> onSprintEvent;
 		public event Action<Vector2> onMovementEvent;
 		public event Action<float> onMovementSpeedEvent;
 
@@ -157,6 +158,7 @@ namespace John
 		public void SprintClientRpc(bool isSprinting)
 		{
 			//View Stuff
+			onSprintEvent?.Invoke(isSprinting);
 		}
 
 		#endregion
