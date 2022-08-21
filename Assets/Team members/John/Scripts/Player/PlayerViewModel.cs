@@ -47,8 +47,9 @@ namespace John
             playerModel.onMovementEvent += PlayMovementDirectionAnimation;
             playerModel.onMovementSpeedEvent += PlayMovementAnimation;
 
-            //Setting default jump sound
+            //Setting default sounds
             finalJumpSound = normalJumpSound;
+            finalFootstepSound = walkFootsteps;
         }
 
         private void OnPlayerSprint(bool isSprinting)

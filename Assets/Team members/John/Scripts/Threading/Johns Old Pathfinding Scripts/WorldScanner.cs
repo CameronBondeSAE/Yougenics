@@ -63,10 +63,7 @@ public class WorldScanner : MonoBehaviour
             gridSize.x = Mathf.RoundToInt(level.bounds.extents.x / nodeSize) + 1;
             gridSize.y = Mathf.RoundToInt(level.bounds.extents.z / nodeSize) + 1;
         }*/
-    }
 
-    private void Start()
-    {
         if (autoGenerateGridOnAwake)
             CreateGrid();
     }
