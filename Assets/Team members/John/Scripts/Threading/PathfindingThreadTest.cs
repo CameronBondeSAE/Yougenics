@@ -112,7 +112,7 @@ public struct JohnPathfindJob : IJob
 
         int i = 0;
 
-        while (currentNode != start)
+        while (currentNode != start && i < 100)
         {
             //Create a path from the end node to the start node following the node parent trail
             //path.Add(currentNode.gridPos);
@@ -141,9 +141,10 @@ public class PathfindingThreadTest : MonoBehaviour
     List<Vector2> path = new List<Vector2>();
 
     public bool useJobs;
-    public int jobCount = 1;
+    //public int jobCount = 1;
 
     public JohnPathTracker testAI;
+    public JohnPathTracker[] testAIArray;
     //public List<GameObject> 
 
     // Start is called before the first frame update
@@ -157,17 +158,17 @@ public class PathfindingThreadTest : MonoBehaviour
             //NativeArray<Vector2> myPathList = new NativeArray<Vector2>(100, Allocator.TempJob);
 
             //List of NativeArray's for each job to use
-            List<NativeArray<Vector2>> pathListArray = new List<NativeArray<Vector2>>(jobCount);
+            List<NativeArray<Vector2>> pathListArray = new List<NativeArray<Vector2>>(testAIArray.Length);
 
-            for (int i = 0; i < jobCount; i++)
+            for (int i = 0; i < testAIArray.Length; i++)
             {
                 //Add a new entry to the list
                 pathListArray.Add(new NativeArray<Vector2>(100, Allocator.TempJob));
 
                 JohnPathfindJob johnPathfindJob = new JohnPathfindJob
                 {
-                    startPos = testAI.transform.position,
-                    targetPos = new Vector3(5, 5, 5),
+                    startPos = testAIArray[i].transform.position,
+                    targetPos = new Vector3(Random.Range(2, 50), Random.Range(2, 50), Random.Range(2, 50)),
                     pathList = pathListArray[i]
                 };
 
@@ -179,17 +180,24 @@ public class PathfindingThreadTest : MonoBehaviour
             JobHandle.CompleteAll(jobHandleArray);
 
             //Give the path to the AI
-            List<Vector2> finalPathList = pathListArray[0].ToList();
+            /*List<Vector2> finalPathList = pathListArray[0].ToList();
             finalPathList.Reverse();
-            testAI.GeneratePathList(finalPathList);
+            testAI.GeneratePathList(finalPathList);*/
+
+            for (int i = 0; i < testAIArray.Length; i++)
+            {
+                List<Vector2> finalPathList = pathListArray[i].ToList();
+                finalPathList.Reverse();
+                testAIArray[i].GeneratePathList(finalPathList);
+            }
 
             //Dispose each native array in the array of native arrays
             foreach (var pathList in pathListArray)
             {
-                foreach (var pos in pathList)
+                /*foreach (var pos in pathList)
                 {
                     Debug.Log(pos);
-                }
+                }*/
 
                 pathList.Dispose();
             }
@@ -201,14 +209,42 @@ public class PathfindingThreadTest : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < jobCount; i++)
+            for (int i = 0; i < testAIArray.Length; i++)
             {
-                FindPath(new Vector3(2, 2, 2), new Vector3(5, 5, 5));
+                FindPath(testAIArray[i].transform.position, new Vector3(Random.Range(2, 50), Random.Range(2, 50), Random.Range(2, 50)), testAIArray[i]);
             }
         }
     }
 
-    public void FindPath(Vector3 _startPos, Vector3 _targetPos)
+    public void FindPathUsingJob(Vector3 startPos)
+    {
+        //Variable to copy the data into
+        NativeArray<Vector2> myPathList = new NativeArray<Vector2>(100, Allocator.TempJob);
+
+        //Create the Job
+        JohnPathfindJob johnPathfindJob = new JohnPathfindJob
+        {
+            startPos = testAI.transform.position,
+            targetPos = new Vector3(Random.Range(2, 50), Random.Range(2, 50), Random.Range(2, 50)),
+            pathList = myPathList
+        };
+
+        //Schedule the Job
+        JobHandle jobHandle1 = johnPathfindJob.Schedule();
+
+        jobHandle1.Complete();
+
+        //Give the path to the AI
+        List<Vector2> finalPathList = myPathList.ToList();
+        finalPathList.Reverse();
+        testAI.GeneratePathList(finalPathList);
+
+        //Dispose
+        myPathList.Dispose();
+
+    }
+
+    public void FindPath(Vector3 _startPos, Vector3 _targetPos, JohnPathTracker user)
     {
         //Keep for ReScan Reference
         targetPos = _targetPos;
@@ -246,7 +282,7 @@ public class PathfindingThreadTest : MonoBehaviour
             //If at the target node - end the loop
             if (currentNode == targetNode)
             {
-                RetracePath(startNode, targetNode);
+                RetracePath(startNode, targetNode, user);
                 return;
             }
             else
@@ -297,7 +333,7 @@ public class PathfindingThreadTest : MonoBehaviour
     }
 
     //Retrace the finalized path
-    void RetracePath(Node start, Node end)
+    void RetracePath(Node start, Node end, JohnPathTracker user)
     {
         Node currentNode = end;
 
@@ -310,6 +346,7 @@ public class PathfindingThreadTest : MonoBehaviour
 
         path.Reverse();
         Debug.Log("Path Found");
+        user.GeneratePathList(path);
     }
 
     int DistanceCheck(Node a, Node b)

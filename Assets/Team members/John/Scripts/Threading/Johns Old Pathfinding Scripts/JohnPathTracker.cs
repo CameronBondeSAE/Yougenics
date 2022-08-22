@@ -12,6 +12,7 @@ public class JohnPathTracker : MonoBehaviour
     public float distanceThreshold = 2f;
     public LayerMask obstacleLayerMask;
     public float speed = 1f;
+    public PathfindingThreadTest pathfindManager;
 
     [Header("Extra Settings: ")]
     //public float maxRayLength = 10f;
@@ -49,6 +50,19 @@ public class JohnPathTracker : MonoBehaviour
             else
             {
                 KeepTrackOfPath();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Debug.Log("Already Pathfinding");
+            }
+        }
+
+        if(!pathGenerated)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                pathfindManager.FindPathUsingJob(transform.position);
             }
         }
     }
