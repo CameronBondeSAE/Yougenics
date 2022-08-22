@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Jobs;
 using Unity.Collections;
+using System.Linq;
 
 public struct JohnPathfindJob : IJob
 {
@@ -121,6 +122,7 @@ public struct JohnPathfindJob : IJob
         }
 
         //path.Reverse();
+        //pathList.Reverse();
         Debug.Log("Path Found");
         //
         //pathList = path.ToNativeArray<Vector2>(Allocator.TempJob);
@@ -141,6 +143,9 @@ public class PathfindingThreadTest : MonoBehaviour
     public bool useJobs;
     public int jobCount = 1;
 
+    public JohnPathTracker testAI;
+    //public List<GameObject> 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -149,15 +154,21 @@ public class PathfindingThreadTest : MonoBehaviour
             // Complete an arbitrary number of jobs
             NativeArray<JobHandle> jobHandleArray = new NativeArray<JobHandle>(100, Allocator.Temp);
 
-            NativeArray<Vector2> myPathList = new NativeArray<Vector2>(100, Allocator.TempJob);
+            //NativeArray<Vector2> myPathList = new NativeArray<Vector2>(100, Allocator.TempJob);
+
+            //List of NativeArray's for each job to use
+            List<NativeArray<Vector2>> pathListArray = new List<NativeArray<Vector2>>(jobCount);
 
             for (int i = 0; i < jobCount; i++)
             {
+                //Add a new entry to the list
+                pathListArray.Add(new NativeArray<Vector2>(100, Allocator.TempJob));
+
                 JohnPathfindJob johnPathfindJob = new JohnPathfindJob
                 {
-                    startPos = new Vector3(2, 2, 2),
+                    startPos = testAI.transform.position,
                     targetPos = new Vector3(5, 5, 5),
-                    pathList = myPathList
+                    pathList = pathListArray[i]
                 };
 
                 JobHandle jobHandle1 = johnPathfindJob.Schedule();
@@ -167,7 +178,24 @@ public class PathfindingThreadTest : MonoBehaviour
 
             JobHandle.CompleteAll(jobHandleArray);
 
-            myPathList.Dispose();
+            //Give the path to the AI
+            List<Vector2> finalPathList = pathListArray[0].ToList();
+            finalPathList.Reverse();
+            testAI.GeneratePathList(finalPathList);
+
+            //Dispose each native array in the array of native arrays
+            foreach (var pathList in pathListArray)
+            {
+                foreach (var pos in pathList)
+                {
+                    Debug.Log(pos);
+                }
+
+                pathList.Dispose();
+            }
+
+            //then dispose the whole array
+            //pathListArray.Dispose();
 
             jobHandleArray.Dispose();
         }
