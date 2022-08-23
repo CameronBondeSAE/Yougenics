@@ -580,7 +580,7 @@ Rigidbody:
   m_GameObject: {fileID: 1388483787997497225}
   serializedVersion: 2
   m_Mass: 50
-  m_Drag: 1
+  m_Drag: 5
   m_AngularDrag: 5
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -599,10 +599,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84b8dd5003a16f54788ab613c8ca44cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnForce: 10
-  rayDistance: 5
+  turnForce: 5
+  rayDistance: 10
   dirR: {x: 0, y: 0, z: 0}
   dirL: {x: 0, y: 0, z: 0}
+  rays: 1
 --- !u!114 &7530188383163628163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -631,6 +632,8 @@ MonoBehaviour:
   perlinValue: 0
   minAngle: 0
   maxAngle: 0
+  oneTick: 0
+  tickRotation: 0
 --- !u!114 &-3068811709233675902
 MonoBehaviour:
   m_ObjectHideFlags: 0

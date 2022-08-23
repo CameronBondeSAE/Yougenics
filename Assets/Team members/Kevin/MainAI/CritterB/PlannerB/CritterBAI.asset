@@ -1,0 +1,209 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f22e7053ea04ed0922308786facc8c, type: 3}
+  m_Name: CritterBAI
+  m_EditorClassIdentifier: 
+  conditions:
+    list:
+    - id: 0
+      name: isWandering
+    - id: 1
+      name: isRunning
+    - id: 2
+      name: isHunting
+    - id: 3
+      name: isEating
+    - id: 4
+      name: isHorny
+    - id: 5
+      name: isMating
+    - id: 6
+      name: isDead
+    - id: 7
+      name: isSleeping
+    - id: 8
+      name: isInDanger
+    - id: 9
+      name: foundFood
+    - id: 10
+      name: isHungry
+    - id: 11
+      name: caughtFood
+    - id: 12
+      name: foundMate
+  actions:
+  - name: Wandering
+    isDefault: 1
+    state: {fileID: 9078323342595764737, guid: c2bb453d52284e641bcf6967f44bbd42, type: 3}
+    cost: 0
+    position: {x: 429, y: 58}
+    pre: []
+    post:
+    - id: 0
+      value: 0
+  - name: RunAway
+    isDefault: 0
+    state: {fileID: 3166555968557676039, guid: 72ca563d85115d6499582f35223a7cc7, type: 3}
+    cost: 0
+    position: {x: 640, y: 59}
+    pre:
+    - id: 8
+      value: 1
+    - id: 7
+      value: 0
+    - id: 1
+      value: 1
+    post:
+    - id: 1
+      value: 0
+    - id: 8
+      value: 0
+  - name: Hunt
+    isDefault: 0
+    state: {fileID: 6149286337068892445, guid: 89a100a9bdd2cbc45a3a469587319520, type: 3}
+    cost: 0
+    position: {x: 840, y: 253}
+    pre:
+    - id: 10
+      value: 1
+    - id: 7
+      value: 0
+    - id: 9
+      value: 1
+    post:
+    - id: 3
+      value: 1
+    - id: 11
+      value: 1
+  - name: Eat
+    isDefault: 0
+    state: {fileID: 739517042319561443, guid: f86ef9c6b8440914dad3bbccea3ce88c, type: 3}
+    cost: 0
+    position: {x: 838, y: 520}
+    pre:
+    - id: 3
+      value: 1
+    - id: 11
+      value: 1
+    post:
+    - id: 3
+      value: 0
+    - id: 10
+      value: 0
+    - id: 11
+      value: 0
+  - name: Sleep
+    isDefault: 0
+    state: {fileID: 2335605474147982618, guid: 479fef519f14f3a4ca491c0f703ec9f6, type: 3}
+    cost: 0
+    position: {x: 1264, y: 62}
+    pre:
+    - id: 7
+      value: 1
+    post:
+    - id: 7
+      value: 0
+  - name: FindMate
+    isDefault: 0
+    state: {fileID: 6062625052046760044, guid: 667ec93384dbb9e42a0eb96330cc1261, type: 3}
+    cost: 0
+    position: {x: 1047, y: 63}
+    pre:
+    - id: 8
+      value: 0
+    - id: 4
+      value: 1
+    - id: 12
+      value: 1
+    post:
+    - id: 5
+      value: 1
+  - name: MateProcess
+    isDefault: 0
+    state: {fileID: 5463843774171225968, guid: 5b2e603e23069a84588164f27e08d9b6, type: 3}
+    cost: 0
+    position: {x: 1046, y: 300}
+    pre:
+    - id: 5
+      value: 1
+    post:
+    - id: 5
+      value: 0
+  - name: Die
+    isDefault: 0
+    state: {fileID: 9078323342595764737, guid: 43ada02ea1f5aeb4baddc5adc39df1d5, type: 3}
+    cost: 0
+    position: {x: 1265, y: 258}
+    pre:
+    - id: 6
+      value: 1
+    post:
+    - id: 6
+      value: 1
+  - name: CanHunt
+    isDefault: 0
+    state: {fileID: 8491417322159591460, guid: c6e1b502aee308748a6a06735b3a965b, type: 3}
+    cost: 0
+    position: {x: 841, y: 55}
+    pre: []
+    post: []
+  goals:
+  - name: IsHealthy
+    isDefault: 1
+    position: {x: 216, y: 55}
+    conditions:
+    - id: 0
+      value: 1
+    - id: 1
+      value: 0
+    - id: 2
+      value: 0
+    - id: 3
+      value: 0
+    - id: 4
+      value: 0
+    - id: 5
+      value: 0
+    - id: 6
+      value: 0
+    - id: 7
+      value: 0
+  worldStates:
+  - position: {x: 266, y: 847}
+    isAutoUpdate: 1
+    list:
+    - id: 0
+      value: 0
+    - id: 1
+      value: 0
+    - id: 2
+      value: 0
+    - id: 3
+      value: 0
+    - id: 4
+      value: 0
+    - id: 5
+      value: 0
+    - id: 6
+      value: 0
+    - id: 7
+      value: 0
+    - id: 8
+      value: 0
+    - id: 9
+      value: 1
+    - id: 10
+      value: 1
+    - id: 11
+      value: 0
+    - id: 12
+      value: 0

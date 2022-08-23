@@ -10,6 +10,8 @@ namespace Kevin
         [SerializeField] private float perlinValue;
         [SerializeField] private float minAngle;
         [SerializeField] private float maxAngle;
+        public float oneTick;
+        public float tickRotation; 
         void Start()
         {
             
@@ -17,9 +19,20 @@ namespace Kevin
         }
         void Update()
         {
-            perlinValue = Mathf.PerlinNoise(Random.Range(minAngle,maxAngle), Random.Range(minAngle,maxAngle));
-            
-            rb.AddRelativeTorque(0, Random.Range(minAngle,maxAngle) * perlinValue * Time.deltaTime * Random.Range(-1,1) * Time.deltaTime, 0);
+            if (oneTick > tickRotation)
+            {
+                oneTick = 0f;
+                perlinValue = (Mathf.PerlinNoise(rb.transform.position.x, rb.transform.position.z))*2-1;
+                Patrol();
+            }
+
+            oneTick += Time.deltaTime;
+
+        }
+
+        void Patrol()
+        {
+            rb.AddRelativeTorque(0, perlinValue, 0,ForceMode.Impulse);
         }
         
     }

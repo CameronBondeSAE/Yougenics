@@ -103,11 +103,7 @@ public class CritterA : CreatureBase, IEdible, ISense
             fireObjects[1].GetComponent<MeshRenderer>().material = fireMaterial[currentState];
             fireObjects[2].GetComponent<MeshRenderer>().material = fireMaterial[currentState];
         }
-
-        public void Chameleon()
-        {
-            
-        }
+        
 
         #region CritterExecutables
 
