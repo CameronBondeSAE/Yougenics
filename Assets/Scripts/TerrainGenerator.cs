@@ -12,8 +12,8 @@ using Random = UnityEngine.Random;
 
 public class TerrainGenerator : MonoBehaviour
 {
-	public int width = 256; //x-axis of the terrain
-	public int height = 256; //z-axis
+	public int width = 1024; //x-axis of the terrain
+	public int height = 1024; //z-axis
 
 	public int depth = 20; //y-axis
 
@@ -30,6 +30,8 @@ public class TerrainGenerator : MonoBehaviour
 	public bool randomHeightTest = false;
 	public TerrainData terrainDataFile;
 	public event Action Generatorformin;
+
+	public Texture2D texture2DTaperGradient;
 	
 	private void Start()
 	{
@@ -60,8 +62,16 @@ public class TerrainGenerator : MonoBehaviour
 		{
 			for (int y = 0; y < height; y++)
 			{
-				if (calculateHeightCallback != null) 
-					heights[x, y] = calculateHeightCallback(x, y);
+				if (calculateHeightCallback != null)
+				{
+					float xPix = (float)texture2DTaperGradient.width*(float)((float)x/(float)width);
+					float yPix = (float)texture2DTaperGradient.height*(float)((float)y/(float)height);
+					heights[x, y] = calculateHeightCallback(x, y)+
+					                (1f-texture2DTaperGradient.GetPixel((int) xPix, (int) yPix).a) * 2f - 1f;
+					// float grayscale = texture2DTaperGradient.GetPixel((int)xPix, (int)yPix).grayscale;
+					// Debug.Log(grayscale);
+					// heights[x, y] = grayscale;
+				}
 			}
 		}
 

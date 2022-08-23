@@ -1,0 +1,41 @@
+{
+  "76ea47e992e0e6c459aa8682e10f5249": {
+    "sceneGuid": "ecb4e1236a6628c48b12bbab26f64972",
+    "uniqueCameraId": "76ea47e992e0e6c459aa8682e10f5249",
+    "name": "Base",
+    "pointX": 10.6438637,
+    "pointY": 2.98951149,
+    "pointZ": -3.63188887,
+    "directionX": -0.311348677,
+    "directionY": 0.5042363,
+    "directionZ": -0.201283872,
+    "directionW": -0.779940963,
+    "zoom": 12.7161713
+  },
+  "e182daef9290e7149ab2c54681c6f6e2": {
+    "sceneGuid": "ecb4e1236a6628c48b12bbab26f64972",
+    "uniqueCameraId": "e182daef9290e7149ab2c54681c6f6e2",
+    "name": "Shop",
+    "pointX": -21.57033,
+    "pointY": -4.429135,
+    "pointZ": 5.056536,
+    "directionX": -0.1170344,
+    "directionY": 0.6871154,
+    "directionZ": -0.11356914,
+    "directionW": -0.7080213,
+    "zoom": 12.7161713
+  },
+  "2f548b6d3ededd942a8474363ca52d32": {
+    "sceneGuid": "ecb4e1236a6628c48b12bbab26f64972",
+    "uniqueCameraId": "2f548b6d3ededd942a8474363ca52d32",
+    "name": "All",
+    "pointX": 59.4572945,
+    "pointY": 154.200821,
+    "pointZ": -129.051743,
+    "directionX": -0.487842917,
+    "directionY": 0.133324862,
+    "directionZ": -0.07568149,
+    "directionW": -0.8593727,
+    "zoom": 12.7161713
+  }
+}
