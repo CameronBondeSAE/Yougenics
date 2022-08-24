@@ -61,6 +61,7 @@ namespace Ollie
             go.transform.position = brain.transform.position + new Vector3(0,0,-2);
             
             brain.moveSpeed = 3;
+            brain.age = 0;
             brain.SetIsHorny(false);
             doneMating = true;
         }

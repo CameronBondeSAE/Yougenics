@@ -97,7 +97,7 @@ MonoBehaviour:
   - name: Mate
     isDefault: 0
     state: {fileID: 3847709778611426878, guid: 8c4e8e560cf9ae34d8b8f9849ecde591, type: 3}
-    cost: 0
+    cost: 1
     position: {x: 1449, y: 806}
     pre:
     - id: 6
@@ -113,15 +113,13 @@ MonoBehaviour:
     pre:
     - id: 1
       value: 1
-    - id: 12
-      value: 1
     post:
     - id: 8
       value: 1
   - name: FoundMate
     isDefault: 0
     state: {fileID: 3847709778611426878, guid: 35fed5ef99391404ea0b0776e6226e47, type: 3}
-    cost: 0
+    cost: 1
     position: {x: 1045, y: 803}
     pre:
     - id: 10
@@ -154,7 +152,7 @@ MonoBehaviour:
   - name: SearchingMate
     isDefault: 0
     state: {fileID: 3847709778611426878, guid: 2432e51d0da998346b67ce9e82a75c63, type: 3}
-    cost: 0
+    cost: 1
     position: {x: 640, y: 800}
     pre:
     - id: 11
@@ -211,6 +209,8 @@ MonoBehaviour:
       value: 1
     - id: 12
       value: 0
+    - id: 0
+      value: 1
     post:
     - id: 7
       value: 1

@@ -83,7 +83,7 @@ namespace Ollie
             energyComponent = GetComponent<Energy>();
             energyComponent.useEnergyOnMovement = true;
             energyComponent.EnergyAmount.Value = energyComponent.energyMax;
-            chompAmount = (energyComponent.energyMax/5);
+            chompAmount = (energyComponent.energyMax/10);
 
 
             if (Random.Range(0, 2) == 0)
@@ -113,21 +113,39 @@ namespace Ollie
                     else
                     {
                         print("path blocked");
+                        if (foodLocationList.Contains(target)) foodLocationList.Remove(target);
+                        if (mateLocationList.Contains(target.gameObject)) mateLocationList.Remove(target.gameObject);
+                        target = null;
+                        //event for food spawning incorrectly
+                        //or change spawner to not spawn on blocked nodes, derr
                     }
                 }
             }
 
-            if (healthComponent.CurrentHealth.Value < 50)
+            if (healthComponent.CurrentHealth.Value < healthComponent.maxHealth/2)
             {
-                //SetHealthLow(true);
+                SetHealthLow(true);
+            }
+
+            if (healthComponent.CurrentHealth.Value >= healthComponent.maxHealth/2)
+            {
+                SetHealthLow(false);
             }
 
             if (healthComponent.CurrentHealth.Value <= 0)
             {
                 Death();
-                
             }
-            //else SetHealthLow(false);
+
+            if (energyComponent.EnergyAmount.Value < energyComponent.energyMax / 2)
+            {
+                SetIsHungry(true);
+            }
+
+            if (energyComponent.EnergyAmount.Value >= energyComponent.energyMax / 2)
+            {
+                SetIsHungry(false);
+            }
 
             if (energyComponent.EnergyAmount.Value <= energyComponent.energyMin)
             {
@@ -144,6 +162,16 @@ namespace Ollie
             {
                 DestroyMe();
             }
+
+            if (age > 18 && sex == Sex.Male)
+            {
+                SetIsHorny(true);
+            }
+
+            if (age < 18 || sex == Sex.Female)
+            {
+                SetIsHorny(false);
+            }
         }
 
         public void StateViewerChange(int index)
@@ -153,6 +181,7 @@ namespace Ollie
 
         private void Death()
         {
+            StateViewerChange(6);
             dead = true;
             healthComponent.IsDead.Value = true;
             energyComponent.useEnergyOnMovement = false;
@@ -174,7 +203,8 @@ namespace Ollie
 
         private void DestroyMe()
         {
-            print(this + " has no health or energy, should be destroyed");
+            Destroy(gameObject, 1f);
+            //print(this + " has no health or energy, should be destroyed");
         }
 
         public override void FixedUpdate()
@@ -308,7 +338,8 @@ namespace Ollie
 
         public float EatMe(float energyRemoved)
         {
-            throw new NotImplementedException();
+            energyComponent.ChangeEnergy(-energyRemoved);
+            return energyRemoved;
         }
 
         #endregion

@@ -26,9 +26,13 @@ namespace Ollie
         public override void Enter()
         {
             base.Enter();
-            target = brain.target.gameObject;
-            brain.turnTowards.TurnParent(target.transform.position);
-            StartCoroutine(EatFoodCoroutine());
+            if (brain.target.gameObject != null)
+            {
+                target = brain.target.gameObject;
+                brain.turnTowards.TurnParent(target.transform.position);
+                StartCoroutine(EatFoodCoroutine());
+            }
+            
             
             //controller.target = null;
             //controller.DisableCollider();
@@ -38,7 +42,7 @@ namespace Ollie
 
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
-            brain.StateViewerChange(2);
+            
             
             if(target!=null) brain.turnTowards.TurnParent(target.transform.position);
             base.Execute(aDeltaTime, aTimeScale);
@@ -70,7 +74,9 @@ namespace Ollie
             
             while (iEdible.GetEnergyAmount() > 0)
             {
+                brain.StateViewerChange(2);
                 iEdible.EatMe(brain.chompAmount);
+                brain.energyComponent.ChangeEnergy(brain.chompAmount);
                 yield return new WaitForSeconds(1);
             }
 

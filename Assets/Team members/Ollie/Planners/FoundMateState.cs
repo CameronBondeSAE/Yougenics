@@ -25,6 +25,7 @@ namespace Ollie
             brain.moveSpeed = 5;
             CheckMateDistances();
             brain.path.Clear();
+            
         }
         
         void CheckMateDistances()
@@ -34,14 +35,17 @@ namespace Ollie
             
             float smallestdistance = 99999999;
 
-            foreach (var position in positionsList)
+            if (positionsList.Count != 0)
             {
-                if (position != null)
+                foreach (var position in positionsList)
                 {
-                    if (Vector3.Distance(position.transform.position, parent.transform.position) < smallestdistance)
+                    if (position != null)
                     {
-                        smallestdistance = Vector3.Distance(position.transform.position,parent.transform.position);
-                        closest = position.transform;
+                        if (Vector3.Distance(position.transform.position, parent.transform.position) < smallestdistance)
+                        {
+                            smallestdistance = Vector3.Distance(position.transform.position,parent.transform.position);
+                            closest = position.transform;
+                        }
                     }
                 }
             }
@@ -52,26 +56,48 @@ namespace Ollie
             brain.StateViewerChange(3);
             brain.moveSpeed = 5;
             base.Execute(aDeltaTime, aTimeScale);
-            
-            if (brain.path.Count == 0)
+            if (positionsList.Count == 0)
             {
-                if (brain.transform.position != closest.position)
-                {
-                    brain.SetTarget(closest);
-                    print("target mate set");
-                }
-                else
-                {
-                    CheckMateDistances();
-                }
+                brain.SetMateLocated(false);
             }
             
-            if (Vector3.Distance(parent.transform.position, closest.position) < 1)
+            for (int i = brain.mateLocationList.Count-1; i >= 0; i--)
             {
-                brain.moveSpeed = 0;
-                print("its GIGADY time");
-                brain.SetMateFound(true);
+                if (brain.mateLocationList[i] != null)
+                {
+                }
+                else brain.mateLocationList.RemoveAt(i);
+                positionsList = brain.mateLocationList;
             }
+
+            if (closest != null)
+            {
+                if (brain.path.Count == 0)
+                {
+                    if (brain.transform.position != closest.position)
+                    {
+                        brain.SetTarget(closest);
+                        print("target mate set");
+                    }
+                    else
+                    {
+                        CheckMateDistances();
+                    }
+                }
+
+                if (Vector3.Distance(parent.transform.position, closest.position) < 1)
+                {
+                    brain.moveSpeed = 0;
+                    print("its GIGADY time");
+                    brain.SetMateFound(true);
+                }
+            }
+            else
+            {
+                brain.mateLocationList.Remove(closest.gameObject);
+                positionsList = brain.mateLocationList;
+            }
+
         }
 
         public override void Exit()

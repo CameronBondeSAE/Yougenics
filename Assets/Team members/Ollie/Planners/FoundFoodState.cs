@@ -37,6 +37,8 @@ namespace Ollie
             base.Enter();
             CheckFoodDistances();
             brain.path.Clear();
+            brain.moveSpeed = 3;
+            
         }
 
         void CheckFoodDistances()
@@ -46,14 +48,17 @@ namespace Ollie
 
             float smallestdistance = 99999999;
 
-            foreach (var position in positionsList)
+            if (positionsList.Count != 0)
             {
-                if (position != null)
+                foreach (var position in positionsList)
                 {
-                    if (Vector3.Distance(position.position, parent.transform.position) < smallestdistance)
+                    if (position != null)
                     {
-                        smallestdistance = Vector3.Distance(position.position,parent.transform.position);
-                        closest = position;
+                        if (Vector3.Distance(position.position, parent.transform.position) < smallestdistance)
+                        {
+                            smallestdistance = Vector3.Distance(position.position,parent.transform.position);
+                            closest = position;
+                        }
                     }
                 }
             }
@@ -63,26 +68,49 @@ namespace Ollie
         {
             brain.StateViewerChange(1);
             base.Execute(aDeltaTime, aTimeScale);
-            
-            if (brain.path.Count == 0 && closest != null)
+            if (positionsList.Count == 0)
             {
-                if (brain.transform.position != closest.position)
+                brain.SetFoodLocated(false);
+            }
+
+            for (int i = brain.foodLocationList.Count-1; i >= 0; i--)
+            {
+                if (brain.foodLocationList[i] != null)
                 {
-                    brain.SetTarget(closest);
-                    print("target food set");
                 }
-                else
+                else brain.foodLocationList.RemoveAt(i);
+
+                positionsList = brain.foodLocationList;
+            }
+
+            if (closest != null)
+            {
+                if (brain.path.Count == 0)
                 {
-                    //parentCollider.enabled = enabled;
-                    CheckFoodDistances();
+                    if (brain.transform.position != closest.position)
+                    {
+                        brain.SetTarget(closest);
+                        print("target food set");
+                        
+                    }
+                    else
+                    {
+                        //parentCollider.enabled = enabled;
+                        CheckFoodDistances();
+                    }
+                }
+
+                if (Vector3.Distance(parent.transform.position, closest.position) < 1)
+                {
+                    brain.moveSpeed = 0;
+                    print("its NOMming time");
+                    brain.SetFoodFound(true);
                 }
             }
-            
-            if (Vector3.Distance(parent.transform.position, closest.position) < 1)
+            else
             {
-                brain.moveSpeed = 0;
-                print("its NOMming time");
-                brain.SetFoodFound(true);
+                brain.foodLocationList.Remove(closest);
+                positionsList = brain.foodLocationList;
             }
         }
 

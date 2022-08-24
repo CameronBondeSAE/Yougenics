@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b34089779a38d024aabbc76701c0784b, type: 3}
   m_Name: OllieCritterPrefabHack
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
+  prefab: {fileID: 5861305019518734890, guid: 15c66fc78f1362b4c89183bff011d047, type: 3}
