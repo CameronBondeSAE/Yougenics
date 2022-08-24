@@ -21,7 +21,7 @@ namespace Minh
         //public bool dead;
         public bool fullenergy = true;
         public bool noenergy = false;
-        public bool healthon = true;
+        public bool healthon = false;
 
 
         public Energy energy;
@@ -39,7 +39,7 @@ namespace Minh
                 // GetComponent<Interactf>().healing += startHealthincreasing;
                 // GetComponent<Interactf>().dealdamage += startHealthdepeting;
                 energy = GetComponent<Energy>();
-                if (energy = null)
+                if (energy != null)
                 {
                     energy.NoEnergyEvent += startHealthdepeting;
                     energy.FullEnergyEvent += startHealthincreasing;
@@ -48,7 +48,7 @@ namespace Minh
         }
         void Start()
         {
-            if (healthon = true)
+            if (healthon == false)
             {
                 startHealthincreasing();
             }

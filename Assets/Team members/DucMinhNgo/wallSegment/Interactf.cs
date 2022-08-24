@@ -43,7 +43,6 @@ namespace Minh
 
             GetComponent<Renderer>().material.color = Color.green;
             GetComponent<Renderer>().material.DOColor(Color.gray, 3f);
-            healing?.Invoke();
         }
         public void Interact()
         {
