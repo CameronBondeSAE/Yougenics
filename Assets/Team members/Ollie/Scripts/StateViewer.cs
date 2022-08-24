@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace Ollie
 {
-    public class StateViewer : MonoBehaviour
+    public class StateViewer : NetworkBehaviour
     {
         private ParticleSystemRenderer particleSystem;
         private AudioSource[] sounds;
@@ -41,8 +42,11 @@ namespace Ollie
         public void ChangeParticles(int index)
         {
             //if isServer or isClient
+            if (IsClient)
+            {
+                particleSystem.material = particleMaterials[index];
+            }
             
-            particleSystem.material = particleMaterials[index];
             // if (index == 6 && !deathSound.isPlaying) deathSound.Play();
             // if (index == 5 && !walkingSound.isPlaying) walkingSound.Play();
             // if (index == 3 && !matingSound.isPlaying) matingSound.Play();
