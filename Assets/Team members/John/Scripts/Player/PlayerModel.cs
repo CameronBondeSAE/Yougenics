@@ -20,7 +20,7 @@ namespace John
 		public float   interactDistance  = 1f;
 		public Vector3 interactRayOffset = new Vector3(0, 0.5f, 0);
 
-		bool onGround = false;
+		public bool onGround = false;
 		public float      onGroundDrag = 4f;
 		public float      inAirDrag    = 0.1f;
 		public Rigidbody  rb;
@@ -48,6 +48,8 @@ namespace John
 		public bool      inVehicle = false;
 		public IVehicleControls vehicleReference;
 
+		public Transform feet;
+		
 		//EVENTS
 		public event Action onJumpEvent;
 		public event Action onDeathEvent;
@@ -86,18 +88,17 @@ namespace John
 
 		private void FixedUpdate()
 		{
-			if (onGround)
-			{
-				//Using forces & mass for movement
-				rb.AddRelativeForce(movement * movementSpeed, ForceMode.Impulse);
-			}
-
+			
 			//instant reactive movement
 			//rb.MovePosition(rb.position + movement * movementSpeed * Time.fixedDeltaTime);
 
 			// Ground check for jumping
 			// Hack: Ray length
-			if (Physics.Raycast(new Ray(transform.position, Vector3.down), 1.1f))
+			Ray   ray         = new Ray(feet.position, Vector3.down);
+			float groundRayLength = 0.25f;
+			Debug.DrawRay(ray.origin, ray.direction * groundRayLength, Color.green);
+			RaycastHit hitInfo;
+			if (Physics.Raycast(ray.origin + rb.velocity/10f,  ray.direction, out hitInfo, groundRayLength, 255, QueryTriggerInteraction.Ignore))
 			{
 				onGround = true;
 				rb.drag  = onGroundDrag;
@@ -106,6 +107,20 @@ namespace John
 			{
 				onGround = false;
 				rb.drag  = inAirDrag;
+			}
+			
+			// Move
+			if (onGround)
+			{
+				Vector3 projectOnPlane = Vector3.ProjectOnPlane(rb.velocity, hitInfo.normal);
+				
+				Debug.DrawRay(hitInfo.point, projectOnPlane*5f, Color.green);
+				
+				projectOnPlane = projectOnPlane.normalized;
+				
+				//Using forces & mass for movement
+				rb.AddRelativeForce(movement * movementSpeed, ForceMode.Acceleration);
+				rb.AddForce(projectOnPlane * movementSpeed, ForceMode.Acceleration);
 			}
 		}
 

@@ -18,6 +18,9 @@ public class Controllercar : MonoBehaviour, IVehicleControls
     public float driving;
     public float speed = 1000f;
     public float steering;
+    
+    
+    public Transform playerMount;
 
 
     void FixedUpdate()
@@ -59,6 +62,11 @@ public class Controllercar : MonoBehaviour, IVehicleControls
     {
         // TODO
         return Vector3.zero;
+    }
+
+    public Transform GetPlayerMountPosition()
+    {
+        return playerMount.transform;
     }
 }
 

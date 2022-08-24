@@ -68,7 +68,10 @@ namespace Alex
 
             scalerRange = targetScaler;
             terrainGenerator.GenerateTerrain();
-        
+
+            spawner.shouldISpawnDelegate = ShouldISpawnDelegate;
+            spawner.SpawnMultiple();
+
             /*
             int i = 0;
             
@@ -85,8 +88,12 @@ namespace Alex
 
         }
 
+        bool ShouldISpawnDelegate(float x, float y)
+        {
+            return true; // TODO replace
+        }
 
-        
+
         public float YourHeightCalculatorFunction(int x, int z)
         {
             perlinNoise = Mathf.PerlinNoise(x * scalerRange, z * scalerRange);
@@ -94,7 +101,8 @@ namespace Alex
             if (thingToSpawn.Count > 0)
                 if (Random.Range(0, 100) == 0 && perlinNoise > .5f)
                 {
-                    spawner.SpawnSingle(thingToSpawn[Random.Range(0,thingToSpawn.Count)], new Vector3(z + transform.position.x, perlinNoise * terrainGenerator.depth + transform.position.y,x + transform.position.z), Quaternion.identity);
+                    spawner.SpawnSingle(thingToSpawn[Random.Range(0,thingToSpawn.Count)], 
+                                        new Vector3(x, perlinNoise * terrainGenerator.depth,z) + transform.position, Quaternion.identity);
                     //Instantiate(energyBall, new Vector3(z + transform.position.x, perlinNoise * heightMultiplier * terrainGenerator.depth + transform.position.y + 2f,x + transform.position.z), Quaternion.identity);
                 }
             

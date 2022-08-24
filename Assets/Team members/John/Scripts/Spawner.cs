@@ -21,10 +21,12 @@ public class Spawner : NetworkBehaviour
 		public int countPerGroup;
 	}
 
-    [Header("SETUP: ")]
+	[Header("SETUP: ")]
 	public bool autoStart = false;
-	public bool autoNetworkStart = false;
-	public float radius = 5f;
+
+	public bool  autoNetworkStart = false;
+	public float radius           = 5f;
+	public bool  findGroundHeight = true;
 
 	public  GroupInfo[] groupInfos;
 	public  float       groundOffset;
@@ -32,15 +34,21 @@ public class Spawner : NetworkBehaviour
 
 	public List<GameObject> spawned;
 
-    public override void OnNetworkSpawn()
-    {
-        if(autoNetworkStart)
-        {
-			SpawnMultiple();
-        }
-    }
 
-    private void Start()
+	public delegate bool ShouldISpawnDelegate(float x, float y);
+
+	public ShouldISpawnDelegate shouldISpawnDelegate;
+
+
+	public override void OnNetworkSpawn()
+	{
+		if (autoNetworkStart)
+		{
+			SpawnMultiple();
+		}
+	}
+
+	private void Start()
 	{
 		if (autoStart) SpawnMultiple();
 	}
@@ -82,18 +90,24 @@ public class Spawner : NetworkBehaviour
 
 	public GameObject SpawnSingle(GameObject prefab, Vector3 pos, Quaternion rotation)
 	{
+		// Ask the user of this component whether I should spawn at the location I have choosen
+		if (shouldISpawnDelegate(pos.x, pos.z) == false)
+			return null;
+
 		Vector3 randomSpot;
 		GameObject spawnedPrefab = Instantiate(prefab, pos,
 											   rotation);
 
 		// Object must have NetworkObject component to work on clients
-		if(NetworkManager.Singleton.IsServer)
+		if (NetworkManager.Singleton.IsServer)
 			spawnedPrefab.GetComponent<NetworkObject>()?.Spawn();
-        
 
-		
-		spawnedPrefab.transform.position = Utilities.FindGroundHeight(spawnedPrefab.transform.position, groundOffset);
-		
+
+		if (findGroundHeight)
+		{
+			spawnedPrefab.transform.position = Utilities.FindGroundHeight(spawnedPrefab.transform.position, groundOffset);
+		}
+
 		return spawnedPrefab;
 	}
 

@@ -24,6 +24,7 @@ public interface IVehicleControls
 	public void Steer(float amount);
 
 	public Vector3 GetExitPosition();
+	public Transform GetPlayerMountPosition();
 }
 
 public interface IFlyable
