@@ -8,6 +8,7 @@ using TMPro;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
+using DG.Tweening;
 
 namespace Kevin
 {
@@ -20,6 +21,8 @@ namespace Kevin
         public Energy energy;
         public float currentEnergy;
         public float remainingTime;
+        public GameObject water;
+        private Vector3 waterStartPos;
         
         
         //reference to Drop off point script 
@@ -48,6 +51,13 @@ namespace Kevin
             
             dropOffPoints = new List<GameObject>();
             StartCoroutine(DrainCoroutine());
+        }
+
+        public void Start()
+        {
+            waterStartPos = water.transform.position;
+
+            water.transform.DOMoveY(waterStartPos.y + 50, remainingTime);
         }
 
         // Assign LOCAL camera to actual player prefab

@@ -20,13 +20,16 @@ namespace Alex
         public float scalerNew;
         private float perlinNoise = 0f;
         public float heightMultiplier = 10f;
-        public GameObject energyBall;
-        public bool terraforming;
-        public float changeRate = 1f;
-        public float terraformCount = 3;
+        //public GameObject energyBall;
+        //public bool terraforming;
+        //public float changeRate = 1f;
+        //public float terraformCount = 3;
+        public List<GameObject> thingToSpawn = new List<GameObject>();
+        Spawner spawner;
 
         public void Start()
         {
+            spawner = GetComponent<Spawner>();
             //DayNightManager.instance.ChangePhase(DayNightManager.DayPhase.Midnight);
             scalerRange = Random.Range(scalerOne, scalerTwo);
             scalerOld = scalerRange;
@@ -83,16 +86,18 @@ namespace Alex
         }
 
 
+        
         public float YourHeightCalculatorFunction(int x, int z)
         {
             perlinNoise = Mathf.PerlinNoise(x * scalerRange, z * scalerRange);
-            /*
-            if (energyBall != null)
-                if (Random.Range(0, 100) == 0 && (perlinNoise * heightMultiplier) > .6f)
+            
+            if (thingToSpawn.Count > 0)
+                if (Random.Range(0, 100) == 0 && perlinNoise > .5f)
                 {
-                    Instantiate(energyBall, new Vector3(z + transform.position.x, perlinNoise * heightMultiplier * terrainGenerator.depth + transform.position.y + 2f,x + transform.position.z), Quaternion.identity);
+                    spawner.SpawnSingle(thingToSpawn[Random.Range(0,thingToSpawn.Count)], new Vector3(z + transform.position.x, perlinNoise * terrainGenerator.depth + transform.position.y,x + transform.position.z), Quaternion.identity);
+                    //Instantiate(energyBall, new Vector3(z + transform.position.x, perlinNoise * heightMultiplier * terrainGenerator.depth + transform.position.y + 2f,x + transform.position.z), Quaternion.identity);
                 }
-            */
+            
             
             return perlinNoise * heightMultiplier;
         }
