@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 8658807687914100501}
   - component: {fileID: 7033405483580813494}
   - component: {fileID: 8683967821822403715}
+  - component: {fileID: -132777568811948879}
+  - component: {fileID: 333901897230480387}
   m_Layer: 0
   m_Name: Wall Segment
   m_TagString: Untagged
@@ -97,3 +99,37 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-132777568811948879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8452699171181523828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f2174cbae7266248b45cfb404f3d377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 0}
+--- !u!114 &333901897230480387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8452699171181523828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac5e6230bb3415145a9b23ae4df86714, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentHealth:
+    m_InternalValue: 0
+  IsDead:
+    m_InternalValue: 0
+  maxHealth: 100
+  fullenergy: 1
+  noenergy: 0
+  healthon: 1
+  energy: {fileID: 0}

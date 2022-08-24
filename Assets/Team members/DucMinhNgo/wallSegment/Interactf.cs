@@ -36,6 +36,11 @@ namespace Minh
         public void Healing()
         {
             Debug.Log("repairing");
+            if (DOTween.IsTweening(GetComponent<Renderer>().material))
+            {
+                DOTween.Kill(GetComponent<Renderer>().material, true);
+            }
+
             GetComponent<Renderer>().material.color = Color.green;
             GetComponent<Renderer>().material.DOColor(Color.gray, 3f);
             healing?.Invoke();
@@ -43,12 +48,15 @@ namespace Minh
         public void Interact()
         {
             Debug.Log("destroying");
-            GetComponent<Renderer>().material.color = Color.red;
-            if (GetComponent<Health>().CurrentHealth.Value >= 10)
+            if (DOTween.IsTweening(GetComponent<Renderer>().material))
             {
-                GetComponent<Renderer>().material.DOColor(Color.gray, 3f);
+                DOTween.Kill(GetComponent<Renderer>().material, true);
             }
-            dealdamage?.Invoke();
+
+            GetComponent<Renderer>().material.color = Color.red;
+            GetComponent<Renderer>().material.DOColor(Color.gray, 3f);
+
+
         }
     }
 }
