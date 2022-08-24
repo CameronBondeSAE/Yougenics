@@ -101,6 +101,51 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 255
+--- !u!1 &6117856916030029927
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1335156242674683886}
+  - component: {fileID: 9170037817297947286}
+  m_Layer: 0
+  m_Name: Feet collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1335156242674683886
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6117856916030029927}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.734, z: -0.01}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8611620220612625326}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &9170037817297947286
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6117856916030029927}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.21
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7118393954210754148
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,7 +401,7 @@ Transform:
   - {fileID: 3097137179570557742}
   - {fileID: 2685090702521460541}
   m_Father: {fileID: 8611620220612625326}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8217795082969892715
 MonoBehaviour:
@@ -608,6 +653,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1335156242674683886}
   - {fileID: 8611620219724298072}
   - {fileID: 8638494978573017855}
   m_Father: {fileID: 0}
@@ -641,12 +687,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50357d34566a21647a9d61ec8d228b8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 7.5
-  sprintSpeed: 13
+  movementSpeed: 30
+  sprintSpeed: 50
   lookSensitivity: 5
   jumpHeight: 6
   interactDistance: 3
   interactRayOffset: {x: 0, y: 0.5, z: 0}
+  onGround: 0
   onGroundDrag: 10
   inAirDrag: 0.1
   rb: {fileID: 8611620220612625321}
@@ -657,6 +704,7 @@ MonoBehaviour:
   myClientInfo: {fileID: 0}
   playerHead: {fileID: 8638494978573017855}
   inVehicle: 0
+  feet: {fileID: 1335156242674683886}
 --- !u!136 &8611620220612625324
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -667,10 +715,10 @@ CapsuleCollider:
   m_Material: {fileID: 13400000, guid: f81d4f0414c86284aa5e84693826e1c9, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.34
+  m_Height: 1.64
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.04, z: 0}
 --- !u!114 &8611620220612625322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -732,6 +780,8 @@ MonoBehaviour:
   maxHealth: 100
   fullenergy: 1
   noenergy: 0
+  healthon: 1
+  energy: {fileID: 0}
 --- !u!114 &246153594134181686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -899,7 +949,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8611620220612625326}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8638494978573017854
 MonoBehaviour:
