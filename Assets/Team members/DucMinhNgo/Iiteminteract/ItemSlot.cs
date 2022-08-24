@@ -50,6 +50,7 @@ namespace Minh
                     MonoBehaviour monoBehaviour = slot1 as MonoBehaviour;
                     slot1 = null;
                     monoBehaviour.transform.parent = null;
+                    monoBehaviour.GetComponent<Collider>().enabled = true;
                     Debug.Log("dropped");
                 }
                 else if (hit.collider != null)
@@ -62,7 +63,12 @@ namespace Minh
                         monoBehaviour.transform.parent = Player.transform;
                         monoBehaviour.transform.position = Player.transform.position + new Vector3(0f, adjust2 * adjust3 * Time.deltaTime, 1 * adjust1 * Time.deltaTime);
                         //Rigidbody rb = item1 as Rigidbody;
-                        monoBehaviour.GetComponent<Rigidbody>().isKinematic = true;
+                        if (monoBehaviour.GetComponent<Rigidbody>())
+                        {
+                            monoBehaviour.GetComponent<Rigidbody>().isKinematic = true;
+                            monoBehaviour.GetComponent<Collider>().enabled = false;
+                        }
+                        
                         Debug.Log("picked up");
                     }
                 }
