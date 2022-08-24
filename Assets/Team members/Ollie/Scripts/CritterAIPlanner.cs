@@ -36,7 +36,7 @@ namespace Ollie
 
         [HideInInspector] public float chompAmount;
 
-        private bool sleeping;
+        [HideInInspector] public bool sleeping;
         private bool dead;
 
         #region Bools for planner World State

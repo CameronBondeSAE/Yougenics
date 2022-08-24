@@ -23,7 +23,10 @@ namespace Ollie
 
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
-            brain.StateViewerChange(3);
+            if (brain.sleeping == false)
+            {
+                brain.StateViewerChange(3);
+            }
             base.Execute(aDeltaTime, aTimeScale);
             if (brain.mateLocationList.Count == 0)
             {

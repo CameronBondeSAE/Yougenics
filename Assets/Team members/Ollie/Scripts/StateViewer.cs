@@ -41,14 +41,13 @@ namespace Ollie
         public void ChangeParticles(int index)
         {
             //if isServer or isClient
+            
             particleSystem.material = particleMaterials[index];
-            if (index == 6 && !deathSound.isPlaying) deathSound.Play();
-            if (index == 5 && !walkingSound.isPlaying) walkingSound.Play();
-            if (index == 3 && !matingSound.isPlaying) matingSound.Play();
-            if (index == 4 && !sleepingSound.isPlaying) sleepingSound.Play();
-            if (index == 2 && !eatingSound.isPlaying) eatingSound.Play();
-
-            //need an extra state for actually eating, and line that up with eat sound
+            // if (index == 6 && !deathSound.isPlaying) deathSound.Play();
+            // if (index == 5 && !walkingSound.isPlaying) walkingSound.Play();
+            // if (index == 3 && !matingSound.isPlaying) matingSound.Play();
+            // if (index == 4 && !sleepingSound.isPlaying) sleepingSound.Play();
+            // if (index == 7 && !eatingSound.isPlaying) eatingSound.Play();
         }
     }
 }

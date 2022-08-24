@@ -59,6 +59,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: da61a755d2ca20a4eb8f8532aa71931b, type: 2}
   - {fileID: 2100000, guid: ab4f0fb64a937034f9d332889d9d7705, type: 2}
   - {fileID: 2100000, guid: 79f855a97a09eb540a867040a1c59aec, type: 2}
+  - {fileID: 2100000, guid: fa9f6f050bcadae4f9e11e121b0654ea, type: 2}
 --- !u!198 &796071943
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -5737,6 +5738,8 @@ MonoBehaviour:
   maxHealth: 100
   fullenergy: 1
   noenergy: 0
+  healthon: 0
+  energy: {fileID: 0}
 --- !u!114 &6004436045818850722
 MonoBehaviour:
   m_ObjectHideFlags: 0
