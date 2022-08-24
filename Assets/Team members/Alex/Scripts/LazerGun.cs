@@ -47,7 +47,7 @@ public class LazerGun : MonoBehaviour, IItem, IInteractable
                 //Debug.DrawRay(transform.position, hitTarget.point, Color.red);
                 health = hitTarget.collider.gameObject.GetComponentInParent<Health>();
                 if (health != null)
-                health.ChangeHealth(lazerDamage);
+                health.ChangeHealth(-lazerDamage);
 
                 Debug.Log("HIT: " + hitTarget.collider.gameObject.name);
                 
