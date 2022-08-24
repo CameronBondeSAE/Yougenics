@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1954794162569713098}
   - component: {fileID: 1954794162569713101}
   m_Layer: 0
-  m_Name: RepairTool
+  m_Name: RepairGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,11 +113,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemInfo:
-    name: 
-    description: 
-    energyRequired: 0
+    name: Repair Gun
+    description: Repair broken walls and heal your allies
+    energyRequired: 10
     height: 0
-    buildTime: 0
+    buildTime: 2
   energy: {fileID: 0}
   energyPerShot: 10
   canShoot: 0

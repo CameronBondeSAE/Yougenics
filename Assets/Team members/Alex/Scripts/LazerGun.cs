@@ -12,6 +12,7 @@ public class LazerGun : MonoBehaviour, IItem, IInteractable
     public float energyPerShot = 20f;
     public bool canShoot;
     public float lazerDamage = 20f;
+    public float range = 50f;
 
     void Start()
     {
@@ -41,7 +42,7 @@ public class LazerGun : MonoBehaviour, IItem, IInteractable
             RaycastHit hitTarget;
             hitTarget = new RaycastHit();
 
-            if (Physics.Raycast(transform.position, transform.forward, out hitTarget, 50))
+            if (Physics.Raycast(transform.position, transform.forward, out hitTarget, range))
             {
                 //Debug.DrawRay(transform.position, hitTarget.point, Color.red);
                 health = hitTarget.collider.gameObject.GetComponentInParent<Health>();

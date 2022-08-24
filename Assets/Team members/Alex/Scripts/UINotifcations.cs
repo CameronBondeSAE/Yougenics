@@ -14,7 +14,7 @@ public class UINotifcations : MonoBehaviour
     {
         instance = this;
         notificationText = GetComponent<TMP_Text>();
-        StartCoroutine(sendNotification("Collect energy before the world collapses", 10));
+        StartCoroutine(sendNotification("Collect energy before the world drowns", 10));
     }
 
     // Update is called once per frame

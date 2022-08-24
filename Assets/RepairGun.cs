@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Minh;
 using UnityEngine;
 
-public class RepairTool : MonoBehaviour, IItem, IInteractable
+public class RepairGun : MonoBehaviour, IItem, IInteractable
 {
     Health health;
     public ItemInfo    itemInfo;
@@ -12,6 +12,7 @@ public class RepairTool : MonoBehaviour, IItem, IInteractable
     public float energyPerShot = 10f;
     public bool canShoot;
     public float repairAmount = 10f;
+    public float range = 10f;
 
     void Start()
     {
@@ -41,7 +42,7 @@ public class RepairTool : MonoBehaviour, IItem, IInteractable
             RaycastHit hitTarget;
             hitTarget = new RaycastHit();
 
-            if (Physics.Raycast(transform.position, transform.forward, out hitTarget, 50))
+            if (Physics.Raycast(transform.position, transform.forward, out hitTarget, range))
             {
                 //Debug.DrawRay(transform.position, hitTarget.point, Color.red);
                 health = hitTarget.collider.gameObject.GetComponentInParent<Health>();
