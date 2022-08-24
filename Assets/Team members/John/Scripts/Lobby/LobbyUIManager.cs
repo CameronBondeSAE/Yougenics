@@ -406,7 +406,8 @@ namespace John
 		{
 			NetworkManager.Singleton.SceneManager.OnLoadComplete -= OnLevelLoaded;
 
-			SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
+			//BUG: Breaks ambient lighting on server
+			//SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
 
 			//Spawn Players
 			HandlePlayerSpawning();

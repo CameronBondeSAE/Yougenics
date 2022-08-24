@@ -145,15 +145,24 @@ namespace Luke
 
 			StartCoroutine(SleepLevelDecay());
 		}
-		
+
 		private IEnumerator ComingOfAge(float delay)
 		{
 			yield return new WaitForSeconds(delay);
 
-			_transform.Translate(Vector3.up*0.5f);
-			view.DOPunchScale(view.localScale * 1.5f, 0.5f);
+			//Do view stuff
+			//comingOfAgeEvent?.Invoke();
+			ComingOfAgeViewHackClientRpc();
+
 			cannotMate = false;
 			readyToMate = true;
+		}
+
+		[ClientRpc]
+		public void ComingOfAgeViewHackClientRpc()
+		{
+			transform.Translate(Vector3.up * 0.5f);
+			transform.DOPunchScale(transform.localScale * 1.5f, 0.5f);
 		}
 
 		private IEnumerator EndOfMatingAge(float delay)
@@ -386,10 +395,19 @@ namespace Luke
 		private void SetScale()
 		{
 			//include eating in equation
-            float scale = Mathf.Min(0.5f+(maxSize-0.5f) * age / maxAge,maxSize);
-			_transform.localScale = Vector3.one*scale;
+			/*float scale = Mathf.Min(0.5f+(maxSize-0.5f) * age / maxAge,maxSize);
+			view.localScale = Vector3.one*scale;*/
+
+			SetScaleViewHackClientRpc();
 		}
-		
+
+		[ClientRpc]
+		public void SetScaleViewHackClientRpc()
+		{
+			float scale = Mathf.Min(0.5f + (maxSize - 0.5f) * age / maxAge, maxSize);
+			transform.localScale = Vector3.one * scale;
+		}
+
 		public void CollectConditions(AntAIAgent aAgent, AntAICondition aWorldState)
 		{
 			aWorldState.Set(LukeCritterScenario.foodNearby, !IsFoodListEmpty());

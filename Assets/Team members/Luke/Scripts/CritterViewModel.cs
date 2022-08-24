@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using DG.Tweening;
 
 public class CritterViewModel : NetworkBehaviour
 {
@@ -28,7 +29,27 @@ public class CritterViewModel : NetworkBehaviour
 			critter.ChangeEmotionEvent += ChangeEmotionClientRpc;
 			critter.TakeDamageEvent += TakeDamageClientRPC;
 		}
+
+        //critter.comingOfAgeEvent += Critter_comingOfAgeEvent;
 	}
+
+    /*private void Critter_comingOfAgeEvent()
+    {
+        critter.transform.Translate(Vector3.up * 0.5f);
+        transform.DOPunchScale(transform.localScale * 1.5f, 0.5f);
+    }
+
+    private void FixedUpdate()
+    {
+		SetScale();
+    }
+
+	private void SetScale()
+	{
+		//include eating in equation
+		float scale = Mathf.Min(0.5f + (critter.maxSize - 0.5f) * critter.age / critter.maxAge, critter.maxSize);
+		transform.localScale = Vector3.one * scale;
+	}*/
 
 	[ClientRpc]
 	public void ChangeEmotionClientRpc(Critter.Emotions type)

@@ -128,9 +128,8 @@ public class Energy : NetworkBehaviour
 
 	public void MovementEnergyDrain()
 	{
-		//if(IsServer)
-
-		EnergyAmount.Value -= Time.deltaTime;
+		if(IsServer)
+			EnergyAmount.Value -= Time.deltaTime;
 	}
 
 
