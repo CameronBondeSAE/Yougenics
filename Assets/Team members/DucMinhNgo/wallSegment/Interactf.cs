@@ -24,11 +24,11 @@ namespace Minh
 
         private void Updatewallstatus(float changedamount, GameObject whodidthis)
         {
-            if (changedamount <= 10)
+            if (changedamount > 0f)
             {
                 Healing(); 
             }
-            if (changedamount >= 100)
+            if (changedamount < 0f)
             {
                 Interact();    
             }
@@ -36,7 +36,6 @@ namespace Minh
         public void Healing()
         {
             Debug.Log("repairing");
-            health.startHealthincreasing();
             GetComponent<Renderer>().material.color = Color.green;
             GetComponent<Renderer>().material.DOColor(Color.gray, 3f);
             healing?.Invoke();
@@ -44,9 +43,11 @@ namespace Minh
         public void Interact()
         {
             Debug.Log("destroying");
-            health.startHealthdepeting();
             GetComponent<Renderer>().material.color = Color.red;
-            GetComponent<Renderer>().material.DOColor(Color.gray, 3f);
+            if (GetComponent<Health>().CurrentHealth.Value >= 10)
+            {
+                GetComponent<Renderer>().material.DOColor(Color.gray, 3f);
+            }
             dealdamage?.Invoke();
         }
     }

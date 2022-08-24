@@ -31,6 +31,21 @@ public class HealthInspector : Editor
             Health health = target as Health;
             health.startHealthincreasing();
         }
+        if (GUILayout.Button("increase"))
+        {
+            Health health = target as Health;
+            health.ChangeHealth(10f);
+        }
+        if (GUILayout.Button("decrease"))
+        {
+            Health health = target as Health;
+            health.ChangeHealth(-10f);
+        }
+        if (GUILayout.Button("kill"))
+        {
+            Health health = target as Health;
+            health.ChangeHealth(-1000000000f);
+        }
     }
     // Start is called before the first frame update
    
