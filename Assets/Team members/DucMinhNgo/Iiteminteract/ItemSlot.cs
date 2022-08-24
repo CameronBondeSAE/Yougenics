@@ -61,8 +61,8 @@ namespace Minh
                         MonoBehaviour monoBehaviour = item1 as MonoBehaviour;
                         monoBehaviour.transform.parent = Player.transform;
                         monoBehaviour.transform.position = Player.transform.position + new Vector3(0f, adjust2 * adjust3 * Time.deltaTime, 1 * adjust1 * Time.deltaTime);
-                        Rigidbody rb = item1 as Rigidbody;
-                        rb.isKinematic = true;
+                        //Rigidbody rb = item1 as Rigidbody;
+                        monoBehaviour.GetComponent<Rigidbody>().isKinematic = true;
                         Debug.Log("picked up");
                     }
                 }
