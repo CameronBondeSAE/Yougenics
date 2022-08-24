@@ -88,7 +88,7 @@ MonoBehaviour:
     isDefault: 0
     state: {fileID: 739517042319561443, guid: f86ef9c6b8440914dad3bbccea3ce88c, type: 3}
     cost: 0
-    position: {x: 838, y: 520}
+    position: {x: 841, y: 506}
     pre:
     - id: 3
       value: 1
@@ -148,7 +148,7 @@ MonoBehaviour:
       value: 1
     post:
     - id: 6
-      value: 1
+      value: 0
   - name: CanHunt
     isDefault: 0
     state: {fileID: 8491417322159591460, guid: c6e1b502aee308748a6a06735b3a965b, type: 3}
@@ -200,9 +200,9 @@ MonoBehaviour:
     - id: 8
       value: 0
     - id: 9
-      value: 1
+      value: 0
     - id: 10
-      value: 1
+      value: 0
     - id: 11
       value: 0
     - id: 12

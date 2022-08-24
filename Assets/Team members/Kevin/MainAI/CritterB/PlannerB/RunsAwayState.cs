@@ -34,9 +34,11 @@ namespace Kevin
             //GenerateNextWalkPoint();
             if (!critterB.isSleeping && critterB.isInDanger)
             {
-                if (critterB.predatorList.Count > 0)
+                if (critterB.predatorList.Count > 0 && critterB.canRun)
                 {
-                    TurnTo((-GetClosestPredator(critterB.predatorList,this.transform).transform.position));
+                    //TurnTo((-GetClosestPredator(critterB.predatorList,this.transform).transform.position));
+                    critterB.turnTowards.Turn(-GetClosestPredator(critterB.foodList, this.transform).transform.position);
+                    critterB.rb.AddRelativeForce(Vector3.forward * critterB.acceleration);
                     /*critterB.transform.position = Vector3.MoveTowards(this.transform.position, 
                         (-GetClosestPredator(critterB.predatorList,this.transform).transform.position),-1 * 0.05f);*/
                 }

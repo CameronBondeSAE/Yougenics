@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cam;
+using Kevin;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using Minh;
@@ -19,9 +20,10 @@ public class CritterB : CreatureBase, IEdible
         //Separate Components
         [SerializeField] private CommonAttributes commonAttributes;
         public Energy energy;
-        public Health health;
+        public Minh.Health health;
         
         //List of Entities
+        public List<Transform> entityList;
         public List<Transform> predatorList;
         public List<Transform> mateList;
         public List<Transform> foodList;
@@ -42,22 +44,38 @@ public class CritterB : CreatureBase, IEdible
         public bool isHungry;
         public bool caughtFood;
         public bool foundMate;
+        public bool canRun;
         
         //view variables 
         public float alpha;
+        public float deathColour = 1f;
         public float invisCooldown = 10f;
         public bool canInvis = true;
         public Renderer renderer;
         public GameObject noseObject;
         public Renderer noseRenderer;
+        public GameObject deathOrb;
+        public TurnTowards turnTowards;
+        public GameObject feetObject;
+        public GameObject feet2Object;
+        public Renderer feetRenderer;
+        public Renderer feet2Renderer;
         public override void Awake()
         {
+            //Critter Stats
             commonAttributes = GetComponent<CommonAttributes>();
             energy = GetComponent<Energy>();
             health = GetComponent<Health>();
             rb = GetComponent<Rigidbody>();
+            
+            //Renderers
             renderer = GetComponent<Renderer>();
             noseRenderer = noseObject.GetComponent<Renderer>();
+            feetRenderer = feetObject.GetComponent<Renderer>();
+            feet2Renderer = feet2Object.GetComponent<Renderer>();
+            
+            turnTowards = GetComponent<TurnTowards>();
+            
         }
         
         public void OnEnable()
@@ -89,9 +107,12 @@ public class CritterB : CreatureBase, IEdible
             CommonAttributes otherCommonAttributes = other.GetComponent<CommonAttributes>();
             
             RaycastHit hitInfo;
+            
+            
             //Physics.Raycast(transform.position,other.transform.position, out hitInfo, other.transform.position.magnitude - transform.position.magnitude,255,QueryTriggerInteraction.Ignore)
             if (otherCreatureBase != null || otherEdible != null)
             {
+                entityList.Add(other.transform);
                 Debug.DrawRay(transform.position,Vector3.forward,Color.red);
                 //Predator List
                 if (otherCreatureBase != null && sex == otherCreatureBase.sex && myDangerLevel < otherCommonAttributes.dangerLevel)
@@ -107,9 +128,18 @@ public class CritterB : CreatureBase, IEdible
                 
             
                 //Food List
-                if (otherEdible != null && myDangerLevel > otherCommonAttributes.dangerLevel) 
+                if (otherEdible != null)
                 {
-                    foodList.Add(other.transform);
+                    //normal food that doesnt have common attributes component
+                    if (otherCommonAttributes == null)
+                    {
+                        foodList.Add(other.transform);
+                    }
+                    //other critters with danger level
+                    else if (myDangerLevel > otherCommonAttributes.dangerLevel)
+                    {
+                        foodList.Add(other.transform);
+                    }
                 }
             }
         }
@@ -121,6 +151,10 @@ public class CritterB : CreatureBase, IEdible
         
         public void ListRemover(Transform _transform)
         {
+            if (entityList.Contains(_transform))
+            {
+                entityList.Remove(_transform);
+            }
             if (predatorList.Contains(_transform))
             {
                 predatorList.Remove(_transform);
@@ -135,13 +169,22 @@ public class CritterB : CreatureBase, IEdible
             }
         }
 
-        #region Special Functions
+        #region View Functions
 
         public void Chameleon(float alpha)
         {
             renderer.material.SetFloat("_Alpha", alpha);
             noseRenderer.material.SetFloat("_Alpha", alpha);
+            feetRenderer.material.SetFloat("_Alpha", alpha);
+            feet2Renderer.material.SetFloat("_Alpha", alpha);
             StartCoroutine(Visible());
+        }
+
+        public void Dead()
+        {
+            renderer.material.SetFloat("_Color", deathColour);
+            noseRenderer.material.SetFloat("_Color", deathColour);
+            deathOrb.SetActive(true);
         }
 
         public void CooldownFunction()
@@ -158,6 +201,7 @@ public class CritterB : CreatureBase, IEdible
             yield return new WaitForSeconds(10f);
             energy.EnergyAmount.Value = 100f;
             isSleeping = false;
+            GetComponent<Wander>().enabled = true;
         }
 
         public IEnumerator Visible()
@@ -300,7 +344,20 @@ public class CritterB : CreatureBase, IEdible
 
             return isSleeping;
         }
-        
+
+        public bool IsDead()
+        {
+            if (health.CurrentHealth.Value < 1)
+            {
+                isDead = true;
+            }
+            else
+            {
+                isDead = false;
+            }
+
+            return isDead;
+        }
 
         #endregion
     }

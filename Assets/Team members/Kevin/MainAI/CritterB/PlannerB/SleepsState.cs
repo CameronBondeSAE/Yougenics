@@ -9,8 +9,10 @@ namespace Kevin
         public override void Enter()
         {
             base.Enter();
+            critterB.GetComponent<Wander>().enabled = false;
             StartCoroutine(critterB.SleepTimer());
         }
+        
 
         
     }

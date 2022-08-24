@@ -301,9 +301,18 @@ public class CritterA : CreatureBase, IEdible, ISense
                 //maybe check for aggression level or just fight it out
             
                 //Food List
-                if (otherEdible != null && myDangerLevel > otherCommonAttributes.dangerLevel) 
+                if (otherEdible != null)
                 {
-                    foodList.Add(other.transform);
+                    //normal food that doesnt have common attributes component
+                    if (otherCommonAttributes == null)
+                    {
+                        foodList.Add(other.transform);
+                    }
+                    //other critters with danger level
+                    else if (myDangerLevel > otherCommonAttributes.dangerLevel)
+                    {
+                        foodList.Add(other.transform);
+                    }
                 }
             }
         }

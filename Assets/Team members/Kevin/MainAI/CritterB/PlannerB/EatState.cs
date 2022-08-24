@@ -15,6 +15,18 @@ namespace Kevin
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
             base.Execute(aDeltaTime, aTimeScale);
+            /*if (critterB.isSleeping) return;
+            if (currentFood == null) return;
+            GameObject go = Instantiate(beam, _transform);
+            go.GetComponent<Beam>().target = currentFood.transform;
+            Minh.Health targetHealth = currentFood.GetComponent<Minh.Health>();
+            targetHealth.ChangeHealth(-critterInfo.dangerLevel);
+            IEdible targetIEdible = currentFood.GetComponent<IEdible>();
+            energyComp.ChangeEnergy(targetIEdible.EatMe(-critterInfo.dangerLevel));
+            energyComp.ChangeEnergy(critterInfo.dangerLevel);
+            justAte = true;
+            StopCoroutine(EnergyDecayCooldown());
+            StartCoroutine(EnergyDecayCooldown());*/
             Debug.Log("Eating!");
         }
 

@@ -32,7 +32,7 @@ namespace Kevin
 
         void Patrol()
         {
-            rb.AddRelativeTorque(0, perlinValue, 0,ForceMode.Impulse);
+            rb.AddRelativeTorque(0, perlinValue * 5f, 0,ForceMode.Impulse);
         }
         
     }

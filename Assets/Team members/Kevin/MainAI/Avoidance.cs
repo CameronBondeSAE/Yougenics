@@ -75,7 +75,7 @@ namespace Kevin
                     {
                         //Debug.DrawRay(transform.position, dir * rayDistance, Color.green);
                         rb.AddRelativeForce(Vector3.back / 6f);
-                        rb.AddRelativeTorque(0, -turnForce * 1.25f, 0, ForceMode.Impulse);
+                        rb.AddRelativeTorque(0, turnForce * 1.25f, 0, ForceMode.Impulse);
                     }
                 }
 
@@ -97,7 +97,7 @@ namespace Kevin
                     {
                         //Debug.DrawRay(transform.position, dir * rayDistance, Color.blue);
                         rb.AddRelativeForce(Vector3.back / 4f);
-                        rb.AddRelativeTorque(0, -turnForce * 2f, 0, ForceMode.Impulse);
+                        rb.AddRelativeTorque(0, turnForce * 2f, 0, ForceMode.Impulse);
                     }
                 }
 
@@ -119,7 +119,7 @@ namespace Kevin
                     {
                         //Debug.DrawRay(transform.position, dir * rayDistance, Color.red);
                         rb.AddRelativeForce(Vector3.back / 2f);
-                        rb.AddRelativeTorque(0, -turnForce, 0, ForceMode.Impulse);
+                        rb.AddRelativeTorque(0, turnForce, 0, ForceMode.Impulse);
                     }
                 }
 
@@ -140,14 +140,21 @@ namespace Kevin
                                 QueryTriggerInteraction.Ignore))
                     {
                         rb.AddRelativeForce(Vector3.back / 2f);
-                        rb.AddRelativeTorque(0, turnForce*5f, 0, ForceMode.Impulse);
+                        rb.AddRelativeTorque(0, turnForce, 0, ForceMode.Impulse);
                     }
                     Debug.DrawRay(transform.position, dir * rayDistance, Color.yellow);
                 }
 
                 if (Physics.Raycast(new Ray(transform.position, Vector3.forward)) && rayDistance < 2f)
                 {
-                    rb.AddRelativeTorque(0, turnForce * 10f, 0, ForceMode.Impulse);
+                    rb.AddRelativeTorque(0, turnForce, 0, ForceMode.Impulse);
+                }
+
+                if (Physics.Raycast(new Ray(transform.position, Vector3.forward), out hitInfo, rayDistance, 255,
+                        QueryTriggerInteraction.Collide) && hitInfo.transform.gameObject.GetComponent<CritterB>())
+                {
+                    rb.AddRelativeForce(Vector3.back);
+                    
                 }
             }
         }

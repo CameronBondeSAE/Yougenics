@@ -11,30 +11,56 @@ namespace Kevin
 {
     public class HuntState : CritterBAIState
     {
+        //public TurnTowards turnTowards;
+        //public Vector3 targetPrey;
         public override void Enter()
         {
             base.Enter();
+            //targetPrey = GetClosestPrey(critterB.foodList, this.transform).transform.position;
         }
 
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
             base.Execute(aDeltaTime, aTimeScale);
             if (!critterB.isHunting && critterB.caughtFood) return;
+            RaycastHit hitInfo;
             
             if (critterB.foodList.Count != 0)
             {
-                TurnTo(GetClosestPrey(critterB.foodList,this.transform).transform.position);
+                critterB.turnTowards.Turn(GetClosestPrey(critterB.foodList, this.transform).transform.position);
+                //TurnTo(GetClosestPrey(critterB.foodList, this.transform).transform.position);
                 critterB.transform.position = Vector3.MoveTowards(this.transform.position, 
-                    GetClosestPrey(critterB.foodList,this.transform).transform.position,0.075f);
+                    GetClosestPrey(critterB.foodList, this.transform).transform.position,0.075f);
+                
+                if(Physics.Raycast(transform.position,GetClosestPrey(critterB.foodList, this.transform).transform.position, out hitInfo, 2.5f,255,QueryTriggerInteraction.Ignore))
+                {
+                    Debug.Log("in the mouth!");
+                    Debug.DrawRay(transform.position,GetClosestPrey(critterB.foodList, this.transform).transform.position,Color.cyan);
+                    if (hitInfo.collider.GetComponent<IEdible>() != null)
+                    {
+                        critterB.foundFood = false;
+                        critterB.caughtFood = true;
+                        critterB.isEating = true;
+                        Debug.Log("in the mouth!");
+                    }
+                }
             }
 
-            RaycastHit hitInfo;
+            /*RaycastHit hitInfo;
             
-            if(transform.position == (GetClosestPrey(critterB.foodList,transform).transform.position) || Physics.Raycast(transform.position,Vector3.forward, out hitInfo, 2.5f,255,QueryTriggerInteraction.Ignore))
+            
+            if(Physics.Raycast(transform.position,GetClosestPrey(critterB.foodList, this.transform).transform.position, out hitInfo, 2.5f,255,QueryTriggerInteraction.Ignore))
             {
                 Debug.Log("in the mouth!");
-                Exit();
-            }
+                Debug.DrawRay(transform.position,GetClosestPrey(critterB.foodList, this.transform).transform.position,Color.cyan);
+                if (hitInfo.collider.GetComponent<IEdible>() != null)
+                {
+                    critterB.foundFood = false;
+                    critterB.caughtFood = true;
+                    critterB.isEating = true;
+                    Debug.Log("in the mouth!");
+                }
+            }*/
         }
         private void TurnTo(Vector3 target)
         {
@@ -58,13 +84,6 @@ namespace Kevin
                 }
             }
             return closestTarget;
-        }
-
-        public override void Exit()
-        {
-            base.Exit();
-            critterB.foundFood = false;
-            critterB.isEating = true;
         }
     }
 }

@@ -41,7 +41,8 @@ namespace Kevin
             aWorldState.Set(CritterBAI.isEating, critterB.IsEating());
             aWorldState.Set(CritterBAI.caughtFood, critterB.CaughtFood());
             aWorldState.Set(CritterBAI.isHunting, critterB.IsHunting());
-            
+            aWorldState.Set(CritterBAI.isDead, critterB.IsDead());
+
 
         }
     }
