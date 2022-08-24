@@ -33,7 +33,7 @@ namespace Alex
             // Set the callback to a temp randomiser function
             terrainGenerator.calculateHeightCallback = YourHeightCalculatorFunction;
             terrainGenerator.GenerateTerrain();
-            DayNightManager.instance.PhaseChangeEvent += ChangeTerrain;
+            //DayNightManager.instance.PhaseChangeEvent += ChangeTerrain;
         }
 
     

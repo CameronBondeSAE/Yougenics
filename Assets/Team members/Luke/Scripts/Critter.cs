@@ -207,7 +207,7 @@ namespace Luke
 			bestNearbyBiome = (BestNeighbourBiome) Random.Range(0, (int)BestNeighbourBiome.LENGTH);
 			randomAdjustment = new Vector3(Random.Range(-30f, 30f), 0, Random.Range(-30f, 30f));
 			
-			yield return new WaitForSeconds(3f);
+			yield return new WaitForSeconds(2f);
 			StartCoroutine(IterateBestBiome());
 		}
 
@@ -387,7 +387,7 @@ namespace Luke
 		{
 			//include eating in equation
             float scale = Mathf.Min(0.5f+(maxSize-0.5f) * age / maxAge,maxSize);
-			view.localScale = Vector3.one*scale;
+			_transform.localScale = Vector3.one*scale;
 		}
 		
 		public void CollectConditions(AntAIAgent aAgent, AntAICondition aWorldState)

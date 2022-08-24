@@ -762,11 +762,11 @@ PrefabInstance:
       objectReference: {fileID: 1023956929}
     - target: {fileID: 2470996679314236398, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
       propertyPath: critterSpawning
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2470996679314236398, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
       propertyPath: useClientSidePrediction
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2470996679314236399, guid: a318fc3ad67db464798abc489ab84c87, type: 3}
       propertyPath: m_RootOrder
