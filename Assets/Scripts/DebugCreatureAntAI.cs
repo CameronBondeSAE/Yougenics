@@ -2,6 +2,7 @@ using Anthill.AI;
 using System;
 using TMPro;
 using UnityEngine;
+using Unity.Netcode;
 
 namespace Cam.Interfaces_and_Inheritance_base_classes
 {
@@ -42,6 +43,7 @@ namespace Cam.Interfaces_and_Inheritance_base_classes
 			textMeshPro.enabled = false;
 		}
 
+		Camera playerCam;
 		void Update()
 		{
 			if (active)
@@ -54,8 +56,10 @@ namespace Cam.Interfaces_and_Inheritance_base_classes
 					{
 						textMeshPro.text += action + "\n";
 					}
-				
-				textMeshPro.transform.LookAt(Camera.main.transform);
+
+				playerCam = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<John.PlayerController>().playerModel.GetComponentInChildren<Camera>();
+				if (playerCam != null)
+					textMeshPro.transform.LookAt(playerCam.transform);
 			}
 			else
 			{

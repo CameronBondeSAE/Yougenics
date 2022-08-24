@@ -407,7 +407,7 @@ namespace John
 			NetworkManager.Singleton.SceneManager.OnLoadComplete -= OnLevelLoaded;
 
 			//BUG: Breaks ambient lighting on server
-			//SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
+			SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
 
 			//Spawn Players
 			HandlePlayerSpawning();
@@ -415,11 +415,14 @@ namespace John
 			//Activate controller on all clients
 			InitControllerClientRpc();
 
-			//SpawnCritters();
-			Invoke("SpawnCritters", 5f);
+			SpawnCritters();
+			//Invoke("SpawnCritters", 5f);
 
 			//Entering Game - Turn Off Lobby Camera & Turn On Game UI
 			UpdateLobbyCameraAndUI(false, true);
+
+			//Hack to get ambient light back
+			SceneManager.SetActiveScene(SceneManager.GetSceneByName("ManagerScene"));
 		}
 
 		private void SceneManagerOnOnSceneEvent(SceneEvent sceneEvent)
@@ -438,7 +441,6 @@ namespace John
 		public void ReturnToLobby()
 		{
 			//Load lobby
-
 			NetworkManager.Singleton.SceneManager.UnloadScene(SceneManager.GetSceneByName(sceneToLoad));
 			critterSpawner.spawned.Clear();
 
