@@ -91,7 +91,7 @@ public class Spawner : NetworkBehaviour
 	public GameObject SpawnSingle(GameObject prefab, Vector3 pos, Quaternion rotation)
 	{
 		// Ask the user of this component whether I should spawn at the location I have choosen
-		if (shouldISpawnDelegate(pos.x, pos.z) == false)
+		if (shouldISpawnDelegate != null && shouldISpawnDelegate(pos.x, pos.z) == false)
 			return null;
 
 		Vector3 randomSpot;
