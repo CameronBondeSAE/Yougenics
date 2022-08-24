@@ -26,6 +26,7 @@ namespace Kevin
             alpha = 0f;
             critterB.Chameleon(alpha);
             critterB.acceleration = 850f;
+            critterB.myAudioClip = critterB.animalScreech;
         }
 
         public override void Execute(float aDeltaTime, float aTimeScale)
@@ -36,8 +37,8 @@ namespace Kevin
             {
                 if (critterB.predatorList.Count > 0 && critterB.canRun)
                 {
-                    //TurnTo((-GetClosestPredator(critterB.predatorList,this.transform).transform.position));
-                    critterB.turnTowards.Turn(-GetClosestPredator(critterB.foodList, this.transform).transform.position);
+                    TurnTo((-GetClosestPredator(critterB.predatorList,this.transform).transform.position));
+                    //critterB.turnTowards.Turn(-GetClosestPredator(critterB.foodList, this.transform).transform.position);
                     critterB.rb.AddRelativeForce(Vector3.forward * critterB.acceleration);
                     /*critterB.transform.position = Vector3.MoveTowards(this.transform.position, 
                         (-GetClosestPredator(critterB.predatorList,this.transform).transform.position),-1 * 0.05f);*/
@@ -73,7 +74,9 @@ namespace Kevin
         public override void Exit()
         {
             base.Exit();
+            critterB.myAudioClip = critterB.snarlClip;
             critterB.acceleration = 750f;
+            critterB.canRun = true;
         }
 
         /*public void GenerateNextWalkPoint()

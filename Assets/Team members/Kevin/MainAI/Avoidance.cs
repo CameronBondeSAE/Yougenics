@@ -66,6 +66,17 @@ namespace Kevin
                     { 
                         Debug.DrawRay(transform.position, dir * rayDistance, Color.red);
                     }
+                    
+                    if (i == 0)
+                    {
+                        if (Physics.Raycast(new Ray(transform.position, dir), out hitInfo, rayDistance/rayDistance, 255,
+                                QueryTriggerInteraction.Ignore))
+                        {
+                            rb.AddRelativeForce(Vector3.back / 2f);
+                            rb.AddRelativeTorque(0, turnForce, 0, ForceMode.Impulse);
+                        }
+                        Debug.DrawRay(transform.position, dir * rayDistance, Color.yellow);
+                    }
                 }
 
                 if (i <= -20)
@@ -134,16 +145,6 @@ namespace Kevin
                     }
                 }
                 
-                if (i == 0)
-                {
-                    if (Physics.Raycast(new Ray(transform.position, dir), out hitInfo, rayDistance/rayDistance, 255,
-                                QueryTriggerInteraction.Ignore))
-                    {
-                        rb.AddRelativeForce(Vector3.back / 2f);
-                        rb.AddRelativeTorque(0, turnForce, 0, ForceMode.Impulse);
-                    }
-                    Debug.DrawRay(transform.position, dir * rayDistance, Color.yellow);
-                }
 
                 if (Physics.Raycast(new Ray(transform.position, Vector3.forward)) && rayDistance < 2f)
                 {

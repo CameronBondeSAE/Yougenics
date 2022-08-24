@@ -60,6 +60,23 @@ public class CritterB : CreatureBase, IEdible
         public GameObject feet2Object;
         public Renderer feetRenderer;
         public Renderer feet2Renderer;
+        
+        //Audio
+        public AudioClip myAudioClip;
+        public AudioClip snarlClip;
+        public AudioClip eatingClip;
+        public AudioClip animalScreech;
+        public AudioSource audioClip;
+
+        public FoodChain myFoodChain;        
+        public enum FoodChain 
+        {
+            Predator,
+            Prey,
+            Neutral
+        }
+        
+        
         public override void Awake()
         {
             //Critter Stats
@@ -75,24 +92,36 @@ public class CritterB : CreatureBase, IEdible
             feet2Renderer = feet2Object.GetComponent<Renderer>();
             
             turnTowards = GetComponent<TurnTowards>();
-            
+
+            myFoodChain = (FoodChain) Random.Range(0, 3);
+            myAudioClip = GetComponent<AudioClip>();
+            audioClip = GetComponent<AudioSource>(); 
         }
         
         public void OnEnable()
         {
-            //Stats
-            maxAge = 0f;
-            gestationTime = 0f;
-            litterSizeMax = 0;
-            metabolism = 0f;
-            mutationRate = 0f;
-            empathy = 0f;
-            aggression = 0f;
+            CritterStats();
+        }
+
+        public void CritterStats()
+        {
+            age = 0f;
+            ageOfMatingStart = 50f;
+            ageOfMatingEnd = 250f;
+            maxAge = Random.Range(150f, 300f);
+            gestationTime = 25f;
+            litterSizeMax = Random.Range(1, 5);
+            metabolism = 15f;
+            mutationRate = Random.Range(1f, 25f);
             sizeScale = 0f;
-            colour = new Color(Random.Range(0f, 10f),Random.Range(0f, 10f),Random.Range(0f, 10f));
+            maxSize = 1f;
             sex = (Sex) Random.Range(0, 1);
             commonAttributes.dangerLevel =  Random.Range(0, 10);
             myDangerLevel = commonAttributes.dangerLevel;
+            
+            //empathy = Random.Range(1f, 25f);
+            //aggression = Random.Range(1f, 25f);
+            //colour = new Color(Random.Range(0f, 10f),Random.Range(0f, 10f),Random.Range(0f, 10f));
         }
 
         public void OnDisable()
@@ -105,42 +134,67 @@ public class CritterB : CreatureBase, IEdible
             CreatureBase otherCreatureBase = other.GetComponent<CreatureBase>();
             IEdible otherEdible = other.GetComponent<IEdible>();
             CommonAttributes otherCommonAttributes = other.GetComponent<CommonAttributes>();
-            
+            CritterB otherCritterB = other.GetComponent<CritterB>();
             RaycastHit hitInfo;
             
             
             //Physics.Raycast(transform.position,other.transform.position, out hitInfo, other.transform.position.magnitude - transform.position.magnitude,255,QueryTriggerInteraction.Ignore)
             if (otherCreatureBase != null || otherEdible != null)
             {
-                entityList.Add(other.transform);
-                Debug.DrawRay(transform.position,Vector3.forward,Color.red);
-                //Predator List
-                if (otherCreatureBase != null && sex == otherCreatureBase.sex && myDangerLevel < otherCommonAttributes.dangerLevel)
-                {
-                    predatorList.Add(other.transform);
-                }
-                
-                //Mate List
-                if (otherCreatureBase != null && otherCreatureBase.sex != sex)
-                {
-                    mateList.Add(other.transform);
-                }
-                
+                //if(Physics.Raycast(transform.position,other.transform.position, out hitInfo, 10f,255,QueryTriggerInteraction.Ignore))
+                //{
+                    //Debug.DrawRay(transform.position,Vector3.forward,Color.red);
+                    
+                    //Predator List
+                    /*if (otherCreatureBase != null && sex == otherCreatureBase.sex && myDangerLevel < otherCommonAttributes.dangerLevel)
+                    {
+                        predatorList.Add(other.transform);
+                    }*/
+
+                    if (otherCreatureBase != null && otherCritterB.myFoodChain == FoodChain.Predator)
+                    {
+                        predatorList.Add(other.transform);
+                    }
+                    else if (otherCritterB.myFoodChain == FoodChain.Predator && sex == Sex.Male && otherCritterB.sex == Sex.Female)
+                    {
+                        entityList.Add(other.transform);
+                        mateList.Add(other.transform);
+                    }
+                    else if (myFoodChain == FoodChain.Predator && myDangerLevel < otherCommonAttributes.dangerLevel) 
+                    {
+                        predatorList.Add(other.transform);
+                    }
+                    
+                    //Mate List
+                    if (otherCreatureBase != null && sex == Sex.Male && otherCritterB.sex == Sex.Female && myFoodChain == otherCritterB.myFoodChain)
+                    {
+                        entityList.Add(other.transform);
+                        mateList.Add(other.transform);
+                    }
+                    
+                    //Neutral List 
+                    if (myFoodChain == FoodChain.Neutral)
+                    {
+                        entityList.Add(other.transform);
+                        mateList.Add(other.transform);
+                    }
+
+                    //Food List
+                    if (otherEdible != null)
+                    {
+                        //normal food that doesnt have common attributes component
+                        if (otherCommonAttributes == null)
+                        {
+                            foodList.Add(other.transform);
+                        }
+                        else if (myFoodChain == FoodChain.Predator && myDangerLevel > otherCommonAttributes.dangerLevel) 
+                        {
+                            foodList.Add(other.transform);
+                        }
+                        
+                    }
+                //}
             
-                //Food List
-                if (otherEdible != null)
-                {
-                    //normal food that doesnt have common attributes component
-                    if (otherCommonAttributes == null)
-                    {
-                        foodList.Add(other.transform);
-                    }
-                    //other critters with danger level
-                    else if (myDangerLevel > otherCommonAttributes.dangerLevel)
-                    {
-                        foodList.Add(other.transform);
-                    }
-                }
             }
         }
 

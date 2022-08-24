@@ -11,18 +11,26 @@ namespace Kevin
         public Vector3 walkPoint;
         public float walkPointRange = 10f;
         
+        //private Rigidbody rb;
+        //public float acceleration;
+        
         public override void Enter()
         {
             base.Enter();
             critterA.fireObjects[0].GetComponent<MeshRenderer>().material =  critterA.fireMaterial[0];
             critterA.fireObjects[1].GetComponent<MeshRenderer>().material =  critterA.fireMaterial[1];
             critterA.fireObjects[2].GetComponent<MeshRenderer>().material =  critterA.fireMaterial[2];
+            //acceleration = critterA.acceleration;
+            //rb = critterA.GetComponent<Rigidbody>();
         }
 
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
             base.Execute(aDeltaTime, aTimeScale);
-            if (!walkPointSet)
+            critterA.rb.AddRelativeForce(Vector3.forward * critterA.acceleration);
+            //rb.AddRelativeForce(Vector3.forward * acceleration);
+            
+            /*if (!walkPointSet)
             {
                 GenerateNextWalkPoint();
             }
@@ -38,7 +46,7 @@ namespace Kevin
                     walkPointSet = false;
                 }
 
-            }
+            }*/
         }
             
             private void TurnTo(Vector3 target)

@@ -310,6 +310,8 @@ GameObject:
   - component: {fileID: 6446122254239337073}
   - component: {fileID: 5004441884263965040}
   - component: {fileID: 1461611691}
+  - component: {fileID: 8927559564977184128}
+  - component: {fileID: 6807556241192894807}
   m_Layer: 0
   m_Name: KevinCritterPrefab
   m_TagString: Untagged
@@ -442,7 +444,7 @@ MonoBehaviour:
   energyTest: 100
   healthTest: 100
   rb: {fileID: 0}
-  acceleration: 1
+  acceleration: 750
   walkPointRange: 100
   maxSpeed: 2
   walkPoint: {x: 0, y: 0, z: 0}
@@ -602,7 +604,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnForce: 1
-  rayDistance: 5
+  rayDistance: 2.5
   dirR: {x: 0, y: 0, z: 0}
   dirL: {x: 0, y: 0, z: 0}
   rays: 1
@@ -613,7 +615,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1388483787997497225}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca2c885f844662e4fb36c283e9f51903, type: 3}
   m_Name: 
@@ -703,7 +705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d471e11a924f1fbb1db944262d7a4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
 --- !u!82 &1461611691
 AudioSource:
   m_ObjectHideFlags: 0
@@ -800,6 +802,34 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8927559564977184128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388483787997497225}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac7c9b0685b75584aa126ba62e04ce2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  transform: {fileID: 0}
+  dir: {x: 0, y: 0, z: 0}
+  speed: 5
+--- !u!114 &6807556241192894807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388483787997497225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e02a80ecdde6a854fb2a8d424eb94043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1860196715936212076
 GameObject:
   m_ObjectHideFlags: 0
@@ -938,7 +968,7 @@ SphereCollider:
   m_GameObject: {fileID: 4103040453238370721}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
