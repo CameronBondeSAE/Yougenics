@@ -30,7 +30,6 @@ public class Wandering : AntAIState
 
     public override void Execute(float aDeltaTime, float aTimeScale)
     {
-        Debug.Log("Wandering");
         
         timer += aDeltaTime;
         rb.AddRelativeTorque(0, RandomForce, 0);

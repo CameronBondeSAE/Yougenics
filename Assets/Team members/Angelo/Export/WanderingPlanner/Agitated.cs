@@ -26,7 +26,6 @@ public class Agitated : AntAIState
 
     public override void Execute(float aDeltaTime, float aTimeScale)
     {
-        Debug.Log("Agitated");
 
         
         if(SenseScript.target != null)

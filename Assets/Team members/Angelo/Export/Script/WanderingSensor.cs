@@ -29,9 +29,12 @@ public class WanderingSensor : MonoBehaviour, ISense
         Collider[] hitcolliders = Physics.OverlapSphere(transform.position, SenseRadius);
         foreach (var hitcollider in hitcolliders)
         {
-            if (hitcollider.GetComponent<AnSensor>())
+            if (hitcollider.GetComponent<CreatureBase>())
             {
-                target = hitcollider.gameObject;
+                if(hitcollider.GetComponent<CreatureBase>().transform != transform)
+                {
+                    target = hitcollider.gameObject;
+                }
             }
         }
     }

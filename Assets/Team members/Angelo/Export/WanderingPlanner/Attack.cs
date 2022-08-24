@@ -28,7 +28,7 @@ public class Attack : AntAIState
 
     public override void Execute(float aDeltaTime, float aTimeScale)
     {
-        Debug.Log("Attack");
+
 
 
         Vector3 Distance = SenseScript.target.transform.position - child.transform.position;
