@@ -123,6 +123,8 @@ GameObject:
   - component: {fileID: 3874624530610530409}
   - component: {fileID: 681720750839257127}
   - component: {fileID: 3114876879129814447}
+  - component: {fileID: 6990439923789176851}
+  - component: {fileID: 7188068667989136195}
   m_Layer: 0
   m_Name: KevinCritterB
   m_TagString: Untagged
@@ -258,7 +260,6 @@ MonoBehaviour:
   commonAttributes: {fileID: 0}
   energy: {fileID: 0}
   health: {fileID: 0}
-  entityList: []
   predatorList: []
   mateList: []
   foodList: []
@@ -278,15 +279,12 @@ MonoBehaviour:
   isHungry: 0
   caughtFood: 0
   foundMate: 0
-  canRun: 1
   alpha: 0
-  deathColour: 0
   invisCooldown: 10
   canInvis: 0
   renderer: {fileID: 0}
   noseObject: {fileID: 2764331586888371833}
   noseRenderer: {fileID: 0}
-  deathOrb: {fileID: 5871562768168694268}
 --- !u!54 &2764331587373533925
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -418,6 +416,8 @@ MonoBehaviour:
   maxHealth: 100
   fullenergy: 1
   noenergy: 0
+  healthon: 0
+  energy: {fileID: 0}
 --- !u!114 &2764331587373533725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -488,9 +488,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21a8d2bb457710c4b85184b4c0055c5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  steeringBehaviour: {fileID: 0}
-  critterB: {fileID: 0}
+--- !u!114 &6990439923789176851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2764331587373533921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 1
+  SyncScaleX: 1
+  SyncScaleY: 1
+  SyncScaleZ: 1
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  InLocalSpace: 0
+  Interpolate: 1
+--- !u!114 &7188068667989136195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2764331587373533921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 932fe5c9f9c95e34d9c3a66f6f025bc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  disableModelComponents:
+  - {fileID: 2764331587373533722}
+  - {fileID: 2764331587373533924}
+  - {fileID: 2764331587373533926}
+  - {fileID: 2764331587373533727}
+  - {fileID: 2764331587373533724}
+  - {fileID: 3874624530610530408}
+  - {fileID: 681720750839257127}
+  - {fileID: 3114876879129814447}
+  doTheseAswell: []
 --- !u!1 &2764331588163727680
 GameObject:
   m_ObjectHideFlags: 0
