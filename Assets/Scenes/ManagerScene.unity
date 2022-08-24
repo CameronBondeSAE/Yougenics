@@ -547,6 +547,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 160116469}
     m_Modifications:
+    - target: {fileID: 1269664732, guid: 6d1597bddfa73214cb282b00482762a6, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1083219460352835597, guid: 6d1597bddfa73214cb282b00482762a6, type: 3}
       propertyPath: m_Name
       value: DayNightManager
