@@ -21,6 +21,7 @@ namespace Minh
         public float adjust3;
         public Transform Player;
 
+
         // Update is called once per frame
         private RaycastHit CheckWhatsInFrontOfMe()
         {
@@ -60,6 +61,8 @@ namespace Minh
                         MonoBehaviour monoBehaviour = item1 as MonoBehaviour;
                         monoBehaviour.transform.parent = Player.transform;
                         monoBehaviour.transform.position = Player.transform.position + new Vector3(0f, adjust2 * adjust3 * Time.deltaTime, 1 * adjust1 * Time.deltaTime);
+                        Rigidbody rb = item1 as Rigidbody;
+                        rb.isKinematic = true;
                         Debug.Log("picked up");
                     }
                 }
