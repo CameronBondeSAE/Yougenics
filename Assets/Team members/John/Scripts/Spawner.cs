@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
@@ -55,6 +56,13 @@ public class Spawner : NetworkBehaviour
 
 	public List<GameObject> SpawnMultiple()
 	{
+		SpawnMultipleCoroutine();
+
+		return spawned;
+	}
+
+	IEnumerator SpawnMultipleCoroutine()
+	{
 		for (int i = 0; i < groupInfos.Length; i++) //searches through all of wildLife aray
 		{
 			// if (spawnInfos[i].phaseTime == timeOfDay) //if the wildlife dayPhase inside the array matches current day phase
@@ -81,11 +89,12 @@ public class Spawner : NetworkBehaviour
 					GameObject spawnedPrefab = SpawnSingle(randomPrefab, spawnPos + randomSpot, randomTransform.rotation);
 
 					spawned.Add(spawnedPrefab);
+
+					// HACK: Netcode doesn't like too many messages at once, because it's stupid?
+					yield return new WaitForSeconds(0.1f);
 				}
 			}
 		}
-
-		return spawned;
 	}
 
 	public GameObject SpawnSingle(GameObject prefab, Vector3 pos, Quaternion rotation)
