@@ -21,9 +21,10 @@ namespace Minh
         //public bool dead;
         public bool fullenergy = true;
         public bool noenergy = false;
-        
-        
+        public bool healthon = true;
 
+
+        public Energy energy;
         public event Action          DeathEvent;
         public delegate void         ChangedDelegate(float changedAmount, GameObject whoDidThis);
         public event ChangedDelegate ChangedEvent;
@@ -37,13 +38,20 @@ namespace Minh
             {
                 // GetComponent<Interactf>().healing += startHealthincreasing;
                 // GetComponent<Interactf>().dealdamage += startHealthdepeting;
-                GetComponent<Energy>().NoEnergyEvent += startHealthdepeting;
-                GetComponent<Energy>().FullEnergyEvent += startHealthincreasing;
+                energy = GetComponent<Energy>();
+                if (energy = null)
+                {
+                    energy.NoEnergyEvent += startHealthdepeting;
+                    energy.FullEnergyEvent += startHealthincreasing;
+                }
             }
         }
         void Start()
         {
-            startHealthincreasing();
+            if (healthon = true)
+            {
+                startHealthincreasing();
+            }
             if (NetworkManager.Singleton == null)
                 Debug.Log("No Network Manager Found - ADD ManagerScene For Testing To Your Scene");
         }
@@ -164,7 +172,7 @@ namespace Minh
                 if (CurrentHealth.Value < maxHealth)
                 {
                     if(IsServer)
-                        CurrentHealth.Value += 1;
+                        ChangeHealth(1);
                     yield return new WaitForSeconds(1);
                 }
                 else
@@ -179,8 +187,12 @@ namespace Minh
 
         private void UpdateDeadState(bool previousValue, bool newValue)
         {
-            Debug.Log(gameObject.name + " has died");
-            DeathEvent?.Invoke();
+            if (newValue)
+            {
+                Debug.Log(gameObject.name + " has died");
+                DeathEvent?.Invoke();
+            }
+            
         }
 
         private void UpdateHealth(float previousValue, float newValue)
