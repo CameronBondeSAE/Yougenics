@@ -880,12 +880,16 @@ namespace Luke
 
         public float GetEnergyAmount()
         {
-            return 0;
+            return energyComp.EnergyAmount.Value;
         }
 
+        public event Action TakeDamageEvent;
+        
         public float EatMe(float energyRemoved)
         {
-            return 0;
+	        TakeDamageEvent?.Invoke();
+	        if (energyComp.EnergyAmount.Value > energyRemoved) return energyRemoved;
+	        return energyComp.EnergyAmount.Value;
         }
     }
 	

@@ -14,8 +14,10 @@ public class CritterViewModel : NetworkBehaviour
 	public Renderer crystals1;
 	public Renderer crystals2;
 	public List<Color> crystalColours;
+	public GameObject shield;
 
-    public Coroutine coroutine;
+    public Coroutine coroutine1;
+    public Coroutine coroutine2;
 
 	public Critter critter;
 
@@ -24,17 +26,32 @@ public class CritterViewModel : NetworkBehaviour
 		if (IsServer)
 		{
 			critter.ChangeEmotionEvent += ChangeEmotionClientRpc;
+			critter.TakeDamageEvent += TakeDamageClientRPC;
 		}
 	}
 
 	[ClientRpc]
 	public void ChangeEmotionClientRpc(Critter.Emotions type)
 	{
-        if (coroutine != null) StopCoroutine(coroutine);
+        if (coroutine1 != null) StopCoroutine(coroutine1);
 		ps.material = psMats[(int)type];
 
-        coroutine = StartCoroutine(ChangeColour(crystalColours[(int)type], 3));
+        coroutine1 = StartCoroutine(ChangeColour(crystalColours[(int)type], 3));
     }
+
+	[ClientRpc]
+	public void TakeDamageClientRPC()
+	{
+		if (coroutine2 != null) StopCoroutine(coroutine2);
+		coroutine2 = StartCoroutine(ToggleShieldEffect());
+	}
+
+	private IEnumerator ToggleShieldEffect()
+	{
+		shield.SetActive(true);
+		yield return new WaitForSeconds(2f);
+		shield.SetActive(false);
+	}
 
     public IEnumerator ChangeColour(Color colour, int iterations)
     {
