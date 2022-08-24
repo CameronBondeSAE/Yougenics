@@ -1,0 +1,128 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f22e7053ea04ed0922308786facc8c, type: 3}
+  m_Name: Scenario
+  m_EditorClassIdentifier: 
+  conditions:
+    list:
+    - id: 0
+      name: SeeTarget
+    - id: 1
+      name: Alive
+    - id: 2
+      name: Patroling
+    - id: 3
+      name: Hunting
+    - id: 4
+      name: Hungry
+    - id: 5
+      name: TargetHunted
+  actions:
+  - name: Target Spotted
+    isDefault: 0
+    state: {fileID: 2627827176395764707, guid: d0dea55aa547b6f4e9a04b2430c21e10, type: 3}
+    cost: 0
+    position: {x: 641, y: 161}
+    pre:
+    - id: 0
+      value: 1
+    - id: 4
+      value: 1
+    - id: 2
+      value: 1
+    post:
+    - id: 3
+      value: 1
+    - id: 2
+      value: 0
+    - id: 0
+      value: 0
+  - name: Patroling
+    isDefault: 1
+    state: {fileID: 5069300912453325377, guid: e45cdc0070de9474cb119482e91e06f3, type: 3}
+    cost: 0
+    position: {x: 424, y: 161}
+    pre:
+    - id: 4
+      value: 0
+    post:
+    - id: 3
+      value: 0
+    - id: 2
+      value: 1
+    - id: 4
+      value: 1
+    - id: 0
+      value: 1
+  - name: Eat
+    isDefault: 0
+    state: {fileID: 8763580748969476679, guid: 110a58763b67be447ae1b5466a673b73, type: 3}
+    cost: 0
+    position: {x: 1046, y: 159}
+    pre:
+    - id: 0
+      value: 0
+    - id: 5
+      value: 1
+    post:
+    - id: 3
+      value: 0
+    - id: 4
+      value: 0
+    - id: 1
+      value: 1
+  - name: Hunting Target
+    isDefault: 0
+    state: {fileID: 2742061991901599149, guid: 0e0e61171d216b7458c28912b7318f62, type: 3}
+    cost: 0
+    position: {x: 842, y: 161}
+    pre:
+    - id: 3
+      value: 1
+    - id: 2
+      value: 0
+    - id: 0
+      value: 0
+    post:
+    - id: 5
+      value: 1
+    - id: 0
+      value: 0
+  goals:
+  - name: LIVE
+    isDefault: 1
+    position: {x: 205, y: 190}
+    conditions:
+    - id: 1
+      value: 1
+  - name: Maintaining Area
+    isDefault: 0
+    position: {x: 207, y: 302}
+    conditions:
+    - id: 2
+      value: 1
+  worldStates:
+  - position: {x: 216, y: 466}
+    isAutoUpdate: 1
+    list:
+    - id: 0
+      value: 0
+    - id: 1
+      value: 0
+    - id: 2
+      value: 0
+    - id: 3
+      value: 0
+    - id: 4
+      value: 0
+    - id: 5
+      value: 0

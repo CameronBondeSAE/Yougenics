@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f22e7053ea04ed0922308786facc8c, type: 3}
+  m_Name: Servant
+  m_EditorClassIdentifier: 
+  conditions:
+    list:
+    - id: 0
+      name: LIVE
+    - id: 1
+      name: SeeTarget
+    - id: 2
+      name: InAttackRange
+    - id: 3
+      name: TrespasserKilled
+  actions:
+  - name: Follow
+    isDefault: 1
+    state: {fileID: 7547505476783367496, guid: 3a55fa97c3966264cbeea8b444758372, type: 3}
+    cost: 0
+    position: {x: 357, y: 234}
+    pre:
+    - id: 1
+      value: 0
+    post:
+    - id: 1
+      value: 1
+  - name: MiniAgitated
+    isDefault: 0
+    state: {fileID: 7983567301716207793, guid: 9f40c0df0d72a0846a30412479b5be11, type: 3}
+    cost: 0
+    position: {x: 592, y: 238}
+    pre:
+    - id: 1
+      value: 1
+    post:
+    - id: 2
+      value: 1
+  - name: MiniAttack
+    isDefault: 0
+    state: {fileID: 3250877747155566638, guid: 6b7cc27a80db76b4f969a11b60574793, type: 3}
+    cost: 0
+    position: {x: 835, y: 239}
+    pre:
+    - id: 2
+      value: 1
+    post:
+    - id: 3
+      value: 1
+  goals:
+  - name: TrespasserKilled
+    isDefault: 1
+    position: {x: 599, y: 107}
+    conditions:
+    - id: 3
+      value: 1
+  - name: LIVE
+    isDefault: 0
+    position: {x: 353, y: 106}
+    conditions:
+    - id: 0
+      value: 1
+  worldStates:
+  - position: {x: 361, y: 458}
+    isAutoUpdate: 1
+    list:
+    - id: 0
+      value: 0
+    - id: 1
+      value: 0
+    - id: 2
+      value: 0
+    - id: 3
+      value: 0

@@ -1,0 +1,134 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f22e7053ea04ed0922308786facc8c, type: 3}
+  m_Name: Wanderer
+  m_EditorClassIdentifier: 
+  conditions:
+    list:
+    - id: 0
+      name: LIVE
+    - id: 1
+      name: Engaged
+    - id: 2
+      name: Attacking
+    - id: 3
+      name: SeeTarget
+    - id: 4
+      name: Wandering
+    - id: 5
+      name: AttackerKilled
+  actions:
+  - name: Wandering
+    isDefault: 1
+    state: {fileID: 32538192222405034, guid: 17cc49160f3b0754e9e6901801e12c47, type: 3}
+    cost: 0
+    position: {x: 559, y: 298}
+    pre:
+    - id: 1
+      value: 0
+    - id: 3
+      value: 0
+    post:
+    - id: 4
+      value: 1
+  - name: TrespasserSpotted
+    isDefault: 0
+    state: {fileID: 736658381819649034, guid: 1aa25c1c5ebb2ac4eb991f328c226f68, type: 3}
+    cost: 0
+    position: {x: 776, y: 301}
+    pre:
+    - id: 4
+      value: 1
+    post:
+    - id: 3
+      value: 1
+    - id: 4
+      value: 0
+  - name: Agitated
+    isDefault: 0
+    state: {fileID: 1303361446289685512, guid: 22edc09afe7345149a5bcafe5d204a87, type: 3}
+    cost: 0
+    position: {x: 989, y: 307}
+    pre:
+    - id: 3
+      value: 1
+    post:
+    - id: 1
+      value: 1
+  - name: Attack
+    isDefault: 0
+    state: {fileID: 3484151021868790857, guid: 3933229875360a248945d8ae26b3e43c, type: 3}
+    cost: 0
+    position: {x: 995, y: 516}
+    pre:
+    - id: 2
+      value: 1
+    post:
+    - id: 5
+      value: 1
+    - id: 2
+      value: 0
+  - name: InRangeOfAttack
+    isDefault: 0
+    state: {fileID: 3357517478194384170, guid: c7670cdc8b9d60b40bd72de42481f95d, type: 3}
+    cost: 0
+    position: {x: 781, y: 509}
+    pre:
+    - id: 1
+      value: 1
+    - id: 3
+      value: 1
+    post:
+    - id: 2
+      value: 1
+  - name: TrespasserLost
+    isDefault: 0
+    state: {fileID: 7910094819606910872, guid: 35e1403f274b32646840a4b758a65999, type: 3}
+    cost: 0
+    position: {x: 562, y: 509}
+    pre:
+    - id: 3
+      value: 0
+    - id: 1
+      value: 1
+    post:
+    - id: 1
+      value: 0
+  goals:
+  - name: LIVE
+    isDefault: 0
+    position: {x: 559, y: 171}
+    conditions:
+    - id: 0
+      value: 1
+  - name: KilledTrespasser
+    isDefault: 1
+    position: {x: 771.7554, y: 172.48935}
+    conditions:
+    - id: 5
+      value: 1
+  worldStates:
+  - position: {x: 559, y: 732}
+    isAutoUpdate: 1
+    list:
+    - id: 0
+      value: 0
+    - id: 1
+      value: 0
+    - id: 2
+      value: 0
+    - id: 3
+      value: 0
+    - id: 4
+      value: 0
+    - id: 5
+      value: 0
