@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 public class CritterViewModel : NetworkBehaviour
 {

@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 968368501291413216, guid: 15c66fc78f1362b4c89183bff011d047, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 968368501291413216, guid: 15c66fc78f1362b4c89183bff011d047, type: 3}
     - target: {fileID: 1519623156087613634, guid: 15c66fc78f1362b4c89183bff011d047, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -54,6 +58,10 @@ PrefabInstance:
     - target: {fileID: 5861305019518734890, guid: 15c66fc78f1362b4c89183bff011d047, type: 3}
       propertyPath: m_Name
       value: OllieCritterAIPlanner_NetworkVariant
+      objectReference: {fileID: 0}
+    - target: {fileID: 6004436045818850722, guid: 15c66fc78f1362b4c89183bff011d047, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 951099334
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15c66fc78f1362b4c89183bff011d047, type: 3}
@@ -116,22 +124,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
---- !u!114 &285829771932063147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4500150202450387085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 951099334
-  AlwaysReplicateAsRoot: 0
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
 --- !u!114 &5930579840133990878
 MonoBehaviour:
   m_ObjectHideFlags: 0

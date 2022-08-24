@@ -52,6 +52,7 @@ namespace Luke
 		public BestNeighbourBiome bestNearbyBiome;
 		[SerializeField]
 		private Vector3 randomAdjustment;
+		private int pathProgress = 1;
 		
 		[SerializeField]
 		private PrefabReferenceHack childPrefab;
@@ -516,24 +517,26 @@ namespace Luke
 		
 		private void TurnTowardsTarget(Vector3 target)
 		{
-			//Commented out because of edge case where repeated turning into wall and steering back leads to walking away from target.
-			/*float angle = Vector3.SignedAngle(_transform.forward, target - _transform.position, Vector3.up);
-			_rb.AddRelativeTorque(new Vector3(0,Mathf.Sign(angle)*turnSpeed,0));*/
-			
-			if (turnBiasRight) _rb.AddRelativeTorque(new Vector3(0,turnSpeed,0));
-			else _rb.AddRelativeTorque(new Vector3(0,-turnSpeed,0));
+			float angle = Vector3.SignedAngle(_transform.forward, target - _transform.position, Vector3.up);
+			_rb.AddRelativeTorque(new Vector3(0,Mathf.Sign(angle)*turnSpeed,0));
 		}
 
 		public Vector3 GetMoveTargetAStar()
 		{
-			return aStarUser.aStarManager.Nodes[aStarUser.path[^2].x,aStarUser.path[^2].y].worldPosition;
+			if (Vector3.Distance(_transform.position,
+				    aStarUser.aStarManager.Nodes[aStarUser.path[^pathProgress].x, aStarUser.path[^pathProgress].y]
+					    .worldPosition) > 1)
+			{
+				pathProgress++;
+			}
+			return aStarUser.aStarManager.Nodes[aStarUser.path[^pathProgress].x,aStarUser.path[^pathProgress].y].worldPosition;
         }
 
 		public bool CheckHasFood()
         {
             if (_transform == null) return false;
 			if (isSleeping) return false;
-			if (!Physics.Raycast(_transform.position, _transform.forward*attackRange, out RaycastHit raycastHit, 1)) return false;
+			if (!Physics.Raycast(_transform.position, _transform.forward*attackRange, out RaycastHit raycastHit, 3)) return false;
 			if (!foodList.Contains(raycastHit.collider.transform)) return false;
 			if (isAttacking) return false;
 			StartCoroutine(AttackCooldown());
@@ -638,13 +641,15 @@ namespace Luke
 		{
 			if (isSleeping) return;
 			if (nearestFood == null) return;
-			if (_currentTarget != CurrentTarget.Food)
+			/*if (_currentTarget != CurrentTarget.Food)
 			{
 				_currentTarget = CurrentTarget.Food;
 				StartCoroutine(AStarReactionTime(Random.Range(0f,1f), nearestFood.position));
-			}
+			}*/
 
-			if (aStarUser.path.Count > 5)
+			TurnTowardsTarget(nearestFood.position);
+			
+			/*if (aStarUser.path.Count > 5)
 			{
 				TurnTowardsTarget(GetMoveTargetAStar());
                 Debug.Log(GetMoveTargetAStar());
@@ -652,8 +657,8 @@ namespace Luke
 			else
 			{
 				TurnTowardsTarget(nearestFood.position);
-			}
-			_rb.AddForce(_transform.TransformDirection(Vector3.forward)*acceleration, ForceMode.Acceleration);
+			}*/
+			_rb.AddForce(_transform.forward*acceleration, ForceMode.Acceleration);
 			_rb.velocity = Vector3.ClampMagnitude(_rb.velocity, maxSpeed);
 		}
 		
@@ -661,19 +666,22 @@ namespace Luke
 		{
 			if (isSleeping) return;
 			if (nearestMate == null) return;
-			if (_currentTarget != CurrentTarget.Mate)
+			/*if (_currentTarget != CurrentTarget.Mate)
 			{
 				_currentTarget = CurrentTarget.Mate;
 				StartCoroutine(AStarReactionTime(Random.Range(0f,1f), nearestMate.position));
-			}
-			if (aStarUser.path.Count > 5)
+			}*/
+			
+			TurnTowardsTarget(nearestMate.position);
+			
+			/*if (aStarUser.path.Count > 5)
 			{
 				TurnTowardsTarget(GetMoveTargetAStar());
 			}
 			else
 			{
 				TurnTowardsTarget(nearestMate.position);
-			}
+			}*/
 			_rb.AddForce(_transform.TransformDirection(Vector3.forward)*acceleration, ForceMode.Acceleration);
 			_rb.velocity = Vector3.ClampMagnitude(_rb.velocity, maxSpeed);
 		}
