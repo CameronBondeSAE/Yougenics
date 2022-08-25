@@ -15,18 +15,32 @@ namespace Kevin
             sphereCollider.radius = parentScript.visionRadius;
             sphereCollider.center = new Vector3(0, 0, parentScript.visionCenterZ);
         }
-    
+
 
         void OnTriggerEnter(Collider other)
         {
             parentScript.Profiler(other);
+            if (parentScript != null)
+            {
+                parentScript.Profiler(other);
+
+            }
+            else
+                Debug.Log("Parent Script Missing Reference");
         }
 
         void OnTriggerExit(Collider other)
         {
             parentScript.VisionExit(other);
+            if (parentScript != null)
+            {
+                parentScript.VisionExit(other);
+
+            }
+            else
+                Debug.Log("Parent Script Missing Reference");
         }
-   
+
     }
 
 }
