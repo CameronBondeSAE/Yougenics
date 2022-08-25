@@ -7,11 +7,7 @@ VisualEffectResource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: New Graph
-<<<<<<< HEAD
   m_Graph: {fileID: 8926484042661614621}
-=======
-  m_Graph: {fileID: 8926484042661614624}
->>>>>>> 45ae72ddfd038238a8defe05d41e15ee7e3d5322
   m_Infos:
     m_RendererSettings:
       motionVectorGenerationMode: 0
@@ -24,11 +20,7 @@ VisualEffectResource:
     m_PreWarmDeltaTime: 0.05
     m_PreWarmStepCount: 0
     m_InitialEventName: OnPlay
-<<<<<<< HEAD
 --- !u!114 &8926484042661614621
-=======
---- !u!114 &8926484042661614624
->>>>>>> 45ae72ddfd038238a8defe05d41e15ee7e3d5322
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
