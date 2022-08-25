@@ -32,7 +32,7 @@ namespace Kevin
             RaycastHit hitRight;
             RaycastHit hitLeft;
 
-            for (int i = -30; i < 30f; i+= 10)
+            for (int i = -30; i < 30f; i++)
             {
                 Vector3 dir = Quaternion.Euler(0, i, 0) * transform.forward;
                 if (rays)

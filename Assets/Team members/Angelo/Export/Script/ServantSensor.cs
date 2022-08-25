@@ -24,7 +24,7 @@ public class ServantSensor : MonoBehaviour, ISense
     // Start is called before the first frame update
     void Start()
     {
-        leaderScript = leader.GetComponent<WanderingSensor>();  
+        leaderScript = leader.GetComponent<WanderingSensor>();
     }
 
     // Update is called once per frame
@@ -35,42 +35,26 @@ public class ServantSensor : MonoBehaviour, ISense
 
     private bool leaderSeeTarget()
     {
-        if (leaderScript != null)
+        if (leaderScript.InRangeOfSense())
         {
-            if (leaderScript.InRangeOfSense())
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return true;
         }
         else
         {
             return false;
         }
-        
     }
 
     private bool inAttackRange()
     {
-        if(leaderScript != null & leaderScript.target != null)
+        if(Vector3.Distance(transform.position,leaderScript.target.transform.position) < attackRadius)
         {
-            if (Vector3.Distance(transform.position, leaderScript.target.transform.position) < attackRadius)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return true;
         }
         else
         {
             return false;
         }
-        
     }
 
     private void OnDrawGizmos()

@@ -15,9 +15,6 @@ namespace John
         #region Networked Setup
         public void OnPlayerAssigned()
         {
-            // Lock cursor to window
-            Cursor.lockState = CursorLockMode.Locked;
-            
             playerInput.actions.Enable();
 
             playerInput.actions.FindAction("Interact").performed += aContext => RequestInteractServerRpc();
@@ -57,9 +54,6 @@ namespace John
 
             playerInput.actions.FindAction("OpenMenu").performed += aContext => ShowLobby();
             playerInput.actions.FindAction("CloseMenu").performed += aContext => HideLobby();
-
-            //Can subscribe to the player dying and disable controls using OnPlayerUnassigned here?
-            //playerModel.onDeathEvent += DisableControls;
         }
 
         public void OnPlayerUnassigned()
@@ -111,8 +105,6 @@ namespace John
             playerInput.SwitchCurrentActionMap("InMenu");
 
             LobbyUIManager.instance.DisplayLobby(true);
-
-            Cursor.lockState = CursorLockMode.None;
         }
 
         public void HideLobby()
@@ -120,8 +112,6 @@ namespace John
             playerInput.SwitchCurrentActionMap("InGame");
 
             LobbyUIManager.instance.DisplayLobby(false);
-
-            Cursor.lockState = CursorLockMode.Locked;
         }
 
         [ServerRpc]

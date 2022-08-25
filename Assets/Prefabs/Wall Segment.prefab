@@ -112,12 +112,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f2174cbae7266248b45cfb404f3d377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemInfo:
-    name: Wall segment
-    description: To rebuild your base
-    energyRequired: 150
-    height: 0
-    buildTime: 1
   health: {fileID: 333901897230480387}
 --- !u!114 &333901897230480387
 MonoBehaviour:
@@ -132,10 +126,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentHealth:
-    m_InternalValue: 1000
+    m_InternalValue: 0
   IsDead:
     m_InternalValue: 0
-  maxHealth: 1000
+  maxHealth: 100
   fullenergy: 1
   noenergy: 0
   healthon: 1

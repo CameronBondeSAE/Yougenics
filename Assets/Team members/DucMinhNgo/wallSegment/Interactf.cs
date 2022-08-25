@@ -1,14 +1,17 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
-using Unity.Netcode;
+using Kev;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Minh
 {
-    public class Interactf : NetworkBehaviour, IItem, IInteractable
+    public class Interactf : MonoBehaviour, IInteractable
     {
-        public ItemInfo            itemInfo;
-        public Health       health;
+        public Health health;
         public event Action dealdamage;
         public event Action healing;
         
@@ -17,13 +20,6 @@ namespace Minh
         {
             health.ChangedEvent += Updatewallstatus;
             
-            health.DeathEvent += HealthOnDeathEvent;
-
-        }
-
-        void HealthOnDeathEvent()
-        {
-            GetComponent<NetworkObject>().Despawn(true);
         }
 
         private void Updatewallstatus(float changedamount, GameObject whodidthis)
@@ -60,16 +56,6 @@ namespace Minh
             GetComponent<Renderer>().material.DOColor(Color.gray, 3f);
 
 
-        }
-
-        public void     SpawnedAsNormal()
-        {
-            
-        }
-
-        public ItemInfo GetInfo()
-        {
-            return itemInfo;
         }
     }
 }

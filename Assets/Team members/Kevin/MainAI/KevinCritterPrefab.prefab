@@ -415,6 +415,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 634e1964b7d194b4ca0c3508c9af98b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   age: 0
   ageOfMatingStart: 0
   ageOfMatingEnd: 0
@@ -431,7 +440,6 @@ MonoBehaviour:
   colour: {r: 0, g: 0, b: 0, a: 0}
   sex: 0
   slowlyDieWhenOldRate: 0
-  energyBall: {fileID: 6538142482682508729, guid: 69a299a19828f084b916616053b88cea, type: 3}
   myDangerLevel: 0
   energyTest: 100
   healthTest: 100
@@ -479,7 +487,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: c12997621c402fc4ba47fd7185cdf9f5, type: 2}
   - {fileID: 2100000, guid: 18e40f69f95814f48bcdf4dd881f011b, type: 2}
   currentState: 0
-  energyBallPrefab: {fileID: 0}
   visionCritterA: {fileID: 0}
 --- !u!114 &1388483787997497220
 MonoBehaviour:
@@ -565,6 +572,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dangerLevel: 0
+  allegiances:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!54 &1388483787997497342
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -837,7 +847,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3449179552728502637
 Transform:
   m_ObjectHideFlags: 0
@@ -920,7 +930,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6945300177755478027
 Transform:
   m_ObjectHideFlags: 0
@@ -973,6 +983,7 @@ GameObject:
   - component: {fileID: 9095758213661675952}
   - component: {fileID: 1450904695305719870}
   - component: {fileID: 4344760511844437570}
+  - component: {fileID: 9201808424737074922}
   m_Layer: 0
   m_Name: Nose
   m_TagString: Untagged
@@ -1045,6 +1056,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &9201808424737074922
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7328263790666428520}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1388483789199306056
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ namespace Alex
 
         private void Start()
         {
-            if (NetworkManager.Singleton != null) playerModel = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<John.PlayerController>().playerModel;
+            playerModel = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<John.PlayerController>().playerModel;
         }
 
         void LateUpdate()

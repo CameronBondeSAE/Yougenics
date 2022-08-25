@@ -75,7 +75,7 @@ namespace Luke
 		private Transform view;
 		[SerializeField] private AStarUser aStarUser;
 
-        private CurrentTarget _currentTarget = CurrentTarget.Nothing;
+		private CurrentTarget _currentTarget = CurrentTarget.Nothing;
 		private enum CurrentTarget
 		{
 			Food,
@@ -122,9 +122,10 @@ namespace Luke
         private IEnumerator EnergyDecayCooldown()
 		{
             // change energy drain amount, then return it after yield
-			yield return new WaitForSeconds(1f);
+			yield return new WaitForSeconds(10f);
 			justAte = false;
-        }
+            
+		}
 		
 		private IEnumerator SleepLevelDecay()
 		{
@@ -271,8 +272,6 @@ namespace Luke
 			acceleration = Mathf.Clamp(20+10f/metabolism,20,30);
 			regularMatingDelay = ageOfMatingStart * 0.5f;
 
-            healthComp.DeathEvent += Die;
-
 			foreach (Transform t in predatorsList)
 			{
 				t.GetComponent<Critter>().RemoveFromListEvent += RemoveTransformFromList;
@@ -330,9 +329,8 @@ namespace Luke
 			IEdible go2 = other.GetComponentInParent<IEdible>();
 			CommonAttributes go3 = other.GetComponentInParent<CommonAttributes>();
 			ILukeEdible go4 = other.GetComponentInParent<ILukeEdible>();
-            Minh.Health go5 = other.GetComponent<Minh.Health>();
 			
-			if (go1 != null && go3 != null)
+			if (go1 != null)
 			{
 				float otherDangerLevel = go3.dangerLevel;
 				if (otherDangerLevel >= critterInfo.dangerLevel + 3)
@@ -372,13 +370,6 @@ namespace Luke
                     if (go4 != null) go4.RemoveFromListEvent += RemoveTransformFromList;
 				}
 			}
-            else if (go5 != null && go1 == null && go3 == null && go4 == null)
-            {
-                if (!foodList.Contains(go5.transform))
-                {
-                    foodList.Add(go5.transform);
-                }
-            }
 		}
 		
 		public void VisionTriggerExit(Collider other)
@@ -557,22 +548,16 @@ namespace Luke
 		{
 			if (isSleeping) return;
 			if (currentFood == null) return;
-            if (!justAte)
-            {
-                GameObject go = Instantiate(beam, _transform);
-                go.GetComponent<Beam>().target = currentFood.transform;
-                Minh.Health targetHealth = currentFood.GetComponent<Minh.Health>();
-                if (targetHealth != null) targetHealth.ChangeHealth(-critterInfo.dangerLevel);
-                IEdible targetIEdible = currentFood.GetComponent<IEdible>();
-                if (targetIEdible != null)
-                {
-                    energyComp.ChangeEnergy(targetIEdible.EatMe(-critterInfo.dangerLevel));
-                    energyComp.ChangeEnergy(critterInfo.dangerLevel);
-                }
-
-                justAte = true;
-                StartCoroutine(EnergyDecayCooldown());
-            }
+            GameObject go = Instantiate(beam, _transform);
+            go.GetComponent<Beam>().target = currentFood.transform;
+			Minh.Health targetHealth = currentFood.GetComponent<Minh.Health>();
+            targetHealth.ChangeHealth(-critterInfo.dangerLevel);
+            IEdible targetIEdible = currentFood.GetComponent<IEdible>();
+            energyComp.ChangeEnergy(targetIEdible.EatMe(-critterInfo.dangerLevel));
+            energyComp.ChangeEnergy(critterInfo.dangerLevel);
+            justAte = true;
+			StopCoroutine(EnergyDecayCooldown());
+			StartCoroutine(EnergyDecayCooldown());
         }
 
 		public bool CheckHasMate()
@@ -716,12 +701,12 @@ namespace Luke
 		public void MoveBiomes()
 		{
 			if (isSleeping) return;
-			// float angle = 90f * (int)bestNearbyBiome;
+			float angle = 90f * (int)bestNearbyBiome;
 			//Check which way north should be or adjust bestBiome iteration to account for direction.
-			// Vector3 mainHeading = Quaternion.AngleAxis(angle, Vector3.up)*Vector3.forward;
-			// mainHeading += randomAdjustment;
+			Vector3 mainHeading = Quaternion.AngleAxis(angle, Vector3.up)*Vector3.forward;
+			mainHeading += randomAdjustment;
 			_currentTarget = CurrentTarget.Wander;
-			TurnTowardsTarget(Vector3.zero-_transform.position/* + mainHeading*/);
+			TurnTowardsTarget(_transform.position + mainHeading);
 			_rb.AddForce(_transform.TransformDirection(Vector3.forward)*acceleration, ForceMode.Acceleration);
 			_rb.velocity = Vector3.ClampMagnitude(_rb.velocity, maxSpeed);
 		}
@@ -787,11 +772,6 @@ namespace Luke
 			float distanceToCompare = critterInfo.visionRadius+5f;
 			foreach (Transform t in foodList)
 			{
-                if (t == null)
-                {
-                    foodList.Remove(t);
-                    continue;
-                }
 				Vector3 targetPosition = t.position;
 				Vector3 translation = targetPosition - position;
 				float distance = Vector3.Magnitude(translation);
@@ -816,10 +796,6 @@ namespace Luke
 
 		public bool IsTired()
 		{
-            if (isSleeping)
-            {
-                return sleepLevel <= 0.7f * critterInfo.maxSleepLevel;
-            }
 			return sleepLevel <= 0.5f * critterInfo.maxSleepLevel;
 		}
 		

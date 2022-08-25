@@ -54,7 +54,7 @@ public class ShopSingleItem : NetworkBehaviour
 			UINotifcations.instance.NotificationText(itemInfo.name +  " has finished building", 5);
 
 			//Doubles the cost of the item to build
-			//itemInfo.energyRequired += (itemInfo.energyRequired * 2);
+			itemInfo.energyRequired += (itemInfo.energyRequired * 2);
 			//After build is complete allows you to build a new object
 			canSpawn = true;
 		}

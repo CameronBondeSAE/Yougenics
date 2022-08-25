@@ -144,8 +144,6 @@ namespace John
 
 		private void Awake()
 		{
-			UnityEngine.Random.InitState(4131);
-			
 			//Setup IP Address Canvas
 			if (!autoHost)
 			{
@@ -417,11 +415,14 @@ namespace John
 			//Activate controller on all clients
 			InitControllerClientRpc();
 
-			SpawnCritterSpawners();
+			SpawnCritters();
 			//Invoke("SpawnCritters", 5f);
 
 			//Entering Game - Turn Off Lobby Camera & Turn On Game UI
 			UpdateLobbyCameraAndUI(false, true);
+
+			//Hack to get ambient light back
+			SceneManager.SetActiveScene(SceneManager.GetSceneByName("ManagerScene"));
 		}
 
 		private void SceneManagerOnOnSceneEvent(SceneEvent sceneEvent)
@@ -524,65 +525,29 @@ namespace John
 			playerModelNetworkObjRef.GetComponent<PlayerModel>().myClientInfo = clientInfoNetworkObjRef.GetComponent<ClientInfo>();
 			clientInfoNetworkObjRef.GetComponent<John.PlayerController>().playerModel = playerModelNetworkObjRef.GetComponent<PlayerModel>();
 		}
-		void SpawnCritterSpawners()
+		void SpawnCritters()
         {
 			if (!critterSpawning)
 				return;
 
 			if (critterSpawner != null)
-			{
-				critterSpawner.onSpawningCompletedEvent += SpawnCritters;
 				critterSpawner.SpawnMultiple();
-			}
 			else
 				Debug.Log("Critter Spawner Reference Not Set");
-		}
 
-		void SpawnCritters(Spawner spawnerRef)
-        {
-			/*foreach (GameObject spawnedSpawnerGO in critterSpawner.spawned)
+			foreach (GameObject spawnedSpawnerGO in critterSpawner.spawned)
 			{
 				Spawner subSpawner = spawnedSpawnerGO.GetComponent<Spawner>();
 				if (subSpawner != null)
-                {
 					subSpawner.SpawnMultiple();
-                }
-			}*/
-
-			//CLEAR LIST
-
-            for (int i = 0; i < critterSpawner.spawned.Count; i++)
-            {
-				if (critterSpawner.spawned[i] != null)
-				{
-					Spawner subSpawner = critterSpawner.spawned[i].GetComponent<Spawner>();
-
-					if (subSpawner != null)
-					{
-						if (i + 1 == critterSpawner.spawned.Count)
-						{
-							subSpawner.onSpawningCompletedEvent += RevertActiveScene;
-						}
-
-						subSpawner.SpawnMultiple();
-					}
-
-				}
 			}
 		}
 
-        private void RevertActiveScene(Spawner spawnerRef)
-        {
-			//Hack to get ambient light back
-			spawnerRef.onSpawningCompletedEvent -= RevertActiveScene;
-			SceneManager.SetActiveScene(SceneManager.GetSceneByName("ManagerScene"));
-		}
+		#endregion
 
-        #endregion
+		#region Handle Player Controllers
 
-        #region Handle Player Controllers
-
-        [ClientRpc]
+		[ClientRpc]
 		public void InitControllerClientRpc()
 		{
 			NetworkObject myClient;
