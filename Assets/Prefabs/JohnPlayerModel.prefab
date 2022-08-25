@@ -706,7 +706,7 @@ MonoBehaviour:
   slowlyDieWhenOldRate: 0
   energyBall: {fileID: 0}
   movementSpeed: 50
-  sprintSpeed: 50
+  sprintSpeed: 100
   lookSensitivity: 5
   jumpHeight: 6
   interactDistance: 3
