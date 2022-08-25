@@ -47,6 +47,8 @@ namespace John
 
 		public bool      inVehicle = false;
 		public IVehicleControls vehicleReference;
+		public Vector3 vehicleOffset;
+		public GameObject playerView;
 
 		public Transform feet;
 		
@@ -281,10 +283,21 @@ namespace John
 
 			// Lock me to the vehicle, just so the camera doesn't need to retarget anything. I don't actually need to be a child
 			MonoBehaviour vehicleComponent = vehicleReference as MonoBehaviour;
-			transform.parent = vehicleReference.GetPlayerMountPosition();
+			transform.parent = vehicleComponent.transform;
 			transform.localPosition = Vector3.zero;
+			transform.localPosition = vehicleOffset;
+
+			//HACK for turning off the player
+			UpdateGraphicsClientRpc(false);
 
 			// vehicleReference.Enter();
+		}
+
+		[ClientRpc]
+		public void UpdateGraphicsClientRpc(bool setActive)
+		{
+			playerView.SetActive(setActive);
+			GetComponent<CapsuleCollider>().enabled = setActive;
 		}
 
 		public void GetOutOfVehicle()
@@ -306,7 +319,10 @@ namespace John
 
 			//BUG HACK: Getting out of the vehicle seems to be changing the player's scale
 			transform.localScale = new Vector3(1, 1, 1);
-			
+
+			//HACK for turning off the player
+			UpdateGraphicsClientRpc(true);
+
 			// vehicleReference.Exit();
 		}
 
