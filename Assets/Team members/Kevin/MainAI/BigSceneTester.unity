@@ -1393,7 +1393,7 @@ MonoBehaviour:
   spawnAmount: 15
   fieldSize: {x: 95, y: 15, z: 95}
   critterA: 0
-  critterB: 0
+  critterB: 1
   spawnFood: 0
 --- !u!4 &1705908340
 Transform:

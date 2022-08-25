@@ -345,7 +345,7 @@ public class CritterB : CreatureBase, IEdible
 
         public float GetEnergyAmount()
         {
-            throw new NotImplementedException();
+            return energy.EnergyAmount.Value;
         }
 
         public float EatMe(float energyRemoved)
