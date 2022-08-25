@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Anthill.AI;
 using Kevin;
 using Minh;
 using Tanks;
@@ -16,7 +17,7 @@ namespace Ollie
         public List<Vector3> path;
         public List<Transform> foodLocationList;
         public List<GameObject> mateLocationList;
-        public float moveSpeed = 0.25f;
+        public float moveSpeed = 7f;
         //public WaterNode currentLocation;
         [HideInInspector] public Transform target;
         [HideInInspector] [FormerlySerializedAs("targetTransform")] public Vector3 targetPos;
@@ -67,7 +68,7 @@ namespace Ollie
         private void Start()
         {
             path = new List<Vector3>();
-            moveSpeed = 3;
+            //moveSpeed = 3;
             //rigidbody = GetComponent<Rigidbody>();
             aStar = GetComponentInChildren<AStar>();
             turnTowards = GetComponentInChildren<TurnTowards>();
@@ -112,7 +113,7 @@ namespace Ollie
                     }
                     else
                     {
-                        print("path blocked");
+                        //print("path blocked");
                         if (foodLocationList.Contains(target)) foodLocationList.Remove(target);
                         if (mateLocationList.Contains(target.gameObject)) mateLocationList.Remove(target.gameObject);
                         target = null;
@@ -149,6 +150,7 @@ namespace Ollie
 
             if (energyComponent.EnergyAmount.Value <= energyComponent.energyMin)
             {
+                print("bad");
                 moveSpeed = 0;
                 sleeping = true;
             }
@@ -177,6 +179,7 @@ namespace Ollie
         public void StateViewerChange(int index)
         {
             stateViewer.ChangeParticles(index);
+            //stateViewer.ChangeViewInfo(aiState);
         }
 
         private void Death()
@@ -197,7 +200,7 @@ namespace Ollie
             {
                 energyComponent.EnergyAmount.Value = energyComponent.energyMax;
                 sleeping = false;
-                moveSpeed = 3;
+                moveSpeed = 7;
             }
         }
 
