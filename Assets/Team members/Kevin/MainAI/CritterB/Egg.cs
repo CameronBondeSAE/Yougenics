@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Kevin
 {
     public class Egg : MonoBehaviour
     {
         public float hatchTimer = 25f;
-        public GameObject critterPrefab;
+        public List<GameObject> critterPrefabs;
         private void OnEnable()
         {
             StartCoroutine(Birth());
@@ -17,8 +18,8 @@ namespace Kevin
 
         IEnumerator Birth()
         {
-            yield return new WaitForSeconds(hatchTimer - 1f);
-            Instantiate(critterPrefab, transform.position, Quaternion.identity);
+            yield return new WaitForSeconds(hatchTimer - 0.5f);
+            Instantiate(critterPrefabs[Random.Range(0,2)], transform.position, Quaternion.identity);
         }
         
         IEnumerator Hatch()

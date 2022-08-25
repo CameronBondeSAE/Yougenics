@@ -684,10 +684,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1388483787997497219, guid: f5369be61feb1e240bd9e7f7f00e95d7, type: 3}
-      propertyPath: serializationData.Prefab
-      value: 
-      objectReference: {fileID: 1388483787997497219, guid: f5369be61feb1e240bd9e7f7f00e95d7, type: 3}
     - target: {fileID: 1388483787997497225, guid: f5369be61feb1e240bd9e7f7f00e95d7, type: 3}
       propertyPath: m_Name
       value: KevinCritterPrefab

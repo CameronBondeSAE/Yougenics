@@ -54,6 +54,7 @@ public class CritterB : CreatureBase, IEdible
         public bool offAge;
         public bool canLayEgg;
         public bool gestationComplete;
+        public bool egg;
         
         //view variables 
         [Tooltip("View Variables")]
@@ -126,7 +127,7 @@ public class CritterB : CreatureBase, IEdible
             mutationRate = Random.Range(1f, 25f);
             sizeScale = 0f;
             maxSize = 1f;
-            sex = (Sex) Random.Range(0, 1);
+            sex = (Sex) Random.Range(0, 2);
             commonAttributes.dangerLevel =  Random.Range(0, 10);
             myDangerLevel = commonAttributes.dangerLevel;
             
@@ -142,6 +143,7 @@ public class CritterB : CreatureBase, IEdible
 
         public override void FixedUpdate()
         {
+            base.FixedUpdate();
             if (canLayEgg && gestationComplete)
             {
                 LayEgg();
@@ -157,10 +159,10 @@ public class CritterB : CreatureBase, IEdible
             CommonAttributes otherCommonAttributes = other.GetComponent<CommonAttributes>();
             CritterB otherCritterB = other.GetComponent<CritterB>(); //This was getting triggered when running into all AI's not just AI's with critterB causing null errors
             Health otherHealth = other.GetComponent<Health>();
-            
+            Egg otherEgg = other.GetComponent<Egg>();
             //RaycastHit hitInfo;
             
-            if (otherHealth != null && otherCreatureBase == null)
+            if (otherHealth != null && otherCreatureBase == null && otherEgg == null)
             {
                    foodList.Add(other.transform); 
             }
@@ -288,7 +290,7 @@ public class CritterB : CreatureBase, IEdible
 
         public void LayEgg()
         {
-            if (gestationComplete && offAge)
+            if (gestationComplete && offAge && sex == Sex.Female && egg)
             {
                 Instantiate(eggPrefab, eggSpawnPosition.position, Quaternion.identity);
                 gestationComplete = false;
@@ -328,6 +330,13 @@ public class CritterB : CreatureBase, IEdible
         {
             yield return new WaitForSeconds(gestationTime);
             gestationComplete = true;
+        }
+        
+        private IEnumerator AttackCooldown()
+        {
+            isEating = true;
+            yield return new WaitForSeconds(2f);
+            isEating = false;
         }
 
         #endregion
@@ -392,7 +401,15 @@ public class CritterB : CreatureBase, IEdible
 
         public bool CaughtFood()
         {
-            if (caughtFood)
+            if (transform == null) return false;
+            if (isSleeping) return false;
+            if (!Physics.Raycast(transform.position, transform.forward*2f, out RaycastHit raycastHit, 3)) return false;
+            if (!foodList.Contains(raycastHit.collider.transform)) return false;
+            if (isEating) return false;
+            StartCoroutine(AttackCooldown());
+            //currentFood = raycastHit.collider;
+            return true;
+            /*if (caughtFood)
             {
                 caughtFood = true;
             }
@@ -401,7 +418,7 @@ public class CritterB : CreatureBase, IEdible
                 caughtFood = false;
             }
 
-            return caughtFood;
+            return caughtFood;*/
         }
 
         public bool IsEating()

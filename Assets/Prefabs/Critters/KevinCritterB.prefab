@@ -668,6 +668,7 @@ MonoBehaviour:
   offAge: 0
   canLayEgg: 0
   gestationComplete: 1
+  egg: 1
   alpha: 0
   deathColour: 1
   invisCooldown: 10
