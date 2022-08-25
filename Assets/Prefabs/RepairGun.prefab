@@ -119,9 +119,10 @@ MonoBehaviour:
     height: 0
     buildTime: 2
   energy: {fileID: 0}
-  energyPerShot: 10
+  energyPerShot: 1
   canShoot: 0
   repairAmount: 10
+  range: 10
 --- !u!114 &1954794162569713098
 MonoBehaviour:
   m_ObjectHideFlags: 0
