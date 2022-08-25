@@ -563,8 +563,11 @@ namespace Luke
 			Minh.Health targetHealth = currentFood.GetComponent<Minh.Health>();
             targetHealth.ChangeHealth(-critterInfo.dangerLevel);
             IEdible targetIEdible = currentFood.GetComponent<IEdible>();
-            energyComp.ChangeEnergy(targetIEdible.EatMe(-critterInfo.dangerLevel));
-            energyComp.ChangeEnergy(critterInfo.dangerLevel);
+            if (targetIEdible != null)
+            {
+                energyComp.ChangeEnergy(targetIEdible.EatMe(-critterInfo.dangerLevel));
+                energyComp.ChangeEnergy(critterInfo.dangerLevel);
+            }
             justAte = true;
             if (currentFood == null) foodList.Remove(currentFood.transform);
 			StopCoroutine(EnergyDecayCooldown());
