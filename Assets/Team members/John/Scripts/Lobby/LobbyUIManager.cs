@@ -144,6 +144,8 @@ namespace John
 
 		private void Awake()
 		{
+			UnityEngine.Random.InitState(4131);
+			
 			//Setup IP Address Canvas
 			if (!autoHost)
 			{

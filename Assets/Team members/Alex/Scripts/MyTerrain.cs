@@ -26,12 +26,11 @@ namespace Alex
         //public float changeRate = 1f;
         //public float terraformCount = 3;
         public List<GameObject> thingToSpawn = new List<GameObject>();
-        Spawner spawner;
+        public Spawner spawner;
         private GameObject thingThatSpawned;
 
         public void Start()
         {
-            spawner = GetComponent<Spawner>();
             //DayNightManager.instance.ChangePhase(DayNightManager.DayPhase.Midnight);
 
             // scalerRange = Random.Range(scalerOne, scalerTwo);
@@ -40,6 +39,9 @@ namespace Alex
             terrainGenerator.calculateHeightCallback = YourHeightCalculatorFunction;
             terrainGenerator.GenerateTerrain();
             //DayNightManager.instance.PhaseChangeEvent += ChangeTerrain;
+
+            spawner.shouldISpawnDelegate = ShouldISpawnDelegate;
+            spawner.SpawnMultiple();
         }
 
     

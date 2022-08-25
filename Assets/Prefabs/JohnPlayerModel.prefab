@@ -689,7 +689,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 50
-  sprintSpeed: 75
+  sprintSpeed: 50
   lookSensitivity: 5
   jumpHeight: 6
   interactDistance: 3

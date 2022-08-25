@@ -85,6 +85,8 @@ public class Spawner : NetworkBehaviour
 					Vector3 randomSpot = Random.insideUnitCircle * radius;
 					randomSpot.z = randomSpot.y; //hack, im sure there is an easier way to do this
 					randomSpot.y = 0;
+					
+					randomTransform.rotation = Quaternion.Euler(0, Random.Range(0,359),0);
 					// Debug.Log(randomSpot);
 					GameObject randomPrefab =
 						_currentGroupInfo.prefabs[Random.Range(0, _currentGroupInfo.prefabs.Length)];
@@ -116,7 +118,7 @@ public class Spawner : NetworkBehaviour
 											   rotation);
 
 		// Object must have NetworkObject component to work on clients
-		if (NetworkManager.Singleton.IsServer)
+		if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer)
 			spawnedPrefab.GetComponent<NetworkObject>()?.Spawn();
 
 
