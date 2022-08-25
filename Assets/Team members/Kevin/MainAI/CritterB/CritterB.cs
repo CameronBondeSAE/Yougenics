@@ -439,14 +439,14 @@ public class CritterB : CreatureBase, IEdible
 
         public bool IsInDanger()
         {
-            /*if (predatorList.Count > 0)
+            if (predatorList.Count > 0)
             {
                 isInDanger = true;
             }
             else
             {
                 isInDanger = false;
-            }*/
+            }
             return isInDanger;
         }
 

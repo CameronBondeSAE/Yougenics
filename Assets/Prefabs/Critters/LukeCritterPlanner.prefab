@@ -5645,7 +5645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   age: 0
-  ageOfMatingStart: 50
+  ageOfMatingStart: 150
   ageOfMatingEnd: 200
   maxAge: 100
   isPregnant: 0
