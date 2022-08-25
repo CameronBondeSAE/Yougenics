@@ -10,12 +10,15 @@ using UnityEngine.Rendering;
 
 public class CritterB : CreatureBase, IEdible
     {
+        [Tooltip("Critter Variables")]
         public float acceleration;
         public float visionRadius = 8f;
         public float visionCenterZ = 2.5f;
         public float myDangerLevel;
         public float rayDistance;
         public Rigidbody rb;
+        public GameObject eggPrefab;
+        public Transform eggSpawnPosition;
         
         //Separate Components
         [SerializeField] private CommonAttributes commonAttributes;
@@ -23,6 +26,7 @@ public class CritterB : CreatureBase, IEdible
         public Minh.Health health;
         
         //List of Entities
+        [Tooltip("Entity Manager")]
         public List<Transform> entityList;
         public List<Transform> predatorList;
         public List<Transform> mateList;
@@ -30,7 +34,8 @@ public class CritterB : CreatureBase, IEdible
         public Transform closestPredator;
         public Transform closestMate;
         public Transform closestFood;
-
+        
+        [Tooltip("Bools")]
         public bool isWandering;
         public bool isRunning;
         public bool isHunting;
@@ -45,8 +50,12 @@ public class CritterB : CreatureBase, IEdible
         public bool caughtFood;
         public bool foundMate;
         public bool canRun;
+        public bool offAge;
+        public bool canLayEgg;
+        public bool gestationComplete;
         
         //view variables 
+        [Tooltip("View Variables")]
         public float alpha;
         public float deathColour = 1f;
         public float invisCooldown = 10f;
@@ -62,6 +71,7 @@ public class CritterB : CreatureBase, IEdible
         public Renderer feet2Renderer;
         
         //Audio
+        [Tooltip("Audio Variables")]
         public AudioClip myAudioClip;
         public AudioClip snarlClip;
         public AudioClip eatingClip;
@@ -95,7 +105,9 @@ public class CritterB : CreatureBase, IEdible
 
             myFoodChain = (FoodChain) Random.Range(0, 3);
             myAudioClip = GetComponent<AudioClip>();
-            audioClip = GetComponent<AudioSource>(); 
+            audioClip = GetComponent<AudioSource>();
+
+            eggPrefab = GetComponent<GameObject>();
         }
         
         public void OnEnable()
@@ -120,7 +132,7 @@ public class CritterB : CreatureBase, IEdible
             myDangerLevel = commonAttributes.dangerLevel;
             
             //empathy = Random.Range(1f, 25f);
-            //aggression = Random.Range(1f, 25f);
+            aggression = Random.Range(1f, 25f);
             //colour = new Color(Random.Range(0f, 10f),Random.Range(0f, 10f),Random.Range(0f, 10f));
         }
 
@@ -129,27 +141,43 @@ public class CritterB : CreatureBase, IEdible
             //On Death maybe
         }
 
+        public override void FixedUpdate()
+        {
+            if (canLayEgg && gestationComplete)
+            {
+                LayEgg();
+            }
+        }
+
         public void Profiler(Collider other)
         {
             CreatureBase otherCreatureBase = other.GetComponent<CreatureBase>();
             IEdible otherEdible = other.GetComponent<IEdible>();
             CommonAttributes otherCommonAttributes = other.GetComponent<CommonAttributes>();
             CritterB otherCritterB = other.GetComponent<CritterB>(); //This was getting triggered when running into all AI's not just AI's with critterB causing null errors
-            RaycastHit hitInfo;
+            Health otherHealth = other.GetComponent<Health>();
             
+            //RaycastHit hitInfo;
+            
+            if (otherHealth != null && otherCreatureBase == null)
+            {
+                   foodList.Add(other.transform); 
+            }
             
             //Physics.Raycast(transform.position,other.transform.position, out hitInfo, other.transform.position.magnitude - transform.position.magnitude,255,QueryTriggerInteraction.Ignore)
-            if ((otherCreatureBase != null || otherEdible != null) && otherCritterB != null)
+            if (otherCreatureBase != null || otherEdible != null)//&& otherCritterB != null)
             {
+                if (otherCommonAttributes == null) return;
+                
                 //if(Physics.Raycast(transform.position,other.transform.position, out hitInfo, 10f,255,QueryTriggerInteraction.Ignore))
                 //{
                     //Debug.DrawRay(transform.position,Vector3.forward,Color.red);
                     
                     //Predator List
-                    /*if (otherCreatureBase != null && sex == otherCreatureBase.sex && myDangerLevel < otherCommonAttributes.dangerLevel)
+                    if (otherCreatureBase != null && sex == otherCreatureBase.sex && myDangerLevel < otherCommonAttributes.dangerLevel)
                     {
                         predatorList.Add(other.transform);
-                    }*/
+                    }
 
                     if (otherCreatureBase != null && otherCritterB.myFoodChain == FoodChain.Predator)
                     {
@@ -223,7 +251,7 @@ public class CritterB : CreatureBase, IEdible
             }
         }
 
-        #region View Functions
+        #region Special Functions
 
         public void Chameleon(float alpha)
         {
@@ -241,6 +269,12 @@ public class CritterB : CreatureBase, IEdible
             deathOrb.SetActive(true);
         }
 
+        public void LayEgg()
+        {
+            Instantiate(eggPrefab, eggSpawnPosition.position, Quaternion.identity);
+            gestationComplete = false;
+            StartCoroutine(GestationTimer());
+        }
         public void CooldownFunction()
         {
             StartCoroutine(InvisibleCooldown());
@@ -270,6 +304,12 @@ public class CritterB : CreatureBase, IEdible
             canInvis = true;
         }
 
+        public IEnumerator GestationTimer()
+        {
+            yield return new WaitForSeconds(gestationTime);
+            gestationComplete = true;
+        }
+
         #endregion
        
         #region IEdible
@@ -290,7 +330,7 @@ public class CritterB : CreatureBase, IEdible
 
         public bool IsHungry()
         {
-            if (energy.EnergyAmount.Value < 25f && !isEating)
+            if (energy.EnergyAmount.Value < 25f && !isEating || aggression > 15f)
             {
                 isHungry = true;
             }
@@ -346,7 +386,7 @@ public class CritterB : CreatureBase, IEdible
 
         public bool IsEating()
         {
-            if (isEating == true && foundFood == true)
+            if (isEating && foundFood)
             {
                 isEating = true;
             }
@@ -360,14 +400,14 @@ public class CritterB : CreatureBase, IEdible
 
         public bool IsInDanger()
         {
-            if (predatorList.Count > 0)
+            /*if (predatorList.Count > 0)
             {
                 isInDanger = true;
             }
             else
             {
                 isInDanger = false;
-            }
+            }*/
             return isInDanger;
         }
 
@@ -384,6 +424,32 @@ public class CritterB : CreatureBase, IEdible
 
             return isRunning;
         }
+
+        public bool IsOffAge()
+        {
+            if (age > ageOfMatingStart)
+            {
+                offAge = true;
+            }
+            return offAge;
+        }
+
+        public bool CanLayEgg()
+        {
+            if (gestationComplete)
+            {
+                canLayEgg = true;
+            }
+            else
+            {
+                canLayEgg = false;
+            }
+
+            return canLayEgg;
+
+        }
+
+        
 
         public bool IsSleeping()
         {

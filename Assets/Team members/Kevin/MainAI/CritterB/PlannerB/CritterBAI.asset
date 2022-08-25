@@ -40,6 +40,10 @@ MonoBehaviour:
       name: caughtFood
     - id: 12
       name: foundMate
+    - id: 13
+      name: offAge
+    - id: 14
+      name: canLayEgg
   actions:
   - name: Wandering
     isDefault: 1
@@ -155,6 +159,15 @@ MonoBehaviour:
     cost: 0
     position: {x: 841, y: 55}
     pre: []
+    post: []
+  - name: LayEgg
+    isDefault: 0
+    state: {fileID: 8769984945718270767, guid: f5947590feb7df2429619601925986c6, type: 3}
+    cost: 0
+    position: {x: 1269, y: 462}
+    pre:
+    - id: 13
+      value: 1
     post: []
   goals:
   - name: IsHealthy
