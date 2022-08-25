@@ -74,7 +74,7 @@ namespace Ollie
             
             while (iEdible.GetEnergyAmount() > 0)
             {
-                brain.StateViewerChange(this);
+                brain.StateViewerChange(7);
                 iEdible.EatMe(brain.chompAmount);
                 brain.energyComponent.ChangeEnergy(brain.chompAmount);
                 yield return new WaitForSeconds(1);

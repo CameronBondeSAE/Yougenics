@@ -22,7 +22,7 @@ namespace Ollie
         public override void Enter()
         {
             base.Enter();
-            brain.moveSpeed = 5;
+            brain.moveSpeed = 9;
             CheckMateDistances();
             brain.path.Clear();
             
@@ -53,8 +53,8 @@ namespace Ollie
 
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
-            brain.StateViewerChange(this);
-            brain.moveSpeed = 5;
+            brain.StateViewerChange(3);
+            brain.moveSpeed = 9;
             base.Execute(aDeltaTime, aTimeScale);
             if (positionsList.Count == 0)
             {
