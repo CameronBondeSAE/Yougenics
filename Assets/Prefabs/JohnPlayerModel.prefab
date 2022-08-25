@@ -634,6 +634,7 @@ GameObject:
   - component: {fileID: 6484856671035641714}
   - component: {fileID: 246153594134181686}
   - component: {fileID: 9169002304504710391}
+  - component: {fileID: 9035003028001693571}
   m_Layer: 0
   m_Name: JohnPlayerModel
   m_TagString: Untagged
@@ -687,8 +688,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50357d34566a21647a9d61ec8d228b8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 30
-  sprintSpeed: 50
+  movementSpeed: 50
+  sprintSpeed: 75
   lookSensitivity: 5
   jumpHeight: 6
   interactDistance: 3
@@ -705,6 +706,8 @@ MonoBehaviour:
   playerHead: {fileID: 8638494978573017855}
   inVehicle: 0
   feet: {fileID: 1335156242674683886}
+  angle: 0
+  angleMultiplier: 0.05
 --- !u!136 &8611620220612625324
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -826,6 +829,19 @@ MonoBehaviour:
   energyBarItem2UI: {fileID: 8362014177791732835}
   itemName1UI: {fileID: 5189356426756723986}
   itemName2UI: {fileID: 2691310485740527755}
+--- !u!114 &9035003028001693571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8611620220612625317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2fa0cdd9a3541d2863b2ab871f3c22f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dangerLevel: 0
 --- !u!1 &8611620220984584861
 GameObject:
   m_ObjectHideFlags: 0

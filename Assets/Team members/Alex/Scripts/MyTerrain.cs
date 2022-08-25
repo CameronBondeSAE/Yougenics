@@ -33,7 +33,8 @@ namespace Alex
         {
             spawner = GetComponent<Spawner>();
             //DayNightManager.instance.ChangePhase(DayNightManager.DayPhase.Midnight);
-            scalerRange = Random.Range(scalerOne, scalerTwo);
+
+            // scalerRange = Random.Range(scalerOne, scalerTwo);
             scalerOld = scalerRange;
             // Set the callback to a temp randomiser function
             terrainGenerator.calculateHeightCallback = YourHeightCalculatorFunction;

@@ -15,6 +15,9 @@ namespace John
         #region Networked Setup
         public void OnPlayerAssigned()
         {
+            // Lock cursor to window
+            Cursor.lockState = CursorLockMode.Locked;
+            
             playerInput.actions.Enable();
 
             playerInput.actions.FindAction("Interact").performed += aContext => RequestInteractServerRpc();

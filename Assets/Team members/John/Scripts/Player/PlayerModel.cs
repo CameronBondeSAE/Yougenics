@@ -86,6 +86,9 @@ namespace John
 			transform.Rotate(new Vector3(0, mouseX * Time.deltaTime * lookSensitivity, 0), Space.Self);
 		}
 
+		public float angle;
+		public float angleMultiplier = 0.2f;
+
 		private void FixedUpdate()
 		{
 			
@@ -95,7 +98,7 @@ namespace John
 			// Ground check for jumping
 			// Hack: Ray length
 			Ray   ray         = new Ray(feet.position, Vector3.down);
-			float groundRayLength = 0.25f;
+			float groundRayLength = 0.35f;
 			Debug.DrawRay(ray.origin, ray.direction * groundRayLength, Color.green);
 			RaycastHit hitInfo;
 			if (Physics.Raycast(ray.origin + rb.velocity/10f,  ray.direction, out hitInfo, groundRayLength, 255, QueryTriggerInteraction.Ignore))
@@ -112,15 +115,17 @@ namespace John
 			// Move
 			if (onGround)
 			{
-				Vector3 projectOnPlane = Vector3.ProjectOnPlane(rb.velocity, hitInfo.normal);
+				// Vector3 projectOnPlane = Vector3.ProjectOnPlane(transform.forward, hitInfo.normal);
 				
-				Debug.DrawRay(hitInfo.point, projectOnPlane*5f, Color.green);
+				// Debug.DrawRay(hitInfo.point, projectOnPlane*5f, Color.green);
 				
-				projectOnPlane = projectOnPlane.normalized;
-				
+				// projectOnPlane = projectOnPlane.normalized;
+
+				angle = Vector3.Angle(hitInfo.normal, Vector3.up);
+
 				//Using forces & mass for movement
-				rb.AddRelativeForce(movement * movementSpeed, ForceMode.Acceleration);
-				rb.AddForce(projectOnPlane * movementSpeed, ForceMode.Acceleration);
+				rb.AddRelativeForce(movement * (movementSpeed * (1f+angle*angleMultiplier)), ForceMode.Acceleration);
+				// rb.AddForce((projectOnPlane + movement) * movementSpeed, ForceMode.Acceleration);
 			}
 		}
 
