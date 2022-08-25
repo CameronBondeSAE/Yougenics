@@ -616,15 +616,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25716cbee64ff9c478c6cb75c908b76b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
   age: 0
   ageOfMatingStart: 0
   ageOfMatingEnd: 0
@@ -641,6 +632,7 @@ MonoBehaviour:
   colour: {r: 0, g: 1, b: 0.0575552, a: 0}
   sex: 0
   slowlyDieWhenOldRate: 0
+  energyBall: {fileID: 0}
   acceleration: 750
   visionRadius: 8
   visionCenterZ: 2.5
@@ -769,9 +761,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dangerLevel: 0
-  allegiances:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &2764331587373533724
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1397,8 +1397,8 @@ MonoBehaviour:
   spawnAmount: 15
   fieldSize: {x: 95, y: 15, z: 95}
   critterA: 0
-  critterB: 1
-  spawnFood: 1
+  critterB: 0
+  spawnFood: 0
 --- !u!4 &1705908340
 Transform:
   m_ObjectHideFlags: 0
@@ -1674,14 +1674,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2764331587373533722, guid: 508830cb9627c944b8615eafe6ada472, type: 3}
-      propertyPath: gestationComplete
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2764331587373533722, guid: 508830cb9627c944b8615eafe6ada472, type: 3}
-      propertyPath: serializationData.Prefab
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 2764331587373533725, guid: 508830cb9627c944b8615eafe6ada472, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 379964176

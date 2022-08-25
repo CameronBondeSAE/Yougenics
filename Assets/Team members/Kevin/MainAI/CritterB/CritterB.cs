@@ -106,8 +106,6 @@ public class CritterB : CreatureBase, IEdible
             myFoodChain = (FoodChain) Random.Range(0, 3);
             myAudioClip = GetComponent<AudioClip>();
             audioClip = GetComponent<AudioSource>();
-
-            eggPrefab = GetComponent<GameObject>();
         }
         
         public void OnEnable()
@@ -270,7 +268,7 @@ public class CritterB : CreatureBase, IEdible
         }
 
         public void LayEgg()
-        {
+        {   
             Instantiate(eggPrefab, eggSpawnPosition.position, Quaternion.identity);
             gestationComplete = false;
             StartCoroutine(GestationTimer());
