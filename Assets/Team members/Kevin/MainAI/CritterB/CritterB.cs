@@ -134,12 +134,12 @@ public class CritterB : CreatureBase, IEdible
             CreatureBase otherCreatureBase = other.GetComponent<CreatureBase>();
             IEdible otherEdible = other.GetComponent<IEdible>();
             CommonAttributes otherCommonAttributes = other.GetComponent<CommonAttributes>();
-            CritterB otherCritterB = other.GetComponent<CritterB>();
+            CritterB otherCritterB = other.GetComponent<CritterB>(); //This was getting triggered when running into all AI's not just AI's with critterB causing null errors
             RaycastHit hitInfo;
             
             
             //Physics.Raycast(transform.position,other.transform.position, out hitInfo, other.transform.position.magnitude - transform.position.magnitude,255,QueryTriggerInteraction.Ignore)
-            if (otherCreatureBase != null || otherEdible != null)
+            if (otherCreatureBase != null || otherEdible != null && otherCritterB != null)
             {
                 //if(Physics.Raycast(transform.position,other.transform.position, out hitInfo, 10f,255,QueryTriggerInteraction.Ignore))
                 //{

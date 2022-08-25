@@ -19,12 +19,24 @@ namespace Kevin
 
         void OnTriggerEnter(Collider other)
         {
-            parentScript.Profiler(other);
+            if (parentScript != null)
+            {
+                parentScript.Profiler(other);
+
+            }
+            else
+                Debug.Log("Parent Script Missing Reference");
         }
 
         void OnTriggerExit(Collider other)
         {
-            parentScript.VisionExit(other);
+            if (parentScript != null)
+            {
+                parentScript.VisionExit(other);
+
+            }
+            else
+                Debug.Log("Parent Script Missing Reference");
         }
    
     }
