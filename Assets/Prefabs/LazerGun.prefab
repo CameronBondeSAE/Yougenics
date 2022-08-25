@@ -120,15 +120,6 @@ MonoBehaviour:
     energyRequired: 50
     height: 0
     buildTime: 2
-  energy: {fileID: 0}
-<<<<<<< HEAD
-  energyPerShot: 2
-=======
-  energyPerShot: 20
->>>>>>> 8aed61a596e08f629f373d79034384acb6893569
-  canShoot: 0
-  lazerDamage: 20
-  range: 50
 --- !u!114 &3850238727689681086
 MonoBehaviour:
   m_ObjectHideFlags: 0
