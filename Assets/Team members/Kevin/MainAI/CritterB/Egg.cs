@@ -11,18 +11,20 @@ namespace Kevin
         public GameObject critterPrefab;
         private void OnEnable()
         {
+            StartCoroutine(Birth());
             StartCoroutine(Hatch());
         }
 
+        IEnumerator Birth()
+        {
+            yield return new WaitForSeconds(hatchTimer - 1f);
+            Instantiate(critterPrefab, transform.position, Quaternion.identity);
+        }
+        
         IEnumerator Hatch()
         {
             yield return new WaitForSeconds(hatchTimer);
             Destroy(gameObject);
-        }
-
-        private void OnDisable()
-        {
-            Instantiate(critterPrefab, transform.position, Quaternion.identity);
         }
     }
 }
