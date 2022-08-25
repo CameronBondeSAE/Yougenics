@@ -5592,7 +5592,7 @@ MonoBehaviour:
   colour: {r: 0, g: 0, b: 0, a: 0}
   sex: 0
   slowlyDieWhenOldRate: 0
-  energyBall: {fileID: 0}
+  energyBall: {fileID: 6538142482682508729, guid: 69a299a19828f084b916616053b88cea, type: 3}
   path: []
   foodLocationList: []
   mateLocationList: []
