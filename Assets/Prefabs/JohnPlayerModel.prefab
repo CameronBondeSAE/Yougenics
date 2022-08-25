@@ -705,6 +705,8 @@ MonoBehaviour:
   playerHead: {fileID: 8638494978573017855}
   inVehicle: 0
   feet: {fileID: 1335156242674683886}
+  angle: 0
+  angleMultiplier: 0.05
 --- !u!136 &8611620220612625324
 CapsuleCollider:
   m_ObjectHideFlags: 0
