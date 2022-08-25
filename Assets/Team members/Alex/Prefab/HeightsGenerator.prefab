@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9197623580334767068}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 52.67961, y: 157.09958, z: 78.55729}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -100,6 +100,30 @@ MonoBehaviour:
   autoStart: 0
   autoNetworkStart: 0
   radius: 5
-  groupInfos: []
+  findGroundHeight: 1
+  groupInfos:
+  - prefabs:
+    - {fileID: 919132149155446097, guid: 2c1fdd79e726eea4c95cd138162b05ea, type: 3}
+    - {fileID: 919132149155446097, guid: 2c1fdd79e726eea4c95cd138162b05ea, type: 3}
+    - {fileID: 919132149155446097, guid: 18871b3dfa07b2740ac3fc74ffb730f7, type: 3}
+    - {fileID: 919132149155446097, guid: 05aeca7ddfad610419e11fdb9192b018, type: 3}
+    spawnPoints: []
+    countPerGroup: 30
+  - prefabs:
+    - {fileID: 919132149155446097, guid: 107476c365ab1da49bec477816e0b053, type: 3}
+    - {fileID: 919132149155446097, guid: 7d1561b6018528e468fb148e174df771, type: 3}
+    - {fileID: 919132149155446097, guid: 3263fe407d783b6458d85a5b3f817315, type: 3}
+    - {fileID: 919132149155446097, guid: 53f607e633d90d744adf8a913a5a0a4e, type: 3}
+    spawnPoints: []
+    countPerGroup: 20
+  - prefabs:
+    - {fileID: 919132149155446097, guid: 780443990bc320d4e8029f2a092eb33f, type: 3}
+    - {fileID: 919132149155446097, guid: 974a275bb68990f4190164b1718785f6, type: 3}
+    spawnPoints: []
+    countPerGroup: 30
+  - prefabs:
+    - {fileID: 6538142482682508728, guid: 69a299a19828f084b916616053b88cea, type: 3}
+    spawnPoints: []
+    countPerGroup: 50
   groundOffset: 0
   spawned: []

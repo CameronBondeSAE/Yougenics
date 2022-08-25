@@ -5,6 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using DG.Tweening;
+using Tanks;
 using Unity.VisualScripting;
 
 namespace Alex
@@ -26,6 +27,7 @@ namespace Alex
         //public float terraformCount = 3;
         public List<GameObject> thingToSpawn = new List<GameObject>();
         Spawner spawner;
+        private GameObject thingThatSpawned;
 
         public void Start()
         {
@@ -50,9 +52,10 @@ namespace Alex
             float targetScaler = Random.Range(scalerOne, scalerTwo);
             //terrainGenerator.calculateHeightCallback = YourHeightCalculatorFunction;
             //terrainGenerator.GenerateTerrain();
-            StartCoroutine(Terraform(targetScaler));
+            //StartCoroutine(Terraform(targetScaler));
         }
 
+        /*
         public IEnumerator Terraform(float targetScaler)
         {
             scalerNew = Random.Range(scalerOne, scalerTwo);
@@ -84,34 +87,35 @@ namespace Alex
             }
             
             while (i < terraformCount);
-            */
+            
 
         }
-
-        bool ShouldISpawnDelegate(float x, float y)
-        {
-            return true; // TODO replace
-        }
-
+        */ 
 
         public float YourHeightCalculatorFunction(int x, int z)
         {
             perlinNoise = Mathf.PerlinNoise(x * scalerRange, z * scalerRange);
             
-            if (thingToSpawn.Count > 0)
-                if (Random.Range(0, 100) == 0 && perlinNoise > .5f)
-                {
-                    spawner.SpawnSingle(thingToSpawn[Random.Range(0,thingToSpawn.Count)], 
-                                        new Vector3(x, perlinNoise * terrainGenerator.depth,z) + transform.position, Quaternion.identity);
-                    //Instantiate(energyBall, new Vector3(z + transform.position.x, perlinNoise * heightMultiplier * terrainGenerator.depth + transform.position.y + 2f,x + transform.position.z), Quaternion.identity);
-                }
-            
-            
             return perlinNoise * heightMultiplier;
         }
         
-
-    }
+         bool ShouldISpawnDelegate(float x, float y)
+        {
+            perlinNoise = Mathf.PerlinNoise(x * scalerRange, y * scalerRange);
+            if (perlinNoise > .5f)
+                return true;
+            else
+                return false;
+        }
+        
+         /*
+         if (energyBall != null)
+         if (Random.Range(0, 100) == 0 && perlinNoise > .8f)
+         {
+             Instantiate(energyBall, new Vector3(z + transform.position.x, perlinNoise * heightMultiplier * terrainGenerator.depth + transform.position.y + 2f,x + transform.position.z), Quaternion.identity);
+         }
+        */
+   }
     
     
 }
