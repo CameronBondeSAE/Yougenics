@@ -189,7 +189,7 @@ MonoBehaviour:
     - {fileID: 919132149155446097, guid: decc19f4abb4b774892c8e768671072e, type: 3}
     - {fileID: 919132149155446097, guid: 342ccc9074ed9b4438c4c4c734d7adc7, type: 3}
     spawnPoints: []
-    countPerGroup: 274
+    countPerGroup: 80
   - prefabs:
     - {fileID: 919132149155446097, guid: fa0301acd070f9f49bc64d30ebbaeb78, type: 3}
     - {fileID: 919132149155446097, guid: 72101afece4dfc341a05c0e45313c6b9, type: 3}
@@ -253,7 +253,7 @@ MonoBehaviour:
     - {fileID: 919132149155446097, guid: fc1325f1f4e176c449acd0d782373493, type: 3}
     - {fileID: 919132149155446097, guid: 0b95809e84714704dac7cd803abb0a07, type: 3}
     spawnPoints: []
-    countPerGroup: 200
+    countPerGroup: 50
   - prefabs:
     - {fileID: 919132149155446097, guid: cce5ab0e70dae9d47ba7517a9ed88256, type: 3}
     - {fileID: 919132149155446097, guid: 9ee87b1dec35dc246b7102d16047ab10, type: 3}
@@ -296,7 +296,7 @@ MonoBehaviour:
     - {fileID: 919132149155446097, guid: 24b115a156381a449b85a82d865911f0, type: 3}
     - {fileID: 919132149155446097, guid: 58498ba51788aad4882b8f1dae3109bf, type: 3}
     spawnPoints: []
-    countPerGroup: 300
+    countPerGroup: 60
   - prefabs:
     - {fileID: 6538142482682508728, guid: 69a299a19828f084b916616053b88cea, type: 3}
     spawnPoints: []
@@ -2175,7 +2175,7 @@ PrefabInstance:
       objectReference: {fileID: 1028234429}
     - target: {fileID: 3863341238931218297, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 4413486585807475198, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: GlobalObjectIdHash
@@ -2292,6 +2292,10 @@ PrefabInstance:
     - target: {fileID: 7518922475590686048, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: m_Name
       value: Base
+      objectReference: {fileID: 0}
+    - target: {fileID: 7599526136320374967, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
+      propertyPath: m_RootOrder
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7691366155111702932, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: m_RootOrder

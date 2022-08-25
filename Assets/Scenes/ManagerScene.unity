@@ -681,6 +681,9 @@ MonoBehaviour:
 
     Pick up/drop = 1 and 2
 
+    Activate item
+    = Left and Right mouse
+
     Shift = Run'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -708,8 +711,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 7.7
-  m_fontSizeBase: 7.7
+  m_fontSize: 14.66
+  m_fontSizeBase: 14.66
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
