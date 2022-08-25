@@ -816,6 +816,10 @@ namespace Luke
 
 		public bool IsTired()
 		{
+            if (isSleeping)
+            {
+                return sleepLevel <= 0.7f * critterInfo.maxSleepLevel;
+            }
 			return sleepLevel <= 0.5f * critterInfo.maxSleepLevel;
 		}
 		

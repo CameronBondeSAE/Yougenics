@@ -5644,15 +5644,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f1a28d512f42524a93bb2cd99dfc547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
   age: 0
   ageOfMatingStart: 50
   ageOfMatingEnd: 200
@@ -5669,6 +5660,7 @@ MonoBehaviour:
   colour: {r: 0, g: 0, b: 0, a: 0}
   sex: 0
   slowlyDieWhenOldRate: 0
+  energyBall: {fileID: 0}
   critterInfo:
     maxHealth: 100
     maxSleepLevel: 100
@@ -5684,7 +5676,7 @@ MonoBehaviour:
   acceleration: 1
   turnSpeed: 12
   maxSpeed: 5
-  awakeDecayDelay: 0
+  awakeDecayDelay: 1
   regularMatingDelay: 0
   cannotMate: 0
   readyToMate: 0
@@ -5820,9 +5812,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dangerLevel: 10
-  allegiances:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &-8559123734810543935
 MonoBehaviour:
   m_ObjectHideFlags: 0
