@@ -151,6 +151,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hatchTimer: 25
   critterPrefabs:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 5861305019518734890, guid: 15c66fc78f1362b4c89183bff011d047, type: 3}
+  - {fileID: 7265986140717145438, guid: 23b1db56bb65d2d4abffe12b850cadef, type: 3}
+  - {fileID: 4500150202450387085, guid: 17f8ad017cc9b6b4cafaa4cb246fab27, type: 3}
+  - {fileID: 2764331587373533921, guid: 508830cb9627c944b8615eafe6ada472, type: 3}

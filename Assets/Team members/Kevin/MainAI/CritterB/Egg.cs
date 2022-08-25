@@ -19,7 +19,7 @@ namespace Kevin
         IEnumerator Birth()
         {
             yield return new WaitForSeconds(hatchTimer - 0.5f);
-            Instantiate(critterPrefabs[Random.Range(0,2)], transform.position, Quaternion.identity);
+            Instantiate(critterPrefabs[Random.Range(0,3)], transform.position, Quaternion.identity);
         }
         
         IEnumerator Hatch()

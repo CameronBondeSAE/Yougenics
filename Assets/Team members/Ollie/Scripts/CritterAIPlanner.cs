@@ -76,6 +76,8 @@ namespace Ollie
             turnTowards = GetComponentInChildren<TurnTowards>();
             avoidance = GetComponentInChildren<Avoidance>();
             stateViewer = GetComponentInChildren<StateViewer>();
+            maxAge = 200;
+            slowlyDieWhenOldRate = 5;
 
             renderer = GetComponent<Renderer>();
             
@@ -138,7 +140,7 @@ namespace Ollie
 
             if (healthComponent.CurrentHealth.Value <= 0)
             {
-                Death();
+                //Death();
             }
 
             if (energyComponent.EnergyAmount.Value < energyComponent.energyMax / 2)
@@ -164,7 +166,7 @@ namespace Ollie
 
             if (sleeping && dead)
             {
-                DestroyMe();
+                //DestroyMe();
             }
 
             if (age > 18 && sex == Sex.Male)

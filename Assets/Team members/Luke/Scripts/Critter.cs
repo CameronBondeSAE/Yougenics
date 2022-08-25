@@ -561,7 +561,7 @@ namespace Luke
             GameObject go = Instantiate(beam, _transform);
             go.GetComponent<Beam>().target = currentFood.transform;
 			Minh.Health targetHealth = currentFood.GetComponent<Minh.Health>();
-            targetHealth.ChangeHealth(-critterInfo.dangerLevel);
+            if (targetHealth != null) targetHealth.ChangeHealth(-critterInfo.dangerLevel);
             IEdible targetIEdible = currentFood.GetComponent<IEdible>();
             if (targetIEdible != null)
             {
@@ -786,6 +786,11 @@ namespace Luke
 			float distanceToCompare = critterInfo.visionRadius+5f;
 			foreach (Transform t in foodList)
 			{
+                if (t == null)
+                {
+                    foodList.Remove(t);
+                    continue;
+                }
 				Vector3 targetPosition = t.position;
 				Vector3 translation = targetPosition - position;
 				float distance = Vector3.Magnitude(translation);

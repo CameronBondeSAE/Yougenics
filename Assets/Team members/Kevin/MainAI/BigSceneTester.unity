@@ -1393,7 +1393,7 @@ MonoBehaviour:
   spawnAmount: 15
   fieldSize: {x: 95, y: 15, z: 95}
   critterA: 0
-  critterB: 0
+  critterB: 1
   spawnFood: 0
 --- !u!4 &1705908340
 Transform:
@@ -1670,6 +1670,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2764331587373533722, guid: 508830cb9627c944b8615eafe6ada472, type: 3}
+      propertyPath: energyBallPrefab
+      value: 
+      objectReference: {fileID: 6538142482682508728, guid: 69a299a19828f084b916616053b88cea, type: 3}
     - target: {fileID: 2764331587373533725, guid: 508830cb9627c944b8615eafe6ada472, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 379964176

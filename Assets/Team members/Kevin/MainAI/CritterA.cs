@@ -72,6 +72,13 @@ public class CritterA : CreatureBase, IEdible, ISense
         public List<GameObject> fireObjects;
         public List<Material> fireMaterial;
         public int currentState;
+        public GameObject energyBallPrefab;
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+            transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
+        }
+
         public override void Awake()
         {
             commonAttributes = GetComponent<CommonAttributes>();
@@ -441,7 +448,7 @@ public class CritterA : CreatureBase, IEdible, ISense
 
         public float GetEnergyAmount()
         {
-            throw new NotImplementedException();
+            return energy.EnergyAmount.Value;
         }
 
         public float EatMe(float energyRemoved)
