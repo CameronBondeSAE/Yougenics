@@ -330,7 +330,7 @@ namespace Luke
 			CommonAttributes go3 = other.GetComponentInParent<CommonAttributes>();
 			ILukeEdible go4 = other.GetComponentInParent<ILukeEdible>();
 			
-			if (go1 != null)
+			if (go1 != null && go3 != null)
 			{
 				float otherDangerLevel = go3.dangerLevel;
 				if (otherDangerLevel >= critterInfo.dangerLevel + 3)

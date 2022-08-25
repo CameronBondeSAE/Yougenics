@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Anthill.AI;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -9,8 +8,6 @@ namespace Ollie
 {
     public class StateViewer : NetworkBehaviour
     {
-        public StateDictionary stateDictionary;
-        
         private ParticleSystemRenderer particleSystem;
         private AudioSource[] sounds;
         private AudioSource deathSound;
@@ -33,35 +30,23 @@ namespace Ollie
         private void Start()
         {
             particleSystem = GetComponent<ParticleSystemRenderer>();
-            // sounds = GetComponents<AudioSource>();
-            // deathSound = sounds[0];
-            // eatingSound = sounds[1];
-            // matingSound = sounds[2];
-            // sleepingSound = sounds[3];
-            // walkingSound = sounds[4];
+            sounds = GetComponents<AudioSource>();
+            deathSound = sounds[0];
+            eatingSound = sounds[1];
+            matingSound = sounds[2];
+            sleepingSound = sounds[3];
+            walkingSound = sounds[4];
             parent = GetComponentInParent<CritterAIPlanner>();
         }
 
-        public void ChangeViewInfo(AntAIState aiState)
-        {
-            AudioClip audioClip = stateDictionary.aiStateInfo[aiState.GetType()].audioClip;
-            Material particleMaterial = stateDictionary.aiStateInfo[aiState.GetType()].particleMaterial;
-            String text = stateDictionary.aiStateInfo[aiState.GetType()].text;
-
-            if (IsClient)
-            {
-                if (audioClip != null) AudioSource.PlayClipAtPoint(audioClip,parent.transform.position);
-                if (particleMaterial != null) particleSystem.material = particleMaterial;
-            }
-        }
         public void ChangeParticles(int index)
         {
+            //if isServer or isClient
+            if (IsClient)
+            {
+                particleSystem.material = particleMaterials[index];
+            }
             
-            // if (IsClient)
-            // {
-            //     particleSystem.material = particleMaterials[index];
-            // }
-            //
             // if (index == 6 && !deathSound.isPlaying) deathSound.Play();
             // if (index == 5 && !walkingSound.isPlaying) walkingSound.Play();
             // if (index == 3 && !matingSound.isPlaying) matingSound.Play();

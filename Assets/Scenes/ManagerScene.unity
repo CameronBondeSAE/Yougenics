@@ -256,7 +256,7 @@ PrefabInstance:
     - target: {fileID: 5076254510905692312, guid: ccbab0122c7c9304fab7deacc164e04e, type: 3}
       propertyPath: groupInfos.Array.data[5].prefabs.Array.data[0]
       value: 
-      objectReference: {fileID: 7918710336458080463, guid: 85e3af658d8c50a4b9cf9c20f87779cf, type: 3}
+      objectReference: {fileID: 7918710336458080463, guid: 666447a560c9f854394bd90176aed3c3, type: 3}
     - target: {fileID: 5076254510905692313, guid: ccbab0122c7c9304fab7deacc164e04e, type: 3}
       propertyPath: m_RootOrder
       value: 0

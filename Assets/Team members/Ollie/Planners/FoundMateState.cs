@@ -53,7 +53,7 @@ namespace Ollie
 
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
-            brain.StateViewerChange(this);
+            brain.StateViewerChange(3);
             brain.moveSpeed = 5;
             base.Execute(aDeltaTime, aTimeScale);
             if (positionsList.Count == 0)
@@ -77,7 +77,7 @@ namespace Ollie
                     if (brain.transform.position != closest.position)
                     {
                         brain.SetTarget(closest);
-                        //print("target mate set");
+                        print("target mate set");
                     }
                     else
                     {
@@ -88,7 +88,7 @@ namespace Ollie
                 if (Vector3.Distance(parent.transform.position, closest.position) < 1)
                 {
                     brain.moveSpeed = 0;
-                    //print("its GIGADY time");
+                    print("its GIGADY time");
                     brain.SetMateFound(true);
                 }
             }

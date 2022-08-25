@@ -20,6 +20,10 @@ namespace Minh
         public float adjust2;
         public float adjust3;
         public Transform Player;
+        public EnergyBarAlex energyBarItem1UI;
+        public EnergyBarAlex energyBarItem2UI;
+        public ItemNameUI itemName1UI;
+        public ItemNameUI itemName2UI;
 
 
         // Update is called once per frame
@@ -68,6 +72,9 @@ namespace Minh
                             monoBehaviour.GetComponent<Rigidbody>().isKinematic = true;
                             monoBehaviour.GetComponent<Collider>().enabled = false;
                         }
+
+                        itemName1UI.name = slot1.GetInfo().name;
+                        energyBarItem1UI.myEnergy = monoBehaviour.GetComponent<Energy>();
                         
                         Debug.Log("picked up");
                     }
@@ -91,6 +98,9 @@ namespace Minh
                         MonoBehaviour monoBehaviour = item2 as MonoBehaviour;
                         monoBehaviour.transform.parent = Player.transform;
                         monoBehaviour.transform.position = Player.transform.position + new Vector3(0f, adjust2 * adjust3 * Time.deltaTime, 1 * adjust1 * Time.deltaTime);
+                        
+                        itemName2UI.name = slot2.GetInfo().name;
+                        energyBarItem2UI.myEnergy = monoBehaviour.GetComponent<Energy>();
                         Debug.Log("picked up");
                     }
                 }
