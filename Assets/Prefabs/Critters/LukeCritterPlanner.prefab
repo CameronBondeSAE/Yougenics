@@ -5666,7 +5666,7 @@ MonoBehaviour:
     maxSleepLevel: 100
     maxEnergyLevel: 100
     metabolism: 0
-    firstMatingDelay: 50
+    firstMatingDelay: 200
     isCarnivore: 0
     gender: 0
     dangerLevel: 17
