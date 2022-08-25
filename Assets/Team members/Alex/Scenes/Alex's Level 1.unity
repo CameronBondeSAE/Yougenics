@@ -493,7 +493,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-161280
+  m_Name: pb_Mesh-1253610
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2175,7 +2175,7 @@ PrefabInstance:
       objectReference: {fileID: 1028234429}
     - target: {fileID: 3863341238931218297, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4413486585807475198, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: GlobalObjectIdHash
@@ -2295,7 +2295,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7599526136320374967, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 7691366155111702932, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: m_RootOrder
@@ -2339,7 +2339,7 @@ PrefabInstance:
       objectReference: {fileID: 1954794162569713100, guid: 7785dd4a8c78c3b47ac3e85e98aac377, type: 3}
     - target: {fileID: 8111039989858690183, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: itemInfo.name
-      value: 
+      value: Repair Gun
       objectReference: {fileID: 0}
     - target: {fileID: 8111039989858690183, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: itemInfo.height
@@ -2347,15 +2347,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8111039989858690183, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: itemInfo.buildTime
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8111039989858690183, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: itemInfo.description
-      value: 
+      value: Repair walls and heal allies
       objectReference: {fileID: 0}
     - target: {fileID: 8111039989858690183, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: itemInfo.energyRequired
-      value: 0
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8111039990374893359, guid: 9577eefd65ac7b84ab5c1a0db30f5657, type: 3}
       propertyPath: GlobalObjectIdHash
