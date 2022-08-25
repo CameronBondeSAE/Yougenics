@@ -199,7 +199,7 @@ MonoBehaviour:
   iteminfo:
     name: Energy Container
     description: Drain energy from everything around you
-    energyRequired: 100
+    energyRequired: 50
     height: 2
     buildTime: 2
 --- !u!54 &7389904
@@ -231,7 +231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnergyAmount:
-    m_InternalValue: 0
+    m_InternalValue: 100
   energyMax: 100
   energyMin: 0
   drainAmount: 1

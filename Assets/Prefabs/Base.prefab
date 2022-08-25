@@ -1375,6 +1375,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3863341238277733247, guid: 0ce31ac89d32d4d4b91527e9c3ada0a9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -76.099976
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863341238277733247, guid: 0ce31ac89d32d4d4b91527e9c3ada0a9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -24.099976
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ce31ac89d32d4d4b91527e9c3ada0a9, type: 3}
 --- !u!224 &3863341238931218297 stripped
@@ -1463,11 +1471,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3571767707691462230, guid: b1b6a4a4712a0364bbffc21e45491ba2, type: 3}
       propertyPath: deepColor.g
-      value: 0.42743352
+      value: 0.4274339
       objectReference: {fileID: 0}
     - target: {fileID: 3571767707691462230, guid: b1b6a4a4712a0364bbffc21e45491ba2, type: 3}
       propertyPath: shoreColor.b
-      value: 0.3019433
+      value: 0.3019437
       objectReference: {fileID: 0}
     - target: {fileID: 3571767707691462230, guid: b1b6a4a4712a0364bbffc21e45491ba2, type: 3}
       propertyPath: waveSteepness
@@ -1483,7 +1491,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3571767707691462230, guid: b1b6a4a4712a0364bbffc21e45491ba2, type: 3}
       propertyPath: horizonColor.g
-      value: 0.22743353
+      value: 0.22743389
       objectReference: {fileID: 0}
     - target: {fileID: 3571767707691462230, guid: b1b6a4a4712a0364bbffc21e45491ba2, type: 3}
       propertyPath: shallowColor.b
@@ -1831,7 +1839,7 @@ PrefabInstance:
       objectReference: {fileID: 1954794162569713100, guid: 7785dd4a8c78c3b47ac3e85e98aac377, type: 3}
     - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: itemInfo.name
-      value: 
+      value: Repair Gun
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: itemInfo.height
@@ -1839,15 +1847,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: itemInfo.buildTime
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: itemInfo.description
-      value: 
+      value: Repair broken walls and heal your allies
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: itemInfo.energyRequired
-      value: 0
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607510, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_RootOrder
@@ -1969,7 +1977,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: itemInfo.energyRequired
-      value: 1000
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607510, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_RootOrder
@@ -2091,7 +2099,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: itemInfo.energyRequired
-      value: 500
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607510, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_RootOrder
@@ -2267,7 +2275,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: itemInfo.height
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: itemInfo.buildTime
@@ -2279,7 +2287,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: itemInfo.energyRequired
-      value: 500
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607510, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_RootOrder
@@ -2933,7 +2941,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: itemInfo.buildTime
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: itemInfo.description
@@ -2941,7 +2949,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: itemInfo.energyRequired
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607510, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_RootOrder
@@ -3267,6 +3275,22 @@ PrefabInstance:
       propertyPath: itemToSpawn
       value: 
       objectReference: {fileID: 2764626321808243858, guid: 0c6dd43972bbe024b946ac84fdf0fe8b, type: 3}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.name
+      value: Lazer
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.buildTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.description
+      value: Shot everything with this lazer
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: itemInfo.energyRequired
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607510, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -3634,6 +3658,14 @@ PrefabInstance:
     - target: {fileID: 3863341237699610676, guid: 0ce31ac89d32d4d4b91527e9c3ada0a9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863341238277733247, guid: 0ce31ac89d32d4d4b91527e9c3ada0a9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -76.099976
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863341238277733247, guid: 0ce31ac89d32d4d4b91527e9c3ada0a9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -24.099976
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ce31ac89d32d4d4b91527e9c3ada0a9, type: 3}
