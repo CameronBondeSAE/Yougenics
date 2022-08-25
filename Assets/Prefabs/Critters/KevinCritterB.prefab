@@ -632,7 +632,7 @@ MonoBehaviour:
   colour: {r: 0, g: 1, b: 0.0575552, a: 0}
   sex: 0
   slowlyDieWhenOldRate: 0
-  energyBall: {fileID: 0}
+  energyBall: {fileID: 6538142482682508729, guid: 69a299a19828f084b916616053b88cea, type: 3}
   acceleration: 750
   visionRadius: 8
   visionCenterZ: 2.5
@@ -682,6 +682,7 @@ MonoBehaviour:
   feet2Object: {fileID: 1194381517}
   feetRenderer: {fileID: 0}
   feet2Renderer: {fileID: 0}
+  energyBallPrefab: {fileID: 6538142482682508728, guid: 69a299a19828f084b916616053b88cea, type: 3}
   myAudioClip: {fileID: 0}
   snarlClip: {fileID: 8300000, guid: 912ff11874bfa8647aaa4bee86f39999, type: 3}
   eatingClip: {fileID: 8300000, guid: e46dbcbf39a5a00469d2757c90680a0a, type: 3}

@@ -71,7 +71,8 @@ public class CritterB : CreatureBase, IEdible
         public GameObject feet2Object;
         public Renderer feetRenderer;
         public Renderer feet2Renderer;
-        
+
+        public GameObject energyBallPrefab;
         //Audio
         [Tooltip("Audio Variables")]
         public AudioClip myAudioClip;
@@ -148,7 +149,7 @@ public class CritterB : CreatureBase, IEdible
             {
                 LayEgg();
             }
-            
+            transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
             SetScale();
         }
 
@@ -286,6 +287,7 @@ public class CritterB : CreatureBase, IEdible
             renderer.material.SetFloat("_Color", deathColour);
             noseRenderer.material.SetFloat("_Color", deathColour);
             deathOrb.SetActive(true);
+            Instantiate(energyBallPrefab, transform.position, Quaternion.identity);
         }
 
         public void LayEgg()

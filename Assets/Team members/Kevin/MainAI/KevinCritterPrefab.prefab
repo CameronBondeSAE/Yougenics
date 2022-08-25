@@ -431,7 +431,7 @@ MonoBehaviour:
   colour: {r: 0, g: 0, b: 0, a: 0}
   sex: 0
   slowlyDieWhenOldRate: 0
-  energyBall: {fileID: 0}
+  energyBall: {fileID: 6538142482682508729, guid: 69a299a19828f084b916616053b88cea, type: 3}
   myDangerLevel: 0
   energyTest: 100
   healthTest: 100
@@ -479,6 +479,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: c12997621c402fc4ba47fd7185cdf9f5, type: 2}
   - {fileID: 2100000, guid: 18e40f69f95814f48bcdf4dd881f011b, type: 2}
   currentState: 0
+  energyBallPrefab: {fileID: 0}
   visionCritterA: {fileID: 0}
 --- !u!114 &1388483787997497220
 MonoBehaviour:
