@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Anthill.AI;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace Ollie
@@ -36,7 +37,7 @@ namespace Ollie
 
             if (doneMating)
             {
-                print("done mating");
+                //print("done mating");
                 doneMating = false;
             }
         }
@@ -55,12 +56,13 @@ namespace Ollie
         
         public IEnumerator MateCoroutine()
         {
-            print("coroutine started");
+            //print("coroutine started");
             yield return new WaitForSeconds(5);
             GameObject go = Instantiate(brain.olliePrefabReferenceHack.prefab);
+            go.GetComponent<NetworkObject>().Spawn();
             go.transform.position = brain.transform.position + new Vector3(0,0,-2);
             
-            brain.moveSpeed = 3;
+            brain.moveSpeed = 7;
             brain.age = 0;
             brain.SetIsHorny(false);
             doneMating = true;

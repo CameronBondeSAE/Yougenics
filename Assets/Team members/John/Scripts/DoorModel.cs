@@ -12,6 +12,10 @@ public class DoorModel : NetworkBehaviour, IInteractable
 
     public event Action<bool> onDoorInteractEvent;
 
+    //SUPER HACK
+    public BoxCollider closedCollider;
+    public BoxCollider openCollider;
+
     public override void OnNetworkSpawn()
     {
         IsDoorOpen.OnValueChanged += UpdateDoorState;
@@ -45,6 +49,8 @@ public class DoorModel : NetworkBehaviour, IInteractable
             {
                 IsDoorOpen.Value = true;
             }
+
+            UpdateColliderHackClientRpc(IsDoorOpen.Value);
         }
         else
         {
@@ -57,5 +63,20 @@ public class DoorModel : NetworkBehaviour, IInteractable
     private void SubmitInteractRequestServerRpc()
     {
         Interact();
+    }
+
+    [ClientRpc]
+    public void UpdateColliderHackClientRpc(bool doorOpen)
+    {
+        if(doorOpen)
+        {
+            closedCollider.enabled = false;
+            openCollider.enabled = true;
+        }
+        else
+        {
+            closedCollider.enabled = true;
+            openCollider.enabled = false;
+        }
     }
 }

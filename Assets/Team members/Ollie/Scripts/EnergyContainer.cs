@@ -10,12 +10,12 @@ namespace Ollie
 {
     public class EnergyContainer : MonoBehaviour, IItem, IEnergyDrainer
     {
-        Energy energy;
+        public Energy energy;
         public float drainRate;
         private bool currentlyDraining;
         public List<GameObject> drainTargets;
         public ItemInfo iteminfo;
-        public GameObject orb;
+        //public GameObject orb;
 
         private void Awake()
         {
@@ -38,13 +38,13 @@ namespace Ollie
                         target.GetComponent<Energy>().ChangeEnergy(-drainRate);
                         energy.ChangeEnergy(drainRate);
                         print("yoink");
-                        orb.SetActive(true);
+                        //orb.SetActive(true);
                         
                     }
                     else if  (target.GetComponent<Energy>().EnergyAmount.Value <= 0)
                     {
                         currentlyDraining = false;
-                        orb.SetActive(false);
+                        //orb.SetActive(false);
                     }
                 }
             }

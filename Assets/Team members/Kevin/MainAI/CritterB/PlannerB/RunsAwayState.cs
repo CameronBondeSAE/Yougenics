@@ -68,7 +68,7 @@ namespace Kevin
         public void TurnTo(Vector3 target)
         {
             Quaternion targetRotation = Quaternion.LookRotation(target - transform.position);
-            critterB.transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation,Time.deltaTime);
+            critterB.transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation,1f);
         }
 
         public override void Exit()

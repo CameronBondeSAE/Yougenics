@@ -28,45 +28,46 @@ namespace Ollie
         {
             myPos = parentTransform.position;
 
-            for (int i = -90; i < 90; i++)
+            for (int i = -90; i < 90; i+=20)
             {
                 Vector3 rayAngle = Quaternion.Euler(25, i, 0) * Vector3.forward;
                 rayAngle = transform.TransformDirection(rayAngle);
                 Ray ray = new Ray(myPos + Vector3.up, rayAngle.normalized);
-                if(i > 0) Debug.DrawRay(ray.origin, ray.direction * hitData.distance, Color.red, 0.1f);
-                if(i < 0) Debug.DrawRay(ray.origin, ray.direction * hitData.distance, Color.blue, 0.1f);
+                //if(i > 0) Debug.DrawRay(ray.origin, ray.direction * hitData.distance, Color.red, 0.1f);
+                //if(i < 0) Debug.DrawRay(ray.origin, ray.direction * hitData.distance, Color.blue, 0.1f);
+                
                 if (Physics.Raycast(ray, out hitDataFloor) && rigidbody.velocity.y < 1)
                 {
                     if (hitDataFloor.distance > 4 && i > 0 && hitDataFloor.collider.gameObject.GetComponent<Terrain>())
                     {
                         rigidbody.AddRelativeTorque(0,-2,0);
                         rigidbody.AddRelativeForce(Vector3.back/2);
-                        print("floor check applied turn LEFT");
+                        //print("floor check applied turn LEFT");
                     }
                     else if (hitDataFloor.distance > 4 && i < 0 &&
                              hitDataFloor.collider.gameObject.GetComponent<Terrain>())
                     {
                         rigidbody.AddRelativeTorque(0,2,0);
                         rigidbody.AddRelativeForce(Vector3.back/2);
-                        print("floor check applied turn RIGHT");
+                        //print("floor check applied turn RIGHT");
                     }
                 }
             }
             
-            for (int i = -fovAngle; i < fovAngle; i++)
+            for (int i = -fovAngle; i < fovAngle; i+=15)
             {
                 Vector3 rayAngle = Quaternion.Euler(0, i, 0) * parentTransform.forward;
                 Ray ray = new Ray(myPos, rayAngle.normalized);
 
 
                 #region Visualize FOV
-                // if (i is > -5 and < 5)
+                // if (i is > -5 and < 5) 
                 // {
-                //     Debug.DrawRay(ray.origin, ray.direction * hitData.distance, Color.red, 0.01f);
+                //      Debug.DrawRay(ray.origin, ray.direction * hitData.distance, Color.red, 0.01f);
                 // }
                 // else
                 // {
-                //     Debug.DrawRay(ray.origin, ray.direction * hitData.distance, Color.blue, 0.01f);
+                //      Debug.DrawRay(ray.origin, ray.direction * hitData.distance, Color.blue, 0.01f);
                 // }
                 #endregion
                 

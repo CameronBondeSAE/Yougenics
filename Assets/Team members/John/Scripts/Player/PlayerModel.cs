@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 
 namespace John
 {
-	public class PlayerModel : NetworkBehaviour
+	public class PlayerModel : CreatureBase, IEdible
 	{
 		[Header("Player Setup")]
 		public float movementSpeed = 10f;
@@ -47,6 +47,8 @@ namespace John
 
 		public bool      inVehicle = false;
 		public IVehicleControls vehicleReference;
+		public Vector3 vehicleOffset;
+		public GameObject playerView;
 
 		public Transform feet;
 		
@@ -86,6 +88,11 @@ namespace John
 			transform.Rotate(new Vector3(0, mouseX * Time.deltaTime * lookSensitivity, 0), Space.Self);
 		}
 
+		public float angle;
+		public float angleMultiplier = 0.2f;
+		// HACK
+		public AudioSource       audioSourceHurt;
+
 		private void FixedUpdate()
 		{
 			
@@ -95,7 +102,7 @@ namespace John
 			// Ground check for jumping
 			// Hack: Ray length
 			Ray   ray         = new Ray(feet.position, Vector3.down);
-			float groundRayLength = 0.25f;
+			float groundRayLength = 0.35f;
 			Debug.DrawRay(ray.origin, ray.direction * groundRayLength, Color.green);
 			RaycastHit hitInfo;
 			if (Physics.Raycast(ray.origin + rb.velocity/10f,  ray.direction, out hitInfo, groundRayLength, 255, QueryTriggerInteraction.Ignore))
@@ -112,15 +119,17 @@ namespace John
 			// Move
 			if (onGround)
 			{
-				Vector3 projectOnPlane = Vector3.ProjectOnPlane(rb.velocity, hitInfo.normal);
+				// Vector3 projectOnPlane = Vector3.ProjectOnPlane(transform.forward, hitInfo.normal);
 				
-				Debug.DrawRay(hitInfo.point, projectOnPlane*5f, Color.green);
+				// Debug.DrawRay(hitInfo.point, projectOnPlane*5f, Color.green);
 				
-				projectOnPlane = projectOnPlane.normalized;
-				
+				// projectOnPlane = projectOnPlane.normalized;
+
+				angle = Vector3.Angle(hitInfo.normal, Vector3.up);
+
 				//Using forces & mass for movement
-				rb.AddRelativeForce(movement * movementSpeed, ForceMode.Acceleration);
-				rb.AddForce(projectOnPlane * movementSpeed, ForceMode.Acceleration);
+				rb.AddRelativeForce(movement * (movementSpeed * (1f+angle*angleMultiplier)), ForceMode.Acceleration);
+				// rb.AddForce((projectOnPlane + movement) * movementSpeed, ForceMode.Acceleration);
 			}
 		}
 
@@ -276,10 +285,21 @@ namespace John
 
 			// Lock me to the vehicle, just so the camera doesn't need to retarget anything. I don't actually need to be a child
 			MonoBehaviour vehicleComponent = vehicleReference as MonoBehaviour;
-			transform.parent        = vehicleComponent.transform;
+			transform.parent = vehicleComponent.transform;
 			transform.localPosition = Vector3.zero;
+			transform.localPosition = vehicleOffset;
+
+			//HACK for turning off the player
+			UpdateGraphicsClientRpc(false);
 
 			// vehicleReference.Enter();
+		}
+
+		[ClientRpc]
+		public void UpdateGraphicsClientRpc(bool setActive)
+		{
+			playerView.SetActive(setActive);
+			GetComponent<CapsuleCollider>().enabled = setActive;
 		}
 
 		public void GetOutOfVehicle()
@@ -301,27 +321,50 @@ namespace John
 
 			//BUG HACK: Getting out of the vehicle seems to be changing the player's scale
 			transform.localScale = new Vector3(1, 1, 1);
-			
+
+			//HACK for turning off the player
+			UpdateGraphicsClientRpc(true);
+
 			// vehicleReference.Exit();
 		}
 
 
-		RaycastHit CheckWhatsInFrontOfMe()
+		public RaycastHit CheckWhatsInFrontOfMe()
 		{
 			// Check what's in front of me. TODO: Make it scan the area or something less precise
-			RaycastHit hit;
+			// RaycastHit hit;
 			// Ray        ray = new Ray(transform.position + transform.TransformPoint(interactRayOffset), transform.forward);
 			// NOTE: TransformPoint I THINK includes the main position, so you don't have to add world position to the final
 			Vector3 transformPoint = playerHead.TransformPoint(interactRayOffset);
 			// Debug.Log(transformPoint);
 			Ray ray = new Ray(transformPoint, playerHead.forward);
 
-			Debug.DrawRay(ray.origin, ray.direction * interactDistance, Color.green, 2f);
+			// Debug.DrawRay(ray.origin, ray.direction * interactDistance, Color.green, 2f);
 
 			// if (Physics.Raycast(ray, out hit, interactDistance))
-			Physics.SphereCast(ray, 0.5f, out hit, interactDistance);
+			RaycastHit[] sphereCastAll = Physics.SphereCastAll(ray, 1f, interactDistance, 255);//, QueryTriggerInteraction.Ignore);
+			foreach (RaycastHit raycastHit in sphereCastAll)
+			{
+				if (raycastHit.collider.GetComponent<IInteractable>() != null)
+				{
+					return raycastHit;
+				}
+			}
 
-			return hit;
+			// Nothing
+			return new RaycastHit();
+		}
+
+		public float GetEnergyAmount()
+		{
+			return GetComponent<Energy>().EnergyAmount.Value;
+		}
+
+		public float EatMe(float energyRemoved)
+		{
+			audioSourceHurt.Play();
+
+			return energyRemoved;
 		}
 	}
 }

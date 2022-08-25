@@ -39,7 +39,6 @@ public class Wandering : AntAIState
             
             RandomForce = Random.Range(-7, 7);
             RandomTimer = Random.Range(3, 10);
-            Debug.Log("rand");
         }
 
 
