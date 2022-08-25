@@ -688,6 +688,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50357d34566a21647a9d61ec8d228b8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  age: 0
+  ageOfMatingStart: 0
+  ageOfMatingEnd: 0
+  maxAge: 0
+  isPregnant: 0
+  gestationTime: 0
+  litterSizeMax: 0
+  metabolism: 0
+  mutationRate: 0
+  empathy: 0
+  aggression: 0
+  sizeScale: 0
+  maxSize: 0
+  colour: {r: 0, g: 0, b: 0, a: 0}
+  sex: 0
+  slowlyDieWhenOldRate: 0
+  energyBall: {fileID: 0}
   movementSpeed: 50
   sprintSpeed: 50
   lookSensitivity: 5
@@ -710,6 +727,7 @@ MonoBehaviour:
   feet: {fileID: 1335156242674683886}
   angle: 0
   angleMultiplier: 0.05
+  audioSourceHurt: {fileID: 0}
 --- !u!136 &8611620220612625324
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -985,7 +1003,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3df35e62c4bef8245892108d01cb9482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lockMouse: 0
+  lockMouse: 1
   target: {fileID: 8611620220612625320}
   heightOffset: 0
 --- !u!1001 &873423054151000396
