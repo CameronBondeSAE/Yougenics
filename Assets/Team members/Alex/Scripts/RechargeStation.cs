@@ -68,7 +68,7 @@ public class RechargeStation : MonoBehaviour, IEnergyDrainer
     public void OnTriggerEnter(Collider other)
     {
         //need to check for player too!! maybe?
-        if (other.GetComponent<Energy>() != null && !energyUsers.Contains(other.gameObject) && !other.GetComponent<JohnPlayerModel>())
+        if (other.GetComponent<Energy>() != null && !energyUsers.Contains(other.gameObject))
         {
             energyUsers.Add(other.gameObject);
         }

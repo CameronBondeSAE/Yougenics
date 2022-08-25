@@ -812,7 +812,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8611620220612625317}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86b58142ff8a3804fa71c5004d10d94b, type: 3}
   m_Name: 
@@ -1193,17 +1193,25 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4297361665943501834, guid: 8945c0a54c2cc9e4690b4f5a7208ccef, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4297361665943501846, guid: 8945c0a54c2cc9e4690b4f5a7208ccef, type: 3}
       propertyPath: myEnergy
       value: 
       objectReference: {fileID: 246153594134181686}
-    - target: {fileID: 4297361666289449373, guid: 8945c0a54c2cc9e4690b4f5a7208ccef, type: 3}
-      propertyPath: m_AnchorMax.x
+    - target: {fileID: 4297361665943501846, guid: 8945c0a54c2cc9e4690b4f5a7208ccef, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4297361666289449373, guid: 8945c0a54c2cc9e4690b4f5a7208ccef, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4297361666289449373, guid: 8945c0a54c2cc9e4690b4f5a7208ccef, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4297361666813395536, guid: 8945c0a54c2cc9e4690b4f5a7208ccef, type: 3}
       propertyPath: myHealth
