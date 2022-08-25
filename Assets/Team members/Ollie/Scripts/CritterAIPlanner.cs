@@ -17,7 +17,7 @@ namespace Ollie
         public List<Vector3> path;
         public List<Transform> foodLocationList;
         public List<GameObject> mateLocationList;
-        public float moveSpeed = 7f;
+        public float moveSpeed = 0.25f;
         //public WaterNode currentLocation;
         [HideInInspector] public Transform target;
         [HideInInspector] [FormerlySerializedAs("targetTransform")] public Vector3 targetPos;
@@ -68,7 +68,7 @@ namespace Ollie
         private void Start()
         {
             path = new List<Vector3>();
-            //moveSpeed = 3;
+            moveSpeed = 3;
             //rigidbody = GetComponent<Rigidbody>();
             aStar = GetComponentInChildren<AStar>();
             turnTowards = GetComponentInChildren<TurnTowards>();
@@ -150,7 +150,6 @@ namespace Ollie
 
             if (energyComponent.EnergyAmount.Value <= energyComponent.energyMin)
             {
-                print("bad");
                 moveSpeed = 0;
                 sleeping = true;
             }
@@ -176,15 +175,15 @@ namespace Ollie
             }
         }
 
-        public void StateViewerChange(int index)
+        public void StateViewerChange(AntAIState aiState)
         {
-            stateViewer.ChangeParticles(index);
-            //stateViewer.ChangeViewInfo(aiState);
+            //stateViewer.ChangeParticles(index);
+            stateViewer.ChangeViewInfo(aiState);
         }
 
         private void Death()
         {
-            StateViewerChange(6);
+            //StateViewerChange(6);
             dead = true;
             healthComponent.IsDead.Value = true;
             energyComponent.useEnergyOnMovement = false;
@@ -193,14 +192,14 @@ namespace Ollie
 
         private void Sleep()
         {
-            StateViewerChange(4);
+            //StateViewerChange(4);
             energyComponent.EnergyAmount.Value += 10 * Time.deltaTime;
 
             if (energyComponent.EnergyAmount.Value >= energyComponent.energyMax)
             {
                 energyComponent.EnergyAmount.Value = energyComponent.energyMax;
                 sleeping = false;
-                moveSpeed = 7;
+                moveSpeed = 3;
             }
         }
 

@@ -30,7 +30,7 @@ namespace Ollie
 
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
-            brain.StateViewerChange(3);
+            brain.StateViewerChange(this);
             brain.turnTowards.TurnParent(target.transform.position);
             base.Execute(aDeltaTime, aTimeScale);
 
@@ -60,7 +60,7 @@ namespace Ollie
             GameObject go = Instantiate(brain.olliePrefabReferenceHack.prefab);
             go.transform.position = brain.transform.position + new Vector3(0,0,-2);
             
-            brain.moveSpeed = 7;
+            brain.moveSpeed = 3;
             brain.age = 0;
             brain.SetIsHorny(false);
             doneMating = true;

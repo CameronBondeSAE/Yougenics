@@ -50,7 +50,6 @@ namespace Ollie
             //     Vector3 xAngle = new Vector3(parent.transform.rotation.x,0,0);
             //     rigidbody.AddRelativeForce((Vector3.forward+ (projectOnPlane)) * parent.moveSpeed);
             // }
-            rigidbody.AddRelativeForce(Vector3.forward * parent.moveSpeed);
             
             if (rigidbody.velocity.magnitude < parent.moveSpeed)
             {

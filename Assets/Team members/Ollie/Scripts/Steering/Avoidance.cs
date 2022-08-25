@@ -33,23 +33,22 @@ namespace Ollie
                 Vector3 rayAngle = Quaternion.Euler(25, i, 0) * Vector3.forward;
                 rayAngle = transform.TransformDirection(rayAngle);
                 Ray ray = new Ray(myPos + Vector3.up, rayAngle.normalized);
-                //if(i > 0) Debug.DrawRay(ray.origin, ray.direction * hitData.distance, Color.red, 0.1f);
-                //if(i < 0) Debug.DrawRay(ray.origin, ray.direction * hitData.distance, Color.blue, 0.1f);
-                
+                if(i > 0) Debug.DrawRay(ray.origin, ray.direction * hitData.distance, Color.red, 0.1f);
+                if(i < 0) Debug.DrawRay(ray.origin, ray.direction * hitData.distance, Color.blue, 0.1f);
                 if (Physics.Raycast(ray, out hitDataFloor) && rigidbody.velocity.y < 1)
                 {
                     if (hitDataFloor.distance > 4 && i > 0 && hitDataFloor.collider.gameObject.GetComponent<Terrain>())
                     {
                         rigidbody.AddRelativeTorque(0,-2,0);
                         rigidbody.AddRelativeForce(Vector3.back/2);
-                        //print("floor check applied turn LEFT");
+                        print("floor check applied turn LEFT");
                     }
                     else if (hitDataFloor.distance > 4 && i < 0 &&
                              hitDataFloor.collider.gameObject.GetComponent<Terrain>())
                     {
                         rigidbody.AddRelativeTorque(0,2,0);
                         rigidbody.AddRelativeForce(Vector3.back/2);
-                        //print("floor check applied turn RIGHT");
+                        print("floor check applied turn RIGHT");
                     }
                 }
             }
@@ -61,13 +60,13 @@ namespace Ollie
 
 
                 #region Visualize FOV
-                // if (i is > -5 and < 5) 
+                // if (i is > -5 and < 5)
                 // {
-                //      Debug.DrawRay(ray.origin, ray.direction * hitData.distance, Color.red, 0.01f);
+                //     Debug.DrawRay(ray.origin, ray.direction * hitData.distance, Color.red, 0.01f);
                 // }
                 // else
                 // {
-                //      Debug.DrawRay(ray.origin, ray.direction * hitData.distance, Color.blue, 0.01f);
+                //     Debug.DrawRay(ray.origin, ray.direction * hitData.distance, Color.blue, 0.01f);
                 // }
                 #endregion
                 

@@ -19,23 +19,20 @@ namespace Ollie
 
         public override void Enter()
         {
-            brain.moveSpeed = 7;
+            brain.moveSpeed = 3;
             brain.target = null;
             base.Enter();
         }
 
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
-            brain.StateViewerChange(5);
-            //brain.StateViewerChange(this);
-            
+            //brain.StateViewerChange(5);
+            brain.StateViewerChange(this);
             if (brain.path.Count == 0)
             {
                 //brain.RandomTarget();
             }
         }
-
-        
 
         public override void Exit()
         {

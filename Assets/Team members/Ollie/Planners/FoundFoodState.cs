@@ -37,7 +37,7 @@ namespace Ollie
             base.Enter();
             CheckFoodDistances();
             brain.path.Clear();
-            brain.moveSpeed = 7;
+            brain.moveSpeed = 3;
             
         }
 
@@ -66,7 +66,7 @@ namespace Ollie
 
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
-            brain.StateViewerChange(1);
+            brain.StateViewerChange(this);
             base.Execute(aDeltaTime, aTimeScale);
             if (positionsList.Count == 0)
             {
