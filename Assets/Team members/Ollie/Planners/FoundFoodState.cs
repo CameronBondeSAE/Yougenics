@@ -66,7 +66,7 @@ namespace Ollie
 
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
-            brain.StateViewerChange(1);
+            brain.StateViewerChange(this);
             base.Execute(aDeltaTime, aTimeScale);
             if (positionsList.Count == 0)
             {
@@ -90,7 +90,7 @@ namespace Ollie
                     if (brain.transform.position != closest.position)
                     {
                         brain.SetTarget(closest);
-                        print("target food set");
+                        //print("target food set");
                         
                     }
                     else
@@ -103,7 +103,7 @@ namespace Ollie
                 if (Vector3.Distance(parent.transform.position, closest.position) < 1)
                 {
                     brain.moveSpeed = 0;
-                    print("its NOMming time");
+                    //print("its NOMming time");
                     brain.SetFoodFound(true);
                 }
             }

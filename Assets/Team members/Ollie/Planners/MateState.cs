@@ -30,13 +30,13 @@ namespace Ollie
 
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
-            brain.StateViewerChange(3);
+            brain.StateViewerChange(this);
             brain.turnTowards.TurnParent(target.transform.position);
             base.Execute(aDeltaTime, aTimeScale);
 
             if (doneMating)
             {
-                print("done mating");
+                //print("done mating");
                 doneMating = false;
             }
         }
@@ -55,7 +55,7 @@ namespace Ollie
         
         public IEnumerator MateCoroutine()
         {
-            print("coroutine started");
+            //print("coroutine started");
             yield return new WaitForSeconds(5);
             GameObject go = Instantiate(brain.olliePrefabReferenceHack.prefab);
             go.transform.position = brain.transform.position + new Vector3(0,0,-2);

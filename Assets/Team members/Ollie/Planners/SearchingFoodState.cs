@@ -27,7 +27,7 @@ namespace Ollie
         {
             if (brain.sleeping == false)
             {
-                brain.StateViewerChange(2);
+                brain.StateViewerChange(this);
             }
             
             base.Execute(aDeltaTime, aTimeScale);

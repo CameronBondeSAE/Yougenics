@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Anthill.AI;
 using Kevin;
 using Minh;
 using Tanks;
@@ -112,7 +113,7 @@ namespace Ollie
                     }
                     else
                     {
-                        print("path blocked");
+                        //print("path blocked");
                         if (foodLocationList.Contains(target)) foodLocationList.Remove(target);
                         if (mateLocationList.Contains(target.gameObject)) mateLocationList.Remove(target.gameObject);
                         target = null;
@@ -174,14 +175,15 @@ namespace Ollie
             }
         }
 
-        public void StateViewerChange(int index)
+        public void StateViewerChange(AntAIState aiState)
         {
-            stateViewer.ChangeParticles(index);
+            //stateViewer.ChangeParticles(index);
+            stateViewer.ChangeViewInfo(aiState);
         }
 
         private void Death()
         {
-            StateViewerChange(6);
+            //StateViewerChange(6);
             dead = true;
             healthComponent.IsDead.Value = true;
             energyComponent.useEnergyOnMovement = false;
@@ -190,7 +192,7 @@ namespace Ollie
 
         private void Sleep()
         {
-            StateViewerChange(4);
+            //StateViewerChange(4);
             energyComponent.EnergyAmount.Value += 10 * Time.deltaTime;
 
             if (energyComponent.EnergyAmount.Value >= energyComponent.energyMax)

@@ -26,7 +26,8 @@ namespace Ollie
 
         public override void Execute(float aDeltaTime, float aTimeScale)
         {
-            brain.StateViewerChange(5);
+            //brain.StateViewerChange(5);
+            brain.StateViewerChange(this);
             if (brain.path.Count == 0)
             {
                 //brain.RandomTarget();
