@@ -75,7 +75,7 @@ namespace Luke
 		private Transform view;
 		[SerializeField] private AStarUser aStarUser;
 
-		private CurrentTarget _currentTarget = CurrentTarget.Nothing;
+        private CurrentTarget _currentTarget = CurrentTarget.Nothing;
 		private enum CurrentTarget
 		{
 			Food,
@@ -122,10 +122,9 @@ namespace Luke
         private IEnumerator EnergyDecayCooldown()
 		{
             // change energy drain amount, then return it after yield
-			yield return new WaitForSeconds(10f);
+			yield return new WaitForSeconds(1f);
 			justAte = false;
-            
-		}
+        }
 		
 		private IEnumerator SleepLevelDecay()
 		{
@@ -558,20 +557,22 @@ namespace Luke
 		{
 			if (isSleeping) return;
 			if (currentFood == null) return;
-            GameObject go = Instantiate(beam, _transform);
-            go.GetComponent<Beam>().target = currentFood.transform;
-			Minh.Health targetHealth = currentFood.GetComponent<Minh.Health>();
-            if (targetHealth != null) targetHealth.ChangeHealth(-critterInfo.dangerLevel);
-            IEdible targetIEdible = currentFood.GetComponent<IEdible>();
-            if (targetIEdible != null)
+            if (!justAte)
             {
-                energyComp.ChangeEnergy(targetIEdible.EatMe(-critterInfo.dangerLevel));
-                energyComp.ChangeEnergy(critterInfo.dangerLevel);
+                GameObject go = Instantiate(beam, _transform);
+                go.GetComponent<Beam>().target = currentFood.transform;
+                Minh.Health targetHealth = currentFood.GetComponent<Minh.Health>();
+                if (targetHealth != null) targetHealth.ChangeHealth(-critterInfo.dangerLevel);
+                IEdible targetIEdible = currentFood.GetComponent<IEdible>();
+                if (targetIEdible != null)
+                {
+                    energyComp.ChangeEnergy(targetIEdible.EatMe(-critterInfo.dangerLevel));
+                    energyComp.ChangeEnergy(critterInfo.dangerLevel);
+                }
+
+                justAte = true;
+                StartCoroutine(EnergyDecayCooldown());
             }
-            justAte = true;
-            if (currentFood == null) foodList.Remove(currentFood.transform);
-			StopCoroutine(EnergyDecayCooldown());
-			StartCoroutine(EnergyDecayCooldown());
         }
 
 		public bool CheckHasMate()
