@@ -351,7 +351,7 @@ namespace Ollie
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.GetComponent<CritterAIPlanner>())
+            if (collision.gameObject.GetComponent<CreatureBase>())
             {
                 Physics.IgnoreCollision(collision.collider,gameObject.GetComponent<Collider>());
             }

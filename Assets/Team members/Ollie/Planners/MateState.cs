@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Anthill.AI;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace Ollie
@@ -58,6 +59,7 @@ namespace Ollie
             //print("coroutine started");
             yield return new WaitForSeconds(5);
             GameObject go = Instantiate(brain.olliePrefabReferenceHack.prefab);
+            go.GetComponent<NetworkObject>().Spawn();
             go.transform.position = brain.transform.position + new Vector3(0,0,-2);
             
             brain.moveSpeed = 7;

@@ -76,11 +76,11 @@ namespace Ollie
                 particleSystem.material = particleMaterials[index];
             }
             
-            if (index == 6 && !deathSound.isPlaying) deathSound.Play();
-            if (index == 5 && !walkingSound.isPlaying) walkingSound.Play();
-            if (index == 3 && !matingSound.isPlaying) matingSound.Play();
-            if (index == 4 && !sleepingSound.isPlaying) sleepingSound.Play();
-            if (index == 7 && !eatingSound.isPlaying) eatingSound.Play();
+            // if (index == 6 && !deathSound.isPlaying) deathSound.Play();
+            // if (index == 5 && !walkingSound.isPlaying) walkingSound.Play();
+            // if (index == 3 && !matingSound.isPlaying) matingSound.Play();
+            // if (index == 4 && !sleepingSound.isPlaying) sleepingSound.Play();
+            // if (index == 7 && !eatingSound.isPlaying) eatingSound.Play();
         }
     }
 }
