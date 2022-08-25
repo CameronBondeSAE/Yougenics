@@ -46,6 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointsParent: {fileID: 0}
   senseRadius: 5
+  EmergencyVision: 2
+  radius: 0.6
   turn: 65
   damp: 1
-  speed: 100
+  speed: 90

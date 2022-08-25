@@ -6,6 +6,7 @@ using Kevin;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using Minh;
+using Unity.Netcode;
 using UnityEngine.Rendering;
 
 public class CritterB : CreatureBase, IEdible
@@ -106,8 +107,6 @@ public class CritterB : CreatureBase, IEdible
             myFoodChain = (FoodChain) Random.Range(0, 3);
             myAudioClip = GetComponent<AudioClip>();
             audioClip = GetComponent<AudioSource>();
-
-            eggPrefab = GetComponent<GameObject>();
         }
         
         public void OnEnable()
@@ -147,6 +146,8 @@ public class CritterB : CreatureBase, IEdible
             {
                 LayEgg();
             }
+            
+            SetScale();
         }
 
         public void Profiler(Collider other)
@@ -165,7 +166,7 @@ public class CritterB : CreatureBase, IEdible
             }
             
             //Physics.Raycast(transform.position,other.transform.position, out hitInfo, other.transform.position.magnitude - transform.position.magnitude,255,QueryTriggerInteraction.Ignore)
-            if (otherCreatureBase != null || otherEdible != null)//&& otherCritterB != null)
+            if ((otherCreatureBase != null || otherEdible != null) && otherCritterB != null)
             {
                 if (otherCommonAttributes == null) return;
                 
@@ -253,6 +254,22 @@ public class CritterB : CreatureBase, IEdible
 
         #region Special Functions
 
+        private void SetScale()
+        {
+            //include eating in equation
+            /*float scale = Mathf.Min(0.5f+(maxSize-0.5f) * age / maxAge,maxSize);
+            view.localScale = Vector3.one*scale;*/
+
+            SetScaleViewHackClientRpc();
+        }
+        
+        [ClientRpc]
+        public void SetScaleViewHackClientRpc()
+        {
+            float scale = Mathf.Min(0.5f + (maxSize - 0.5f) * age / maxAge, maxSize);
+            transform.localScale = Vector3.one * scale;
+        }
+        
         public void Chameleon(float alpha)
         {
             renderer.material.SetFloat("_Alpha", alpha);
@@ -271,9 +288,12 @@ public class CritterB : CreatureBase, IEdible
 
         public void LayEgg()
         {
-            Instantiate(eggPrefab, eggSpawnPosition.position, Quaternion.identity);
-            gestationComplete = false;
-            StartCoroutine(GestationTimer());
+            if (gestationComplete && offAge)
+            {
+                Instantiate(eggPrefab, eggSpawnPosition.position, Quaternion.identity);
+                gestationComplete = false;
+                StartCoroutine(GestationTimer());
+            }
         }
         public void CooldownFunction()
         {

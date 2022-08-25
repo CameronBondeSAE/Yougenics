@@ -44,3 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdf296310f28ddd4c9cbba6375cf6e03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damp: 0.8
+  turn: 75
+  speed: 100

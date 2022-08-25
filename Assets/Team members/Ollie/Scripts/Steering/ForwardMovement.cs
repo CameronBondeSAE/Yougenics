@@ -12,6 +12,8 @@ namespace Ollie
         private Rigidbody rigidbody;
         private CritterAIPlanner parent;
         private float speed;
+        private float angle;
+        private float angleMultiplier = 0.05f;
         
         void Start()
         {
@@ -54,7 +56,18 @@ namespace Ollie
             
             if (rigidbody.velocity.magnitude < parent.moveSpeed)
             {
-                rigidbody.AddRelativeForce(Vector3.forward * parent.moveSpeed);
+                Ray ray = new Ray(rigidbody.position, Vector3.down);
+                RaycastHit hitData;
+                if (Physics.Raycast(ray.origin + rigidbody.velocity / 10f, ray.direction, out hitData))
+                {
+                    angle = Vector3.Angle(hitData.normal, Vector3.up);
+                    rigidbody.AddRelativeForce(Vector3.forward * (parent.moveSpeed * (1f + angle + angleMultiplier)));
+                }
+
+                else
+                {
+                    rigidbody.AddRelativeForce(Vector3.forward * parent.moveSpeed);
+                }
             }
         }
     }

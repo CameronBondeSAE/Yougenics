@@ -12,6 +12,8 @@ public class Attack : AntAIState
     public float damp;
     public float pounceSpeed;
     public float timer;
+
+    public float damage;
     Transform child;
     public override void Create(GameObject aGameObject)
     {
@@ -41,8 +43,15 @@ public class Attack : AntAIState
         {
             timer = 0;
             rb.AddRelativeForce(0, 0, pounceSpeed);
-            Finish();
+            if(timer>= timeToPounce + 1)
+            {
+                Finish();
+            }
         }
+    }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        
     }
 }
