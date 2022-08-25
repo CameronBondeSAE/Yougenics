@@ -1168,10 +1168,26 @@ PrefabInstance:
       propertyPath: myHealth
       value: 
       objectReference: {fileID: 6484856671035641714}
+    - target: {fileID: 4303581757707561110, guid: 8945c0a54c2cc9e4690b4f5a7208ccef, type: 3}
+      propertyPath: isItem2
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5230930619264848101, guid: 8945c0a54c2cc9e4690b4f5a7208ccef, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5472007753311405987, guid: 8945c0a54c2cc9e4690b4f5a7208ccef, type: 3}
+      propertyPath: isItem1
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5472007753311405987, guid: 8945c0a54c2cc9e4690b4f5a7208ccef, type: 3}
       propertyPath: myEnergy
       value: 
       objectReference: {fileID: 246153594134181686}
+    - target: {fileID: 6261230824740494607, guid: 8945c0a54c2cc9e4690b4f5a7208ccef, type: 3}
+      propertyPath: isItem1
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7612773704107159047, guid: 8945c0a54c2cc9e4690b4f5a7208ccef, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1179,6 +1195,10 @@ PrefabInstance:
     - target: {fileID: 7612773704107159047, guid: 8945c0a54c2cc9e4690b4f5a7208ccef, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704471460929463422, guid: 8945c0a54c2cc9e4690b4f5a7208ccef, type: 3}
+      propertyPath: isItem2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7704471460929463422, guid: 8945c0a54c2cc9e4690b4f5a7208ccef, type: 3}
       propertyPath: myEnergy

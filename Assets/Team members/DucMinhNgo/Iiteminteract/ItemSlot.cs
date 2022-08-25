@@ -24,6 +24,8 @@ namespace Minh
         public EnergyBarAlex energyBarItem2UI;
         public ItemNameUI itemName1UI;
         public ItemNameUI itemName2UI;
+        public event Action<bool> item1PickedUpEvent;
+        public event Action<bool> item2PickedUpEvent;
 
 
         // Update is called once per frame
@@ -55,6 +57,8 @@ namespace Minh
                     slot1 = null;
                     monoBehaviour.transform.parent = null;
                     monoBehaviour.GetComponent<Collider>().enabled = true;
+                    
+                    item1PickedUpEvent?.Invoke(false);
                     Debug.Log("dropped");
                 }
                 else if (hit.collider != null)
@@ -74,6 +78,8 @@ namespace Minh
                         }
 
                         itemName1UI.name = slot1.GetInfo().name;
+                        
+                        item1PickedUpEvent?.Invoke(true);
                         energyBarItem1UI.myEnergy = monoBehaviour.GetComponent<Energy>();
                         
                         Debug.Log("picked up");
@@ -87,6 +93,10 @@ namespace Minh
                     MonoBehaviour monoBehaviour = slot2 as MonoBehaviour;
                     slot2 = null;
                     monoBehaviour.transform.parent = null;
+                    
+                    item2PickedUpEvent?.Invoke(false);
+                    
+                    //energyBarItem2UI.isVisible = false;
                     Debug.Log("dropped");
                 }
                 else if (hit.collider != null)
@@ -98,7 +108,9 @@ namespace Minh
                         MonoBehaviour monoBehaviour = item2 as MonoBehaviour;
                         monoBehaviour.transform.parent = Player.transform;
                         monoBehaviour.transform.position = Player.transform.position + new Vector3(0f, adjust2 * adjust3 * Time.deltaTime, 1 * adjust1 * Time.deltaTime);
-                        
+
+
+                        item2PickedUpEvent?.Invoke(true);
                         itemName2UI.name = slot2.GetInfo().name;
                         energyBarItem2UI.myEnergy = monoBehaviour.GetComponent<Energy>();
                         Debug.Log("picked up");
