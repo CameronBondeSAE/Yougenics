@@ -348,5 +348,13 @@ namespace Ollie
         }
 
         #endregion
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.GetComponent<CritterAIPlanner>())
+            {
+                Physics.IgnoreCollision(collision.collider,gameObject.GetComponent<Collider>());
+            }
+        }
     }
 }
