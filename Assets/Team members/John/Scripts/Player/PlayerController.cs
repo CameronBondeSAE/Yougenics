@@ -54,6 +54,9 @@ namespace John
 
             playerInput.actions.FindAction("OpenMenu").performed += aContext => ShowLobby();
             playerInput.actions.FindAction("CloseMenu").performed += aContext => HideLobby();
+
+            //Can subscribe to the player dying and disable controls using OnPlayerUnassigned here?
+            //playerModel.onDeathEvent += DisableControls;
         }
 
         public void OnPlayerUnassigned()
