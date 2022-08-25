@@ -28,7 +28,7 @@ namespace Ollie
         {
             myPos = parentTransform.position;
 
-            for (int i = -90; i < 90; i++)
+            for (int i = -90; i < 90; i+=20)
             {
                 Vector3 rayAngle = Quaternion.Euler(25, i, 0) * Vector3.forward;
                 rayAngle = transform.TransformDirection(rayAngle);
@@ -54,7 +54,7 @@ namespace Ollie
                 }
             }
             
-            for (int i = -fovAngle; i < fovAngle; i++)
+            for (int i = -fovAngle; i < fovAngle; i+=15)
             {
                 Vector3 rayAngle = Quaternion.Euler(0, i, 0) * parentTransform.forward;
                 Ray ray = new Ray(myPos, rayAngle.normalized);
