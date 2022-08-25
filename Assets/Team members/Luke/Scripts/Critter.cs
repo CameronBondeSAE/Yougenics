@@ -329,6 +329,7 @@ namespace Luke
 			IEdible go2 = other.GetComponentInParent<IEdible>();
 			CommonAttributes go3 = other.GetComponentInParent<CommonAttributes>();
 			ILukeEdible go4 = other.GetComponentInParent<ILukeEdible>();
+            Minh.Health go5 = other.GetComponent<Minh.Health>();
 			
 			if (go1 != null && go3 != null)
 			{
@@ -370,6 +371,13 @@ namespace Luke
                     if (go4 != null) go4.RemoveFromListEvent += RemoveTransformFromList;
 				}
 			}
+            else if (go5 != null && go1 == null && go3 == null && go4 == null)
+            {
+                if (!foodList.Contains(go5.transform))
+                {
+                    foodList.Add(go5.transform);
+                }
+            }
 		}
 		
 		public void VisionTriggerExit(Collider other)
@@ -701,12 +709,12 @@ namespace Luke
 		public void MoveBiomes()
 		{
 			if (isSleeping) return;
-			float angle = 90f * (int)bestNearbyBiome;
+			// float angle = 90f * (int)bestNearbyBiome;
 			//Check which way north should be or adjust bestBiome iteration to account for direction.
-			Vector3 mainHeading = Quaternion.AngleAxis(angle, Vector3.up)*Vector3.forward;
-			mainHeading += randomAdjustment;
+			// Vector3 mainHeading = Quaternion.AngleAxis(angle, Vector3.up)*Vector3.forward;
+			// mainHeading += randomAdjustment;
 			_currentTarget = CurrentTarget.Wander;
-			TurnTowardsTarget(_transform.position + mainHeading);
+			TurnTowardsTarget(Vector3.zero-_transform.position/* + mainHeading*/);
 			_rb.AddForce(_transform.TransformDirection(Vector3.forward)*acceleration, ForceMode.Acceleration);
 			_rb.velocity = Vector3.ClampMagnitude(_rb.velocity, maxSpeed);
 		}
