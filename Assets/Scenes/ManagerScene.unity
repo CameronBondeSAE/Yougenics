@@ -187,7 +187,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5076254510905692312, guid: ccbab0122c7c9304fab7deacc164e04e, type: 3}
       propertyPath: groupInfos.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5076254510905692312, guid: ccbab0122c7c9304fab7deacc164e04e, type: 3}
       propertyPath: groupInfos.Array.data[0].countPerGroup
@@ -210,6 +210,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5076254510905692312, guid: ccbab0122c7c9304fab7deacc164e04e, type: 3}
+      propertyPath: groupInfos.Array.data[5].countPerGroup
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5076254510905692312, guid: ccbab0122c7c9304fab7deacc164e04e, type: 3}
       propertyPath: groupInfos.Array.data[0].prefabs.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -223,6 +227,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5076254510905692312, guid: ccbab0122c7c9304fab7deacc164e04e, type: 3}
       propertyPath: groupInfos.Array.data[4].prefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5076254510905692312, guid: ccbab0122c7c9304fab7deacc164e04e, type: 3}
+      propertyPath: groupInfos.Array.data[5].prefabs.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5076254510905692312, guid: ccbab0122c7c9304fab7deacc164e04e, type: 3}
@@ -245,6 +253,10 @@ PrefabInstance:
       propertyPath: groupInfos.Array.data[4].prefabs.Array.data[0]
       value: 
       objectReference: {fileID: 7918710336458080463, guid: de202a3b7247a4143bba3e8489a9cea7, type: 3}
+    - target: {fileID: 5076254510905692312, guid: ccbab0122c7c9304fab7deacc164e04e, type: 3}
+      propertyPath: groupInfos.Array.data[5].prefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 7918710336458080463, guid: 85e3af658d8c50a4b9cf9c20f87779cf, type: 3}
     - target: {fileID: 5076254510905692313, guid: ccbab0122c7c9304fab7deacc164e04e, type: 3}
       propertyPath: m_RootOrder
       value: 0
