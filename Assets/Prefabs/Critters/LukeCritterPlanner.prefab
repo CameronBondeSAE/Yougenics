@@ -5206,7 +5206,6 @@ MonoBehaviour:
   - {r: 1, g: 0.42864963, b: 0, a: 1}
   shield: {fileID: 77882986508892189}
   critter: {fileID: 3124390809528273905}
-  myAudio: {fileID: 5284591703951231690}
 --- !u!1 &6112835568152321978
 GameObject:
   m_ObjectHideFlags: 0
@@ -5678,7 +5677,7 @@ MonoBehaviour:
     firstMatingDelay: 50
     isCarnivore: 0
     gender: 0
-    dangerLevel: 15
+    dangerLevel: 17
     visionRadius: 15
   defaultBehaviour: 0
   sleepLevel: 0
