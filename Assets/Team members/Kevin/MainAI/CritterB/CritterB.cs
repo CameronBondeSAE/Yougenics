@@ -139,7 +139,7 @@ public class CritterB : CreatureBase, IEdible
             
             
             //Physics.Raycast(transform.position,other.transform.position, out hitInfo, other.transform.position.magnitude - transform.position.magnitude,255,QueryTriggerInteraction.Ignore)
-            if (otherCreatureBase != null || otherEdible != null && otherCritterB != null)
+            if ((otherCreatureBase != null || otherEdible != null) && otherCritterB != null)
             {
                 //if(Physics.Raycast(transform.position,other.transform.position, out hitInfo, 10f,255,QueryTriggerInteraction.Ignore))
                 //{
