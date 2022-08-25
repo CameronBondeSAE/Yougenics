@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class EnergyBarUI : MonoBehaviour
 {
-    public Energy energy;
+    public Energy myEnergy;
     public Slider slider;
     public Gradient gradient;
     public Image fill;
@@ -16,22 +16,22 @@ public class EnergyBarUI : MonoBehaviour
     public void SetMaxEnergy(float energyTest)
     {
         
-        slider.maxValue = energy.EnergyAmount.Value;
-        slider.value = energy.EnergyAmount.Value;
+        slider.maxValue = myEnergy.EnergyAmount.Value;
+        slider.value = myEnergy.EnergyAmount.Value;
 
         fill.color = gradient.Evaluate(1f);
     }
 
     public void SetEnergy(float energyTest)
     {
-        slider.value = energy.EnergyAmount.Value;
+        slider.value = myEnergy.EnergyAmount.Value;
 
         fill.color = gradient.Evaluate(slider.normalizedValue);
     }
 
     public void Update()
     {
-        slider.value = energy.EnergyAmount.Value;
+        slider.value = myEnergy.EnergyAmount.Value;
         fill.color = gradient.Evaluate(slider.normalizedValue);
     }
 }
