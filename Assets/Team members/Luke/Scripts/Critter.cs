@@ -564,6 +564,7 @@ namespace Luke
             energyComp.ChangeEnergy(targetIEdible.EatMe(-critterInfo.dangerLevel));
             energyComp.ChangeEnergy(critterInfo.dangerLevel);
             justAte = true;
+            if (currentFood == null) foodList.Remove(currentFood.transform);
 			StopCoroutine(EnergyDecayCooldown());
 			StartCoroutine(EnergyDecayCooldown());
         }
