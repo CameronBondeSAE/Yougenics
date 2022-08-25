@@ -57,7 +57,7 @@ namespace Cam.Interfaces_and_Inheritance_base_classes
 						textMeshPro.text += action + "\n";
 					}
 
-				playerCam = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<John.PlayerController>().playerModel.GetComponentInChildren<Camera>();
+				if (NetworkManager.Singleton != null) playerCam = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<John.PlayerController>().playerModel.GetComponentInChildren<Camera>();
 				if (playerCam != null)
 					textMeshPro.transform.LookAt(playerCam.transform);
 			}
