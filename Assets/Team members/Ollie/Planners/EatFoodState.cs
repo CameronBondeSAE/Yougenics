@@ -67,10 +67,14 @@ namespace Ollie
             base.Destroy(aGameObject);
         }
 
+        public IEdible iEdible;
         public IEnumerator EatFoodCoroutine()
         {
             //print("coroutine started");
-            IEdible iEdible = target.GetComponent<IEdible>();
+            if (target.GetComponent<IEdible>() != null)
+            {
+                iEdible = target.GetComponent<IEdible>();
+            }
             
             while (iEdible.GetEnergyAmount() > 0)
             {

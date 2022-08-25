@@ -64,9 +64,13 @@ namespace Ollie
                     rigidbody.AddRelativeForce(Vector3.forward * (parent.moveSpeed * (1f + angle + angleMultiplier)));
                 }
 
+                if (angle != 0 && rigidbody.velocity.magnitude < 0.1f)
+                {
+                    rigidbody.AddRelativeForce(Vector3.forward * (parent.moveSpeed * (3f + angle + angleMultiplier)));
+                }
                 else
                 {
-                    rigidbody.AddRelativeForce(Vector3.forward * parent.moveSpeed);
+                    //rigidbody.AddRelativeForce(Vector3.forward * parent.moveSpeed);
                 }
             }
         }
