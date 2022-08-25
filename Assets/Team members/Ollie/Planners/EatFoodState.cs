@@ -49,7 +49,7 @@ namespace Ollie
             
             if (doneEating)
             {
-                //print("done eating");
+                print("done eating");
                 doneEating = false;
             }
         }
@@ -59,7 +59,7 @@ namespace Ollie
             base.Exit();
             brain.SetFoodLocated(false);
             brain.SetFoodFound(false);
-            //print("exiting eating");
+            print("exiting eating");
         }
 
         public override void Destroy(GameObject aGameObject)
@@ -67,18 +67,14 @@ namespace Ollie
             base.Destroy(aGameObject);
         }
 
-        public IEdible iEdible;
         public IEnumerator EatFoodCoroutine()
         {
-            //print("coroutine started");
-            if (target.GetComponent<IEdible>() != null)
-            {
-                iEdible = target.GetComponent<IEdible>();
-            }
+            print("coroutine started");
+            IEdible iEdible = target.GetComponent<IEdible>();
             
             while (iEdible.GetEnergyAmount() > 0)
             {
-                brain.StateViewerChange(7);
+                brain.StateViewerChange(2);
                 iEdible.EatMe(brain.chompAmount);
                 brain.energyComponent.ChangeEnergy(brain.chompAmount);
                 yield return new WaitForSeconds(1);

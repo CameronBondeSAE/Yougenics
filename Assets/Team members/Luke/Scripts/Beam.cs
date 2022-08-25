@@ -10,11 +10,6 @@ public class Beam : MonoBehaviour
 
     private void Update()
     {
-        if (target == null)
-        {
-            Destroy(gameObject);
-            return;
-        }
         Vector3 position = t.position;
         Vector3 targetPosition = target.position;
         t.localScale = new Vector3(1, 1, Vector3.Distance(position, targetPosition));

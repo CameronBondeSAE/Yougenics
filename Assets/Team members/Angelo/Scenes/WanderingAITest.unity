@@ -330,7 +330,8 @@ GameObject:
   - component: {fileID: 862629638}
   - component: {fileID: 862629637}
   - component: {fileID: 862629636}
-  - component: {fileID: 862629640}
+  - component: {fileID: 862629635}
+  - component: {fileID: 862629634}
   m_Layer: 0
   m_Name: Cube (4)
   m_TagString: Untagged
@@ -338,6 +339,39 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &862629634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862629633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a80d83ffe8524e94694b9f2e7bc96491, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TestDistance: 0
+  targetObj: {fileID: 0}
+  tresspasser: {fileID: 0}
+--- !u!114 &862629635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862629633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28351ccdb3a9c674fb3885bfa2e259d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Vision: {fileID: 862629634}
+  Alive: 0
+  Patrolling: 0
+  Hunting: 0
+  Hungry: 0
+  TargetHunted: 0
 --- !u!65 &862629636
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -409,50 +443,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 862629633}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -27.29, y: -0.02, z: 1.53}
+  m_LocalPosition: {x: -14.17, y: -0.02, z: 7.46}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &862629640
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 862629633}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8edff56be9d514a47b6f318a0820d600, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
-  age: 0
-  ageOfMatingStart: 0
-  ageOfMatingEnd: 0
-  maxAge: 0
-  isPregnant: 0
-  gestationTime: 0
-  litterSizeMax: 0
-  metabolism: 0
-  mutationRate: 0
-  empathy: 0
-  aggression: 0
-  sizeScale: 0
-  maxSize: 0
-  colour: {r: 0, g: 0, b: 0, a: 0}
-  sex: 0
-  slowlyDieWhenOldRate: 0
 --- !u!1 &930175922
 GameObject:
   m_ObjectHideFlags: 0
@@ -958,10 +955,6 @@ PrefabInstance:
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 465996672306392909, guid: dad32a40352cbb94b82ccf060af98199, type: 3}
-    - target: {fileID: 6279557557670435050, guid: dad32a40352cbb94b82ccf060af98199, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6279557558697047508, guid: dad32a40352cbb94b82ccf060af98199, type: 3}
       propertyPath: m_RootOrder
       value: 7

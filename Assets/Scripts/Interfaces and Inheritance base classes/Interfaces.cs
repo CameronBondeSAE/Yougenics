@@ -4,8 +4,6 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Tanks;
-using Unity.Netcode;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -105,7 +103,7 @@ public class Stat<T>
 	public T      Value;
 }
 
-public class CreatureBase : NetworkBehaviour
+public class CreatureBase : SerializedMonoBehaviour
 {
 	// public List<Stat<float>> stats;
 	// public List<Stat<bool>>  statsBools;
@@ -144,15 +142,12 @@ public class CreatureBase : NetworkBehaviour
 		Female
 	}
 
-	public Sex        sex;
-	public float      slowlyDieWhenOldRate;
-	public EnergyBall energyBall;
-	
+	public Sex   sex;
+	public float slowlyDieWhenOldRate;
+
 	public virtual void Awake()
 	{
 		health = GetComponent<Health>();
-
-		health.DeathEvent += Die;
 	}
 
 	public virtual void FixedUpdate()
@@ -164,23 +159,6 @@ public class CreatureBase : NetworkBehaviour
 		{
 			if (health != null) health.ChangeHealth(-Time.fixedDeltaTime * slowlyDieWhenOldRate);
 		}
-	}
-
-	public void Die()
-	{
-		if (!NetworkManager.Singleton.IsServer)
-			return;
-		
-		GameObject spawnedPrefab = Instantiate(energyBall.gameObject, transform.position,
-												   transform.rotation);
-
-		spawnedPrefab.GetComponent<Energy>().EnergyAmount.Value = GetComponent<Energy>().EnergyAmount.Value;
-		
-		// Object must have NetworkObject component to work on clients
-			spawnedPrefab.GetComponent<NetworkObject>()?.Spawn();
-
-		gameObject.GetComponent<NetworkObject>().Despawn(true);
-		//Destroy(gameObject);
 	}
 
 	// public float Mutate(Stat selfTrait, Stat partnerTrait, Stat baseMinimum, Stat baseMaximum)

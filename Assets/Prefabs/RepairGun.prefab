@@ -115,14 +115,13 @@ MonoBehaviour:
   itemInfo:
     name: Repair Gun
     description: Repair broken walls and heal your allies
-    energyRequired: 20
+    energyRequired: 10
     height: 0
-    buildTime: 5
+    buildTime: 2
   energy: {fileID: 0}
   energyPerShot: 10
   canShoot: 0
   repairAmount: 10
-  range: 10
 --- !u!114 &1954794162569713098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnergyAmount:
-    m_InternalValue: 100
+    m_InternalValue: 0
   energyMax: 100
   energyMin: 0
   drainAmount: 0

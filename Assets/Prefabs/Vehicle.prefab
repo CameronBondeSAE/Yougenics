@@ -299,7 +299,7 @@ MonoBehaviour:
     description: Drive around the area in this awesome car
     energyRequired: 50
     height: 2
-    buildTime: 10
+    buildTime: 2
   wheels:
   - {fileID: 392720054664321577}
   - {fileID: 8860035961690252253}

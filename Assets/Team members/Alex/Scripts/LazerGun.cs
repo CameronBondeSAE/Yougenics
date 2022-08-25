@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Minh;
-using Unity.Netcode;
 using UnityEngine;
 
 public class LazerGun : MonoBehaviour, IItem, IInteractable
@@ -14,9 +13,6 @@ public class LazerGun : MonoBehaviour, IItem, IInteractable
     public bool canShoot;
     public float lazerDamage = 20f;
     public float range = 50f;
-
-    
-    public AudioSource audioSource;
 
     void Start()
     {
@@ -39,19 +35,10 @@ public class LazerGun : MonoBehaviour, IItem, IInteractable
         StartCoroutine(Shoot());
     }
 
-    [ClientRpc]
-    public void ShootClientRpc()
-    {
-        audioSource.Play();
-    }
-    
     public IEnumerator Shoot()
     {
         if (energy.EnergyAmount.Value >= energyPerShot && canShoot) 
         {
-            // HACK view sound
-            ShootClientRpc();
-            
             RaycastHit hitTarget;
             hitTarget = new RaycastHit();
 

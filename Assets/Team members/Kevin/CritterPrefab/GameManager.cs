@@ -55,16 +55,9 @@ namespace Kevin
 
         public void Start()
         {
-            if (water != null)
-            {
-                waterStartPos = water.transform.position;
+            waterStartPos = water.transform.position;
 
-                water.transform.DOMoveY(waterStartPos.y + 50, remainingTime);
-            }
-            else
-            {
-                Debug.Log("Missing Water Reference!");
-            }
+            water.transform.DOMoveY(waterStartPos.y + 50, remainingTime);
         }
 
         // Assign LOCAL camera to actual player prefab

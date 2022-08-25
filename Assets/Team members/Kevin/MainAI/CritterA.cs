@@ -72,13 +72,6 @@ public class CritterA : CreatureBase, IEdible, ISense
         public List<GameObject> fireObjects;
         public List<Material> fireMaterial;
         public int currentState;
-        public GameObject energyBallPrefab;
-        public override void FixedUpdate()
-        {
-            base.FixedUpdate();
-            transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
-        }
-
         public override void Awake()
         {
             commonAttributes = GetComponent<CommonAttributes>();
@@ -281,61 +274,46 @@ public class CritterA : CreatureBase, IEdible, ISense
         }
         public void Profiler(Collider other)
         {
+            //Debug.Log("vision works");
             CreatureBase otherCreatureBase = other.GetComponent<CreatureBase>();
             IEdible otherEdible = other.GetComponent<IEdible>();
             CommonAttributes otherCommonAttributes = other.GetComponent<CommonAttributes>();
-            CritterA otherCritterA = other.GetComponent<CritterA>(); //This was getting triggered when running into all AI's not just AI's with critterB causing null errors
-            Health otherHealth = other.GetComponent<Health>();
-            //RaycastHit hitInfo;
             
-            if (otherHealth != null && otherCreatureBase == null)
-            {
-                   foodList.Add(other.transform); 
-            }
-            
-            //Physics.Raycast(transform.position,other.transform.position, out hitInfo, other.transform.position.magnitude - transform.position.magnitude,255,QueryTriggerInteraction.Ignore)
-            if ((otherCreatureBase != null || otherEdible != null) && otherCritterA != null)
-            {
-                if (otherCommonAttributes == null) return;
-                
-                //if(Physics.Raycast(transform.position,other.transform.position, out hitInfo, 10f,255,QueryTriggerInteraction.Ignore))
-                //{
-                    //Debug.DrawRay(transform.position,Vector3.forward,Color.red);
-                    
-                    //Predator List
-                    if (otherCreatureBase != null && sex == otherCreatureBase.sex && myDangerLevel < otherCommonAttributes.dangerLevel)
-                    {
-                        predatorList.Add(other.transform);
-                    }
+            //CritterA otherCritter = other.GetComponent<CritterA>();
 
-                
-                    else if (myDangerLevel < otherCommonAttributes.dangerLevel) 
-                    {
-                        predatorList.Add(other.transform);
-                    }
-                    
-                    //Mate List
-                    if (otherCreatureBase != null && sex == Sex.Male && otherCritterA.sex == Sex.Female)
-                    {
-                        mateList.Add(other.transform);
-                    }
-                    
-                    //Food List
-                    if (otherEdible != null)
-                    {
-                        //normal food that doesnt have common attributes component
-                        if (otherCommonAttributes == null)
-                        {
-                            foodList.Add(other.transform);
-                        }
-                        else if (myDangerLevel > otherCommonAttributes.dangerLevel) 
-                        {
-                            foodList.Add(other.transform);
-                        }
-                        
-                    }
-                //}
+            //if (otherCritter == null || otherEdible == null) return;
             
+            if (otherCreatureBase != null || otherEdible != null)
+            {
+                //Predator List
+                if (otherCreatureBase != null && sex == otherCreatureBase.sex && myDangerLevel < otherCommonAttributes.dangerLevel)
+                {
+                    predatorList.Add(other.transform);
+                }
+                
+                //Mate List
+                if (otherCreatureBase != null && otherCreatureBase.sex != sex)
+                {
+                    mateList.Add(other.transform);
+                }
+                
+                //need an If statement for when they are the same sex and same danger level 
+                //maybe check for aggression level or just fight it out
+            
+                //Food List
+                if (otherEdible != null)
+                {
+                    //normal food that doesnt have common attributes component
+                    if (otherCommonAttributes == null)
+                    {
+                        foodList.Add(other.transform);
+                    }
+                    //other critters with danger level
+                    else if (myDangerLevel > otherCommonAttributes.dangerLevel)
+                    {
+                        foodList.Add(other.transform);
+                    }
+                }
             }
         }
         
@@ -445,7 +423,7 @@ public class CritterA : CreatureBase, IEdible, ISense
 
         public float GetEnergyAmount()
         {
-            return energy.EnergyAmount.Value;
+            throw new NotImplementedException();
         }
 
         public float EatMe(float energyRemoved)

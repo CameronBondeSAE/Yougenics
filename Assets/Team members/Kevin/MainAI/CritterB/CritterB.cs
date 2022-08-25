@@ -6,20 +6,16 @@ using Kevin;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using Minh;
-using Unity.Netcode;
 using UnityEngine.Rendering;
 
 public class CritterB : CreatureBase, IEdible
     {
-        [Tooltip("Critter Variables")]
         public float acceleration;
         public float visionRadius = 8f;
         public float visionCenterZ = 2.5f;
         public float myDangerLevel;
         public float rayDistance;
         public Rigidbody rb;
-        public GameObject eggPrefab;
-        public Transform eggSpawnPosition;
         
         //Separate Components
         [SerializeField] private CommonAttributes commonAttributes;
@@ -27,7 +23,6 @@ public class CritterB : CreatureBase, IEdible
         public Minh.Health health;
         
         //List of Entities
-        [Tooltip("Entity Manager")]
         public List<Transform> entityList;
         public List<Transform> predatorList;
         public List<Transform> mateList;
@@ -35,8 +30,7 @@ public class CritterB : CreatureBase, IEdible
         public Transform closestPredator;
         public Transform closestMate;
         public Transform closestFood;
-        
-        [Tooltip("Bools")]
+
         public bool isWandering;
         public bool isRunning;
         public bool isHunting;
@@ -51,13 +45,8 @@ public class CritterB : CreatureBase, IEdible
         public bool caughtFood;
         public bool foundMate;
         public bool canRun;
-        public bool offAge;
-        public bool canLayEgg;
-        public bool gestationComplete;
-        public bool egg;
         
         //view variables 
-        [Tooltip("View Variables")]
         public float alpha;
         public float deathColour = 1f;
         public float invisCooldown = 10f;
@@ -71,10 +60,8 @@ public class CritterB : CreatureBase, IEdible
         public GameObject feet2Object;
         public Renderer feetRenderer;
         public Renderer feet2Renderer;
-
-        public GameObject energyBallPrefab;
+        
         //Audio
-        [Tooltip("Audio Variables")]
         public AudioClip myAudioClip;
         public AudioClip snarlClip;
         public AudioClip eatingClip;
@@ -108,7 +95,7 @@ public class CritterB : CreatureBase, IEdible
 
             myFoodChain = (FoodChain) Random.Range(0, 3);
             myAudioClip = GetComponent<AudioClip>();
-            audioClip = GetComponent<AudioSource>();
+            audioClip = GetComponent<AudioSource>(); 
         }
         
         public void OnEnable()
@@ -128,12 +115,12 @@ public class CritterB : CreatureBase, IEdible
             mutationRate = Random.Range(1f, 25f);
             sizeScale = 0f;
             maxSize = 1f;
-            sex = (Sex) Random.Range(0, 2);
+            sex = (Sex) Random.Range(0, 1);
             commonAttributes.dangerLevel =  Random.Range(0, 10);
             myDangerLevel = commonAttributes.dangerLevel;
             
             //empathy = Random.Range(1f, 25f);
-            aggression = Random.Range(1f, 25f);
+            //aggression = Random.Range(1f, 25f);
             //colour = new Color(Random.Range(0f, 10f),Random.Range(0f, 10f),Random.Range(0f, 10f));
         }
 
@@ -142,46 +129,27 @@ public class CritterB : CreatureBase, IEdible
             //On Death maybe
         }
 
-        public override void FixedUpdate()
-        {
-            base.FixedUpdate();
-            if (canLayEgg && gestationComplete)
-            {
-                LayEgg();
-            }
-            transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
-            SetScale();
-        }
-
         public void Profiler(Collider other)
         {
             CreatureBase otherCreatureBase = other.GetComponent<CreatureBase>();
             IEdible otherEdible = other.GetComponent<IEdible>();
             CommonAttributes otherCommonAttributes = other.GetComponent<CommonAttributes>();
-            CritterB otherCritterB = other.GetComponent<CritterB>(); //This was getting triggered when running into all AI's not just AI's with critterB causing null errors
-            Health otherHealth = other.GetComponent<Health>();
-            Egg otherEgg = other.GetComponent<Egg>();
-            //RaycastHit hitInfo;
+            CritterB otherCritterB = other.GetComponent<CritterB>();
+            RaycastHit hitInfo;
             
-            if (otherHealth != null && otherCreatureBase == null && otherEgg == null)
-            {
-                   foodList.Add(other.transform); 
-            }
             
             //Physics.Raycast(transform.position,other.transform.position, out hitInfo, other.transform.position.magnitude - transform.position.magnitude,255,QueryTriggerInteraction.Ignore)
-            if ((otherCreatureBase != null || otherEdible != null) && otherCritterB != null)
+            if (otherCreatureBase != null || otherEdible != null)
             {
-                if (otherCommonAttributes == null) return;
-                
                 //if(Physics.Raycast(transform.position,other.transform.position, out hitInfo, 10f,255,QueryTriggerInteraction.Ignore))
                 //{
                     //Debug.DrawRay(transform.position,Vector3.forward,Color.red);
                     
                     //Predator List
-                    if (otherCreatureBase != null && sex == otherCreatureBase.sex && myDangerLevel < otherCommonAttributes.dangerLevel)
+                    /*if (otherCreatureBase != null && sex == otherCreatureBase.sex && myDangerLevel < otherCommonAttributes.dangerLevel)
                     {
                         predatorList.Add(other.transform);
-                    }
+                    }*/
 
                     if (otherCreatureBase != null && otherCritterB.myFoodChain == FoodChain.Predator)
                     {
@@ -255,24 +223,8 @@ public class CritterB : CreatureBase, IEdible
             }
         }
 
-        #region Special Functions
+        #region View Functions
 
-        private void SetScale()
-        {
-            //include eating in equation
-            /*float scale = Mathf.Min(0.5f+(maxSize-0.5f) * age / maxAge,maxSize);
-            view.localScale = Vector3.one*scale;*/
-
-            SetScaleViewHackClientRpc();
-        }
-        
-        [ClientRpc]
-        public void SetScaleViewHackClientRpc()
-        {
-            float scale = Mathf.Min(0.5f + (maxSize - 0.5f) * age / maxAge, maxSize);
-            transform.localScale = Vector3.one * scale;
-        }
-        
         public void Chameleon(float alpha)
         {
             renderer.material.SetFloat("_Alpha", alpha);
@@ -287,18 +239,8 @@ public class CritterB : CreatureBase, IEdible
             renderer.material.SetFloat("_Color", deathColour);
             noseRenderer.material.SetFloat("_Color", deathColour);
             deathOrb.SetActive(true);
-            Instantiate(energyBallPrefab, transform.position, Quaternion.identity);
         }
 
-        public void LayEgg()
-        {
-            if (gestationComplete && offAge && sex == Sex.Female && egg)
-            {
-                Instantiate(eggPrefab, eggSpawnPosition.position, Quaternion.identity);
-                gestationComplete = false;
-                StartCoroutine(GestationTimer());
-            }
-        }
         public void CooldownFunction()
         {
             StartCoroutine(InvisibleCooldown());
@@ -328,26 +270,13 @@ public class CritterB : CreatureBase, IEdible
             canInvis = true;
         }
 
-        public IEnumerator GestationTimer()
-        {
-            yield return new WaitForSeconds(gestationTime);
-            gestationComplete = true;
-        }
-        
-        private IEnumerator AttackCooldown()
-        {
-            isEating = true;
-            yield return new WaitForSeconds(2f);
-            isEating = false;
-        }
-
         #endregion
        
         #region IEdible
 
         public float GetEnergyAmount()
         {
-            return energy.EnergyAmount.Value;
+            throw new NotImplementedException();
         }
 
         public float EatMe(float energyRemoved)
@@ -361,7 +290,7 @@ public class CritterB : CreatureBase, IEdible
 
         public bool IsHungry()
         {
-            if (energy.EnergyAmount.Value < 25f && !isEating || aggression > 15f)
+            if (energy.EnergyAmount.Value < 25f && !isEating)
             {
                 isHungry = true;
             }
@@ -403,15 +332,7 @@ public class CritterB : CreatureBase, IEdible
 
         public bool CaughtFood()
         {
-            if (transform == null) return false;
-            if (isSleeping) return false;
-            if (!Physics.Raycast(transform.position, transform.forward*2f, out RaycastHit raycastHit, 3)) return false;
-            if (!foodList.Contains(raycastHit.collider.transform)) return false;
-            if (isEating) return false;
-            StartCoroutine(AttackCooldown());
-            //currentFood = raycastHit.collider;
-            return true;
-            /*if (caughtFood)
+            if (caughtFood)
             {
                 caughtFood = true;
             }
@@ -420,12 +341,12 @@ public class CritterB : CreatureBase, IEdible
                 caughtFood = false;
             }
 
-            return caughtFood;*/
+            return caughtFood;
         }
 
         public bool IsEating()
         {
-            if (isEating && foundFood)
+            if (isEating == true && foundFood == true)
             {
                 isEating = true;
             }
@@ -463,32 +384,6 @@ public class CritterB : CreatureBase, IEdible
 
             return isRunning;
         }
-
-        public bool IsOffAge()
-        {
-            if (age > ageOfMatingStart)
-            {
-                offAge = true;
-            }
-            return offAge;
-        }
-
-        public bool CanLayEgg()
-        {
-            if (gestationComplete)
-            {
-                canLayEgg = true;
-            }
-            else
-            {
-                canLayEgg = false;
-            }
-
-            return canLayEgg;
-
-        }
-
-        
 
         public bool IsSleeping()
         {

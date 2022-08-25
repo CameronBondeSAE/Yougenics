@@ -390,7 +390,7 @@ MonoBehaviour:
     name: Drop off point
     description: Drop energy containers here to transfer their energy to the main
       base
-    energyRequired: 100
+    energyRequired: 50
     height: 2
     buildTime: 2
   cube: {fileID: 8373309874826726821}
@@ -409,7 +409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnergyAmount:
-    m_InternalValue: 100
+    m_InternalValue: 0
   energyMax: 100
   energyMin: 0
   drainAmount: 1

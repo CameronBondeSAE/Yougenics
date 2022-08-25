@@ -21,9 +21,7 @@ namespace Kevin
             foundFood = 9,
             isHungry = 10,
             caughtFood = 11,
-            foundMate = 12,
-            offAge = 13,
-            canLayEgg = 14
+            foundMate = 12
         }
 
         //public CritterB parentScript;
@@ -44,8 +42,6 @@ namespace Kevin
             aWorldState.Set(CritterBAI.caughtFood, critterB.CaughtFood());
             aWorldState.Set(CritterBAI.isHunting, critterB.IsHunting());
             aWorldState.Set(CritterBAI.isDead, critterB.IsDead());
-            aWorldState.Set(CritterBAI.offAge, critterB.IsOffAge());
-            aWorldState.Set(CritterBAI.canLayEgg, critterB.CanLayEgg());
 
 
         }
