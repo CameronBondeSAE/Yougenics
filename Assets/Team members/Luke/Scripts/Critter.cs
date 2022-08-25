@@ -561,7 +561,7 @@ namespace Luke
             GameObject go = Instantiate(beam, _transform);
             go.GetComponent<Beam>().target = currentFood.transform;
 			Minh.Health targetHealth = currentFood.GetComponent<Minh.Health>();
-            targetHealth.ChangeHealth(-critterInfo.dangerLevel);
+            if (targetHealth != null) targetHealth.ChangeHealth(-critterInfo.dangerLevel);
             IEdible targetIEdible = currentFood.GetComponent<IEdible>();
             if (targetIEdible != null)
             {
