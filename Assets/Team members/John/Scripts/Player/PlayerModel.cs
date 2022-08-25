@@ -281,7 +281,7 @@ namespace John
 
 			// Lock me to the vehicle, just so the camera doesn't need to retarget anything. I don't actually need to be a child
 			MonoBehaviour vehicleComponent = vehicleReference as MonoBehaviour;
-			transform.parent        = vehicleComponent.transform;
+			transform.parent = vehicleReference.GetPlayerMountPosition();
 			transform.localPosition = Vector3.zero;
 
 			// vehicleReference.Enter();
