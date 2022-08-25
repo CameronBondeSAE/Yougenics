@@ -45,6 +45,8 @@ namespace Minh
                     
                     item1PickedUpEvent?.Invoke(false);
                     Debug.Log("dropped");
+                    hit.collider.enabled = true;
+
                 }
                 else if (hit.collider != null)
                 {
@@ -57,6 +59,9 @@ namespace Minh
                         monoBehaviour.transform.position = playerModel.transform.position + new Vector3(0f, adjust2 * adjust3 * Time.deltaTime, 1 * adjust1 * Time.deltaTime);
                         monoBehaviour.transform.rotation = playerModel.transform.rotation;
                         //Rigidbody rb = item1 as Rigidbody;
+
+                        hit.collider.enabled = false;
+                        
                         if (monoBehaviour.GetComponent<Rigidbody>())
                         {
                             monoBehaviour.GetComponent<Rigidbody>().isKinematic = true;
@@ -86,6 +91,7 @@ namespace Minh
                     
                     //energyBarItem2UI.isVisible = false;
                     Debug.Log("dropped");
+                    hit.collider.enabled = true;
                 }
                 else if (hit.collider != null)
                 {
@@ -102,6 +108,8 @@ namespace Minh
                             monoBehaviour.GetComponent<Rigidbody>().isKinematic = true;
                             monoBehaviour.GetComponent<Collider>().enabled = false;
                         }
+
+                        hit.collider.enabled = false;
 
 
                         item2PickedUpEvent?.Invoke(true);

@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 
 namespace John
 {
-	public class PlayerModel : NetworkBehaviour
+	public class PlayerModel : CreatureBase, IEdible
 	{
 		[Header("Player Setup")]
 		public float movementSpeed = 10f;
@@ -90,6 +90,8 @@ namespace John
 
 		public float angle;
 		public float angleMultiplier = 0.2f;
+		// HACK
+		public AudioSource       audioSourceHurt;
 
 		private void FixedUpdate()
 		{
@@ -351,6 +353,18 @@ namespace John
 
 			// Nothing
 			return new RaycastHit();
+		}
+
+		public float GetEnergyAmount()
+		{
+			return GetComponent<Energy>().EnergyAmount.Value;
+		}
+
+		public float EatMe(float energyRemoved)
+		{
+			audioSourceHurt.Play();
+
+			return energyRemoved;
 		}
 	}
 }
