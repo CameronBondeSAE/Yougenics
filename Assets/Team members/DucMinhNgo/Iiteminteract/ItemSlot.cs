@@ -93,6 +93,7 @@ namespace Minh
                     MonoBehaviour monoBehaviour = slot2 as MonoBehaviour;
                     slot2 = null;
                     monoBehaviour.transform.parent = null;
+                    monoBehaviour.GetComponent<Collider>().enabled = true;
                     
                     item2PickedUpEvent?.Invoke(false);
                     
@@ -108,6 +109,12 @@ namespace Minh
                         MonoBehaviour monoBehaviour = item2 as MonoBehaviour;
                         monoBehaviour.transform.parent = Player.transform;
                         monoBehaviour.transform.position = Player.transform.position + new Vector3(0f, adjust2 * adjust3 * Time.deltaTime, 1 * adjust1 * Time.deltaTime);
+                        
+                        if (monoBehaviour.GetComponent<Rigidbody>())
+                        {
+                            monoBehaviour.GetComponent<Rigidbody>().isKinematic = true;
+                            monoBehaviour.GetComponent<Collider>().enabled = false;
+                        }
 
 
                         item2PickedUpEvent?.Invoke(true);

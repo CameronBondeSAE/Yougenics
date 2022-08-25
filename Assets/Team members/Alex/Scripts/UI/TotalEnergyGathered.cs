@@ -18,6 +18,6 @@ public class TotalEnergyGathered : MonoBehaviour
     void Update()
     {
         //EnergyLevel();
-        textMeshPro.text = "Total Energy Gathered:" + "\n\r" + GameManager.instance.GetComponent<Energy>().EnergyAmount.Value.ToString("#"); 
+        textMeshPro.text = "Total Energy Gathered:" + "\n\r" + GameManager.instance.GetComponent<Energy>().EnergyAmount.Value.ToString("#") + "/" + GameManager.instance.energyGoal; 
     }
 }

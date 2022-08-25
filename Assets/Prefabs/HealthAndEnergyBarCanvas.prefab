@@ -1010,6 +1010,8 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   fill: {fileID: 3586284976185816723}
+  isItem1: 0
+  isItem2: 0
 --- !u!1 &3586284975706213015
 GameObject:
   m_ObjectHideFlags: 0
