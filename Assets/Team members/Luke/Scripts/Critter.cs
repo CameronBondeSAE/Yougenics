@@ -786,6 +786,11 @@ namespace Luke
 			float distanceToCompare = critterInfo.visionRadius+5f;
 			foreach (Transform t in foodList)
 			{
+                if (t == null)
+                {
+                    foodList.Remove(t);
+                    continue;
+                }
 				Vector3 targetPosition = t.position;
 				Vector3 translation = targetPosition - position;
 				float distance = Vector3.Magnitude(translation);
