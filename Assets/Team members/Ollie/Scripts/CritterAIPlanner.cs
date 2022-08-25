@@ -25,6 +25,8 @@ namespace Ollie
         [HideInInspector] public float timer;
         //public Vector3 facingDirection;
         //private Rigidbody rigidbody;
+
+        private Renderer renderer;
         
         [HideInInspector] public TurnTowards turnTowards;
         private Avoidance avoidance;
@@ -75,7 +77,7 @@ namespace Ollie
             avoidance = GetComponentInChildren<Avoidance>();
             stateViewer = GetComponentInChildren<StateViewer>();
 
-            
+            renderer = GetComponent<Renderer>();
             
             healthComponent = GetComponent<Minh.Health>();
             healthComponent.CurrentHealth.Value = healthComponent.maxHealth;
@@ -100,6 +102,7 @@ namespace Ollie
         private void Update()
         {
             timer += Time.deltaTime;
+            renderer.material.SetFloat("_energy", energyComponent.EnergyAmount.Value);
             if (timer >= 0.1f)
             {
                 timer = 0;
@@ -150,7 +153,6 @@ namespace Ollie
 
             if (energyComponent.EnergyAmount.Value <= energyComponent.energyMin)
             {
-                print("bad");
                 moveSpeed = 0;
                 sleeping = true;
             }
