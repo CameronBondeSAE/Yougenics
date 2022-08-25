@@ -327,10 +327,10 @@ namespace Luke
 			if (other.transform == _transform) return;
 			CreatureBase go1 = other.GetComponentInParent<CreatureBase>();
 			IEdible go2 = other.GetComponentInParent<IEdible>();
-			CommonAttributes go3 = other.GetComponentInParent<CommonAttributes>();
+			CommonAttributes go3 = other.GetComponentInParent<CommonAttributes>(); //Nulling out
 			ILukeEdible go4 = other.GetComponentInParent<ILukeEdible>();
 			
-			if (go1 != null)
+			if (go1 != null && go3 != null)
 			{
 				float otherDangerLevel = go3.dangerLevel;
 				if (otherDangerLevel >= critterInfo.dangerLevel + 3)
