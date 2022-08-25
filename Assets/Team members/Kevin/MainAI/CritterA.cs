@@ -308,10 +308,7 @@ public class CritterA : CreatureBase, IEdible, ISense
                         predatorList.Add(other.transform);
                     }
 
-                    if (otherCreatureBase != null)
-                    {
-                        predatorList.Add(other.transform);
-                    }
+                
                     else if (myDangerLevel < otherCommonAttributes.dangerLevel) 
                     {
                         predatorList.Add(other.transform);
