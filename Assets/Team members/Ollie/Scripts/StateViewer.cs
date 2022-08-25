@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Anthill.AI;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -8,6 +9,8 @@ namespace Ollie
 {
     public class StateViewer : NetworkBehaviour
     {
+        //public StateDictionary stateDictionary;
+        
         private ParticleSystemRenderer particleSystem;
         private AudioSource[] sounds;
         private AudioSource deathSound;
@@ -17,6 +20,10 @@ namespace Ollie
         private AudioSource walkingSound;
         public List<Material> particleMaterials;
         private CritterAIPlanner parent;
+
+        private AudioClip audioClip;
+        private Material particleMaterial;
+        private String text;
         
         //Particle Materials
         //0 - aggressive
@@ -26,6 +33,7 @@ namespace Ollie
         //4 - sleep
         //5 - wander
         //6 - dead
+        //7 - eating
 
         private void Start()
         {
@@ -37,11 +45,32 @@ namespace Ollie
             sleepingSound = sounds[3];
             walkingSound = sounds[4];
             parent = GetComponentInParent<CritterAIPlanner>();
+            //stateDictionary = this.gameObject.GetComponentInChildren<StateDictionary>();
         }
 
+        /*public void ChangeViewInfo(AntAIState aiState)
+        {
+            if (aiState != null)
+            {
+                audioClip = stateDictionary.aiStateInfo[aiState.GetType()].audioClip;
+                particleMaterial = stateDictionary.aiStateInfo[aiState.GetType()].particleMaterial;
+                text = stateDictionary.aiStateInfo[aiState.GetType()].text;
+            }
+            
+
+            if (IsClient)
+            {
+                if (audioClip != null)
+                {
+                    //AudioSource.PlayClipAtPoint(audioClip,parent.transform.position);
+                }
+                if (particleMaterial != null) particleSystem.material = particleMaterial;
+            }
+        }*/
+        
         public void ChangeParticles(int index)
         {
-            //if isServer or isClient
+            
             if (IsClient)
             {
                 particleSystem.material = particleMaterials[index];

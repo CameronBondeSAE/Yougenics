@@ -37,7 +37,7 @@ namespace Ollie
             base.Enter();
             CheckFoodDistances();
             brain.path.Clear();
-            brain.moveSpeed = 3;
+            brain.moveSpeed = 7;
             
         }
 
@@ -90,7 +90,7 @@ namespace Ollie
                     if (brain.transform.position != closest.position)
                     {
                         brain.SetTarget(closest);
-                        print("target food set");
+                        //print("target food set");
                         
                     }
                     else
@@ -103,7 +103,7 @@ namespace Ollie
                 if (Vector3.Distance(parent.transform.position, closest.position) < 1)
                 {
                     brain.moveSpeed = 0;
-                    print("its NOMming time");
+                    //print("its NOMming time");
                     brain.SetFoodFound(true);
                 }
             }

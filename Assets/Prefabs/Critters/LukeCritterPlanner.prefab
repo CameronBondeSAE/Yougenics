@@ -5206,7 +5206,6 @@ MonoBehaviour:
   - {r: 1, g: 0.42864963, b: 0, a: 1}
   shield: {fileID: 77882986508892189}
   critter: {fileID: 3124390809528273905}
-  myAudio: {fileID: 5284591703951231690}
 --- !u!1 &6112835568152321978
 GameObject:
   m_ObjectHideFlags: 0
@@ -5645,17 +5644,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f1a28d512f42524a93bb2cd99dfc547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
   age: 0
-  ageOfMatingStart: 50
+  ageOfMatingStart: 150
   ageOfMatingEnd: 200
   maxAge: 100
   isPregnant: 0
@@ -5670,22 +5660,23 @@ MonoBehaviour:
   colour: {r: 0, g: 0, b: 0, a: 0}
   sex: 0
   slowlyDieWhenOldRate: 0
+  energyBall: {fileID: 0}
   critterInfo:
     maxHealth: 100
     maxSleepLevel: 100
     maxEnergyLevel: 100
     metabolism: 0
-    firstMatingDelay: 50
+    firstMatingDelay: 200
     isCarnivore: 0
     gender: 0
-    dangerLevel: 15
+    dangerLevel: 17
     visionRadius: 15
   defaultBehaviour: 0
   sleepLevel: 0
   acceleration: 1
   turnSpeed: 12
   maxSpeed: 5
-  awakeDecayDelay: 0
+  awakeDecayDelay: 1
   regularMatingDelay: 0
   cannotMate: 0
   readyToMate: 0
@@ -5821,9 +5812,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dangerLevel: 10
-  allegiances:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &-8559123734810543935
 MonoBehaviour:
   m_ObjectHideFlags: 0

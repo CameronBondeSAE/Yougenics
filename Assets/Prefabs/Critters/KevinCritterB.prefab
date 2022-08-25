@@ -536,6 +536,7 @@ Transform:
   m_Children:
   - {fileID: 2764331588163727681}
   - {fileID: 6637270378086561530}
+  - {fileID: 1142038635558755607}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -615,15 +616,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25716cbee64ff9c478c6cb75c908b76b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
   age: 0
   ageOfMatingStart: 0
   ageOfMatingEnd: 0
@@ -640,12 +632,15 @@ MonoBehaviour:
   colour: {r: 0, g: 1, b: 0.0575552, a: 0}
   sex: 0
   slowlyDieWhenOldRate: 0
+  energyBall: {fileID: 6538142482682508729, guid: 69a299a19828f084b916616053b88cea, type: 3}
   acceleration: 750
   visionRadius: 8
   visionCenterZ: 2.5
   myDangerLevel: 0
   rayDistance: 5
   rb: {fileID: 0}
+  eggPrefab: {fileID: 3323340309940094276, guid: 2acad95c6493064448595c0eeed2cfde, type: 3}
+  eggSpawnPosition: {fileID: 1142038635558755607}
   commonAttributes: {fileID: 0}
   energy: {fileID: 0}
   health: {fileID: 0}
@@ -670,6 +665,10 @@ MonoBehaviour:
   caughtFood: 0
   foundMate: 0
   canRun: 0
+  offAge: 0
+  canLayEgg: 0
+  gestationComplete: 1
+  egg: 1
   alpha: 0
   deathColour: 1
   invisCooldown: 10
@@ -683,6 +682,7 @@ MonoBehaviour:
   feet2Object: {fileID: 1194381517}
   feetRenderer: {fileID: 0}
   feet2Renderer: {fileID: 0}
+  energyBallPrefab: {fileID: 6538142482682508728, guid: 69a299a19828f084b916616053b88cea, type: 3}
   myAudioClip: {fileID: 0}
   snarlClip: {fileID: 8300000, guid: 912ff11874bfa8647aaa4bee86f39999, type: 3}
   eatingClip: {fileID: 8300000, guid: e46dbcbf39a5a00469d2757c90680a0a, type: 3}
@@ -721,7 +721,7 @@ MonoBehaviour:
   rayDistance: 2
   dirR: {x: 0, y: 0, z: 0}
   dirL: {x: 0, y: 0, z: 0}
-  rays: 1
+  rays: 0
 --- !u!114 &2764331587373533927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -763,9 +763,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dangerLevel: 0
-  allegiances:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &2764331587373533724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -867,7 +864,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d471e11a924f1fbb1db944262d7a4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
 --- !u!114 &681720750839257127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -887,7 +884,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2764331587373533921}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21a8d2bb457710c4b85184b4c0055c5f, type: 3}
   m_Name: 
@@ -950,7 +947,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2764331587373533921}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac7c9b0685b75584aa126ba62e04ce2f, type: 3}
   m_Name: 
@@ -1114,6 +1111,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentScript: {fileID: 0}
+--- !u!1 &5854709702276864914
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1142038635558755607}
+  m_Layer: 0
+  m_Name: EggSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1142038635558755607
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5854709702276864914}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.519, z: -1.191}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2764331587373533726}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5871562768168694268
 GameObject:
   m_ObjectHideFlags: 0

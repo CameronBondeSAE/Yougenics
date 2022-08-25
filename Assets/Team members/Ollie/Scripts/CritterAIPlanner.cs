@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Anthill.AI;
 using Kevin;
 using Minh;
 using Tanks;
@@ -16,7 +17,7 @@ namespace Ollie
         public List<Vector3> path;
         public List<Transform> foodLocationList;
         public List<GameObject> mateLocationList;
-        public float moveSpeed = 0.25f;
+        public float moveSpeed = 7f;
         //public WaterNode currentLocation;
         [HideInInspector] public Transform target;
         [HideInInspector] [FormerlySerializedAs("targetTransform")] public Vector3 targetPos;
@@ -24,6 +25,8 @@ namespace Ollie
         [HideInInspector] public float timer;
         //public Vector3 facingDirection;
         //private Rigidbody rigidbody;
+
+        private Renderer renderer;
         
         [HideInInspector] public TurnTowards turnTowards;
         private Avoidance avoidance;
@@ -67,14 +70,16 @@ namespace Ollie
         private void Start()
         {
             path = new List<Vector3>();
-            moveSpeed = 3;
+            //moveSpeed = 3;
             //rigidbody = GetComponent<Rigidbody>();
             aStar = GetComponentInChildren<AStar>();
             turnTowards = GetComponentInChildren<TurnTowards>();
             avoidance = GetComponentInChildren<Avoidance>();
             stateViewer = GetComponentInChildren<StateViewer>();
+            maxAge = 200;
+            slowlyDieWhenOldRate = 5;
 
-            
+            renderer = GetComponent<Renderer>();
             
             healthComponent = GetComponent<Minh.Health>();
             healthComponent.CurrentHealth.Value = healthComponent.maxHealth;
@@ -99,6 +104,7 @@ namespace Ollie
         private void Update()
         {
             timer += Time.deltaTime;
+            renderer.material.SetFloat("_energy", energyComponent.EnergyAmount.Value);
             if (timer >= 0.1f)
             {
                 timer = 0;
@@ -112,7 +118,7 @@ namespace Ollie
                     }
                     else
                     {
-                        print("path blocked");
+                        //print("path blocked");
                         if (foodLocationList.Contains(target)) foodLocationList.Remove(target);
                         if (mateLocationList.Contains(target.gameObject)) mateLocationList.Remove(target.gameObject);
                         target = null;
@@ -134,7 +140,7 @@ namespace Ollie
 
             if (healthComponent.CurrentHealth.Value <= 0)
             {
-                Death();
+                //Death();
             }
 
             if (energyComponent.EnergyAmount.Value < energyComponent.energyMax / 2)
@@ -160,7 +166,7 @@ namespace Ollie
 
             if (sleeping && dead)
             {
-                DestroyMe();
+                //DestroyMe();
             }
 
             if (age > 18 && sex == Sex.Male)
@@ -177,6 +183,7 @@ namespace Ollie
         public void StateViewerChange(int index)
         {
             stateViewer.ChangeParticles(index);
+            //stateViewer.ChangeViewInfo(aiState);
         }
 
         private void Death()
@@ -197,7 +204,7 @@ namespace Ollie
             {
                 energyComponent.EnergyAmount.Value = energyComponent.energyMax;
                 sleeping = false;
-                moveSpeed = 3;
+                moveSpeed = 7;
             }
         }
 
@@ -343,5 +350,13 @@ namespace Ollie
         }
 
         #endregion
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.GetComponent<CreatureBase>())
+            {
+                Physics.IgnoreCollision(collision.collider,gameObject.GetComponent<Collider>());
+            }
+        }
     }
 }

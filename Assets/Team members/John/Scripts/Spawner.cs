@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
+using System;
 
 #if UNITY_EDITOR || UNITY_EDITOR_64
 using UnityEditor;
@@ -40,6 +41,7 @@ public class Spawner : NetworkBehaviour
 
 	public ShouldISpawnDelegate shouldISpawnDelegate;
 
+	public event Action<Spawner> onSpawningCompletedEvent;
 
 	public override void OnNetworkSpawn()
 	{
@@ -56,7 +58,7 @@ public class Spawner : NetworkBehaviour
 
 	public List<GameObject> SpawnMultiple()
 	{
-		SpawnMultipleCoroutine();
+		StartCoroutine(SpawnMultipleCoroutine());
 
 		return spawned;
 	}
@@ -83,6 +85,8 @@ public class Spawner : NetworkBehaviour
 					Vector3 randomSpot = Random.insideUnitCircle * radius;
 					randomSpot.z = randomSpot.y; //hack, im sure there is an easier way to do this
 					randomSpot.y = 0;
+					
+					randomTransform.rotation = Quaternion.Euler(0, Random.Range(0,359),0);
 					// Debug.Log(randomSpot);
 					GameObject randomPrefab =
 						_currentGroupInfo.prefabs[Random.Range(0, _currentGroupInfo.prefabs.Length)];
@@ -94,7 +98,13 @@ public class Spawner : NetworkBehaviour
 					yield return new WaitForSeconds(0.1f);
 				}
 			}
+
+			if (i + 1 == groupInfos.Length)
+			{
+				onSpawningCompletedEvent?.Invoke(this);
+			}
 		}
+
 	}
 
 	public GameObject SpawnSingle(GameObject prefab, Vector3 pos, Quaternion rotation)
@@ -108,7 +118,7 @@ public class Spawner : NetworkBehaviour
 											   rotation);
 
 		// Object must have NetworkObject component to work on clients
-		if (NetworkManager.Singleton.IsServer)
+		if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer)
 			spawnedPrefab.GetComponent<NetworkObject>()?.Spawn();
 
 
