@@ -723,7 +723,7 @@ MonoBehaviour:
   playerHead: {fileID: 8638494978573017855}
   inVehicle: 0
   vehicleOffset: {x: 0, y: 3.75, z: -1.5}
-  playerView: {fileID: 0}
+  playerView: {fileID: 62606681800154141}
   feet: {fileID: 1335156242674683886}
   angle: 0
   angleMultiplier: 0.05
@@ -1067,6 +1067,11 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: aa4574b7cc0229346b8eec01dca005ac, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de13a7420582ded45a8d7d3f96889aca, type: 3}
+--- !u!1 &62606681800154141 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: de13a7420582ded45a8d7d3f96889aca, type: 3}
+  m_PrefabInstance: {fileID: 873423054151000396}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &834780970299410087 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: de13a7420582ded45a8d7d3f96889aca, type: 3}
