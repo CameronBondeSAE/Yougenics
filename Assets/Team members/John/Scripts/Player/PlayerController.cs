@@ -111,6 +111,8 @@ namespace John
             playerInput.SwitchCurrentActionMap("InMenu");
 
             LobbyUIManager.instance.DisplayLobby(true);
+
+            Cursor.lockState = CursorLockMode.None;
         }
 
         public void HideLobby()
@@ -118,6 +120,8 @@ namespace John
             playerInput.SwitchCurrentActionMap("InGame");
 
             LobbyUIManager.instance.DisplayLobby(false);
+
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         [ServerRpc]
