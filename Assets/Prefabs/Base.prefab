@@ -1461,11 +1461,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3571767707691462230, guid: b1b6a4a4712a0364bbffc21e45491ba2, type: 3}
       propertyPath: deepColor.g
-      value: 0.42743284
+      value: 0.42743164
       objectReference: {fileID: 0}
     - target: {fileID: 3571767707691462230, guid: b1b6a4a4712a0364bbffc21e45491ba2, type: 3}
       propertyPath: shoreColor.b
-      value: 0.30194262
+      value: 0.30194142
       objectReference: {fileID: 0}
     - target: {fileID: 3571767707691462230, guid: b1b6a4a4712a0364bbffc21e45491ba2, type: 3}
       propertyPath: waveSteepness
@@ -1481,7 +1481,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3571767707691462230, guid: b1b6a4a4712a0364bbffc21e45491ba2, type: 3}
       propertyPath: horizonColor.g
-      value: 0.22743285
+      value: 0.22743163
       objectReference: {fileID: 0}
     - target: {fileID: 3571767707691462230, guid: b1b6a4a4712a0364bbffc21e45491ba2, type: 3}
       propertyPath: shallowColor.b
@@ -1785,6 +1785,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7636052516034579675}
     m_Modifications:
+    - target: {fileID: 4995610799422681834, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5802881147779121520, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_VersionIndex
       value: 163
@@ -1899,6 +1903,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7636052516034579675}
     m_Modifications:
+    - target: {fileID: 4995610799422681834, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5802881147779121520, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_VersionIndex
       value: 163
@@ -2013,6 +2021,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7636052516034579675}
     m_Modifications:
+    - target: {fileID: 4995610799422681834, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5802881147779121520, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_VersionIndex
       value: 163
@@ -2193,6 +2205,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7636052516034579675}
     m_Modifications:
+    - target: {fileID: 4995610799422681834, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5802881147779121520, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_VersionIndex
       value: 163
@@ -2212,14 +2228,14 @@ PrefabInstance:
     - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: itemToSpawn
       value: 
-      objectReference: {fileID: 6628694674896416980, guid: a113eb118bcdb2f40bebeecf9a1810a0, type: 3}
+      objectReference: {fileID: 8452699171181523828, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
     - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: itemInfo.name
-      value: Drone
+      value: Wall segment
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: itemInfo.height
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: itemInfo.buildTime
@@ -2227,7 +2243,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: itemInfo.description
-      value: Fly the drone around to scount the surrounding area
+      value: If your walls get destroyed!
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: itemInfo.energyRequired
@@ -2847,6 +2863,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7636052516034579675}
     m_Modifications:
+    - target: {fileID: 4995610799422681834, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5802881147779121520, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_VersionIndex
       value: 163
@@ -3113,6 +3133,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7636052516034579675}
     m_Modifications:
+    - target: {fileID: 4995610799422681834, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5802881147779121520, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_VersionIndex
       value: 163

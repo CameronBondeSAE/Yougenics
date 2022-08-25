@@ -311,22 +311,30 @@ namespace John
 		}
 
 
-		RaycastHit CheckWhatsInFrontOfMe()
+		public RaycastHit CheckWhatsInFrontOfMe()
 		{
 			// Check what's in front of me. TODO: Make it scan the area or something less precise
-			RaycastHit hit;
+			// RaycastHit hit;
 			// Ray        ray = new Ray(transform.position + transform.TransformPoint(interactRayOffset), transform.forward);
 			// NOTE: TransformPoint I THINK includes the main position, so you don't have to add world position to the final
 			Vector3 transformPoint = playerHead.TransformPoint(interactRayOffset);
 			// Debug.Log(transformPoint);
 			Ray ray = new Ray(transformPoint, playerHead.forward);
 
-			Debug.DrawRay(ray.origin, ray.direction * interactDistance, Color.green, 2f);
+			// Debug.DrawRay(ray.origin, ray.direction * interactDistance, Color.green, 2f);
 
 			// if (Physics.Raycast(ray, out hit, interactDistance))
-			Physics.SphereCast(ray, 0.5f, out hit, interactDistance);
+			RaycastHit[] sphereCastAll = Physics.SphereCastAll(ray, 1f, interactDistance, 255);//, QueryTriggerInteraction.Ignore);
+			foreach (RaycastHit raycastHit in sphereCastAll)
+			{
+				if (raycastHit.collider.GetComponent<IInteractable>() != null)
+				{
+					return raycastHit;
+				}
+			}
 
-			return hit;
+			// Nothing
+			return new RaycastHit();
 		}
 	}
 }

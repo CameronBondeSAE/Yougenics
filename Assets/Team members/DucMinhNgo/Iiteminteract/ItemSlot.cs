@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Alex;
 using Anthill.Pool;
+using John;
 using UnityEngine;
 using Unity.Netcode;
 using Unity.VisualScripting;
@@ -19,7 +20,7 @@ namespace Minh
         public float adjust1;
         public float adjust2;
         public float adjust3;
-        public Transform Player;
+        public PlayerModel playerModel;
         public EnergyBarAlex energyBarItem1UI;
         public EnergyBarAlex energyBarItem2UI;
         public ItemNameUI itemName1UI;
@@ -28,29 +29,13 @@ namespace Minh
         public event Action<bool> item2PickedUpEvent;
 
 
-        // Update is called once per frame
-        private RaycastHit CheckWhatsInFrontOfMe()
-        {
-            // Check what's in front of me. TODO: Make it scan the area or something less precise
-            RaycastHit hit;
-            // Ray        ray = new Ray(transform.position + transform.TransformPoint(interactRayOffset), transform.forward);
-            // NOTE: TransformPoint I THINK includes the main position, so you don't have to add world position to the final
-            Vector3 transformPoint = Player.TransformPoint(interactRayOffset);
-            // Debug.Log(transformPoint);
-            Ray ray = new Ray(transformPoint, Player.forward);
-
-            Debug.DrawRay(ray.origin, ray.direction * interactDistance, Color.green, 2f);
-
-            // if (Physics.Raycast(ray, out hit, interactDistance))
-            Physics.SphereCast(ray, 0.5f, out hit, interactDistance);
-            return hit;
-        }
         public void Update()
         {
-            RaycastHit hit = CheckWhatsInFrontOfMe();
+            RaycastHit hit;
             //if (hit.transform != null) Debug.Log(hit.transform.gameObject.name);
             if (InputSystem.GetDevice<Keyboard>().digit1Key.wasPressedThisFrame)
             {
+                hit = playerModel.CheckWhatsInFrontOfMe();
                 if(slot1 != null)
                 {
                     MonoBehaviour monoBehaviour = slot1 as MonoBehaviour;
@@ -68,8 +53,9 @@ namespace Minh
                     {
                         slot1 = item1;
                         MonoBehaviour monoBehaviour = item1 as MonoBehaviour;
-                        monoBehaviour.transform.parent = Player.transform;
-                        monoBehaviour.transform.position = Player.transform.position + new Vector3(0f, adjust2 * adjust3 * Time.deltaTime, 1 * adjust1 * Time.deltaTime);
+                        monoBehaviour.transform.parent   = playerModel.transform;
+                        monoBehaviour.transform.position = playerModel.transform.position + new Vector3(0f, adjust2 * adjust3 * Time.deltaTime, 1 * adjust1 * Time.deltaTime);
+                        monoBehaviour.transform.rotation = playerModel.transform.rotation;
                         //Rigidbody rb = item1 as Rigidbody;
                         if (monoBehaviour.GetComponent<Rigidbody>())
                         {
@@ -88,6 +74,7 @@ namespace Minh
             }
             if (InputSystem.GetDevice<Keyboard>().digit2Key.wasPressedThisFrame)
             {
+                hit = playerModel.CheckWhatsInFrontOfMe();
                 if(slot2 != null)
                 {
                     MonoBehaviour monoBehaviour = slot2 as MonoBehaviour;
@@ -107,9 +94,9 @@ namespace Minh
                     {
                         slot2 = item2;
                         MonoBehaviour monoBehaviour = item2 as MonoBehaviour;
-                        monoBehaviour.transform.parent = Player.transform;
-                        monoBehaviour.transform.position = Player.transform.position + new Vector3(0f, adjust2 * adjust3 * Time.deltaTime, 1 * adjust1 * Time.deltaTime);
-                        
+                        monoBehaviour.transform.parent   = playerModel.transform;
+                        monoBehaviour.transform.position = playerModel.transform.position + new Vector3(0f, adjust2 * adjust3 * Time.deltaTime, 1 * adjust1 * Time.deltaTime);
+                        monoBehaviour.transform.rotation = playerModel.transform.rotation;
                         if (monoBehaviour.GetComponent<Rigidbody>())
                         {
                             monoBehaviour.GetComponent<Rigidbody>().isKinematic = true;

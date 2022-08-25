@@ -693,7 +693,7 @@ MonoBehaviour:
   lookSensitivity: 5
   jumpHeight: 6
   interactDistance: 3
-  interactRayOffset: {x: 0, y: 0.5, z: 0}
+  interactRayOffset: {x: 0, y: 0.2, z: 0}
   onGround: 0
   onGroundDrag: 10
   inAirDrag: 0.1
@@ -822,9 +822,9 @@ MonoBehaviour:
   interactDistance: 1.5
   interactRayOffset: {x: 0, y: 0.5, z: 0}
   adjust1: 0
-  adjust2: 0.5
+  adjust2: 0.1
   adjust3: 0
-  Player: {fileID: 8611620220612625326}
+  playerModel: {fileID: 8611620220612625320}
   energyBarItem1UI: {fileID: 6129516058913329086}
   energyBarItem2UI: {fileID: 8362014177791732835}
   itemName1UI: {fileID: 5189356426756723986}
