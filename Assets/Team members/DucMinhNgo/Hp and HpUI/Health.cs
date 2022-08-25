@@ -88,6 +88,7 @@ namespace Minh
             if (CurrentHealth.Value <= 0)
             {
                 IsDead.Value = true;
+                Destroy(gameObject);
                 DeathEvent?.Invoke();
             }
         }

@@ -30,7 +30,7 @@ namespace Minh
             }
             if (changedamount < 0f)
             {
-                Interact();    
+                Interact();
             }
         }
         public void Healing()
