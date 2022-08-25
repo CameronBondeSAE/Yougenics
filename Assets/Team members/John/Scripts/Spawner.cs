@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
+using System;
 
 #if UNITY_EDITOR || UNITY_EDITOR_64
 using UnityEditor;
@@ -40,6 +41,7 @@ public class Spawner : NetworkBehaviour
 
 	public ShouldISpawnDelegate shouldISpawnDelegate;
 
+	public event Action<Spawner> onSpawningCompletedEvent;
 
 	public override void OnNetworkSpawn()
 	{
@@ -56,7 +58,7 @@ public class Spawner : NetworkBehaviour
 
 	public List<GameObject> SpawnMultiple()
 	{
-		SpawnMultipleCoroutine();
+		StartCoroutine(SpawnMultipleCoroutine());
 
 		return spawned;
 	}
@@ -94,7 +96,13 @@ public class Spawner : NetworkBehaviour
 					yield return new WaitForSeconds(0.1f);
 				}
 			}
+
+			if (i + 1 == groupInfos.Length)
+			{
+				onSpawningCompletedEvent?.Invoke(this);
+			}
 		}
+
 	}
 
 	public GameObject SpawnSingle(GameObject prefab, Vector3 pos, Quaternion rotation)
