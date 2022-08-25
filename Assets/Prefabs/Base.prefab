@@ -1461,11 +1461,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3571767707691462230, guid: b1b6a4a4712a0364bbffc21e45491ba2, type: 3}
       propertyPath: deepColor.g
-      value: 0.42743632
+      value: 0.42743284
       objectReference: {fileID: 0}
     - target: {fileID: 3571767707691462230, guid: b1b6a4a4712a0364bbffc21e45491ba2, type: 3}
       propertyPath: shoreColor.b
-      value: 0.3019461
+      value: 0.30194262
       objectReference: {fileID: 0}
     - target: {fileID: 3571767707691462230, guid: b1b6a4a4712a0364bbffc21e45491ba2, type: 3}
       propertyPath: waveSteepness
@@ -1481,7 +1481,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3571767707691462230, guid: b1b6a4a4712a0364bbffc21e45491ba2, type: 3}
       propertyPath: horizonColor.g
-      value: 0.22743633
+      value: 0.22743285
       objectReference: {fileID: 0}
     - target: {fileID: 3571767707691462230, guid: b1b6a4a4712a0364bbffc21e45491ba2, type: 3}
       propertyPath: shallowColor.b
@@ -1569,6 +1569,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2785204721799650143, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 951099334
+      objectReference: {fileID: 0}
     - target: {fileID: 8452699171181523828, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
       propertyPath: m_Name
       value: Wall Segment (5)
@@ -1630,6 +1634,10 @@ PrefabInstance:
     - target: {fileID: 388605357402476535, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785204721799650143, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 951099334
       objectReference: {fileID: 0}
     - target: {fileID: 8452699171181523828, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
       propertyPath: m_Name
@@ -1799,23 +1807,23 @@ PrefabInstance:
       objectReference: {fileID: 1954794162569713100, guid: 7785dd4a8c78c3b47ac3e85e98aac377, type: 3}
     - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: itemInfo.name
-      value: Food
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: itemInfo.height
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: itemInfo.buildTime
-      value: 9001
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: itemInfo.description
-      value: The cost of living
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607509, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: itemInfo.energyRequired
-      value: 1000000
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607510, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_RootOrder
@@ -1863,7 +1871,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607511, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_Name
-      value: ShopFood
+      value: ShopRepairGun
       objectReference: {fileID: 0}
     - target: {fileID: 7334385388066088445, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: GlobalObjectIdHash
@@ -2343,6 +2351,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2785204721799650143, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 951099334
+      objectReference: {fileID: 0}
     - target: {fileID: 8452699171181523828, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
       propertyPath: m_Name
       value: Wall Segment (6)
@@ -2405,6 +2417,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2785204721799650143, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 951099334
+      objectReference: {fileID: 0}
     - target: {fileID: 8452699171181523828, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
       propertyPath: m_Name
       value: Wall Segment (12)
@@ -2466,6 +2482,10 @@ PrefabInstance:
     - target: {fileID: 388605357402476535, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785204721799650143, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 951099334
       objectReference: {fileID: 0}
     - target: {fileID: 8452699171181523828, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
       propertyPath: m_Name
@@ -2595,6 +2615,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2785204721799650143, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 951099334
+      objectReference: {fileID: 0}
     - target: {fileID: 8452699171181523828, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
       propertyPath: m_Name
       value: Wall Segment (15)
@@ -2722,6 +2746,10 @@ PrefabInstance:
     - target: {fileID: 388605357402476535, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785204721799650143, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 951099334
       objectReference: {fileID: 0}
     - target: {fileID: 8452699171181523828, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
       propertyPath: m_Name
@@ -3151,7 +3179,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7334385387549607511, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: m_Name
-      value: Shop
+      value: ShopLazer
       objectReference: {fileID: 0}
     - target: {fileID: 7334385388066088445, guid: ff5079a2a2a75b44aa59c83002c57a6e, type: 3}
       propertyPath: GlobalObjectIdHash
@@ -3288,6 +3316,10 @@ PrefabInstance:
     - target: {fileID: 388605357402476535, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785204721799650143, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 951099334
       objectReference: {fileID: 0}
     - target: {fileID: 8452699171181523828, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
       propertyPath: m_Name
@@ -3635,6 +3667,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2785204721799650143, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 951099334
+      objectReference: {fileID: 0}
     - target: {fileID: 8452699171181523828, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
       propertyPath: m_Name
       value: Wall Segment (10)
@@ -3891,6 +3927,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2785204721799650143, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 951099334
+      objectReference: {fileID: 0}
     - target: {fileID: 8452699171181523828, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
       propertyPath: m_Name
       value: Wall Segment (7)
@@ -3952,6 +3992,10 @@ PrefabInstance:
     - target: {fileID: 388605357402476535, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785204721799650143, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 951099334
       objectReference: {fileID: 0}
     - target: {fileID: 8452699171181523828, guid: d1e2797a21f596a468e8b227766994a2, type: 3}
       propertyPath: m_Name

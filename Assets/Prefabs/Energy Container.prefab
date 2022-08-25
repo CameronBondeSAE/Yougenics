@@ -193,6 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 059aac044d2c7284e8c92d72bd6bd97e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  energy: {fileID: 0}
   drainRate: 5
   drainTargets: []
   iteminfo:
@@ -201,7 +202,6 @@ MonoBehaviour:
     energyRequired: 100
     height: 2
     buildTime: 2
-  orb: {fileID: 6102224712380683561}
 --- !u!54 &7389904
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -231,12 +231,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnergyAmount:
-    m_InternalValue: 50
+    m_InternalValue: 0
   energyMax: 100
   energyMin: 0
   drainAmount: 1
-  moveDrainAmount: 0.001
-  drainSpeed: 1
+  moveDrainAmount: 0
+  drainSpeed: 0.5
   energyUserMoving: 0
   myMagnitude: 0
   useEnergyOnMovement: 0
@@ -311,16 +311,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: ORB
       objectReference: {fileID: 0}
+    - target: {fileID: 9210527426357635151, guid: f22c3cc43e15c6c4ba964b3a647d91b6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f22c3cc43e15c6c4ba964b3a647d91b6, type: 3}
 --- !u!4 &6102224712380683557 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9210527426357635139, guid: f22c3cc43e15c6c4ba964b3a647d91b6, type: 3}
-  m_PrefabInstance: {fileID: 3133705920853687654}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6102224712380683561 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9210527426357635151, guid: f22c3cc43e15c6c4ba964b3a647d91b6, type: 3}
   m_PrefabInstance: {fileID: 3133705920853687654}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7474335503372871482
