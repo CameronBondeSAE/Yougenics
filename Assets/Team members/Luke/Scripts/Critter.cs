@@ -272,6 +272,8 @@ namespace Luke
 			acceleration = Mathf.Clamp(20+10f/metabolism,20,30);
 			regularMatingDelay = ageOfMatingStart * 0.5f;
 
+            healthComp.DeathEvent += Die;
+
 			foreach (Transform t in predatorsList)
 			{
 				t.GetComponent<Critter>().RemoveFromListEvent += RemoveTransformFromList;
