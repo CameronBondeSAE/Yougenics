@@ -5576,15 +5576,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7392689303276e54cbcf7e5cdcf9f4c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
   age: 0
   ageOfMatingStart: 0
   ageOfMatingEnd: 0
@@ -5601,6 +5592,7 @@ MonoBehaviour:
   colour: {r: 0, g: 0, b: 0, a: 0}
   sex: 0
   slowlyDieWhenOldRate: 0
+  energyBall: {fileID: 0}
   path: []
   foodLocationList: []
   mateLocationList: []
@@ -5696,9 +5688,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dangerLevel: 0
-  allegiances:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &1987901841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5770,7 +5759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d471e11a924f1fbb1db944262d7a4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
 --- !u!1 &8654584319481658008
 GameObject:
   m_ObjectHideFlags: 0
