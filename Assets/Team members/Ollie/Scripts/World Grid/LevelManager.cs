@@ -490,18 +490,28 @@ namespace Ollie
             if(gridNodeReferences != null && worldInitialised) foreach (WaterNode node in gridNodeReferences)
             {
                 
-                if (node.isBlocked)
-                {
-                    Gizmos.color = Color.red;
+                //if (node.isBlocked)
+                //{
+                    //Gizmos.color = Color.red;
                     //Gizmos.DrawCube(new Vector3(node.gridPosition.x,0,node.gridPosition.y),Vector3.one);
-                }
+                //}
 
-                if (!node.isBlocked && !node.isWater)
-                {
-                    Gizmos.color = Color.green;
+                //if (!node.isBlocked && !node.isWater)
+                //{
+                    //Gizmos.color = Color.green;
                     //Gizmos.DrawCube(new Vector3(node.gridPosition.x,0,node.gridPosition.y),Vector3.one);
-                }
+                //}
 
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 // if (node.isWater)
                 // {
                 //     Gizmos.color = Color.blue;
