@@ -284,6 +284,7 @@ GameObject:
   - component: {fileID: 584940608}
   - component: {fileID: 584940612}
   - component: {fileID: 584940613}
+  - component: {fileID: 584940614}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -403,6 +404,24 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &584940614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584940606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46eb57fc3ab7b274b8f74ed8f48af58e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactDistance: 1
+  interactRayOffset: {x: 0, y: 0.5, z: 0}
+  adjust1: 0
+  adjust2: 0
+  adjust3: 0
+  Player: {fileID: 0}
 --- !u!1 &766952759
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,7 +627,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
